@@ -1,0 +1,8 @@
+@use '../../constants/scss/theme';
+
+.BoardSquare {
+  width: 100%;
+  position: relative;
+  margin-left: 0;
+  box-sizing: border-box;
+}

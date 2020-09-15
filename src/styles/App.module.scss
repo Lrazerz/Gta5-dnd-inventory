@@ -1,0 +1,32 @@
+@use '../constants/scss/theme';
+
+.TopTooltip {
+  height: 6.2%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .ToolTipText {
+    display: block;
+    line-height: 23px;
+    font-size: 14px;
+  }
+}
+
+.App {
+  display: flex;
+  height: 93.8%;
+  width: 100%;
+  @media (max-width: theme.$breakpoint-md) {
+    flex-direction: column;
+  }
+  .BoardContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    width: 66%;
+  }
+}
+
+
+

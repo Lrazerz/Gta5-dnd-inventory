@@ -1,0 +1,45 @@
+@use '../../constants/scss/theme';
+
+.SecondaryText {
+  width: 100%;
+  font-weight: 300;
+  color: #f0f0f1;
+  font-family: Montserrat-Light, sans-serif;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  letter-spacing: -0.02rem;
+  @media (min-aspect-ratio: theme.$aspect-ratio-5x4) {
+    line-height: 16px;
+  }
+  @media (min-aspect-ratio: theme.$aspect-ratio-4x3) and (min-width: 1500px) {
+    font-size: 15px;
+    line-height: 16px;
+  }
+  @media (min-aspect-ratio: theme.$aspect-ratio-3x2) {
+    font-size: 17px;
+    line-height: 20px;
+  }
+  @media (min-aspect-ratio: theme.$aspect-ratio-16x10) {
+    font-size: 14px;
+    line-height: 16px;
+    @media (min-width: 1900px) {
+      font-size: 14px;
+      line-height: 16px;
+    }
+  }
+  @media (min-aspect-ratio: theme.$aspect-ratio-16x9) {
+    font-size: 14px;
+    line-height: 16px;
+  }
+  @media (min-aspect-ratio: theme.$aspect-ratio-17x9) and (min-width: 3800px) {
+    font-size: 23px;
+    line-height: 25px;
+  }
+  // for 3840x2160
+  @media (max-aspect-ratio: theme.$aspect-ratio-17x9) and (min-width: 3800px) {
+    font-size: 23px;
+    line-height: 25px;
+  }
+
+}

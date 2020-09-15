@@ -1,0 +1,82 @@
+@use '../../constants/scss/theme';
+
+.WeaponTypeContainer {
+  height: 25%;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.MainContent {
+  width: 70.59%;
+  height: 100%;
+  margin-right: 0;
+  margin-left: auto;
+
+  .TypeAndWeaponTitle {
+    height: 21.5%;
+    width: 100%;
+    box-sizing: border-box;
+    padding-right: 4%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+
+  .WeaponSquareContainer {
+    height: 32.156%;
+    width: 100%;
+    background: linear-gradient(90deg, transparent, rgba(44, 60, 97, 1));
+    box-sizing: border-box;
+    border-top: 2px solid;
+    border-bottom: 2px solid;
+    border-image: linear-gradient(90deg, transparent, #3f76f3) 2;
+    position: relative;
+  }
+
+  .AttachmentsSquaresContainer {
+    height: 37%;
+    width: 120%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    overflow: visible;
+
+    .LeftArrow {
+      //visibility: hidden;
+      width: 4.5%;
+      height: 16%;
+      background-color: rgba(47, 55, 71, 0.3);
+      clip-path: polygon(0 50%, 100% 0, 100% 100%);
+    }
+  }
+}
+
+.UIBordersContainer {
+  width: 23%;
+  box-sizing: border-box;
+  position: relative;
+
+  .UIBorders {
+    height: 40.78%;
+    width: 100%;
+    position: absolute;
+    top: 16.9%;
+    right: 0;
+    box-sizing: border-box;
+    clip-path: polygon(0 10.568%, 17.15% 0, 100% 0, 100% 100%, 17.15% 100%, 0 89.432%);
+    background: #3f76f3;
+    overflow: hidden;
+
+    .ClippedElement {
+      height: 95%;
+      width: 100%;
+      background: linear-gradient(90deg, rgba(44, 60, 97, 1), rgba(48, 68, 112, 1));
+      clip-path: polygon(0 12.568%, 19.15% 0, 100% 0, 100% 100%, 19.15% 100%, 0 88.832%);
+      box-sizing: border-box;
+      position: absolute;
+      top: 2.5%;
+    }
+  }
+}

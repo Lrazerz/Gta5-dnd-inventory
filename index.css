@@ -1,0 +1,33 @@
+html, body, #root {
+    height: 100%;
+}
+
+#root {
+    background: rgba(91,90,70,0.5);
+    overflow: hidden;
+}
+
+@font-face {
+    font-family: 'Montserrat-Bold';
+    src: local('Montserrat-Bold'), url(./src/assets/fonts/Montserrat-Bold.ttf) format('truetype');
+}
+@font-face {
+    font-family: 'Montserrat-Light';
+    src: local('Montserrat-Light'), url(./src/assets/fonts/Montserrat-Light.ttf) format('truetype');
+}
+@font-face {
+    font-family: 'Montserrat-Regular';
+    src: local('Montserrat-Regular'), url(./src/assets/fonts/Montserrat-Regular.ttf) format('truetype');
+}
+@font-face {
+    font-family: 'Montserrat-SemiBold';
+    src: local('Montserrat-SemiBold'), url(./src/assets/fonts/Montserrat-SemiBold.ttf) format('truetype');
+}
+@font-face {
+    font-family: 'BebasNeue-Regular',sans-serif;
+    src: local('BebasNeue-Regular'), url(./src/assets/fonts/BebasNeue-Regular.ttf) format('truetype');
+}
+@font-face {
+    font-family: 'BebasNeue-Bold';
+    src: local('BebasNeue-Bold'), url(./src/assets/fonts/BebasNeue-Bold.otf) format('opentype');
+}

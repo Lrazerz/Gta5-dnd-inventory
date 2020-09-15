@@ -1,0 +1,12 @@
+.Octagon {
+  width: 26%;
+  clip-path: polygon(0 21.4%, 21.4% 0, 78.6% 0, 100% 21.4%, 100% 78.6%, 78.6% 100%, 21.4% 100%, 0 78.6%);
+  background-color: rgba(47,55,71,0.3);
+
+  position: relative;
+  &:after {
+    content: "";
+    display: block;
+    padding-bottom: 100%;
+  }
+}
