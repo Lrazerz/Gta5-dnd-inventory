@@ -26,7 +26,7 @@
   .WeaponSquareContainer {
     height: 32.156%;
     width: 100%;
-    background: linear-gradient(90deg, transparent, rgba(44, 60, 97, 1));
+    background: linear-gradient(90deg, transparent 0%, transparent 10%, rgba(44, 60, 97, 1) 100%);
     box-sizing: border-box;
     border-top: 2px solid;
     border-bottom: 2px solid;
@@ -44,7 +44,7 @@
     overflow: visible;
 
     .LeftArrow {
-      //visibility: hidden;
+      visibility: hidden;
       width: 4.5%;
       height: 16%;
       background-color: rgba(47, 55, 71, 0.3);

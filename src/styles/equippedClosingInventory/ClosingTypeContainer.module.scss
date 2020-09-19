@@ -58,6 +58,7 @@
       border-image: linear-gradient(90deg, #3f76f3, transparent) 2;
 
       .Arrow {
+        visibility: 'hidden';
         height: 19%;
         width: 5.7%;
         background-color: rgba(47, 55, 71, 0.3);

@@ -90,13 +90,6 @@ const SquareCommonItem = ({coords: [x, y], item}) => {
       {imageElement}
     </CommonItem>
   )
-
-  return (
-    <CommonItem forwardedRef={drag} imageContainerForwardedRef={imageContainerRef}
-                imageUrl={item.imageUrl} connectPreview={preview}>
-      {imageElement}
-    </CommonItem>
-  )
 }
 
 

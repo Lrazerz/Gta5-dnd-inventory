@@ -18,22 +18,18 @@ const ClosingWeaponSquare = ({children, acceptedItemType, coords, itemId}) => {
   let isAllowDrop = !children;
 
   if (draggedItem) {
-    if (coords === 10) {
-      console.log('isAllowDrop', isAllowDrop);
-    }
-    if (coords === 10) {
-      console.log('id', itemId, 'dragged', draggedItem.id);
-    }
     isAllowDrop = !children || itemId === draggedItem.id;
-    if (coords === 10) {
-      console.log('isAllowDropdragged', isAllowDrop);
-    }
   }
 
   const [{isOver}, drop] = useDrop({
     accept: acceptedItemType,
     drop: (DNDItem, monitor) => {
       if (monitor.canDrop()) {
+        // if the same item
+        if(typeof draggedItem.mainCell === 'number' && draggedItem.mainCell === coords) {
+          return;
+        }
+        console.log('not return');
         // @ts-ignore
         if (DNDItem.isInventory) {
           dispatch(removeEquippedItem(draggedItem.mainCell));
@@ -43,7 +39,7 @@ const ClosingWeaponSquare = ({children, acceptedItemType, coords, itemId}) => {
         dispatch(setEquippedItem(coords));
       }
     },
-    canDrop: (item) => {
+    canDrop: () => {
       return isAllowDrop;
     },
     hover: () => {
@@ -53,12 +49,6 @@ const ClosingWeaponSquare = ({children, acceptedItemType, coords, itemId}) => {
       return {isOver: monitor.isOver({shallow: true})};
     }
   });
-
-  if (coords === 1) {
-    console.log('includes', WeaponItemTypes.includes(acceptedItemType));
-    console.log('accItemType', acceptedItemType);
-    console.log('weapTypes', WeaponItemTypes);
-  }
 
   const successColor = WeaponItemTypes.includes(acceptedItemType)
     ? `linear-gradient(90deg,transparent, ${theme.colors.success} 50%, transparent`

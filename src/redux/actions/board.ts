@@ -59,6 +59,15 @@ window.openInventory = openOrRefreshInventory;
 // @ts-ignore
 window.refreshInventory = openOrRefreshInventory;
 
+// @ts-ignore
+window.mp = async (item) => {
+  let asd = 1;
+  for(let i = 0; i < 1000000000; i++) {
+    asd = i;
+  }
+  console.log('mp works',item);
+}
+
 const _addItem = (squares, item: Item) => {
   return {type: SINGLE_ITEM_SQUARES_FILL, squares, item};
 }
@@ -73,18 +82,22 @@ const _removeItem = (coordsArr) => {
 
 // add item fetched from draggedItem
 const addItem = ([x, y]) => {
-  return (dispatch, getState) => {
+  return async (dispatch, getState) => {
     const {allHoveredSquares, xDown, yDown, item} = getState().draggedItem;
+    if(item.mainCell[0] === x - xDown && item.mainCell[1] === y - yDown) {
+      return;
+    }
     item.mainCell = [x - xDown, y - yDown];
 
-    dispatch(_addItem(allHoveredSquares, item));
-
-    const itemToServer = translateToServerItem(item);
+    await dispatch(_addItem(allHoveredSquares, item));
+    const itemToServer = translateToServerItem(item, false);
+    // console.log('trigger',itemToServer);
+    //@ts-ignore
+    // window.mp(item);
 
     // translate to Server Item
-    console.log('trigger item', itemToServer);
-    // mp.trigger(item);
-
+    // setTimeout(() => mp.trigger(itemToServer),0);
+    // mp.trigger(itemToServer);
   }
 }
 

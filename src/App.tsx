@@ -29,7 +29,6 @@ const App: React.FC = () => {
         </div>
         <EquippedWeaponsInventoryContainer />
       </div>
-      {/*<CustomDragLayer/>*/}
       <object type="image/svg+xml" data={leftSparksSvg} className={classes.LeftSparksSvgContainer}/>
       <object type="image/svg+xml" data={rightSparksSvg} className={classes.RightSparksSvgContainer}/>
     </DndProvider>

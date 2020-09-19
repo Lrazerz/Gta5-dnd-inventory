@@ -12,12 +12,12 @@ import {removeEquippedItem} from "../../redux/actions/equippedItems";
 
 const BoardSquare = ({coords: [x, y], children}) => {
   const [isOver, setIsOver] = useState(false);
+  // for simultaneously change overlay color
+  const [canDrop, setCanDrop] = useState(false);
 
-  const [hoveredSquare, allHoveredSquares, canDropRedux, item] =
+  const {hoveredSquare, allHoveredSquares, canDrop: canDropRedux, item, xDown, yDown} =
     // @ts-ignore - AppBoard does not exists on DefaultRootState
-    useSelector(({draggedItem}) =>
-      ([draggedItem.hoveredSquare, draggedItem.allHoveredSquares,
-        draggedItem.canDrop, draggedItem.item]));
+    useSelector(({draggedItem}) => draggedItem);
 
   const dispatch = useDispatch();
 
@@ -25,6 +25,11 @@ const BoardSquare = ({coords: [x, y], children}) => {
     accept: AllItemTypes,
     drop: (DNDItem, monitor) => {
       if (monitor.canDrop()) {
+        // if the same item
+        if(typeof item.mainCell === 'object' &&
+          item.mainCell[0] === x - xDown && item.mainCell[1] === y - yDown) {
+          return;
+        }
         // @ts-ignore
         if (DNDItem.isInventory) {
           dispatch(removeEquippedItem(item.mainCell));
@@ -55,13 +60,28 @@ const BoardSquare = ({coords: [x, y], children}) => {
     } else {
       setIsOver(false);
     }
+    setCanDrop(canDropRedux)
   }, [x, y, allHoveredSquares]);
 
+  let styles = {outline: `1px solid ${theme.colors.gray}`};
+
+  if (children) {
+    styles = null;
+  }
+  if (isOver) {
+    styles = {outline: `1px solid ${theme.colors.gray}`}
+  }
+
+  if(x === 4 && y === 0) {
+    // true && false === danger
+    console.log('boardSquare: isover', isOver, 'canDrop', canDropRedux);
+  }
+
   return (
-    <div ref={drop} className={classes.BoardSquare} style={children === null ? {outline: '1px solid #4d515a'} : null}>
+    <div ref={drop} className={classes.BoardSquare} style={styles}>
       <Square>{children}</Square>
-      {isOver && !canDropRedux && <Overlay color={theme.colors.danger}/>}
-      {isOver && canDropRedux && <Overlay color={theme.colors.success}/>}
+      {isOver && !canDrop && <Overlay color={theme.colors.danger}/>}
+      {isOver && canDrop && <Overlay color={theme.colors.success}/>}
     </div>
   )
 }
