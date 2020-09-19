@@ -1,20 +1,14 @@
 import React from 'react';
 import {useSelector} from 'react-redux';
-// @ts-ignore
 import classes from '../../styles/equippedClosingInventory/EquippedClosingInventoryContainer.module.scss';
 import AccessoriesTypeContainer from "./AccessoriesTypeContainer";
 import ClosingTypeContainer from "./ClosingTypeContainer";
-// @ts-ignore
 import capImage from '../../assets/images/equippedClosingInventory/cap.png';
-// @ts-ignore
 import hoodieImage from '../../assets/images/equippedClosingInventory/hoodie.png';
-// @ts-ignore
 import pantsImage from '../../assets/images/equippedClosingInventory/pants.png';
-// @ts-ignore
 import bootsImage from '../../assets/images/equippedClosingInventory/boots.png';
-// @ts-ignore
 import glassesImage from '../../assets/images/equippedClosingInventory/glasses.png';
-import UniqueServerDescription from "../../components/UI/UniqueServerDescription/UniqueServerDescription";
+import UniqueServerDescription from "../../components/UI/UniqueServerDescription";
 import {ItemTypes} from "../../constants/dnd/types";
 import {SingleCell} from "../equippedWeaponsInventory/EquippedWeaponsInventoryContainer";
 
@@ -47,7 +41,6 @@ const EquippedClosingInventoryContainer = () => {
     {id: 92, cell: equippedCells[92]},
     {id: 93, cell: equippedCells[92]},
   ];
-
 
   return (
     <div className={classes.EquippedClosingInventoryContainer}>

@@ -1,5 +1,4 @@
 import React from 'react';
-// @ts-ignore
 import classes from '../../styles/layout/LeadText.module.scss';
 
 const LeadText = ({children, styles={}}) => {

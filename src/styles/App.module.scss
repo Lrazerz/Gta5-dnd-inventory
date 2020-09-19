@@ -28,5 +28,35 @@
   }
 }
 
+.LeftSparksSvgContainer {
+  position: absolute;
+  width: 44.375%;
+  height: 13.148%;
+  //background-color: red;
+  z-index: -100;
+  bottom: 0;
+  left: 0;
+}
+
+.LeftSparksSvgContainer {
+  position: absolute;
+  width: 44.375%;
+  height: 13.148%;
+  //background-color: red;
+  z-index: 0;
+  bottom: 0;
+  right: 0;
+}
+
+.RightSparksSvgContainer {
+  position: absolute;
+  width: 44.375%;
+  height: 13.148%;
+  //background-color: red;
+  z-index: 0;
+  bottom: 0;
+  right: 0;
+}
+
 
 

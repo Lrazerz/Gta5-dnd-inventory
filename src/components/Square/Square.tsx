@@ -1,5 +1,4 @@
 import React from 'react'
-// @ts-ignore
 import classes from '../../styles/board/Square.module.scss';
 
 interface Props {

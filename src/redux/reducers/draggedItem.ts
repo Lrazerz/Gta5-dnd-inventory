@@ -4,10 +4,9 @@ import {
   HOVERED_SQUARES_SET,
   HOVERED_SQUARES_REMOVE
 } from "../actions/types";
-import Item from "../../models/Item";
 
 interface State {
-  item: Item | null;
+  item: any;
 
   xUp: number | null;
   xDown: number | null;

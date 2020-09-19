@@ -1,5 +1,4 @@
 import React from 'react';
-// @ts-ignore
 import classes from '../../styles/equippedWeaponsInventory/EquippedWeaponsInventoryContainer.module.scss';
 import WeaponTypeContainer from "./WeaponTypeContainer";
 import PhoneAndSimContainer from "./PhoneAndSimContainer";
@@ -23,17 +22,17 @@ const EquippedWeaponsInventoryContainer = () => {
 
   // accepted types
   const primaryWeaponAcceptedTypes = {
-    mainSquareType: ItemTypes.WEAPON,
+    mainSquareType: ItemTypes.WEAPON_RIFLE,
     ammoType: ItemTypes.AMMO,
     toolsType: ItemTypes.TOOLS,
   }
   const pistolAcceptedTypes = {
-    mainSquareType: ItemTypes.WEAPON,
+    mainSquareType: ItemTypes.WEAPON_PISTOL,
     ammoType: ItemTypes.AMMO,
     toolsType: ItemTypes.TOOLS,
   }
   const heavyWeaponAcceptedTypes = {
-    mainSquareType: ItemTypes.WEAPON,
+    mainSquareType: ItemTypes.WEAPON_LAUNCHER,
     ammoType: ItemTypes.AMMO,
     toolsType: ItemTypes.TOOLS,
   }
@@ -63,11 +62,11 @@ const EquippedWeaponsInventoryContainer = () => {
   return (
     <div className={classes.EquippedWeaponsInventoryContainer}>
       <WeaponTypeContainer typeTitle={'Основное Оружие'} acceptedTypes={primaryWeaponAcceptedTypes}
-                            cells={primaryWeaponCells}/>
+                           cells={primaryWeaponCells}/>
       <WeaponTypeContainer typeTitle={'Пистолет'} acceptedTypes={pistolAcceptedTypes}
-                            cells={secondaryWeaponCells}/>
+                           cells={secondaryWeaponCells}/>
       <WeaponTypeContainer typeTitle={'Тяжелое Оружие'} acceptedTypes={heavyWeaponAcceptedTypes}
-                            cells={heavyWeaponCells}/>
+                           cells={heavyWeaponCells}/>
       <PhoneAndSimContainer phoneType={ItemTypes.PHONE} simType={ItemTypes.SIM_CARD}
                             phoneCell={phoneCell} simCell={simCell}/>
     </div>

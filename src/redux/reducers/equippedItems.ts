@@ -2,7 +2,6 @@ import {
   EQUIPPED_ITEM_SET,
   EQUIPPED_ITEM_REMOVE, EQUIPPED_ITEMS_SET
 } from "../actions/types";
-import {ItemTypes} from "../../constants/dnd/types";
 import EquippedItemsCell from "../../models/EquippedItemsCell";
 
 // cells[x] - {item: null | Item}

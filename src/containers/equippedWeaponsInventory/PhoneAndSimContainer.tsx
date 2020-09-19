@@ -1,10 +1,8 @@
 import React from 'react';
-//@ts-ignore
 import classes from '../../styles/equippedWeaponsInventory/PhoneAndSimContainer.module.scss';
-// @ts-ignore
 import standardClasses from '../../styles/equippedWeaponsInventory/WeaponTypeContainer.module.scss';
 import LeadText from "../../components/layout/LeadText";
-import ClosingSquare from "../../components/equippedClosingInventory/ClosingSquare";
+import ClosingWeaponSquare from "../../components/equippedClosingInventory/ClosingWeaponSquare";
 import SquareEquippedItem from "../equippedClosingInventory/SquareEquippedItem";
 import {SingleCell} from './EquippedWeaponsInventoryContainer';
 
@@ -26,31 +24,33 @@ const PhoneAndSimContainer = ({phoneType, simType, phoneCell, simCell}: Props) =
     <div className={classes.PhoneAndSimContainer}>
       <div className={standardClasses.MainContent}>
         <div className={classes.TypeAndWeaponTitle}>
-            <div className={standardClasses.TypeTitleText}>
-              <LeadText styles={{textAlign: 'right'}}>ТЕЛЕФОН И СИМКАРТА</LeadText>
-            </div>
+          <div className={standardClasses.TypeTitleText}>
+            <LeadText styles={{textAlign: 'right'}}>ТЕЛЕФОН И СИМКАРТА</LeadText>
           </div>
+        </div>
         <div className={classes.WeaponSquareContainer}>
           <div className={classes.SquaresContainer}>
             <div className={classes.CirclesWrapper}>
               <div className={classes.Circle}>
-                <ClosingSquare acceptedItemType={phoneType} coords={phoneCell.id}>
+                <ClosingWeaponSquare acceptedItemType={phoneType} coords={phoneCell.id}
+                                     itemId={phoneCell.cell.item && phoneCell.cell.item.id}>
                   {phoneSquareContent}
-                </ClosingSquare>
+                </ClosingWeaponSquare>
               </div>
               <div className={classes.Circle}>
-                <ClosingSquare acceptedItemType={simType} coords={simCell.id}>
+                <ClosingWeaponSquare acceptedItemType={simType} coords={simCell.id}
+                                     itemId={simCell.cell.item && simCell.cell.item.id}>
                   {simSquareContent}
-                </ClosingSquare>
+                </ClosingWeaponSquare>
               </div>
             </div>
           </div>
         </div>
       </div>
       <div className={classes.UIBordersContainer}>
-          <div className={classes.UIBorders}>
-            <div className={classes.ClippedElement} />
-          </div>
+        <div className={classes.UIBorders}>
+          <div className={classes.ClippedElement}/>
+        </div>
       </div>
     </div>
   );

@@ -3,11 +3,6 @@ import {useDrag} from 'react-dnd';
 import {useDispatch} from "react-redux";
 import {addDraggedItem, draggedItemRelease} from "../../redux/actions/draggedItem";
 import CommonItem from "../../components/items/CommonItem/CommonItem";
-import {removeEquippedItem} from "../../redux/actions/equippedItems";
-// @ts-ignore
-import {ItemTypes} from '../../constants/dnd/types.ts';
-import {removeItem} from "../../redux/actions/board";
-// @ts-ignore
 import classes from '../../styles/board/SquareCommonItem.module.scss';
 import SecondaryText from "../../components/layout/SecondaryText";
 
@@ -23,7 +18,7 @@ const SquareCommonItem = ({coords: [x, y], item}) => {
     begin() {
       dispatch(addDraggedItem([x, y], item));
     },
-    end(DNDItem, monitor) {
+    end() {
       dispatch(draggedItemRelease());
     },
     collect: () => {
@@ -32,8 +27,6 @@ const SquareCommonItem = ({coords: [x, y], item}) => {
   });
 
   const imageContainerRef = useRef();
-  // @ts-ignore
-
   useEffect(() => {
     // Handler to call on window resize
     function handleResize() {
@@ -67,6 +60,7 @@ const SquareCommonItem = ({coords: [x, y], item}) => {
   let imageElement = null;
 
   if (x === item.mainCell[0] && y === item.mainCell[1]) {
+
     let currentCountText = null;
 
     if (item.currentCount > 1) {
@@ -92,7 +86,14 @@ const SquareCommonItem = ({coords: [x, y], item}) => {
   // image inside commonItem and pos absolute ofc
   return (
     <CommonItem forwardedRef={drag} imageContainerForwardedRef={imageContainerRef}
-    connectPreview={preview} imageUrl={item.imageUrl}>
+                connectPreview={preview} imageUrl={item.imageUrl}>
+      {imageElement}
+    </CommonItem>
+  )
+
+  return (
+    <CommonItem forwardedRef={drag} imageContainerForwardedRef={imageContainerRef}
+                imageUrl={item.imageUrl} connectPreview={preview}>
       {imageElement}
     </CommonItem>
   )

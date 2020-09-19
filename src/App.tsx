@@ -2,13 +2,17 @@ import React from 'react';
 import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
 import AppBoard from "./containers/AppBoard/AppBoard";
-import Alert from "./components/layout/Alert/Alert";
 // @ts-ignore
 import classes from './styles/App.module.scss';
 import EquippedClosingInventoryContainer
   from "./containers/equippedClosingInventory/EquippedClosingInventoryContainer";
 import EquippedWeaponsInventoryContainer from "./containers/equippedWeaponsInventory/EquippedWeaponsInventoryContainer";
 import SecondaryText from "./components/layout/SecondaryText";
+// @ts-ignore
+import leftSparksSvg from "./assets/images/UI/left-sparks.svg";
+// @ts-ignore
+import rightSparksSvg from "./assets/images/UI/right-sparks.svg";
+import CustomDragLayer from "./components/items/CustomDragLayer";
 
 const App: React.FC = () => {
   return (
@@ -19,13 +23,15 @@ const App: React.FC = () => {
         </SecondaryText>
       </div>
       <div className={classes.App}>
-        <Alert/>
         <EquippedClosingInventoryContainer/>
         <div className={classes.BoardContainer}>
           <AppBoard/>
         </div>
         <EquippedWeaponsInventoryContainer />
       </div>
+      {/*<CustomDragLayer/>*/}
+      <object type="image/svg+xml" data={leftSparksSvg} className={classes.LeftSparksSvgContainer}/>
+      <object type="image/svg+xml" data={rightSparksSvg} className={classes.RightSparksSvgContainer}/>
     </DndProvider>
   );
 }

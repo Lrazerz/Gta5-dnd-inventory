@@ -1,7 +1,7 @@
 import React from 'react';
 // @ts-ignore
 import classes from '../../styles/equippedClosingInventory/ClosingTypeContainer.module.scss';
-import ClosingSquare from "../../components/equippedClosingInventory/ClosingSquare";
+import ClosingWeaponSquare from "../../components/equippedClosingInventory/ClosingWeaponSquare";
 import Octagon from "../../components/equippedClosingInventory/Octagon";
 import LeadText from "../../components/layout/LeadText";
 import SquareEquippedItem from "./SquareEquippedItem";
@@ -17,9 +17,10 @@ const ClosingTypeContainer = ({typeTitle, typeImage, acceptedType, cells}) => {
 
     return (
       <Octagon key={id}>
-        <ClosingSquare acceptedItemType={acceptedType} coords={id}>
+        <ClosingWeaponSquare acceptedItemType={acceptedType} coords={id}
+                             itemId={cell.item && cell.item.id}>
           {squareContent}
-        </ClosingSquare>
+        </ClosingWeaponSquare>
       </Octagon>
     )
   });
@@ -27,9 +28,7 @@ const ClosingTypeContainer = ({typeTitle, typeImage, acceptedType, cells}) => {
   return (
     <div className={classes.ClosingTypeContainer}>
       <div className={classes.UIBorderContainer}>
-        <div className={classes.UIBorder}>
-          <div className={classes.ClippedElement} />
-        </div>
+        <div className={classes.UIBorder}/>
       </div>
       <div className={classes.MainContent}>
         <div className={classes.TitleContainer}>

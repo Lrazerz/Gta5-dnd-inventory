@@ -1,7 +1,10 @@
+import {ItemCategories} from "../constants/dnd/categories";
+
 export default class Item {
+  public id: string;
   public name: string;
   // smth like itemType
-  public category: string;
+  public category: ItemCategories;
 
   // [x,y] (PosNumberLeftAngle on server (1-102))
   // x from 0 to 16, y from 0 to 5
@@ -22,8 +25,11 @@ export default class Item {
 
   public imageUrl: string | null;
 
-  constructor(name: string, category: string, mainCell: [number,number], width: number, height: number,
-              currentCount: number, imageUrl: string | null) {
+  public rest: any;
+
+  constructor(id: string, name: string, category: ItemCategories, mainCell: [number, number], width: number, height: number,
+              currentCount: number, imageUrl: string | null, rest: any) {
+    this.id = id;
     this.name = name;
     this.category = category;
     this.mainCell = mainCell;
@@ -31,5 +37,6 @@ export default class Item {
     this.height = height;
     this.currentCount = currentCount;
     this.imageUrl = imageUrl;
+    this.rest = rest;
   }
 }

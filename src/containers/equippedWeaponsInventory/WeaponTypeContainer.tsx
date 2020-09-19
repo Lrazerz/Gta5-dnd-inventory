@@ -1,8 +1,7 @@
 import React from 'react';
-// @ts-ignore
 import classes from '../../styles/equippedWeaponsInventory/WeaponTypeContainer.module.scss';
 import Octagon from "../../components/equippedClosingInventory/Octagon";
-import ClosingSquare from "../../components/equippedClosingInventory/ClosingSquare";
+import ClosingWeaponSquare from "../../components/equippedClosingInventory/ClosingWeaponSquare";
 import LeadText from "../../components/layout/LeadText";
 import SecondaryText from "../../components/layout/SecondaryText";
 import {WeaponTypeContainerCells} from './EquippedWeaponsInventoryContainer';
@@ -38,9 +37,10 @@ const WeaponTypeContainer = ({typeTitle, acceptedTypes, cells}: Props) => {
 
     return (
       <Octagon key={toolsCell.id} width={'19.85%'}>
-        <ClosingSquare acceptedItemType={toolsType} coords={toolsCell.id}>
+        <ClosingWeaponSquare acceptedItemType={toolsType} coords={toolsCell.id}
+                             itemId={toolsCell.cell.item && toolsCell.cell.item.id}>
           {toolsSquareContent}
-        </ClosingSquare>
+        </ClosingWeaponSquare>
       </Octagon>
     );
   });
@@ -55,16 +55,19 @@ const WeaponTypeContainer = ({typeTitle, acceptedTypes, cells}: Props) => {
           </SecondaryText>
         </div>
         <div className={classes.WeaponSquareContainer}>
-          <ClosingSquare acceptedItemType={mainSquareType} coords={weaponCell.id}>
+          <ClosingWeaponSquare acceptedItemType={mainSquareType}
+                               coords={weaponCell.id}
+                               itemId={weaponCell.cell.item && weaponCell.cell.item.id}>
             {weaponSquareContent}
-          </ClosingSquare>
+          </ClosingWeaponSquare>
         </div>
         <div className={classes.AttachmentsSquaresContainer}>
           <div className={classes.LeftArrow}/>
           <Octagon width={'19.85%'}>
-            <ClosingSquare acceptedItemType={ammoType} coords={ammoCell.id}>
+            <ClosingWeaponSquare acceptedItemType={ammoType} coords={ammoCell.id}
+                                 itemId={ammoCell.cell.item && ammoCell.cell.item.id}>
               {ammoSquareContent}
-            </ClosingSquare>
+            </ClosingWeaponSquare>
           </Octagon>
           {toolsSquares}
         </div>

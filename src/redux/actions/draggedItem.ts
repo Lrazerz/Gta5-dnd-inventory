@@ -1,6 +1,5 @@
 import {DRAGGED_ITEM_SET, HOVERED_SQUARES_SET, HOVERED_SQUARES_REMOVE, DRAGGED_ITEM_RELEASE} from "./types";
 import {xMin, xMax, yMin, yMax} from "../../constants/boardDimensions";
-import Item from "../../models/Item";
 
 const _addDraggedItem = (item, xUp, xDown, yUp, yDown) => {
   return {type: DRAGGED_ITEM_SET, item, xUp, xDown, yUp, yDown};
@@ -18,11 +17,11 @@ const removeHoveredSquares = () => {
   return {type: HOVERED_SQUARES_REMOVE};
 }
 
-const addDraggedItem = ([x, y], item: Item, fromInventory = false) => {
+const addDraggedItem = ([x, y], item, fromInventory = false) => {
   return dispatch => {
     let xUp, yUp, xDown, yDown;
 
-    if(!fromInventory) {
+    if (!fromInventory) {
       const [mainCellX, mainCellY] = item.mainCell;
       // Maximum X and Y for given item (border)
       const xMax = mainCellX + item.width - 1;
@@ -41,17 +40,16 @@ const addDraggedItem = ([x, y], item: Item, fromInventory = false) => {
       // set hovered squares
       const hoveredSquares = [];
 
-      for(let i = x - xDown; i <= x + xUp; i++) {
-        for(let j = y - yDown; j <= y + yUp; j++) {
-          hoveredSquares.push([i,j]);
+      for (let i = x - xDown; i <= x + xUp; i++) {
+        for (let j = y - yDown; j <= y + yUp; j++) {
+          hoveredSquares.push([i, j]);
         }
       }
 
       dispatch(_addDraggedItem(item, xUp, xDown, yUp, yDown));
 
-      dispatch(_setHoveredSquares([x,y],hoveredSquares,true));
-    }
-    else {
+      dispatch(_setHoveredSquares([x, y], hoveredSquares, true));
+    } else {
       xUp = item.width - 1;
       yUp = item.height - 1;
       xDown = 0;
@@ -68,8 +66,8 @@ const setHoveredSquares = ([x, y]) => {
 
     let mainCell = item.mainCell;
 
-    if(typeof item.mainCell === 'number') {
-      mainCell = [x,y];
+    if (typeof item.mainCell === 'number') {
+      mainCell = [x, y];
     }
 
     const allHoveredSquares = [];
@@ -90,9 +88,9 @@ const setHoveredSquares = ([x, y]) => {
             canDrop = false;
           } else if (hoveredX === i && hoveredY === j) {
             if (board[j][i] !== null) {
-              if(mainCell) {
+              if (mainCell) {
                 // if item came from equipped and has no mainCell
-                if(hoveredX < mainCell[0] || hoveredX > mainCell[0] + item.width - 1
+                if (hoveredX < mainCell[0] || hoveredX > mainCell[0] + item.width - 1
                   || hoveredY < mainCell[1] || hoveredY > mainCell[1] + item.height - 1) {
                   // if hovered square exists outside prev item location,
                   // because we can drag big items on 1 square

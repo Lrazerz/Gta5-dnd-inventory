@@ -11,16 +11,27 @@
     .LogoContainer {
       height: 100%;
       width: 38.77%;
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
+
+      .ImageWrapper {
+        max-width: 70%;
+        margin-right: 0;
+        margin-left: auto;
+        margin-top: 20%;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        .Image {
+          width: 100%;
+          max-width: 53px;
+        }
+      }
     }
 
     .TextContainer {
       flex-grow: 1;
       display: flex;
       flex-direction: column;
-      justify-content: flex-end;
+      justify-content: center;
       align-items: flex-start;
 
       .ServerDescription {

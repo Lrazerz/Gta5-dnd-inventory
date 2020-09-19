@@ -1,5 +1,4 @@
 import React from 'react';
-// @ts-ignore
 import classes from '../../styles/equippedClosingInventory/Octagon.module.scss';
 
 const Octagon = ({children, width='26%'}) => {

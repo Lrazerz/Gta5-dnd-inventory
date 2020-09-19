@@ -1,13 +1,25 @@
 // true types (coz bugs with item.types)
 export enum ItemCategories {
-  'weapon',
+  // Standardized
+  'weapon_rifle',
+  'weapon_pistol',
+  'weapon_launcher',
+
   'ammo',
-  'tools',
+
+  'drug_light',
+  'drug_hard',
+  'eat',
+
+  // Not standardized
+
   'headdress',
   'outerwear',
   'pants',
   'shoes',
   'accessories',
+
+  'tools',
+  'sim_card',
   'phone',
-  'sim'
 }

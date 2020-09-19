@@ -1,5 +1,4 @@
 import React from 'react';
-// @ts-ignore
 import classes from '../../../styles/CommonItem.module.scss';
 import {DragPreviewImage} from "react-dnd";
 

@@ -26,6 +26,7 @@
   },
   "include": [
     "./index.tsx",
-    "./webpack.config.js"
+    "./webpack.config.js",
+    "./declarations.d.ts"
   ]
 }
