@@ -14,7 +14,7 @@ import {WeaponItemTypes} from "../../constants/dnd/types";
 const ClosingWeaponSquare = ({children, acceptedItemType, coords, itemId}) => {
   const dispatch = useDispatch();
 
-  const draggedItem = useSelector(({draggedItem}) => draggedItem.item);
+  const {item: draggedItem, allHoveredSquares} = useSelector(({draggedItem}) => draggedItem);
   let isAllowDrop = !children;
 
   if (draggedItem) {
@@ -29,7 +29,6 @@ const ClosingWeaponSquare = ({children, acceptedItemType, coords, itemId}) => {
         if(typeof draggedItem.mainCell === 'number' && draggedItem.mainCell === coords) {
           return;
         }
-        console.log('not return');
         // @ts-ignore
         if (DNDItem.isInventory) {
           dispatch(removeEquippedItem(draggedItem.mainCell));
@@ -43,7 +42,9 @@ const ClosingWeaponSquare = ({children, acceptedItemType, coords, itemId}) => {
       return isAllowDrop;
     },
     hover: () => {
-      dispatch(removeHoveredSquares());
+      if(allHoveredSquares) {
+        dispatch(removeHoveredSquares());
+      }
     },
     collect: (monitor) => {
       return {isOver: monitor.isOver({shallow: true})};

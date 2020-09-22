@@ -5,9 +5,6 @@ import {
 import EquippedItemsCell from "../../models/EquippedItemsCell";
 
 // cells[x] - {item: null | Item}
-const initialState = {
-  cells: [],
-}
 
 const fillInitialState = () => {
   const cells = [];

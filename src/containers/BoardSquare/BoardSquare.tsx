@@ -9,6 +9,7 @@ import {setHoveredSquares} from "../../redux/actions/draggedItem";
 import classes from '../../styles/board/BoardSquare.module.scss';
 import theme from "../../constants/css/theme";
 import {removeEquippedItem} from "../../redux/actions/equippedItems";
+import {translateToServerItem} from "../../utils/translateToServerItem";
 
 const BoardSquare = ({coords: [x, y], children}) => {
   const [isOver, setIsOver] = useState(false);
@@ -72,10 +73,10 @@ const BoardSquare = ({coords: [x, y], children}) => {
     styles = {outline: `1px solid ${theme.colors.gray}`}
   }
 
-  if(x === 4 && y === 0) {
-    // true && false === danger
-    console.log('boardSquare: isover', isOver, 'canDrop', canDropRedux);
-  }
+  // if(x === 4 && y === 0) {
+  //   // true && false === danger
+  //   console.log('boardSquare: isover', isOver, 'canDrop', canDropRedux);
+  // }
 
   return (
     <div ref={drop} className={classes.BoardSquare} style={styles}>

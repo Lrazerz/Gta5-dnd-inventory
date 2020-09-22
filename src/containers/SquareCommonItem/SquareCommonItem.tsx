@@ -21,7 +21,7 @@ const SquareCommonItem = ({coords: [x, y], item}) => {
     end() {
       dispatch(draggedItemRelease());
     },
-    collect: () => {
+    collect: (monitor) => {
       return ({});
     }
   });
@@ -83,10 +83,38 @@ const SquareCommonItem = ({coords: [x, y], item}) => {
     );
   }
 
-  // image inside commonItem and pos absolute ofc
+  let [resultDataUri, setResultDataUri] = useState(null);
+
+  useEffect(() => {
+    function imageToDataUri(img, width, height) {
+
+      // create an off-screen canvas
+      let canvas = document.createElement('canvas'),
+        ctx = canvas.getContext('2d');
+
+      // set its dimension to target size
+      canvas.width = width;
+      canvas.height = height;
+
+      // draw source image into the off-screen canvas:
+      ctx.drawImage(img, 0, 0, width, height);
+
+      // encode image to data-uri with base64 version of compressed image
+      return canvas.toDataURL();
+    }
+
+    const resizeImage = () => {
+      setResultDataUri(imageToDataUri(newImage, imageWidth, imageHeight));
+    }
+    const newImage = new Image();
+    newImage.onload = resizeImage;
+    newImage.src = item.imageUrl;
+
+  }, [item, imageWidth, imageHeight]);
+
   return (
-    <CommonItem forwardedRef={drag} imageContainerForwardedRef={imageContainerRef}
-                connectPreview={preview} imageUrl={item.imageUrl}>
+    <CommonItem forwardedRef={drag} imageContainerForwardedRef={imageContainerRef} connectPreview={preview}
+                imageUrl={resultDataUri ? resultDataUri : null}>
       {imageElement}
     </CommonItem>
   )

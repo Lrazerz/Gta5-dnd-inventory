@@ -3,287 +3,69 @@
 .ClosingTypeContainer {
   height: 15%;
   width: 100%;
-  display: flex;
-  flex-direction: row;
-  align-items: flex-end;
-  overflow: hidden;
+  //display: flex;
+  //flex-direction: row;
+  //align-items: flex-end;
+  padding-right: 14%;
 
-  .UIBorderContainer {
-    width: 20.92%;
-    height: 100%;
-    position: relative;
-    .UIBorder {
-      position: absolute;
-      width: 100%;
-      height: 62.194%;
-      top: 15%;
-      border-top: 3px solid #3f76f3;
-      //clip-path: polygon(0 0, 87% 0, 100% 10%, 100% 100%, 0 100%);
-      clip-path: polygon(0 0, 87% 0, 100% 10%, 100% 100%, 0 100%);
-      &:before {
-        content: '';
-        position: absolute;
-        width: 27%;
-        height: 20%;
-        right: 10%;
-        top: -1%;
-        transform: rotate(59deg);
-        border-top: 3px solid #3f76f3;
-      }
-    }
+  .TitleContainer {
+    width: 100%;
+    padding-left: 22.75%;
+    height: 10%;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
   }
 
-  .MainContent {
-    flex-grow: 1;
-    height: 100%;
+  .Borders {
+    height: 9.15%;
+    width: 83%;
+    background: linear-gradient(90deg, #3f76f3 30%, transparent 70%);
+    clip-path: polygon(0 0, 20.657% 0, 25.5% 84.615%, 100% 84.615%, 100% 100%, 25% 100%, 20.357% 23.077%, 0% 23.077%);
+  }
 
-    .TitleContainer {
-      width: 96%;
-      display: flex;
-      align-items: center;
-      height: 25%;
+  .SquaresContainer {
+    width: 66.4%;
+    margin-left: 20.92%;
+    margin-right: 14%;
+    height: 74.4%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    box-sizing: border-box;
+    overflow: visible;
+
+    .Arrow {
+      visibility: hidden;
+      height: 19%;
+      width: 5.7%;
+      background-color: rgba(47, 55, 71, 0.3);
+      clip-path: polygon(0 0, 100% 50%, 0 100%);
     }
 
-    .SquaresContainer {
-      width: 83%;
-      height: 74.4%;
-      margin-right: 14%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      position: relative;
-      box-sizing: border-box;
-      border-top: 2px solid;
-      overflow: visible;
-      border-image: linear-gradient(90deg, #3f76f3, transparent) 2;
-
-      .Arrow {
-        visibility: 'hidden';
-        height: 19%;
-        width: 5.7%;
-        background-color: rgba(47, 55, 71, 0.3);
-        clip-path: polygon(0 0, 100% 50%, 0 100%);
-      }
-
-      @media (min-width: theme.$breakpoint-xl) {
-        border-top: 3px solid;
-        border-image: linear-gradient(93deg, #3f76f3, transparent) 3;
-        &:before {
-          border-top: 3px solid #3f76f3;
-        }
-        &:after {
-          border-top: 3px solid #3f76f3;
-        }
-      }
-    }
   }
 }
 
 @media (min-aspect-ratio: theme.$aspect-ratio-5x4) {
-  .ClosingTypeContainer {
-    .UIBorderContainer {
-      .UIBorder {
-        clip-path: polygon(0 0, 77% 0, 100% 8%, 100% 100%, 0 100%);
-        height: 62.194%;
-        top: 19%;
-        &:before {
-          width: 52%;
-          right: -3%;
-          top: -1%;
-          transform: rotate(38deg);
-        }
-      }
-    }
-    .MainContent {
-      .SquaresContainer {
-        height: 60%;
-      }
-    }
-  }
-}
-
-@media (min-aspect-ratio: theme.$aspect-ratio-4x3) {
-  .ClosingTypeContainer {
-    .UIBorderContainer {
-      .UIBorder {
-        clip-path: polygon(0 0, 75% 0, 100% 9%, 100% 100%, 0 100%);
-        top: 19%;
-        &:before {
-          width: 39%;
-          right: 8%;
-          top: -4%;
-          transform: rotate(35deg);
-        }
-      }
-    }
-    .MainContent {
-      .TitleContainer {
-        .ImageContainer {
-          margin-bottom: 3px;
-        }
-      }
-    }
-
-    @media (min-width: 1500px) {
-      .MainContent {
-        .TitleContainer {
-          .TitleText {
-            font-size: 16px;
-            line-height: 20px;
-          }
-          .ImageContainer {
-            margin-bottom: 0px;
-          }
-        }
-      }
-      .UIBorderContainer {
-        .UIBorder {
-          clip-path: polygon(0 0, 80% 0, 100% 6%, 100% 100%, 0 100%);
-          &:before {
-            width: 40%;
-            right: 3%;
-            top: -2%;
-            transform: rotate(42deg);
-          }
-        }
-      }
-    }
+  .TitleContainer {
+    margin-bottom: -1%;
   }
 }
 
 @media (min-aspect-ratio: theme.$aspect-ratio-3x2) {
-  .ClosingTypeContainer {
-    .UIBorderContainer {
-      .UIBorder {
-        clip-path: polygon(0 0, 79% 0, 100% 6%, 100% 100%, 0 100%);
-        &:before {
-          width: 45%;
-          right: 5%;
-          top: -3%;
-          transform: rotate(38deg);
-        }
-      }
-    }
-    @media (min-width: 2500px) {
-      .UIBorderContainer {
-        .UIBorder {
-          clip-path: polygon(0 0, 77% 0, 100% 6%, 100% 100%, 0 100%);
-          &:before {
-            width: 45%;
-            right: 5%;
-            top: -2%;
-            transform: rotate(35deg);
-          }
-        }
-      }
-    }
+  .TitleContainer {
+    margin-bottom: -3%;
   }
 }
 
 @media (min-aspect-ratio: theme.$aspect-ratio-16x10) {
-  .ClosingTypeContainer {
-    .UIBorderContainer {
-      .UIBorder {
-        clip-path: polygon(0 0, 80% 0, 100% 8%, 100% 100%, 0 100%);
-        &:before {
-          width: 32%;
-          right: 6%;
-          top: -3%;
-          transform: rotate(36deg);
-        }
-      }
-    }
+  .TitleContainer {
+    margin-bottom: 0;
   }
   @media (min-width: 1900px) {
-    .ClosingTypeContainer {
-      .UIBorderContainer {
-        .UIBorder {
-          clip-path: polygon(0 0, 83% 0, 100% 8%, 100% 100%, 0 100%);
-          &:before {
-            width: 32%;
-            right: 3%;
-            top: -1%;
-            transform: rotate(40deg);
-          }
-        }
-      }
-    }
-  }
-}
-
-@media (min-aspect-ratio: theme.$aspect-ratio-16x9) {
-  .ClosingTypeContainer {
-    .UIBorderContainer {
-      .UIBorder {
-        clip-path: polygon(0 0, 78% 0, 100% 7%, 100% 100%, 0 100%);
-        top: 18%;
-        &:before {
-          width: 40%;
-          right: 4%;
-          top: -4.1%;
-          transform: rotate(37deg);
-        }
-      }
-    }
-  }
-  @media (min-width: 1900px) {
-    .ClosingTypeContainer {
-      .UIBorderContainer {
-        .UIBorder {
-          clip-path: polygon(0 0, 80% 0, 100% 8%, 100% 100%, 0 100%);
-          &:before {
-            width: 32%;
-            right: 5%;
-            top: -1%;
-            transform: rotate(38deg);
-          }
-        }
-      }
-    }
-  }
-}
-
-@media (min-aspect-ratio: theme.$aspect-ratio-17x9) and (min-width: 3800px) {
-  .ClosingTypeContainer {
-    .UIBorderContainer {
-      .UIBorder {
-        border-top: 4px solid #3f76f3;
-        clip-path: polygon(0 0, 81% 0, 100% 8%, 100% 100%, 0 100%);
-        top: 17%;
-        &:before {
-          width: 35%;
-          right: 4%;
-          top: -1%;
-          transform: rotate(42deg);
-          border-top: 4px solid #3f76f3;
-        }
-      }
-    }
-    .SquaresContainer {
-      border-top: 4px solid !important;
-    }
-  }
-}
-
-// for 3840x2160
-@media (max-aspect-ratio: theme.$aspect-ratio-17x9) and (min-width: 3800px) {
-  .ClosingTypeContainer {
-    .UIBorderContainer {
-      .UIBorder {
-        border-top: 4px solid #3f76f3;
-        clip-path: polygon(0 0, 81.5% 0, 100% 8%, 100% 100%, 0 100%);
-        top: 17.5%;
-        &:before {
-          width: 35%;
-          right: 4%;
-          top: -1%;
-          transform: rotate(42deg);
-          border-top: 4px solid #3f76f3;
-        }
-      }
-    }
-    .SquaresContainer {
-      border-top: 4px solid !important;
+    .TitleContainer {
+      margin-bottom: -2%;
     }
   }
 }

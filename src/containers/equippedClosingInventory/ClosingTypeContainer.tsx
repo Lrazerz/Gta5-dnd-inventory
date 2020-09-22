@@ -27,22 +27,18 @@ const ClosingTypeContainer = ({typeTitle, typeImage, acceptedType, cells}) => {
 
   return (
     <div className={classes.ClosingTypeContainer}>
-      <div className={classes.UIBorderContainer}>
-        <div className={classes.UIBorder}/>
+      <div className={classes.TitleContainer}>
+        <div className={classes.ImageContainer}>
+          <img src={typeImage}/>
+        </div>
+        <LeadText>
+          &nbsp;{typeTitle.toUpperCase()}
+        </LeadText>
       </div>
-      <div className={classes.MainContent}>
-        <div className={classes.TitleContainer}>
-          <div className={classes.ImageContainer}>
-            <img src={typeImage}/>
-          </div>
-          <LeadText>
-            &nbsp;{typeTitle.toUpperCase()}
-          </LeadText>
-        </div>
-        <div className={classes.SquaresContainer}>
-          {squaresContent}
-          <div className={classes.Arrow}/>
-        </div>
+      <div className={classes.Borders}/>
+      <div className={classes.SquaresContainer}>
+        {squaresContent}
+        <div className={classes.Arrow}/>
       </div>
     </div>
   );

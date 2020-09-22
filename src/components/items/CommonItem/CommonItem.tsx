@@ -7,7 +7,7 @@ interface Props {
   forwardedRef: React.Ref<any>;
   imageContainerForwardedRef: React.Ref<any>;
   connectPreview: any;
-  imageUrl: string;
+  imageUrl: any;
 }
 
 const CommonItem: React.FC<Props> = ({
@@ -16,7 +16,7 @@ const CommonItem: React.FC<Props> = ({
                                      }) => {
   return (
     <>
-      <DragPreviewImage connect={connectPreview} src={imageUrl}/>
+      {imageUrl && <DragPreviewImage connect={connectPreview} src={imageUrl}/>}
       <div ref={forwardedRef} className={classes.CommonItem}>
         <div ref={imageContainerForwardedRef} className={classes.ImageContainer}>
           {children}

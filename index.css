@@ -2,11 +2,14 @@ html, body, #root {
     height: 100%;
 }
 
+body * {
+    cursor: default !important;
+}
+
 #root {
-    /*background: rgba(91,90,70,0.5);*/
     overflow: hidden;
     background-image: url("./src/assets/images/UI/root-background.png");
-    object-fit: fill;
+    background-size: cover;
 }
 
 @font-face {

@@ -1,6 +1,4 @@
 import React from 'react';
-import {DndProvider} from 'react-dnd';
-import {HTML5Backend} from 'react-dnd-html5-backend';
 import AppBoard from "./containers/AppBoard/AppBoard";
 // @ts-ignore
 import classes from './styles/App.module.scss';
@@ -12,26 +10,25 @@ import SecondaryText from "./components/layout/SecondaryText";
 import leftSparksSvg from "./assets/images/UI/left-sparks.svg";
 // @ts-ignore
 import rightSparksSvg from "./assets/images/UI/right-sparks.svg";
-import CustomDragLayer from "./components/items/CustomDragLayer";
 
 const App: React.FC = () => {
   return (
-    <DndProvider backend={HTML5Backend}>
+    <>
       <div className={classes.TopTooltip}>
         <SecondaryText styles={{fontWeight: 600, color: '#fcfdff', width: 'auto'}}>
           Нажмите ESC для выхода
         </SecondaryText>
       </div>
       <div className={classes.App}>
-        <EquippedClosingInventoryContainer/>
+       <EquippedClosingInventoryContainer/>
         <div className={classes.BoardContainer}>
           <AppBoard/>
         </div>
         <EquippedWeaponsInventoryContainer />
       </div>
-      <object type="image/svg+xml" data={leftSparksSvg} className={classes.LeftSparksSvgContainer}/>
-      <object type="image/svg+xml" data={rightSparksSvg} className={classes.RightSparksSvgContainer}/>
-    </DndProvider>
+      <object type="image/svg+xml" data={leftSparksSvg} className={classes.LeftSparksSvgContainer} />
+      <object type="image/svg+xml" data={rightSparksSvg} className={classes.RightSparksSvgContainer} />
+    </>
   );
 }
 

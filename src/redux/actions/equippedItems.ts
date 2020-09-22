@@ -11,9 +11,8 @@ const setEquippedItem = (cellId) => (dispatch, getState) => {
   item.mainCell = cellId;
   dispatch({type: EQUIPPED_ITEM_SET, id: cellId, item});
   const itemToServer = translateToServerItem(item, true);
-  // setTimeout(() => mp.trigger(itemToServer),0);
-  // @ts-ignore
-  // setTimeout(() => window.mp(itemToServer),0);
+  //@ts-ignore
+  mp.trigger(itemToServer);
 }
 
 const setEquippedItems = (items: Item[]) => {

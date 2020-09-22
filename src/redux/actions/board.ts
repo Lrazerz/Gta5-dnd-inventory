@@ -4,7 +4,9 @@ import {setEquippedItems} from "./equippedItems";
 import {ItemCategories} from "../../constants/dnd/categories";
 import {xMax} from "../../constants/boardDimensions";
 import Item from "../../models/Item";
+import DummyImage from '../../assets/dummy/weapon.png';
 import {translateToServerItem} from "../../utils/translateToServerItem";
+//'https://i.ibb.co/HCn40jg/weapon-2.png'
 
 const openOrRefreshInventory = (info) => {
   const values = info.$values;
@@ -29,7 +31,7 @@ const openOrRefreshInventory = (info) => {
 
     const FullItem = new Item(ID, Name, category, PosNumberLeftAngle,
       SizeX, SizeY, CurrentCount,
-      ImageUrl || 'https://i.ibb.co/HCn40jg/weapon-2.png', rest);
+      ImageUrl || DummyImage, rest);
 
     if (Enabled === true) {
       enabledItems.push(FullItem);
@@ -59,15 +61,6 @@ window.openInventory = openOrRefreshInventory;
 // @ts-ignore
 window.refreshInventory = openOrRefreshInventory;
 
-// @ts-ignore
-window.mp = async (item) => {
-  let asd = 1;
-  for(let i = 0; i < 1000000000; i++) {
-    asd = i;
-  }
-  console.log('mp works',item);
-}
-
 const _addItem = (squares, item: Item) => {
   return {type: SINGLE_ITEM_SQUARES_FILL, squares, item};
 }
@@ -82,26 +75,20 @@ const _removeItem = (coordsArr) => {
 
 // add item fetched from draggedItem
 const addItem = ([x, y]) => {
-  return async (dispatch, getState) => {
+  return (dispatch, getState) => {
     const {allHoveredSquares, xDown, yDown, item} = getState().draggedItem;
-    if(item.mainCell[0] === x - xDown && item.mainCell[1] === y - yDown) {
-      return;
-    }
+
     item.mainCell = [x - xDown, y - yDown];
 
-    await dispatch(_addItem(allHoveredSquares, item));
-    const itemToServer = translateToServerItem(item, false);
-    // console.log('trigger',itemToServer);
-    //@ts-ignore
-    // window.mp(item);
-
+    dispatch(_addItem(allHoveredSquares, item));
     // translate to Server Item
-    // setTimeout(() => mp.trigger(itemToServer),0);
-    // mp.trigger(itemToServer);
+    const itemToServer = translateToServerItem(item);
+    //@ts-ignore
+    mp.trigger(itemToServer);
   }
 }
 
-// remove items from AppBoard
+// mainCell, width, height
 const removeItem = ([x, y], width = 1, height = 1) => {
   return dispatch => {
     const itemsToRemove = [];

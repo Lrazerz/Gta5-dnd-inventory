@@ -88,14 +88,11 @@ const setHoveredSquares = ([x, y]) => {
             canDrop = false;
           } else if (hoveredX === i && hoveredY === j) {
             if (board[j][i] !== null) {
-              if (mainCell) {
-                // if item came from equipped and has no mainCell
-                if (hoveredX < mainCell[0] || hoveredX > mainCell[0] + item.width - 1
-                  || hoveredY < mainCell[1] || hoveredY > mainCell[1] + item.height - 1) {
-                  // if hovered square exists outside prev item location,
-                  // because we can drag big items on 1 square
-                  canDrop = false;
-                }
+              if (hoveredX < mainCell[0] || hoveredX > mainCell[0] + item.width - 1
+                || hoveredY < mainCell[1] || hoveredY > mainCell[1] + item.height - 1) {
+                // if hovered square exists outside prev item location,
+                // because we can drag big items on 1 square
+                canDrop = false;
               }
             }
           }

@@ -35,19 +35,15 @@ const AccessoriesTypeContainer = ({typeTitle, typeImage, acceptedType, cells}) =
 
   return (
     <div className={standardClasses.ClosingTypeContainer}>
-      <div className={standardClasses.UIBorderContainer}>
-        <div className={standardClasses.UIBorder}/>
+      <div className={standardClasses.TitleContainer}>
+        <img src={typeImage}/>
+        <LeadText>&nbsp;{typeTitle.toUpperCase()}</LeadText>
       </div>
-      <div className={standardClasses.MainContent}>
-        <div className={standardClasses.TitleContainer}>
-          <img src={typeImage}/>
-          <LeadText>&nbsp;{typeTitle.toUpperCase()}</LeadText>
-        </div>
-        <div className={standardClasses.SquaresContainer}>
-          <div className={classes.SquaresWrapper}>
-            {squaresContent}
-            <div className={standardClasses.Arrow}/>
-          </div>
+      <div className={standardClasses.Borders}/>
+      <div className={standardClasses.SquaresContainer}>
+        <div className={classes.SquaresWrapper}>
+          {squaresContent}
+          <div className={standardClasses.Arrow}/>
         </div>
       </div>
     </div>
