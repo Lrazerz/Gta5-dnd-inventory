@@ -8,8 +8,6 @@ body * {
 
 #root {
     overflow: hidden;
-    background-image: url("./src/assets/images/UI/root-background.png");
-    background-size: cover;
 }
 
 @font-face {
