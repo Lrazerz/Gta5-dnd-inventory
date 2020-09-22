@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import AppBoard from "./containers/AppBoard/AppBoard";
 // @ts-ignore
 import classes from './styles/App.module.scss';
@@ -10,8 +10,23 @@ import SecondaryText from "./components/layout/SecondaryText";
 import leftSparksSvg from "./assets/images/UI/left-sparks.svg";
 // @ts-ignore
 import rightSparksSvg from "./assets/images/UI/right-sparks.svg";
+import {openOrRefreshInventory} from "./redux/actions/board";
 
 const App: React.FC = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  // @ts-ignore
+  if(!window.openInventory || !window.refreshInventory) {
+    // @ts-ignore
+    window.openInventory = async (info) => { setIsOpen(true); await openOrRefreshInventory(info); };
+    // @ts-ignore
+    window.refreshInventory = openOrRefreshInventory;
+  }
+
+  if(!isOpen) {
+    return null;
+  }
+
   return (
     <>
       <div className={classes.TopTooltip}>

@@ -4,10 +4,32 @@
   width: 16.94%;
   height: 100%;
   box-sizing: border-box;
-  padding-top: 1vh;
+  //padding-top: 3vh;
+  padding-top: 1.75%;
 
-  @media (max-width: theme.$breakpoint-md) {
-    height: 20%;
-    width: 100%;
+  // to align with weapons container
+  @media (min-aspect-ratio: theme.$aspect-ratio-5x4) {
+    padding-top: 2.6%
+  }
+  @media (min-aspect-ratio: theme.$aspect-ratio-4x3) {
+    padding-top: 2%;
+  }
+  @media (min-aspect-ratio: theme.$aspect-ratio-3x2) {
+    padding-top: 2.2%
+  }
+  @media (min-aspect-ratio: theme.$aspect-ratio-16x10) {
+    padding-top: 1.9%
+  }
+  @media (min-aspect-ratio: theme.$aspect-ratio-16x9) {
+    padding-top: 1.7%
+  }
+  @media (min-aspect-ratio: theme.$aspect-ratio-16x9) {
+    padding-top: 1.4%;
+    @media(min-width: 1900px) {
+      padding-top: 1.8%;
+    }
+  }
+  @media (min-aspect-ratio: theme.$aspect-ratio-17x9) {
+    padding-top: 1.7%;
   }
 }

@@ -26,12 +26,11 @@
   .WeaponSquareContainer {
     height: 32.156%;
     width: 100%;
-    background: linear-gradient(90deg, transparent, rgba(44, 60, 97, 0.2) 40%, rgba(44, 60, 97, 1) 100%);
-                //linear-gradient(180deg, #3f76f3 0%, #3f76f3 10%, transparent 11%);
+    background: linear-gradient(90deg, transparent, rgba(44, 60, 97, 1) 100%);
     box-sizing: border-box;
     border-top: 2px solid;
     border-bottom: 2px solid;
-    border-image: linear-gradient(90deg, transparent, rgba(63,118,243,0.2) 40%, rgba(63,118,243,1)) 2;
+    border-image: linear-gradient(90deg, transparent 50%, rgba(63,118,243,0.6) 60%, rgba(63,118,243,1)) 2;
     position: relative;
   }
 

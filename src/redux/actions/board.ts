@@ -75,10 +75,6 @@ const openOrRefreshInventory = async (info) => {
   store.dispatch(_addItems(boardItems));
   store.dispatch(setEquippedItems(enabledItems));
 }
-// @ts-ignore
-window.openInventory = openOrRefreshInventory;
-// @ts-ignore
-window.refreshInventory = openOrRefreshInventory;
 
 const _addItem = (squares, item: Item) => {
   return {type: SINGLE_ITEM_SQUARES_FILL, squares, item};
@@ -123,5 +119,6 @@ const removeItem = ([x, y], width = 1, height = 1) => {
 
 export {
   addItem,
-  removeItem
+  removeItem,
+  openOrRefreshInventory
 }

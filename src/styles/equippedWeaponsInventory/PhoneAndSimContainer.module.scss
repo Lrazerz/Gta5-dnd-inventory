@@ -17,8 +17,8 @@
     box-sizing: border-box;
     border-top: 2px solid;
     border-bottom: 2px solid;
-    border-image: linear-gradient(90deg, transparent, rgba(9,198,187,0.2) 40%, rgba(9,198,187,1)) 2;
-    background: linear-gradient(90deg, transparent, rgba(40, 106, 125, 0.2) 40%, rgba(40, 106, 125, 1));
+    border-image: linear-gradient(90deg, transparent 50%, rgba(9,198,187,0.6) 60%, rgba(9,198,187,1)) 2;
+    background: linear-gradient(90deg, transparent, rgba(40, 106, 125, 1));
     .SquaresContainer {
       height: 100%;
       width: 100%;
@@ -33,7 +33,7 @@
         left: 17%;
         .Circle {
           border-radius: 50%;
-          background-color: rgba(46,83,97,0.3);
+          background-color: rgba(46,83,97,0.7);
           z-index: 10;
           margin-left: 4%;
           width: 25%;
