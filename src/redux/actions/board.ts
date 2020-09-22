@@ -44,7 +44,6 @@ const openOrRefreshInventory = async (info) => {
     } else {
       ImageUrl = DummyImage;
     }
-    console.log('IMAGEURL', ImageUrl);
 
     const category: ItemCategories = item.Category.toLowerCase();
     const FullItem = new Item(ID, Name, category, PosNumberLeftAngle,
@@ -52,7 +51,6 @@ const openOrRefreshInventory = async (info) => {
       ImageUrl, rest);
 
     if (Enabled === true) {
-      console.log('enabledItem', FullItem);
       enabledItems.push(FullItem);
     }
     else {
@@ -70,15 +68,10 @@ const openOrRefreshInventory = async (info) => {
 
       FullItem.mainCell = [mainCellX, mainCellY];
 
-      console.log('boardItem', FullItem);
       boardItems.push({...FullItem, squares: filledSquares});
     }
   }
 
-
-
-
-  console.log('addItems dispatch');
   store.dispatch(_addItems(boardItems));
   store.dispatch(setEquippedItems(enabledItems));
 }
