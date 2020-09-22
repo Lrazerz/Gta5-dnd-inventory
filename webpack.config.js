@@ -51,12 +51,12 @@ module.exports = {
           'sass-loader',
         ],
       },
-      // {
-      //   test: /\.(jpg|png|svg)$/,
-      //   use: {
-      //     loader: 'url-loader',
-      //   },
-      // },
+      {
+        test: /\.(jpg|png|svg)$/,
+        use: {
+          loader: 'url-loader',
+        },
+      },
       {
         test: /\.(woff(2)?|ttf|eot|otf)(\?v=\d+\.\d+\.\d+)?$/,
         use: [
@@ -65,18 +65,6 @@ module.exports = {
             options: {
               name: '[name].[ext]',
               outputPath: 'fonts/'
-            }
-          }
-        ]
-      },
-      {
-        test: /\.(jpg|png|svg)$/,
-        use: [
-          {
-            loader: 'file-loader',
-            options: {
-              name: '[name].[ext]',
-              outputPath: 'images/'
             }
           }
         ]

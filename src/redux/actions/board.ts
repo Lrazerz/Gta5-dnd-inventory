@@ -44,6 +44,7 @@ const openOrRefreshInventory = async (info) => {
     } else {
       ImageUrl = DummyImage;
     }
+    console.log('IMAGEURL', ImageUrl);
 
     const category: ItemCategories = item.Category.toLowerCase();
     const FullItem = new Item(ID, Name, category, PosNumberLeftAngle,
