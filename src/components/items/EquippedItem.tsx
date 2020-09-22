@@ -2,11 +2,14 @@ import React from 'react';
 import classes from '../../styles/items/EquippedItem.module.scss';
 import {DragPreviewImage} from "react-dnd";
 
-const EquippedItem = ({forwardedRef, children}) => {
+const EquippedItem = ({forwardedRef, children, imageContainerForwardedRef, connectPreview, imageUrl}) => {
   return (
   <>
+    {imageUrl && <DragPreviewImage connect={connectPreview} src={imageUrl}/>}
     <div ref={forwardedRef} className={classes.EquippedItem}>
-      {children}
+      <div ref={imageContainerForwardedRef} className={classes.ImageContainer}>
+        {children}
+      </div>
     </div>
   </>
   );

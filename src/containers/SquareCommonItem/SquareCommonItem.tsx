@@ -10,6 +10,7 @@ const SquareCommonItem = ({coords: [x, y], item}) => {
 
   const [imageWidth, setImageWidth] = useState();
   const [imageHeight, setImageHeight] = useState();
+  const [resultDataUri, setResultDataUri] = useState(null);
 
   const dispatch = useDispatch();
   // Allow drag
@@ -83,7 +84,6 @@ const SquareCommonItem = ({coords: [x, y], item}) => {
     );
   }
 
-  let [resultDataUri, setResultDataUri] = useState(null);
 
   useEffect(() => {
     function imageToDataUri(img, width, height) {
