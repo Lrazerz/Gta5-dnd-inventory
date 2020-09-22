@@ -8,7 +8,7 @@ import DummyImage from '../../assets/dummy/weapon.png';
 import {translateToServerItem} from "../../utils/translateToServerItem";
 //'https://i.ibb.co/HCn40jg/weapon-2.png'
 
-const openOrRefreshInventory = (info) => {
+const openOrRefreshInventory = async (info) => {
   const values = info.$values;
 
   // equipped
@@ -16,26 +16,45 @@ const openOrRefreshInventory = (info) => {
 
   const boardItems = [];
 
-  values.forEach(item => {
+  for(const propName in values) {
     // map through every item and add to corresponding array
     // item - single item with its own sizes
+    const item = values[propName];
 
     // Square numbers starts from 1 instead of 0
     const {
       Name, PosNumberLeftAngle, SizeX, SizeY, Enabled, CurrentCount = 1
-      , ImageUrl, ...rest
+      , ...rest
     } = item;
     const ID = item.ID.toString();
 
-    const category: ItemCategories = item.Category.toLowerCase();
+    let ImageUrl;
+    try {
+      ImageUrl = await import(`../../assets/images/items/${Name.toLowerCase()}.png`);
+    } catch (e) {
+      if(e.code === 'MODULE_NOT_FOUND') {
+        console.log(`image for "${Name}" not found, using default image.`)
+      } else {
+        console.log('error while importing image');
+      }
+    }
 
+    if(ImageUrl) {
+      ImageUrl = ImageUrl.default;
+    } else {
+      ImageUrl = DummyImage;
+    }
+
+    const category: ItemCategories = item.Category.toLowerCase();
     const FullItem = new Item(ID, Name, category, PosNumberLeftAngle,
       SizeX, SizeY, CurrentCount,
-      ImageUrl || DummyImage, rest);
+      ImageUrl, rest);
 
     if (Enabled === true) {
+      console.log('enabledItem', FullItem);
       enabledItems.push(FullItem);
-    } else {
+    }
+    else {
       const mainCellY = Math.floor(PosNumberLeftAngle / (xMax + 1));
       const mainCellX = PosNumberLeftAngle % (xMax + 1) - 1;
 
@@ -50,9 +69,15 @@ const openOrRefreshInventory = (info) => {
 
       FullItem.mainCell = [mainCellX, mainCellY];
 
+      console.log('boardItem', FullItem);
       boardItems.push({...FullItem, squares: filledSquares});
     }
-  });
+  }
+
+
+
+
+  console.log('addItems dispatch');
   store.dispatch(_addItems(boardItems));
   store.dispatch(setEquippedItems(enabledItems));
 }

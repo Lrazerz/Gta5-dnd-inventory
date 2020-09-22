@@ -9,7 +9,7 @@ import SecondaryText from "../../components/layout/SecondaryText";
 const SquareEquippedItem = ({item}: { item: any }) => {
 
   const dispatch = useDispatch();
-  const [{}, drag, preview] = useDrag({
+  const [{}, drag] = useDrag({
     item: {type: item.category, isInventory: true},
     begin() {
       dispatch(addDraggedItem([0, 0], item, true));
@@ -22,9 +22,19 @@ const SquareEquippedItem = ({item}: { item: any }) => {
     }
   });
 
+  let imageStyles;
+  if(item.mainCell === 1 || item.mainCell === 2 || item.mainCell === 3) {
+    imageStyles = {
+      top: '1%',
+      right: '1%',
+      height: '98%',
+      width: 'auto'
+    }
+  }
+
   return (
-    <EquippedItem forwardedRef={drag} previewConnect={preview} imageUrl={item.imageUrl}>
-      {item.imageUrl && <img src={item.imageUrl} className={classes.Image}/>}
+    <EquippedItem forwardedRef={drag}>
+      {item.imageUrl && <img src={item.imageUrl} className={classes.Image} style={imageStyles}/>}
       {item.currentCount > 1
       &&
       (<div className={classes.CurrentCount}>

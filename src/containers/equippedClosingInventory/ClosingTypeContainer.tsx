@@ -5,7 +5,6 @@ import ClosingWeaponSquare from "../../components/equippedClosingInventory/Closi
 import Octagon from "../../components/equippedClosingInventory/Octagon";
 import LeadText from "../../components/layout/LeadText";
 import SquareEquippedItem from "./SquareEquippedItem";
-import {SingleCell} from "../equippedWeaponsInventory/EquippedWeaponsInventoryContainer";
 
 const ClosingTypeContainer = ({typeTitle, typeImage, acceptedType, cells}) => {
   const squaresContent = cells.map(({id,cell}) => {
