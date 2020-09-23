@@ -64,13 +64,13 @@
     left: -2%;
     background: linear-gradient(180deg, #09c6bb 0%, #09c6bb 12%, transparent 13%),
     linear-gradient(0deg, #09c6bb 0%, #09c6bb 12%, transparent 13%);
-    clip-path: polygon(0 10.568%, 17.15% 0,100% 0,100% 100%, 17.15% 100%, 0 89.432%);
+    clip-path: polygon(0 10.568%, 17.15% 0,100% 0,100% 100%, 17.15% 100%, 0 91%);
     // border === gap between UIBorders and ClippedElement
     .ClippedElement {
       box-sizing: border-box;
       height: 95%;
       width: 100%;
-      clip-path: polygon(0 12.568%, 19.15% 0,100% 0,100% 100%, 19.15% 100%, 0 88.832%);
+      clip-path: polygon(0 12.568%, 19.15% 0,100% 0,100% 100%, 19.15% 100%, 0 90%);
       position: absolute;
       top: 2.5%;
       background: linear-gradient(90deg, rgba(40, 106, 125, 1), rgba(48, 68, 112, 1));

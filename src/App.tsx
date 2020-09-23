@@ -31,7 +31,7 @@ const App: React.FC = () => {
     <div className={classes.AppContainer}>
       <div className={classes.TopTooltip}>
         <SecondaryText styles={{fontWeight: 600, color: '#fcfdff', width: 'auto'}}>
-          Нажмите ESC для выхода
+          Нажмите I для выхода
         </SecondaryText>
       </div>
       <div className={classes.App}>

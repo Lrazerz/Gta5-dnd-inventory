@@ -364,7 +364,7 @@ body * {
 #root {
     overflow: hidden;
     /*background-image: url("./src/assets/dummy/dummybackground.jpg");*/
-    background-size: cover;
+    /*background-size: cover;*/
 }
 
 @font-face {

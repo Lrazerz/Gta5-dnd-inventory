@@ -70,7 +70,8 @@
     position: absolute;
     top: 16.9%;
     left: -2%;
-    clip-path: polygon(0 10.568%, 17.15% 0, 100% 0, 100% 100%, 17.15% 100%, 0 89.432%);
+    //clip-path: polygon(0 10.568%, 17.15% 0, 100% 0, 100% 100%, 17.15% 100%, 0 89.432%);
+    clip-path: polygon(0 10.568%, 17.15% 0, 100% 0, 100% 100%, 17.15% 100%, 0 91%);
     background: linear-gradient(180deg, #3f76f3 0%, #3f76f3 12%, transparent 13%),
     linear-gradient(0deg, #3f76f3 0%, #3f76f3 12%, transparent 13%);
     overflow: hidden;
@@ -79,7 +80,7 @@
       height: 95%;
       width: 100%;
       background: linear-gradient(90deg, rgba(44, 60, 97, 1), rgba(48, 68, 112, 1));
-      clip-path: polygon(0 12.568%, 19.15% 0, 100% 0, 100% 100%, 19.15% 100%, 0 88.832%);
+      clip-path: polygon(0 12.568%, 19.15% 0, 100% 0, 100% 100%, 19.15% 100%, 0 90%);
       box-sizing: border-box;
       position: absolute;
       left: 0;
