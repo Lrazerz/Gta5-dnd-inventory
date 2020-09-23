@@ -77,6 +77,15 @@
     linear-gradient(0deg, #3f76f3 0%, #3f76f3 12%, transparent 13%);
     overflow: hidden;
 
+    @media(min-width: 1900px) {
+      width: 101%;
+      left: -1%;
+    }
+    @media(min-width: 2500px) {
+      width: 101.5%;
+      left: -1.5%;
+    }
+
     .ClippedElement {
       height: 95%;
       width: 100%;
