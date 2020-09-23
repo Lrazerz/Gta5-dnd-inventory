@@ -4,7 +4,7 @@ export default class Item {
   public id: string;
   public name: string;
   // smth like itemType
-  public category: ItemCategories;
+  public category: ItemCategories | string;
 
   // [x,y] (PosNumberLeftAngle on server (1-102))
   // x from 0 to 16, y from 0 to 5
@@ -27,7 +27,7 @@ export default class Item {
 
   public rest: any;
 
-  constructor(id: string, name: string, category: ItemCategories, mainCell: [number, number], width: number, height: number,
+  constructor(id: string, name: string, category: ItemCategories | string, mainCell: [number, number], width: number, height: number,
               currentCount: number, imageUrl: string | null, rest: any) {
     this.id = id;
     this.name = name;

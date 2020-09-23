@@ -1,4 +1,4 @@
-import {SINGLE_ITEM_SQUARES_FILL, SQUARES_RELEASE, SQUARES_FILL} from "./types";
+import {EQUIPPED_STATE_CHANGE, SINGLE_ITEM_SQUARES_FILL, SQUARES_FILL, SQUARES_RELEASE} from "./types";
 import store from "../store";
 import {setEquippedItems} from "./equippedItems";
 import {ItemCategories} from "../../constants/dnd/categories";
@@ -6,6 +6,8 @@ import {xMax} from "../../constants/boardDimensions";
 import Item from "../../models/Item";
 import DummyImage from '../../assets/dummy/weapon.png';
 import {translateToServerItem} from "../../utils/translateToServerItem";
+import {ItemTypes} from "../../constants/dnd/types";
+import WeaponItem from "../../models/WeaponItem";
 //'https://i.ibb.co/HCn40jg/weapon-2.png'
 
 const openOrRefreshInventory = async (info) => {
@@ -45,10 +47,25 @@ const openOrRefreshInventory = async (info) => {
       ImageUrl = DummyImage;
     }
 
-    const category: ItemCategories = item.Category.toLowerCase();
-    const FullItem = new Item(ID, Name, category, PosNumberLeftAngle,
-      SizeX, SizeY, CurrentCount,
-      ImageUrl, rest);
+    const category: ItemCategories | string = item.Category.toLowerCase();
+
+    let FullItem;
+
+    // create separate item for weapon
+    if(category === ItemTypes.WEAPON_RIFLE || category === ItemTypes.WEAPON_PISTOL
+      || category === ItemTypes.WEAPON_LAUNCHER) {
+      FullItem = new WeaponItem(ID, Name, category, PosNumberLeftAngle,
+        SizeX, SizeY, CurrentCount,
+        ImageUrl, rest, false);
+      if(Enabled) {
+        FullItem.isEquipped = true;
+      }
+    } else {
+      // If is not weapon
+      FullItem = new Item(ID, Name, category, PosNumberLeftAngle,
+        SizeX, SizeY, CurrentCount,
+        ImageUrl, rest);
+    }
 
     if (Enabled === true) {
       enabledItems.push(FullItem);
@@ -88,6 +105,10 @@ const _removeItem = (coordsArr) => {
   return {type: SQUARES_RELEASE, squares: coordsArr};
 }
 
+const _changeEquippedState = (squares, newState) => {
+  return {type: EQUIPPED_STATE_CHANGE, squares, state: newState};
+}
+
 // add item fetched from draggedItem
 const addItem = ([x, y]) => {
   return (dispatch, getState) => {
@@ -99,7 +120,7 @@ const addItem = ([x, y]) => {
     // translate to Server Item
     const itemToServer = translateToServerItem(item);
     //@ts-ignore
-    mp.trigger(itemToServer);
+    // mp.trigger(itemToServer);
   }
 }
 
@@ -117,8 +138,21 @@ const removeItem = ([x, y], width = 1, height = 1) => {
   }
 }
 
+const changeEquippedState = (item, newState) => dispatch => {
+  const squares = [];
+
+  for(let y = item.mainCell[1]; y < item.mainCell[1] + item.height; y++) {
+    for(let x = item.mainCell[0]; x < item.mainCell[0] + item.width; x++) {
+      squares.push([x,y]);
+    }
+  }
+
+  dispatch(_changeEquippedState(squares, newState));
+}
+
 export {
   addItem,
   removeItem,
-  openOrRefreshInventory
+  openOrRefreshInventory,
+  changeEquippedState
 }

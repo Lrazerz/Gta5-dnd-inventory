@@ -5,10 +5,13 @@ import {useDrop} from "react-dnd";
 import Overlay from "../UI/Overlay";
 import {useSelector} from 'react-redux';
 import {removeEquippedItem, setEquippedItem} from "../../redux/actions/equippedItems";
-import {removeItem} from "../../redux/actions/board";
+import {changeEquippedState, removeItem} from "../../redux/actions/board";
 import {removeHoveredSquares} from "../../redux/actions/draggedItem";
 import theme from "../../constants/css/theme";
-import {WeaponItemTypes} from "../../constants/dnd/types";
+import {ItemTypes, WeaponItemTypes} from "../../constants/dnd/types";
+import {Simulate} from "react-dom/test-utils";
+import drag = Simulate.drag;
+import change = Simulate.change;
 
 //itemId - an item inside if exists
 const ClosingWeaponSquare = ({children, acceptedItemType, coords, itemId}) => {
@@ -31,9 +34,18 @@ const ClosingWeaponSquare = ({children, acceptedItemType, coords, itemId}) => {
         }
         // @ts-ignore
         if (DNDItem.isInventory) {
-          dispatch(removeEquippedItem(draggedItem.mainCell));
+            dispatch(removeEquippedItem(draggedItem.mainCell));
+            // If item from board
         } else {
-          dispatch(removeItem(draggedItem.mainCell, draggedItem.width, draggedItem.height));
+          // If item is weapon
+          if (acceptedItemType === ItemTypes.WEAPON_RIFLE || acceptedItemType === ItemTypes.WEAPON_PISTOL
+          || acceptedItemType === ItemTypes.WEAPON_LAUNCHER) {
+            draggedItem.mainCellOnBoard = draggedItem.mainCell;
+            // action that changes item.isEquipped on board to true
+            dispatch(changeEquippedState(draggedItem, true));
+          } else {
+            dispatch(removeItem(draggedItem.mainCell, draggedItem.width, draggedItem.height));
+          }
         }
         dispatch(setEquippedItem(coords));
       }

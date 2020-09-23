@@ -73,17 +73,17 @@ const SquareCommonItem = ({coords: [x, y], item}) => {
         </div>);
     }
 
+    // console.log('SqCommItem', item.isEquipped, item);
     imageElement = (
       <>
         <div className={classes.ImageContainer} style={{width: imageWidth, height: imageHeight}}>
           <img src={item.imageUrl}
-               className={classes.Image}/>
+               className={classes.Image} style={item.isEquipped ? {opacity: '0.3'} : null}/>
           {currentCountText}
         </div>
       </>
     );
   }
-
 
   useEffect(() => {
     function imageToDataUri(img, width, height) {

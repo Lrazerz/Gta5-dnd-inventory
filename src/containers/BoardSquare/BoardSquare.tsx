@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import Square from "../../components/Square/Square";
-import {AllItemTypes} from "../../constants/dnd/types";
+import {AllItemTypes, ItemTypes} from "../../constants/dnd/types";
 import {useDrop} from "react-dnd";
 import {useDispatch, useSelector} from "react-redux";
 import {addItem, removeItem} from "../../redux/actions/board";
@@ -9,14 +9,15 @@ import {setHoveredSquares} from "../../redux/actions/draggedItem";
 import classes from '../../styles/board/BoardSquare.module.scss';
 import theme from "../../constants/css/theme";
 import {removeEquippedItem} from "../../redux/actions/equippedItems";
-import {translateToServerItem} from "../../utils/translateToServerItem";
+import {Simulate} from "react-dom/test-utils";
+import drag = Simulate.drag;
 
 const BoardSquare = ({coords: [x, y], children}) => {
   const [isOver, setIsOver] = useState(false);
   // for simultaneously change overlay color
   const [canDrop, setCanDrop] = useState(false);
 
-  const {hoveredSquare, allHoveredSquares, canDrop: canDropRedux, item, xDown, yDown} =
+  const {hoveredSquare, allHoveredSquares, canDrop: canDropRedux, item: draggedItem, xDown, yDown} =
     // @ts-ignore - AppBoard does not exists on DefaultRootState
     useSelector(({draggedItem}) => draggedItem);
 
@@ -27,15 +28,20 @@ const BoardSquare = ({coords: [x, y], children}) => {
     drop: (DNDItem, monitor) => {
       if (monitor.canDrop()) {
         // if the same item
-        if(typeof item.mainCell === 'object' &&
-          item.mainCell[0] === x - xDown && item.mainCell[1] === y - yDown) {
+        if(typeof draggedItem.mainCell === 'object' &&
+          draggedItem.mainCell[0] === x - xDown && draggedItem.mainCell[1] === y - yDown) {
           return;
         }
         // @ts-ignore
         if (DNDItem.isInventory) {
-          dispatch(removeEquippedItem(item.mainCell));
+          // check if weapon - remove prev (transparent) weapon from board
+          if(draggedItem.category === ItemTypes.WEAPON_RIFLE || draggedItem.category === ItemTypes.WEAPON_PISTOL
+          || draggedItem.category === ItemTypes.WEAPON_LAUNCHER) {
+            dispatch(removeItem(draggedItem.mainCellOnBoard, draggedItem.width, draggedItem.height));
+          }
+          dispatch(removeEquippedItem(draggedItem.mainCell));
         } else {
-          dispatch(removeItem(item.mainCell, item.width, item.height));
+          dispatch(removeItem(draggedItem.mainCell, draggedItem.width, draggedItem.height));
         }
         dispatch(addItem([x, y]));
       }

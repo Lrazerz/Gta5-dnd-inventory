@@ -12,7 +12,7 @@ const setEquippedItem = (cellId) => (dispatch, getState) => {
   dispatch({type: EQUIPPED_ITEM_SET, id: cellId, item});
   const itemToServer = translateToServerItem(item, true);
   //@ts-ignore
-  mp.trigger(itemToServer);
+  // mp.trigger(itemToServer);
 }
 
 const setEquippedItems = (items: Item[]) => {

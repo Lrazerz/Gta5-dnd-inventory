@@ -67,6 +67,7 @@ const setHoveredSquares = ([x, y]) => {
     let mainCell = item.mainCell;
 
     if (typeof item.mainCell === 'number') {
+      // x, y - coords of hovered square
       mainCell = [x, y];
     }
 
@@ -88,10 +89,14 @@ const setHoveredSquares = ([x, y]) => {
             canDrop = false;
           } else if (hoveredX === i && hoveredY === j) {
             if (board[j][i] !== null) {
-              if (hoveredX < mainCell[0] || hoveredX > mainCell[0] + item.width - 1
-                || hoveredY < mainCell[1] || hoveredY > mainCell[1] + item.height - 1) {
-                // if hovered square exists outside prev item location,
-                // because we can drag big items on 1 square
+              // if (hoveredX < mainCell[0] || hoveredX > mainCell[0] + item.width - 1
+              //   || hoveredY < mainCell[1] || hoveredY > mainCell[1] + item.height - 1) {
+              //   // if hovered square exists outside prev item location,
+              //   // because we can drag big items on 1 square
+              //   console.log('here');
+              //   canDrop = false;
+              // }
+              if(board[j][i].id !== item.id) {
                 canDrop = false;
               }
             }
@@ -99,6 +104,7 @@ const setHoveredSquares = ([x, y]) => {
         });
       }
     }
+    console.log('draggedItem canDrop', canDrop);
     dispatch(_setHoveredSquares([x, y], allHoveredSquares, canDrop));
   }
 };
