@@ -28,7 +28,7 @@ const App: React.FC = () => {
   }
 
   return (
-    <>
+    <div className={classes.AppContainer}>
       <div className={classes.TopTooltip}>
         <SecondaryText styles={{fontWeight: 600, color: '#fcfdff', width: 'auto'}}>
           Нажмите ESC для выхода
@@ -43,7 +43,7 @@ const App: React.FC = () => {
       </div>
       <object type="image/svg+xml" data={leftSparksSvg} className={classes.LeftSparksSvgContainer} />
       <object type="image/svg+xml" data={rightSparksSvg} className={classes.RightSparksSvgContainer} />
-    </>
+    </div>
   );
 }
 

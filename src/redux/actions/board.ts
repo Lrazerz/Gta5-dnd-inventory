@@ -9,7 +9,7 @@ import {translateToServerItem} from "../../utils/translateToServerItem";
 //'https://i.ibb.co/HCn40jg/weapon-2.png'
 
 const openOrRefreshInventory = async (info) => {
-  const values = info.$values;
+  const values = JSON.parse(info).$values;
 
   // equipped
   const enabledItems = [];
