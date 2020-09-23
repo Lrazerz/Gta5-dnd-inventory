@@ -58,12 +58,12 @@
 
   .UIBorders {
     height: 40.78%;
-    width: 100%;
+    width: 102%;
     position: absolute;
-    box-sizing: border-box;
     top: 6.9%;
-    right: 0;
-    background: #09c6bb;
+    left: -2%;
+    background: linear-gradient(180deg, #09c6bb 0%, #09c6bb 12%, transparent 13%),
+    linear-gradient(0deg, #09c6bb 0%, #09c6bb 12%, transparent 13%);
     clip-path: polygon(0 10.568%, 17.15% 0,100% 0,100% 100%, 17.15% 100%, 0 89.432%);
     // border === gap between UIBorders and ClippedElement
     .ClippedElement {

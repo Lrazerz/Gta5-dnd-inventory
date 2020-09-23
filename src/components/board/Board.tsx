@@ -8,8 +8,6 @@ const Board = ({children}) => {
 
   const boardEl: React.MutableRefObject<null> | null = useRef(null);
 
-  const {canDrop: canDropRedux} = useSelector(({draggedItem}) => draggedItem);
-
   // Make element proportional no matter where it placed
   useEffect(() => {
     // Handler to call on window resize

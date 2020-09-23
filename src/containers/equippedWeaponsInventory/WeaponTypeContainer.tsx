@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import classes from '../../styles/equippedWeaponsInventory/WeaponTypeContainer.module.scss';
 import Octagon from "../../components/equippedClosingInventory/Octagon";
 import ClosingWeaponSquare from "../../components/equippedClosingInventory/ClosingWeaponSquare";
@@ -14,6 +14,38 @@ interface Props {
 }
 
 const WeaponTypeContainer = ({typeTitle, acceptedTypes, cells}: Props) => {
+  const [mainContentWidth, setMainContentWidth] = useState();
+  const [UIBordersContainerWidth, setUIBordersContainerWidth] = useState();
+  const weaponTypeContainerRef = useRef();
+
+  useEffect(() => {
+    // Handler to call on window resize
+    function handleResize() {
+      const current: HTMLElement | null = weaponTypeContainerRef.current;
+      const CSSStyleDeclaration = window.getComputedStyle(current);
+
+      let weaponTypeContainerWidth: string | number = CSSStyleDeclaration.getPropertyValue('width');
+
+      // get number from string (string example: 123.45px)
+      const regex = /^((\d|\.)+)/;
+      weaponTypeContainerWidth = parseFloat(weaponTypeContainerWidth.match(regex)[0]);
+
+      //@ts-ignore
+      setMainContentWidth(Math.floor(weaponTypeContainerWidth * 0.754));
+      //@ts-ignore
+      setUIBordersContainerWidth(Math.floor(weaponTypeContainerWidth * 0.256));
+    }
+
+    // Add event listener
+    window.addEventListener("resize", handleResize);
+
+    // Call handler right away so state gets updated with initial size
+    handleResize();
+
+    // Remove event listener on cleanup
+    return () => window.removeEventListener("resize", handleResize);
+  }, [weaponTypeContainerRef]);
+
   const {mainSquareType, ammoType, toolsType} = acceptedTypes;
 
   // every has id and item
@@ -45,8 +77,11 @@ const WeaponTypeContainer = ({typeTitle, acceptedTypes, cells}: Props) => {
     );
   });
 
+  console.log(mainContentWidth);
+  console.log(UIBordersContainerWidth);
   return (
-    <div className={classes.WeaponTypeContainer}>
+    <div ref={weaponTypeContainerRef} className={classes.WeaponTypeContainer}>
+      <div className={classes.Shift}></div>
       <div className={classes.MainContent}>
         <div className={classes.TypeAndWeaponTitle}>
           <LeadText styles={{textAlign: 'right'}}>{typeTitle.toUpperCase()}</LeadText>
