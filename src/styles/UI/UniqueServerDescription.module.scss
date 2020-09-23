@@ -7,22 +7,33 @@
   .UniqueServerDescription {
     min-height: 55.3%;
     display: flex;
+    width: 100%;
 
     .LogoContainer {
       height: 100%;
-      width: 38.77%;
+      //width: 38.77%;
+      min-width: 40%;
 
       .ImageWrapper {
-        max-width: 70%;
+        max-width: 40%;
         margin-right: 0;
         margin-left: auto;
-        margin-top: 20%;
+        margin-top: 0;
         display: flex;
         align-items: center;
         justify-content: flex-end;
         .Image {
           width: 100%;
           max-width: 53px;
+        }
+        @media(min-width: 1900px) {
+          margin-top: 10%;
+        }
+        @media(min-width: 2100px) {
+          margin-top: 20%;
+        }
+        @media(min-width: 2500px) {
+          margin-top: 25%;
         }
       }
     }
@@ -46,6 +57,7 @@
     }
   }
 }
+
 
 
 
