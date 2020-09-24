@@ -9,8 +9,8 @@ body * {
 #root {
     overflow: hidden;
     /*background-image: url("./src/assets/dummy/dummybackground.jpg");*/
-    background-image: url("./src/assets/images/UI/root-background.png");
-    background-size: cover;
+    /*background-image: url("./src/assets/images/UI/root-background.png");*/
+    /*background-size: cover;*/
 }
 
 @font-face {
