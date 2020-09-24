@@ -48,20 +48,20 @@ const WeaponTypeContainer = ({typeTitle, acceptedTypes, cells}: Props) => {
 
   return (
     <div className={classes.WeaponTypeContainer}>
-      <div className={classes.Shift}/>
-      <div className={classes.MainContent}>
         <div className={classes.TypeAndWeaponTitle}>
           <LeadText styles={{textAlign: 'right'}}>{typeTitle.toUpperCase()}</LeadText>
-          <SecondaryText styles={{textAlign: 'right', marginBottom: '5%'}}>
+          <SecondaryText styles={{textAlign: 'right'}}>
             {weaponCell.cell.item && weaponCell.cell.item.name}
           </SecondaryText>
         </div>
         <div className={classes.WeaponSquareContainer}>
-          <ClosingWeaponSquare acceptedItemType={mainSquareType}
-                               coords={weaponCell.id}
-                               itemId={weaponCell.cell.item && weaponCell.cell.item.id}>
-            {weaponSquareContent}
-          </ClosingWeaponSquare>
+          <div className={classes.ClosingSquareWrapper}>
+            <ClosingWeaponSquare acceptedItemType={mainSquareType}
+                                 coords={weaponCell.id}
+                                 itemId={weaponCell.cell.item && weaponCell.cell.item.id}>
+              {weaponSquareContent}
+            </ClosingWeaponSquare>
+          </div>
         </div>
         <div className={classes.AttachmentsSquaresContainer}>
           <div className={classes.LeftArrow}/>
@@ -73,12 +73,6 @@ const WeaponTypeContainer = ({typeTitle, acceptedTypes, cells}: Props) => {
           </Octagon>
           {toolsSquares}
         </div>
-      </div>
-      <div className={classes.UIBordersContainer}>
-        <div className={classes.UIBorders}>
-          <div className={classes.ClippedElement}/>
-        </div>
-      </div>
     </div>
   );
 };

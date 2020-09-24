@@ -11,3 +11,13 @@
   top: 8%;
   right: 8%;
 }
+
+// only for weapons
+.ClosingSquareWrapper {
+  width: 54.45%;
+  left: 23%;
+  height: 76%;
+  /*position: abs; / with pseudo-elements with display: block;*/
+  position: absolute;
+  top: 12%;
+}

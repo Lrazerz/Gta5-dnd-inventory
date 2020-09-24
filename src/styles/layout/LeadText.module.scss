@@ -8,7 +8,7 @@
   font-size: 14px;
   line-height: 17px;
   text-overflow: ellipsis;
-  overflow: hidden;
+  //overflow: hidden;
 
   @media (min-aspect-ratio: theme.$aspect-ratio-4x3) {
     @media (min-width: 1500px) {

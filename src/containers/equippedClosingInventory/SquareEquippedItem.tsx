@@ -84,27 +84,45 @@ const SquareEquippedItem = ({item}: { item: any }) => {
     }
   });
 
-  let imageStyles;
-  if (item.mainCell === 1 || item.mainCell === 2 || item.mainCell === 3) {
-    imageStyles = {
-      top: '1%',
-      right: '1%',
-      height: '98%',
-      width: 'auto'
-    }
-  }
-
-  return (
-    <EquippedItem forwardedRef={drag} imageContainerForwardedRef={imageContainerRef} connectPreview={preview}
-    imageUrl={resultDataUri}>
-      {item.imageUrl && <img src={item.imageUrl} className={classes.Image} style={imageStyles}/>}
-      {item.currentCount > 1
-      &&
+  let imageElement = (
+    <>
+      <img src={item.imageUrl} className={classes.Image}/>
+      {item.currentCount > 1 &&
       (<div className={classes.CurrentCount}>
         <SecondaryText>
           {item.currentCount}
         </SecondaryText>
       </div>)}
+    </>
+    );
+
+
+  if (item.mainCell === 1 || item.mainCell === 2 || item.mainCell === 3) {
+    const imageStyles = {
+      top: '1%',
+      right: '1%',
+      height: '98%',
+      width: 'auto'
+    }
+
+    imageElement = (
+      <div className={classes.ClosingSquareWrapper}>
+        <img src={item.imageUrl} className={classes.Image} style={imageStyles}/>
+        {item.currentCount > 1 &&
+        (<div className={classes.CurrentCount} style={{top: '1%', right: '1%'}}>
+          <SecondaryText>
+            {item.currentCount}
+          </SecondaryText>
+        </div>)}
+      </div>
+      );
+  }
+
+  return (
+    <EquippedItem forwardedRef={drag} imageContainerForwardedRef={imageContainerRef} connectPreview={preview}
+    imageUrl={resultDataUri}>
+      {item.imageUrl && imageElement}
+
     </EquippedItem>
   );
 }
