@@ -104,7 +104,6 @@ const setHoveredSquares = ([x, y]) => {
         });
       }
     }
-    console.log('draggedItem canDrop', canDrop);
     dispatch(_setHoveredSquares([x, y], allHoveredSquares, canDrop));
   }
 };

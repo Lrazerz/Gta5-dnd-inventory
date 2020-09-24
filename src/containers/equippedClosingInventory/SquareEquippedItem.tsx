@@ -31,8 +31,8 @@ const SquareEquippedItem = ({item}: { item: any }) => {
       let imageHeight = imageContainerHeight * item.height * 1.4;
 
       if(item.mainCell === 1 || item.mainCell === 2 || item.mainCell === 3) {
-        imageWidth = imageContainerWidth * item.width * 0.33;
-        imageHeight = imageContainerHeight * item.height * 1.15;
+        imageWidth = imageContainerWidth * item.width * 0.24;
+        imageHeight = imageContainerHeight * item.height * 0.8;
       }
 
       function imageToDataUri(img, width, height) {

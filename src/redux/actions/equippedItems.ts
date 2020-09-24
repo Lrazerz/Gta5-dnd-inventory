@@ -15,7 +15,7 @@ const setEquippedItem = (cellId) => (dispatch, getState) => {
   // mp.trigger(itemToServer);
 }
 
-const setEquippedItems = (items: Item[]) => {
+const setEquippedItems = (items: Item[] | []) => {
   return {type: EQUIPPED_ITEMS_SET, items};
 }
 

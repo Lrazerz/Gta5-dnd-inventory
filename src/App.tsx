@@ -13,12 +13,12 @@ import rightSparksSvg from "./assets/images/UI/right-sparks.svg";
 import {openOrRefreshInventory} from "./redux/actions/board";
 
 const App: React.FC = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
 
   // @ts-ignore
   if(!window.openInventory || !window.refreshInventory) {
     // @ts-ignore
-    window.openInventory = async (info) => { setIsOpen(true); await openOrRefreshInventory(info); };
+    window.openInventory = async (info) => { setIsOpen(true); await openOrRefreshInventory(info); return; };
     // @ts-ignore
     window.refreshInventory = openOrRefreshInventory;
   }

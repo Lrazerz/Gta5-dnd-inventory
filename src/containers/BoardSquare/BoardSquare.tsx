@@ -70,13 +70,13 @@ const BoardSquare = ({coords: [x, y], children}) => {
     setCanDrop(canDropRedux)
   }, [x, y, allHoveredSquares]);
 
-  let styles = {outline: `1px solid rgba(109, 114, 125, 0.3)`};
+  let styles = {outline: `1px solid rgba(109, 114, 125, 0.8)`};
 
   if (children) {
     styles = null;
   }
   if (isOver) {
-    styles = {outline: `1px solid rgba(109, 114, 125, 0.3)`}
+    styles = {outline: `1px solid rgba(109, 114, 125, 0.8)`}
   }
 
   // if(x === 4 && y === 0) {

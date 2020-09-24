@@ -1,9 +1,5 @@
 @use '../../constants/scss/theme';
 
-// main container
-//border-image: linear-gradient(90deg, transparent 50%, rgba(9,198,187,0.6) 60%, rgba(9,198,187,1)) 2;
-//background: linear-gradient(90deg, transparent, rgba(40, 106, 125, 1));
-
 .PhoneAndSimContainer {
   height: 25%;
   width: 100%;
@@ -74,7 +70,7 @@
 
         .Circle {
           border-radius: 50%;
-          background-color: rgba(46, 83, 97, 0.3);
+          background-color: rgba(70, 106, 127, 0.6);
           z-index: 10;
           margin-left: 4%;
           //width: 25%;
@@ -97,51 +93,6 @@
           }
         }
       }
-    }
-  }
-}
-
-
-//.UIBordersContainer {
-//  width: 23%;
-//  box-sizing: border-box;
-//  position: relative;
-//
-//  .UIBorders {
-//    height: 40.78%;
-//    width: 102%;
-//    position: absolute;
-//    top: 6.9%;
-//    left: -2%;
-//    background: linear-gradient(180deg, #09c6bb 0%, #09c6bb 12%, transparent 13%),
-//    linear-gradient(0deg, #09c6bb 0%, #09c6bb 12%, transparent 13%);
-//    clip-path: polygon(0 10.568%, 17.15% 0,100% 0,100% 100%, 17.15% 100%, 0 91%);
-//    // border === gap between UIBorders and ClippedElement
-//    .ClippedElement {
-//      box-sizing: border-box;
-//      height: 95%;
-//      width: 100%;
-//      clip-path: polygon(0 12.568%, 19.15% 0,100% 0,100% 100%, 19.15% 100%, 0 90%);
-//      position: absolute;
-//      top: 2.5%;
-//      background: linear-gradient(90deg, rgba(40, 106, 125, 1), rgba(48, 68, 112, 1));
-//    }
-//  }
-//}
-
-@media (min-width: 2000px) {
-  .PhoneAndSimContainer {
-    .WeaponSquareContainer {
-      border-top: 3px solid;
-      border-bottom: 3px solid;
-    }
-  }
-}
-@media (min-width: 2500px) {
-  .PhoneAndSimContainer {
-    .WeaponSquareContainer {
-      border-top: 4px solid;
-      border-bottom: 4px solid;
     }
   }
 }
