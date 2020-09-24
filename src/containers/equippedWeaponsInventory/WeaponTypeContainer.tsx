@@ -48,7 +48,7 @@ const WeaponTypeContainer = ({typeTitle, acceptedTypes, cells}: Props) => {
 
   return (
     <div className={classes.WeaponTypeContainer}>
-      <div className={classes.Shift}></div>
+      <div className={classes.Shift}/>
       <div className={classes.MainContent}>
         <div className={classes.TypeAndWeaponTitle}>
           <LeadText styles={{textAlign: 'right'}}>{typeTitle.toUpperCase()}</LeadText>
