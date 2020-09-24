@@ -24,6 +24,7 @@
             100% 100%, 81.0447% 100%, 77.45% 89.43208%, 0% 89.43208%);
     position: relative;
 
+    // top border
     &::before {
       content: "";
       position: absolute;
@@ -35,7 +36,7 @@
       clip-path: polygon(0% 84.6154%, 77.45% 84.6154%, 81.0447% 0%, 100% 0%,
               100% 23.077%, 81.0447% 23.077%, 77.8% 100%, 0% 100%);
 
-      background: linear-gradient(90deg, transparent, rgba(9,198,187,1));
+      background: linear-gradient(90deg, transparent 40%, rgba(9,198,187,0.8) 60%, rgba(9,198,187,1));
     }
 
     &::after {
@@ -48,7 +49,7 @@
       clip-path: polygon(0% 0%, 77.8% 0%, 81.0447% 76.923%, 100% 76.923%,
               100% 100%, 81.0447% 100%, 77.45% 15.3846%, 0% 15.3846%);
 
-      background: linear-gradient(90deg, transparent, rgba(9,198,187,1));
+      background: linear-gradient(90deg, transparent 40%, rgba(9,198,187,0.8) 60%, rgba(9,198,187,1));
     }
 
     .SquaresContainer {
