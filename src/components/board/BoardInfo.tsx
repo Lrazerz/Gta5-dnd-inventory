@@ -7,7 +7,7 @@ const BoardInfo = ({cash}) => {
   return (
     <div className={classes.BoardInfo}>
       <img src={cashImage}/>
-      <SecondaryText styles={{width: 'auto'}}>
+      <SecondaryText styles={{width: 'auto', fontWeight: 500}}>
         &nbsp;Наличные:{' '}
         <span className={classes.CurrentCashText}>
             ${cash}

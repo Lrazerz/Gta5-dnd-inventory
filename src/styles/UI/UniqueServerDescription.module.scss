@@ -42,8 +42,21 @@
       flex-grow: 1;
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      margin-top: 4%;
+      //justify-content: center;
+      justify-content: flex-start;
       align-items: flex-start;
+
+      @media(min-width: 1900px) {
+        margin-top: 9%;
+      }
+
+      @media(min-width: 2100px) {
+        margin-top: 12%;
+      }
+      @media(min-width: 2100px) {
+        margin-top: 12%;
+      }
 
       .ServerDescription {
         font-family: inherit;

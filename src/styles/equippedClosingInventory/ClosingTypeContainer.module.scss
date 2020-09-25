@@ -80,3 +80,14 @@
     }
   }
 }
+
+@media (min-aspect-ratio: theme.$aspect-ratio-16x9) {
+  .TitleContainer {
+    margin-bottom: -0.2%;
+  }
+  @media (min-width: 1900px) {
+    .TitleContainer {
+      margin-bottom: -0.7%;
+    }
+  }
+}
