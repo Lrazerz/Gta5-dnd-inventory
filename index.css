@@ -21,16 +21,16 @@ body * {
     background: rgba(56, 69, 168, 0.4);
 }
 
-/*#rootWrapper {*/
-/*    width: 100%;*/
-/*    height: 100%;*/
+#rootWrapper {
+    width: 100%;
+    height: 100%;
 
-/*    background-image: url("./src/assets/dummy/game-screen-1.jpg");*/
-/*    !*background-image: url("./src/assets/dummy/game-screen-2.jpg");*!*/
-/*    !*background-image: url("./src/assets/images/UI/root-background.png");*!*/
-/*    background-size: cover;*/
+    background-image: url("./src/assets/dummy/game-screen-1.jpg");
+    /*background-image: url("./src/assets/dummy/game-screen-2.jpg");*/
+    /*background-image: url("./src/assets/images/UI/root-background.png");*/
+    background-size: cover;
 
-/*}*/
+}
 
 @font-face {
     font-family: 'Montserrat-Bold';

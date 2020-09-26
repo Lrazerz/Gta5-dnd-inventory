@@ -120,7 +120,7 @@ const addItem = ([x, y]) => {
     // translate to Server Item
     const itemToServer = translateToServerItem(item);
     //@ts-ignore
-    // mp.trigger(itemToServer);
+    mp.trigger(itemToServer);
   }
 }
 
