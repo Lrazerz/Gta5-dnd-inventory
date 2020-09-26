@@ -74,9 +74,11 @@ const SquareEquippedItem = ({item}: { item: any }) => {
   const [{}, drag, preview] = useDrag({
     item: {type: item.category, isInventory: true},
     begin() {
+      console.log('SquareEquippedItem useDrag begin');
       dispatch(addDraggedItem([0, 0], item, true));
     },
     end() {
+      console.log('SquareEquippedItem useDrag end');
       dispatch(draggedItemRelease());
     },
     collect: () => {

@@ -17,9 +17,11 @@ const SquareCommonItem = ({coords: [x, y], item}) => {
   const [{}, drag, preview] = useDrag({
     item: {type: item.category, isInventory: false},
     begin() {
+      console.log('SquareCommonItem useDrag begin');
       dispatch(addDraggedItem([x, y], item));
     },
     end() {
+      console.log('SquareCommonItem useDrag end');
       dispatch(draggedItemRelease());
     },
     collect: (monitor) => {

@@ -26,6 +26,7 @@ const BoardSquare = ({coords: [x, y], children}) => {
   const [{}, drop] = useDrop({
     accept: AllItemTypes,
     drop: (DNDItem, monitor) => {
+      console.log('BoardSquare useDrop drop');
       if (monitor.canDrop()) {
         // if the same item
         if(typeof draggedItem.mainCell === 'object' &&

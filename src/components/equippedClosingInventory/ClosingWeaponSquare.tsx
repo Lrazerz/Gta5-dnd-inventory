@@ -27,6 +27,7 @@ const ClosingWeaponSquare = ({children, acceptedItemType, coords, itemId}) => {
   const [{isOver}, drop] = useDrop({
     accept: acceptedItemType,
     drop: (DNDItem, monitor) => {
+      console.log('ClosingWeaponSquare useDrop drop');
       if (monitor.canDrop()) {
         // if the same item
         if(typeof draggedItem.mainCell === 'number' && draggedItem.mainCell === coords) {
