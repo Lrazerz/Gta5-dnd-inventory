@@ -21,6 +21,7 @@
     display: flex;
     height: 93.8%;
     width: 100%;
+    background: rgba(56, 69, 168, 0.4);
     @media (max-width: theme.$breakpoint-md) {
       flex-direction: column;
     }
