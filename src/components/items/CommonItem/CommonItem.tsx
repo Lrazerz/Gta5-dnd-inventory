@@ -12,8 +12,8 @@ const CommonItem: React.FC<Props> = ({
                                      }) => {
   return (
     <>
-      <div className={classes.CommonItem}>
-        <div ref={imageContainerForwardedRef} className={classes.ImageContainer}>
+      <div className={classes.CommonItem} >
+        <div ref={imageContainerForwardedRef} className={classes.ImageContainer} onDragOver={e => e.preventDefault()}>
           {children}
         </div>
       </div>

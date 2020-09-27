@@ -81,7 +81,7 @@ const BoardSquare = ({coords: [x, y], children}) => {
 
   return (
     <div ref={drop} className={classes.BoardSquare} style={styles}
-         onDragOver={() => console.log('dragOver',x,y)}>
+         onDragOver={e => {e.preventDefault();console.log('dragOver',x,y)}} >
       <Square>{children}</Square>
       {isOver && !canDrop && <Overlay color={theme.colors.danger}/>}
       {isOver && canDrop && <Overlay color={theme.colors.success}/>}
