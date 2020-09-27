@@ -13,7 +13,7 @@ import rightSparksSvg from "./assets/images/UI/right-sparks.svg";
 import {openOrRefreshInventory} from "./redux/actions/board";
 
 const App: React.FC = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
 
   // @ts-ignore
   if(!window.openInventory || !window.refreshInventory) {
@@ -28,22 +28,25 @@ const App: React.FC = () => {
   }
 
   return (
-    <div className={classes.AppContainer}>
-      <div className={classes.TopTooltip}>
-        <SecondaryText styles={{fontWeight: 600, color: '#fcfdff', width: 'auto'}}>
-          Нажмите I для выхода
-        </SecondaryText>
-      </div>
-      <div className={classes.App}>
-       <EquippedClosingInventoryContainer/>
-        <div className={classes.BoardContainer}>
-          <AppBoard/>
+    <>
+      <div className={classes.BlurredWrapper}/>
+      <div className={classes.AppContainer}>
+        <div className={classes.TopTooltip}>
+          <SecondaryText styles={{fontWeight: 600, color: '#fcfdff', width: 'auto'}}>
+            Нажмите I для выхода
+          </SecondaryText>
         </div>
-        <EquippedWeaponsInventoryContainer />
+        <div className={classes.App}>
+         <EquippedClosingInventoryContainer/>
+          <div className={classes.BoardContainer}>
+            <AppBoard/>
+          </div>
+          <EquippedWeaponsInventoryContainer />
+        </div>
+        <object type="image/svg+xml" data={leftSparksSvg} className={classes.LeftSparksSvgContainer} />
+        <object type="image/svg+xml" data={rightSparksSvg} className={classes.RightSparksSvgContainer} />
       </div>
-      <object type="image/svg+xml" data={leftSparksSvg} className={classes.LeftSparksSvgContainer} />
-      <object type="image/svg+xml" data={rightSparksSvg} className={classes.RightSparksSvgContainer} />
-    </div>
+    </>
   );
 }
 

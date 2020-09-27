@@ -1,7 +1,6 @@
 import React from 'react';
 import classes from '../../styles/equippedClosingInventory/ClosingWeaponSquare.module.scss';
 import {useDispatch} from 'react-redux';
-import {useDrop} from "react-dnd";
 import Overlay from "../UI/Overlay";
 import {useSelector} from 'react-redux';
 import {removeEquippedItem, setEquippedItem} from "../../redux/actions/equippedItems";
@@ -24,45 +23,47 @@ const ClosingWeaponSquare = ({children, acceptedItemType, coords, itemId}) => {
     isAllowDrop = !children || itemId === draggedItem.id;
   }
 
-  const [{isOver}, drop] = useDrop({
-    accept: acceptedItemType,
-    drop: (DNDItem, monitor) => {
-      console.log('ClosingWeaponSquare useDrop drop');
-      if (monitor.canDrop()) {
-        // if the same item
-        if(typeof draggedItem.mainCell === 'number' && draggedItem.mainCell === coords) {
-          return;
-        }
-        // @ts-ignore
-        if (DNDItem.isInventory) {
-            dispatch(removeEquippedItem(draggedItem.mainCell));
-            // If item from board
-        } else {
-          // If item is weapon
-          if (acceptedItemType === ItemTypes.WEAPON_RIFLE || acceptedItemType === ItemTypes.WEAPON_PISTOL
-          || acceptedItemType === ItemTypes.WEAPON_LAUNCHER) {
-            draggedItem.mainCellOnBoard = draggedItem.mainCell;
-            // action that changes item.isEquipped on board to true
-            dispatch(changeEquippedState(draggedItem, true));
-          } else {
-            dispatch(removeItem(draggedItem.mainCell, draggedItem.width, draggedItem.height));
-          }
-        }
-        dispatch(setEquippedItem(coords));
-      }
-    },
-    canDrop: () => {
-      return isAllowDrop;
-    },
-    hover: () => {
-      if(allHoveredSquares) {
-        dispatch(removeHoveredSquares());
-      }
-    },
-    collect: (monitor) => {
-      return {isOver: monitor.isOver({shallow: true})};
-    }
-  });
+  // const [{isOver}, drop] = useDrop({
+  //   accept: acceptedItemType,
+  //   drop: (DNDItem, monitor) => {
+  //     console.log('ClosingWeaponSquare useDrop drop');
+  //     if (monitor.canDrop()) {
+  //       // if the same item
+  //       if(typeof draggedItem.mainCell === 'number' && draggedItem.mainCell === coords) {
+  //         return;
+  //       }
+  //       // @ts-ignore
+  //       if (DNDItem.isInventory) {
+  //           dispatch(removeEquippedItem(draggedItem.mainCell));
+  //           // If item from board
+  //       } else {
+  //         // If item is weapon
+  //         if (acceptedItemType === ItemTypes.WEAPON_RIFLE || acceptedItemType === ItemTypes.WEAPON_PISTOL
+  //         || acceptedItemType === ItemTypes.WEAPON_LAUNCHER) {
+  //           draggedItem.mainCellOnBoard = draggedItem.mainCell;
+  //           // action that changes item.isEquipped on board to true
+  //           dispatch(changeEquippedState(draggedItem, true));
+  //         } else {
+  //           dispatch(removeItem(draggedItem.mainCell, draggedItem.width, draggedItem.height));
+  //         }
+  //       }
+  //       dispatch(setEquippedItem(coords));
+  //     }
+  //   },
+  //   canDrop: () => {
+  //     return isAllowDrop;
+  //   },
+  //   hover: () => {
+  //     if(allHoveredSquares) {
+  //       dispatch(removeHoveredSquares());
+  //     }
+  //   },
+  //   collect: (monitor) => {
+  //     return {isOver: monitor.isOver({shallow: true})};
+  //   }
+  // });
+
+  const [isOver, drop] = [false, null];
 
   const successColor = WeaponItemTypes.includes(acceptedItemType)
     ? `linear-gradient(90deg,transparent, ${theme.colors.success} 50%, transparent`

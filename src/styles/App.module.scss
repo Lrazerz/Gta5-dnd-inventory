@@ -1,9 +1,24 @@
 @use '../constants/scss/theme';
 
-.AppContainer {
+.BlurredWrapper {
   width: 100%;
   height: 100%;
-  backdrop-filter: blur(0.2rem);
+
+  background-image: url("../assets/dummy/game-screen-1.jpg");
+  /*background-image: url("./src/assets/dummy/game-screen-2.jpg");*/
+  /*background-image: url("./src/assets/images/UI/root-background.png");*/
+  background-size: cover;
+  filter: blur(0.3rem);
+}
+
+.AppContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  //backdrop-filter: blur(1rem);
+  background: rgba(56, 69, 168, 0.2);
   .TopTooltip {
     height: 6.2%;
     width: 100%;
@@ -21,7 +36,6 @@
     display: flex;
     height: 93.8%;
     width: 100%;
-    background: rgba(56, 69, 168, 0.4);
     @media (max-width: theme.$breakpoint-md) {
       flex-direction: column;
     }

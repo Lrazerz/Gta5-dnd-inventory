@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import Square from "../../components/Square/Square";
 import {AllItemTypes, ItemTypes} from "../../constants/dnd/types";
-import {useDrop} from "react-dnd";
 import {useDispatch, useSelector} from "react-redux";
 import {addItem, removeItem} from "../../redux/actions/board";
 import Overlay from "../../components/UI/Overlay";
@@ -9,8 +8,6 @@ import {setHoveredSquares} from "../../redux/actions/draggedItem";
 import classes from '../../styles/board/BoardSquare.module.scss';
 import theme from "../../constants/css/theme";
 import {removeEquippedItem} from "../../redux/actions/equippedItems";
-import {Simulate} from "react-dom/test-utils";
-import drag = Simulate.drag;
 
 const BoardSquare = ({coords: [x, y], children}) => {
   const [isOver, setIsOver] = useState(false);
@@ -23,39 +20,40 @@ const BoardSquare = ({coords: [x, y], children}) => {
 
   const dispatch = useDispatch();
 
-  const [{}, drop] = useDrop({
-    accept: AllItemTypes,
-    drop: (DNDItem, monitor) => {
-      console.log('BoardSquare useDrop drop');
-      if (monitor.canDrop()) {
-        // if the same item
-        if(typeof draggedItem.mainCell === 'object' &&
-          draggedItem.mainCell[0] === x - xDown && draggedItem.mainCell[1] === y - yDown) {
-          return;
-        }
-        // @ts-ignore
-        if (DNDItem.isInventory) {
-          // check if weapon - remove prev (transparent) weapon from board
-          if(draggedItem.category === ItemTypes.WEAPON_RIFLE || draggedItem.category === ItemTypes.WEAPON_PISTOL
-          || draggedItem.category === ItemTypes.WEAPON_LAUNCHER) {
-            dispatch(removeItem(draggedItem.mainCellOnBoard, draggedItem.width, draggedItem.height));
-          }
-          dispatch(removeEquippedItem(draggedItem.mainCell));
-        } else {
-          dispatch(removeItem(draggedItem.mainCell, draggedItem.width, draggedItem.height));
-        }
-        dispatch(addItem([x, y]));
-      }
-    },
-    hover: (DNDItem, monitor) => {
-      if (monitor.isOver({shallow: true})) {
-        if (!hoveredSquare || hoveredSquare[0] !== x || hoveredSquare[1] !== y) {
-          dispatch(setHoveredSquares([x, y]));
-        }
-      }
-    },
-    canDrop: () => canDropRedux
-  });
+  // const [{}, drop] = useDrop({
+  //   accept: AllItemTypes,
+  //   drop: (DNDItem, monitor) => {
+  //     console.log('BoardSquare useDrop drop');
+  //     if (monitor.canDrop()) {
+  //       // if the same item
+  //       if(typeof draggedItem.mainCell === 'object' &&
+  //         draggedItem.mainCell[0] === x - xDown && draggedItem.mainCell[1] === y - yDown) {
+  //         return;
+  //       }
+  //       // @ts-ignore
+  //       if (DNDItem.isInventory) {
+  //         // check if weapon - remove prev (transparent) weapon from board
+  //         if(draggedItem.category === ItemTypes.WEAPON_RIFLE || draggedItem.category === ItemTypes.WEAPON_PISTOL
+  //         || draggedItem.category === ItemTypes.WEAPON_LAUNCHER) {
+  //           dispatch(removeItem(draggedItem.mainCellOnBoard, draggedItem.width, draggedItem.height));
+  //         }
+  //         dispatch(removeEquippedItem(draggedItem.mainCell));
+  //       } else {
+  //         dispatch(removeItem(draggedItem.mainCell, draggedItem.width, draggedItem.height));
+  //       }
+  //       dispatch(addItem([x, y]));
+  //     }
+  //   },
+  //   hover: (DNDItem, monitor) => {
+  //     if (monitor.isOver({shallow: true})) {
+  //       if (!hoveredSquare || hoveredSquare[0] !== x || hoveredSquare[1] !== y) {
+  //         dispatch(setHoveredSquares([x, y]));
+  //       }
+  //     }
+  //   },
+  //   canDrop: () => canDropRedux
+  // });
+  const drop = null;
 
   useEffect(() => {
     if (allHoveredSquares) {
@@ -71,7 +69,8 @@ const BoardSquare = ({coords: [x, y], children}) => {
     setCanDrop(canDropRedux)
   }, [x, y, allHoveredSquares]);
 
-  let styles = {outline: `1px solid rgba(109, 114, 125, 0.8)`};
+  // let styles = {outline: `1px solid rgba(109, 114, 125, 0.8)`};
+  let styles = {outline: `0.5px solid rgba(109, 114, 125, 0.8)`};
 
   if (children) {
     styles = null;
@@ -80,13 +79,9 @@ const BoardSquare = ({coords: [x, y], children}) => {
     styles = {outline: `1px solid rgba(109, 114, 125, 0.8)`}
   }
 
-  // if(x === 4 && y === 0) {
-  //   // true && false === danger
-  //   console.log('boardSquare: isover', isOver, 'canDrop', canDropRedux);
-  // }
-
   return (
-    <div ref={drop} className={classes.BoardSquare} style={styles}>
+    <div ref={drop} className={classes.BoardSquare} style={styles}
+         onDragOver={() => console.log('dragOver',x,y)}>
       <Square>{children}</Square>
       {isOver && !canDrop && <Overlay color={theme.colors.danger}/>}
       {isOver && canDrop && <Overlay color={theme.colors.success}/>}

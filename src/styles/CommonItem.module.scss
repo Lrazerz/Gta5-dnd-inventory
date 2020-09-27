@@ -1,9 +1,10 @@
 .CommonItem {
+  background-color: transparent;
   display: block;
   position: absolute;
+  //z-index: 100;
   width: 100%;
   height: 100%;
-  background-color: transparent;
 }
 
 .ImageContainer {

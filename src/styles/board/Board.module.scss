@@ -6,7 +6,8 @@
     grid-template-columns: repeat(16, 1fr);
     grid-template-rows: repeat(6, 1fr);
     box-sizing: border-box;
-    border: 3px solid rgba(116, 121, 130, 0.7);
+    //border: 3px solid rgba(116, 121, 130, 0.7);
+    border: 1.5px solid rgba(116, 121, 130, 0.7);
     background: rgba(96, 99, 110, 0.6);
     overflow: hidden;
 }

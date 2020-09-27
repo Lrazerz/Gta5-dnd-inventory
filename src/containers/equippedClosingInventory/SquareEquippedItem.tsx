@@ -1,5 +1,4 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {useDrag} from 'react-dnd';
 import {useDispatch} from "react-redux";
 import {addDraggedItem, draggedItemRelease} from "../../redux/actions/draggedItem";
 import EquippedItem from "../../components/items/EquippedItem";
@@ -71,20 +70,22 @@ const SquareEquippedItem = ({item}: { item: any }) => {
   }, []);
 
   const dispatch = useDispatch();
-  const [{}, drag, preview] = useDrag({
-    item: {type: item.category, isInventory: true},
-    begin() {
-      console.log('SquareEquippedItem useDrag begin');
-      dispatch(addDraggedItem([0, 0], item, true));
-    },
-    end() {
-      console.log('SquareEquippedItem useDrag end');
-      dispatch(draggedItemRelease());
-    },
-    collect: () => {
-      return ({});
-    }
-  });
+  // const [{}, drag, preview] = useDrag({
+  //   item: {type: item.category, isInventory: true},
+  //   begin() {
+  //     console.log('SquareEquippedItem useDrag begin');
+  //     dispatch(addDraggedItem([0, 0], item, true));
+  //   },
+  //   end() {
+  //     console.log('SquareEquippedItem useDrag end');
+  //     dispatch(draggedItemRelease());
+  //   },
+  //   collect: () => {
+  //     return ({});
+  //   }
+  // });
+
+  const [{}, drag, preview] = [{}, null, () => {}]
 
   let imageElement = (
     <>

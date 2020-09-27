@@ -1,12 +1,25 @@
+@use '../../constants/scss/theme';
+
 .BoardInfo {
   flex: 1 1 auto;
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  height: 10%;
-  max-height: 10%;
+
+  height: 15%;
+  max-height: 15%;
+
+  @media(min-width: 1200px) {
+    height: 13%;
+    max-height: 13%;
+  }
+  @media(min-width: 1500px) {
+    height: 10%;
+    max-height: 10%;
+  }
 }
 
 .CurrentCashText {
+  font-weight: 600;
   color: #15d598;
 }

@@ -1,10 +1,10 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {useDrag} from 'react-dnd';
 import {useDispatch} from "react-redux";
 import {addDraggedItem, draggedItemRelease} from "../../redux/actions/draggedItem";
 import CommonItem from "../../components/items/CommonItem/CommonItem";
 import classes from '../../styles/board/SquareCommonItem.module.scss';
 import SecondaryText from "../../components/layout/SecondaryText";
+import Draggable from 'react-draggable';
 
 const SquareCommonItem = ({coords: [x, y], item}) => {
 
@@ -14,20 +14,21 @@ const SquareCommonItem = ({coords: [x, y], item}) => {
 
   const dispatch = useDispatch();
   // Allow drag
-  const [{}, drag, preview] = useDrag({
-    item: {type: item.category, isInventory: false},
-    begin() {
-      console.log('SquareCommonItem useDrag begin');
-      dispatch(addDraggedItem([x, y], item));
-    },
-    end() {
-      console.log('SquareCommonItem useDrag end');
-      dispatch(draggedItemRelease());
-    },
-    collect: (monitor) => {
-      return ({});
-    }
-  });
+  // const [{}, drag, preview] = useDrag({
+  //   item: {type: item.category, isInventory: false},
+  //   begin() {
+  //     console.log('SquareCommonItem useDrag begin');
+  //     dispatch(addDraggedItem([x, y], item));
+  //   },
+  //   end() {
+  //     console.log('SquareCommonItem useDrag end');
+  //     dispatch(draggedItemRelease());
+  //   },
+  //   collect: (monitor) => {
+  //     return ({});
+  //   }
+  // });
+  const [{}, drag, preview] = [{}, null, () => {}]
 
   const imageContainerRef = useRef();
   useEffect(() => {
@@ -58,7 +59,7 @@ const SquareCommonItem = ({coords: [x, y], item}) => {
 
     // Remove event listener on cleanup
     return () => window.removeEventListener("resize", handleResize);
-  }, []); // Empty array ensures that effect is only run on mount
+  }, []);
 
   let imageElement = null;
 
@@ -75,14 +76,18 @@ const SquareCommonItem = ({coords: [x, y], item}) => {
         </div>);
     }
 
-    // console.log('SqCommItem', item.isEquipped, item);
     imageElement = (
       <>
-        <div className={classes.ImageContainer} style={{width: imageWidth, height: imageHeight}}>
-          <img src={item.imageUrl}
-               className={classes.Image} style={item.isEquipped ? {opacity: '0.3'} : null}/>
-          {currentCountText}
-        </div>
+        {/*<Draggable onStart={() => dispatch(addDraggedItem([x, y], item))}*/}
+        {/*           onDrag={(props) => console.log('ondrag props', props)}*/}
+        {/*onStop={(props) => console.log('stop',props)}>*/}
+          <div className={classes.ImageContainer} style={{width: imageWidth, height: imageHeight,
+          backgroundImage: `url(${item.imageUrl})`, backgroundSize: `100% 100%`}} draggable={"true"}>
+            {/*<img src={item.imageUrl}*/}
+            {/*     className={classes.Image} style={item.isEquipped ? {opacity: '0.3'} : null}/>*/}
+            {currentCountText}
+          </div>
+        {/*</Draggable>*/}
       </>
     );
   }
@@ -115,7 +120,7 @@ const SquareCommonItem = ({coords: [x, y], item}) => {
   }, [item, imageWidth, imageHeight]);
 
   return (
-    <CommonItem forwardedRef={drag} imageContainerForwardedRef={imageContainerRef} connectPreview={preview}
+    <CommonItem imageContainerForwardedRef={imageContainerRef}
                 imageUrl={resultDataUri ? resultDataUri : null}>
       {imageElement}
     </CommonItem>
