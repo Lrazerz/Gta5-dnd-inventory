@@ -66,7 +66,7 @@ const BoardSquare = ({coords: [x, y], children}) => {
     } else {
       setIsOver(false);
     }
-    setCanDrop(canDropRedux)
+    setCanDrop(canDropRedux);
   }, [x, y, allHoveredSquares]);
 
   // let styles = {outline: `1px solid rgba(109, 114, 125, 0.8)`};
@@ -81,7 +81,7 @@ const BoardSquare = ({coords: [x, y], children}) => {
 
   return (
     <div ref={drop} className={classes.BoardSquare} style={styles}
-         onDragOver={e => {e.preventDefault();console.log('dragOver',x,y)}} >
+         onDragOver={e => {e.preventDefault();console.log('dragOver',x,y,e.dataTransfer.getData('isInventory'))}} >
       <Square>{children}</Square>
       {isOver && !canDrop && <Overlay color={theme.colors.danger}/>}
       {isOver && canDrop && <Overlay color={theme.colors.success}/>}

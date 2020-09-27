@@ -83,7 +83,9 @@ const SquareCommonItem = ({coords: [x, y], item}) => {
         {/*onStop={(props) => console.log('stop',props)}>*/}
           <div className={classes.ImageContainer} style={{width: imageWidth, height: imageHeight,
           backgroundImage: `url(${item.imageUrl})`, backgroundSize: `100% 100%`}} draggable={"true"}
-          onDragStart={e => {e.dataTransfer.effectAllowed = "all"}}>
+          onDragStart={e => {console.log('drag starts');e.dataTransfer.effectAllowed = "move";
+          e.dataTransfer.setData('isInventory', 'true')}}
+          onDragEnd={() => console.log('drag ends')}>
             {/*<img src={item.imageUrl}*/}
             {/*     className={classes.Image} style={item.isEquipped ? {opacity: '0.3'} : null}/>*/}
             {currentCountText}
