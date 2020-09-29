@@ -1,19 +1,17 @@
 import Item from "../models/Item";
 import {xMax} from '../constants/boardDimensions';
 
-const translateToServerItem = (item: Item, enabled: boolean = false) => {
+const translateToServerItem = (item: Item) => {
   const {id, name, category, mainCell, width,
-    height, currentCount, imageUrl} = item;
+    height, currentCount, isEquipped} = item;
   let {rest} = item;
 
   // translate coords to 1-dimension
   let posNumberLeftAngle = mainCell;
 
-  if(!enabled) {
+  if(!isEquipped) {
     posNumberLeftAngle = mainCell[1] * (xMax + 1) + (mainCell[0] + 1);
-    rest = {...rest, Enabled: false};
   } else {
-    rest = {...rest, Enabled: true};
   }
 
   return JSON.stringify({
@@ -24,7 +22,7 @@ const translateToServerItem = (item: Item, enabled: boolean = false) => {
     SizeX: width,
     SizeY: height,
     CurrentCount: currentCount,
-    ImageUrl: imageUrl,
+    Enabled: isEquipped,
     ...rest
   });
 }

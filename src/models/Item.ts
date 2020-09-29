@@ -25,10 +25,12 @@ export default class Item {
 
   public imageUrl: string | null;
 
+  public isEquipped: boolean;
+
   public rest: any;
 
-  constructor(id: string, name: string, category: ItemCategories | string, mainCell: [number, number], width: number, height: number,
-              currentCount: number, imageUrl: string | null, rest: any) {
+  constructor(id: string, name: string, category: ItemCategories | string, mainCell: [number, number] | number, width: number, height: number,
+              currentCount: number, imageUrl: string | null, isEquipped: boolean, rest: any) {
     this.id = id;
     this.name = name;
     this.category = category;
@@ -37,6 +39,7 @@ export default class Item {
     this.height = height;
     this.currentCount = currentCount;
     this.imageUrl = imageUrl;
+    this.isEquipped = isEquipped;
     this.rest = rest;
   }
 }

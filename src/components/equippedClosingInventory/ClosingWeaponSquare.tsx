@@ -5,7 +5,7 @@ import Overlay from "../UI/Overlay";
 import {useSelector} from 'react-redux';
 import {removeEquippedItem, setEquippedItem} from "../../redux/actions/equippedItems";
 import {changeEquippedState, removeItem} from "../../redux/actions/board";
-import {removeHoveredSquares} from "../../redux/actions/draggedItem";
+import {removeHoveredSquares, setHoveredSquares} from "../../redux/actions/draggedItem";
 import theme from "../../constants/css/theme";
 import {ItemTypes, WeaponItemTypes} from "../../constants/dnd/types";
 import {Simulate} from "react-dom/test-utils";
@@ -16,17 +16,11 @@ import change = Simulate.change;
 const ClosingWeaponSquare = ({children, acceptedItemType, coords, itemId}) => {
   const dispatch = useDispatch();
 
-  const {item: draggedItem, allHoveredSquares} = useSelector(({draggedItem}) => draggedItem);
-  let isAllowDrop = !children;
-
-  if (draggedItem) {
-    isAllowDrop = !children || itemId === draggedItem.id;
-  }
+  const {item: draggedItem, hoveredSquare, allHoveredSquares, canDrop} = useSelector(({draggedItem}) => draggedItem);
 
   // const [{isOver}, drop] = useDrop({
   //   accept: acceptedItemType,
   //   drop: (DNDItem, monitor) => {
-  //     console.log('ClosingWeaponSquare useDrop drop');
   //     if (monitor.canDrop()) {
   //       // if the same item
   //       if(typeof draggedItem.mainCell === 'number' && draggedItem.mainCell === coords) {
@@ -63,18 +57,45 @@ const ClosingWeaponSquare = ({children, acceptedItemType, coords, itemId}) => {
   //   }
   // });
 
-  const [isOver, drop] = [false, null];
+  const squareMouseOverHandler = (e) => {
+    e.persist();
+    if (draggedItem) {
+      if (!hoveredSquare || typeof hoveredSquare !== 'number' || hoveredSquare !== coords) {
+        dispatch(setHoveredSquares(coords, true, acceptedItemType));
+      }
+    }
+  }
 
-  const successColor = WeaponItemTypes.includes(acceptedItemType)
-    ? `linear-gradient(90deg,transparent, ${theme.colors.success} 50%, transparent`
-    : theme.colors.success;
+  let closingWeaponSquareTypes;
 
+  closingWeaponSquareTypes = {
+    pointerEvents: (typeof hoveredSquare === 'number' && hoveredSquare === coords ) ? 'none' : 'auto',
+  }
+
+  const isOver = hoveredSquare === coords;
+
+
+  // overlay colors
+  let successColor = theme.colors.success;
+  let dangerColor = theme.colors.danger;
+
+  if(WeaponItemTypes.includes(acceptedItemType)) {
+    successColor = `linear-gradient(90deg, transparent, ${theme.colors.success} 50%, transparent)`;
+    dangerColor = `linear-gradient(90deg, transparent, ${theme.colors.danger} 50%, transparent)`;
+  }
+
+
+
+  if(draggedItem) {
+    closingWeaponSquareTypes = {...closingWeaponSquareTypes, zIndex: 1000};
+  }
 
   return (
-    <div ref={drop} className={classes.ClosingWeaponSquare}>
+    <div className={classes.ClosingWeaponSquare} style={closingWeaponSquareTypes}
+         onMouseOver={squareMouseOverHandler}>
       {children}
-      {isOver && isAllowDrop && <Overlay color={successColor}/>}
-      {isOver && !isAllowDrop && <Overlay color={theme.colors.danger}/>}
+      {isOver && canDrop && <Overlay color={successColor}/>}
+      {isOver && !canDrop && <Overlay color={dangerColor}/>}
     </div>
   );
 };

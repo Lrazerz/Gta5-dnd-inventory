@@ -13,8 +13,9 @@ interface State {
   yUp: number | null;
   yDown: number | null;
 
-  hoveredSquare: [number,number] | null;
-  allHoveredSquares: Array<Array<number>> | null;
+  isHoveredEquipped: boolean;
+  hoveredSquare: [number,number] | number | null;
+  allHoveredSquares: Array<Array<number>> | number | null;
 
   canDrop: boolean;
 }
@@ -27,6 +28,7 @@ const initialState: State = {
   yUp: null,
   yDown: null,
 
+  isHoveredEquipped: false,
   // Square, hovered with mouse
   hoveredSquare: null,
   // All hovered squares depending on the size of the item
@@ -53,14 +55,13 @@ export default (state = initialState, action) => {
     }
     case HOVERED_SQUARES_REMOVE: {
       return {
-        ...state,
-        hoveredSquare: null,
-        allHoveredSquares: null,
+        ...initialState
       }
     }
     case HOVERED_SQUARES_SET: {
       return {
         ...state,
+        isHoveredEquipped: action.isHoveredEquipped,
         hoveredSquare: action.square,
         allHoveredSquares: action.squares,
         canDrop: action.canDrop,

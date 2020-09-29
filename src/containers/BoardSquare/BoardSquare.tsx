@@ -8,6 +8,7 @@ import {setHoveredSquares} from "../../redux/actions/draggedItem";
 import classes from '../../styles/board/BoardSquare.module.scss';
 import theme from "../../constants/css/theme";
 import {removeEquippedItem} from "../../redux/actions/equippedItems";
+import board from "../../redux/reducers/board";
 
 const BoardSquare = ({coords: [x, y], children}) => {
   const [isOver, setIsOver] = useState(false);
@@ -23,7 +24,6 @@ const BoardSquare = ({coords: [x, y], children}) => {
   // const [{}, drop] = useDrop({
   //   accept: AllItemTypes,
   //   drop: (DNDItem, monitor) => {
-  //     console.log('BoardSquare useDrop drop');
   //     if (monitor.canDrop()) {
   //       // if the same item
   //       if(typeof draggedItem.mainCell === 'object' &&
@@ -56,7 +56,7 @@ const BoardSquare = ({coords: [x, y], children}) => {
   const drop = null;
 
   useEffect(() => {
-    if (allHoveredSquares) {
+    if (allHoveredSquares && typeof allHoveredSquares === 'object') {
       const idx = allHoveredSquares.findIndex((el) => el[0] === x && el[1] === y);
       if (idx !== -1) {
         setIsOver(true);
@@ -69,19 +69,46 @@ const BoardSquare = ({coords: [x, y], children}) => {
     setCanDrop(canDropRedux);
   }, [x, y, allHoveredSquares]);
 
-  // let styles = {outline: `1px solid rgba(109, 114, 125, 0.8)`};
-  let styles = {outline: `0.5px solid rgba(109, 114, 125, 0.8)`};
+  let boardSquareStyles;
 
-  if (children) {
-    styles = null;
+   boardSquareStyles = {
+    pointerEvents: (hoveredSquare && typeof hoveredSquare === 'object' && (hoveredSquare[0] === x && hoveredSquare[1] === y) ) ? 'none' : 'auto',
   }
+
+
+  // if(x === 0 && y === 0) console.log('pointerevents', boardSquareStyles.pointerEvents + '\n', hoveredSquare);
+
+
+  const squareMouseOverHandler = (e) => {
+     e.persist();
+    if (draggedItem) {
+      if (!hoveredSquare || typeof hoveredSquare !== 'object' || hoveredSquare[0] !== x || hoveredSquare[1] !== y) {
+        dispatch(setHoveredSquares([x, y]));
+      }
+    }
+  }
+
+  // todo was div ref=drop style=styles
+  // let styles = {outline: `1px solid rgba(109, 114, 125, 0.8)`};
+  // @ts-ignore
+  boardSquareStyles = {...boardSquareStyles, outline: `0.25px solid rgba(109, 114, 125, 0.8)`};
+
+  // if (children) {
+  //   boardSquareStyles = boardSquareStyles;
+  // }
   if (isOver) {
-    styles = {outline: `1px solid rgba(109, 114, 125, 0.8)`}
+    // @ts-ignore
+    // boardSquareStyles = {...boardSquareStyles, outline: `0.25px solid rgba(109, 114, 125, 0.8)`};
+  }
+
+  if(draggedItem) {
+    boardSquareStyles = {...boardSquareStyles, zIndex: 200};
   }
 
   return (
-    <div ref={drop} className={classes.BoardSquare} style={styles}
-         onDragOver={e => {e.preventDefault();console.log('dragOver',x,y,e.dataTransfer.getData('isInventory'))}} >
+    // @ts-ignore
+    <div ref={drop} className={classes.BoardSquare} style={boardSquareStyles}
+         onMouseOver={squareMouseOverHandler} onMouseUp={() => console.log('boardSq mouse up')}>
       <Square>{children}</Square>
       {isOver && !canDrop && <Overlay color={theme.colors.danger}/>}
       {isOver && canDrop && <Overlay color={theme.colors.success}/>}

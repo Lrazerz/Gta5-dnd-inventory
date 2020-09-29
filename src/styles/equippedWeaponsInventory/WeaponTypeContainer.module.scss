@@ -29,6 +29,7 @@
 //}
 
 .WeaponSquareContainer {
+  pointer-events: none;
   height: 40.78%;
   width: 100%;
   //background: linear-gradient(90deg, transparent, rgba(44, 60, 97, 1));
@@ -36,6 +37,7 @@
   clip-path: polygon(0% 10.56792%, 77.45% 10.56792%, 81.0447% 0%, 100% 0%,
           100% 100%, 81.0447% 100%, 77.45% 89.43208%, 0% 89.43208%);
   position: relative;
+  z-index: 200;
   // top border
   &::before {
     content: "";

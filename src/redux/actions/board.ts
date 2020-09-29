@@ -25,8 +25,7 @@ const openOrRefreshInventory = async (info) => {
 
     // Square numbers starts from 1 instead of 0
     const {
-      Name, PosNumberLeftAngle, SizeX, SizeY, Enabled, CurrentCount = 1
-      , ...rest
+      Name, PosNumberLeftAngle, SizeX, SizeY, Enabled, CurrentCount = 1, ...rest
     } = item;
     const ID = item.ID.toString();
 
@@ -35,7 +34,7 @@ const openOrRefreshInventory = async (info) => {
       ImageUrl = await import(`../../assets/images/items/${Name.toLowerCase()}.png`);
     } catch (e) {
       if(e.code === 'MODULE_NOT_FOUND') {
-        console.log(`image for "${Name}" not found, using default image.`)
+        // console.log(`image for "${Name}" not found, using default image.`)
       } else {
         console.log('error while importing image');
       }
@@ -56,15 +55,12 @@ const openOrRefreshInventory = async (info) => {
       || category === ItemTypes.WEAPON_LAUNCHER) {
       FullItem = new WeaponItem(ID, Name, category, PosNumberLeftAngle,
         SizeX, SizeY, CurrentCount,
-        ImageUrl, rest, false);
-      if(Enabled) {
-        FullItem.isEquipped = true;
-      }
+        ImageUrl, Enabled, rest);
     } else {
       // If is not weapon
       FullItem = new Item(ID, Name, category, PosNumberLeftAngle,
         SizeX, SizeY, CurrentCount,
-        ImageUrl, rest);
+        ImageUrl, Enabled, rest);
     }
 
     if (Enabled === true) {
@@ -110,15 +106,17 @@ const _changeEquippedState = (squares, newState) => {
 }
 
 // add item fetched from draggedItem
-const addItem = ([x, y]) => {
+const addItem = () => {
   return (dispatch, getState) => {
-    const {allHoveredSquares, xDown, yDown, item} = getState().draggedItem;
+    const {hoveredSquare, allHoveredSquares, xDown, yDown, item} = getState().draggedItem;
 
-    item.mainCell = [x - xDown, y - yDown];
+    item.mainCell = [hoveredSquare[0] - xDown, hoveredSquare[1] - yDown];
+    item.isEquipped = false;
 
     dispatch(_addItem(allHoveredSquares, item));
     // translate to Server Item
     const itemToServer = translateToServerItem(item);
+    console.log('itToServ',itemToServer);
     //@ts-ignore
     mp.trigger(itemToServer);
   }

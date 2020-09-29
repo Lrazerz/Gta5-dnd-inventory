@@ -355,6 +355,8 @@ p {
 }
 html, body, #root {
     height: 100%;
+    overflow: hidden;
+    user-select: none;
 }
 
 body * {

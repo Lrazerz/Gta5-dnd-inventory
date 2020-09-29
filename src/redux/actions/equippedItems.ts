@@ -9,8 +9,10 @@ const _removeEquippedItem = (cellId) => {
 const setEquippedItem = (cellId) => (dispatch, getState) => {
   const item: Item = getState().draggedItem.item;
   item.mainCell = cellId;
+  item.isEquipped = true;
   dispatch({type: EQUIPPED_ITEM_SET, id: cellId, item});
-  const itemToServer = translateToServerItem(item, true);
+  const itemToServer = translateToServerItem(item);
+  console.log('itToServ',itemToServer);
   //@ts-ignore
   mp.trigger(itemToServer);
 }

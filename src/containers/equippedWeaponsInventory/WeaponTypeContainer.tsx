@@ -55,13 +55,11 @@ const WeaponTypeContainer = ({typeTitle, acceptedTypes, cells}: Props) => {
           </SecondaryText>
         </div>
         <div className={classes.WeaponSquareContainer}>
-          <div className={classes.ClosingSquareWrapper}>
             <ClosingWeaponSquare acceptedItemType={mainSquareType}
                                  coords={weaponCell.id}
                                  itemId={weaponCell.cell.item && weaponCell.cell.item.id}>
               {weaponSquareContent}
             </ClosingWeaponSquare>
-          </div>
         </div>
         <div className={classes.AttachmentsSquaresContainer}>
           <div className={classes.LeftArrow}/>
