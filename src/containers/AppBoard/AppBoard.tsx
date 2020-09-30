@@ -9,7 +9,7 @@ import BoardInfo from "../../components/board/BoardInfo";
 
 const AppBoard = () => {
   const squares = [];
-  const {board: boardItems} = useSelector(({board}) => board);
+  const {board: {board: boardItems}, draggedItem: {allHoveredSquares}} = useSelector((state) => state);
 
   const renderSquare = (y: number, x: number) => {
     if (!boardItems) {
@@ -21,8 +21,10 @@ const AppBoard = () => {
     if (item) {
       squareContent = <SquareCommonItem coords={[x, y]} item={item}/>;
     }
+    const isHovered = allHoveredSquares.findIndex(sq => sq[0] === x && sq[1] === y) !== -1;
+
     return (
-      <BoardSquare key={x * 30 + y} coords={[x, y]}>
+      <BoardSquare key={x * 30 + y} coords={[x, y]} isHovered={isHovered}>
         {squareContent}
       </BoardSquare>
     );

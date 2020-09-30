@@ -116,7 +116,6 @@ const addItem = () => {
     dispatch(_addItem(allHoveredSquares, item));
     // translate to Server Item
     const itemToServer = translateToServerItem(item);
-    console.log('itToServ',itemToServer);
     //@ts-ignore
     mp.trigger(itemToServer);
   }

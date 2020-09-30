@@ -141,6 +141,9 @@ const SquareEquippedItem = ({item}: { item: any }) => {
 
     // удалить более ненужные обработчики событий
     newClone.onmouseup = function() {
+      document.body.removeChild(newClone);
+      document.removeEventListener('mousemove', onMouseMove);
+      newClone.onmouseup = null;
       console.log('onmouseup');
 
       if(canDropRef.current) {
@@ -149,20 +152,22 @@ const SquareEquippedItem = ({item}: { item: any }) => {
         // checks
         if(typeof hoveredSquareRef.current === 'number') {
           // add to equipped
-          dispatch(setEquippedItem(hoveredSquareRef.current));
+          try {
+            dispatch(setEquippedItem(hoveredSquareRef.current));
+          } catch (e) {}
         } else {
            // add to board
-          dispatch(addItem());
+          try {
+            dispatch(addItem());
+          } catch (e) {}
         }
         // debugger;
       } else {
         if(event.target) event.target.style.pointerEvents = 'auto';
         if(event.currentTarget) event.currentTarget.style.pointerEvents = 'auto';
       }
+      console.log('draggedRelease');
       dispatch(draggedItemRelease());
-      document.body.removeChild(newClone);
-      document.removeEventListener('mousemove', onMouseMove);
-      newClone.onmouseup = null;
     };
 
   };

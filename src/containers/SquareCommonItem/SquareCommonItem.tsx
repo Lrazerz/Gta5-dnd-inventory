@@ -11,7 +11,6 @@ const SquareCommonItem = ({coords: [x, y], item}) => {
 
   const [imageWidth, setImageWidth] = useState();
   const [imageHeight, setImageHeight] = useState();
-  // const [resultDataUri, setResultDataUri] = useState(null);
 
   const {canDrop, hoveredSquare} = useSelector(state => {return state.draggedItem;});
 
@@ -20,7 +19,6 @@ const SquareCommonItem = ({coords: [x, y], item}) => {
   const hoveredSquareRef = useRef();
   canDropRef.current = canDrop;
   hoveredSquareRef.current = hoveredSquare;
-
 
   const dispatch = useDispatch();
   // Allow drag
@@ -36,7 +34,6 @@ const SquareCommonItem = ({coords: [x, y], item}) => {
   //     return ({});
   //   }
   // });
-  const [{}, drag, preview] = [{}, null, () => {}]
 
   const imageContainerRef = useRef();
   useEffect(() => {
@@ -75,29 +72,23 @@ const SquareCommonItem = ({coords: [x, y], item}) => {
     dispatch(addDraggedItem([x, y], item));
     event.persist();
 
-    // fix mainCell position over draggedElement
-    event.currentTarget.style.zIndex = 0;
+    // save target
+    const savedTarget = event.currentTarget;
+    savedTarget.style.zIndex = 0;
 
     const newClone = event.currentTarget.cloneNode(true);
     newClone.addEventListener('dragstart', (e) => {e.stopPropagation();e.preventDefault();return false});
     // event.currentTarget.style.opacity=0.2;
     event.currentTarget.style.pointerEvents = 'none';
     event.target.style.pointerEvents = 'none';
-    // (2) подготовить к перемещению:
-    // разместить поверх остального содержимого и в абсолютных координатах
+
     newClone.style.position = 'absolute';
     newClone.style.zIndex = 100;
-    // переместим в body, чтобы мяч был точно не внутри position:relative
 
-
-    // document.body.append(event.target);
     document.body.append(newClone);
-    // и установим абсолютно спозиционированный мяч под курсор
 
     moveAt(event.pageX, event.pageY);
 
-    // передвинуть мяч под координаты курсора
-    // и сдвинуть на половину ширины/высоты для центрирования
     function moveAt(pageX, pageY) {
       newClone.style.left = pageX - newClone.offsetWidth / 2 + 'px';
       newClone.style.top = pageY - newClone.offsetHeight / 2 + 'px';
@@ -114,6 +105,10 @@ const SquareCommonItem = ({coords: [x, y], item}) => {
     }
 
     newClone.onmouseup = function() {
+      document.body.removeChild(newClone);
+      document.removeEventListener('mousemove', onMouseMove);
+      newClone.onmouseup = null;
+      savedTarget.style.zIndex = 100;
 
       // debugger;
       if(canDropRef.current) {
@@ -122,20 +117,23 @@ const SquareCommonItem = ({coords: [x, y], item}) => {
         // checks
         if(typeof hoveredSquareRef.current === 'number') {
           // add to equipped
-          dispatch(setEquippedItem(hoveredSquareRef.current));
+          try {
+            dispatch(setEquippedItem(hoveredSquareRef.current));
+          } catch (e) {}
         } else {
           // add to board
-          dispatch(addItem());
+          console.log('addItem');
+          try {
+            dispatch(addItem());
+          } catch(e) {}
         }
-
         // debugger;
       } else {
         event.target.style.pointerEvents = 'auto';
       }
+      console.log('draggedRelease');
       dispatch(draggedItemRelease());
-      document.body.removeChild(newClone);
-      document.removeEventListener('mousemove', onMouseMove);
-      newClone.onmouseup = null;
+
     };
   };
 

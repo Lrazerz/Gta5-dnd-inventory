@@ -10,12 +10,9 @@ import theme from "../../constants/css/theme";
 import {removeEquippedItem} from "../../redux/actions/equippedItems";
 import board from "../../redux/reducers/board";
 
-const BoardSquare = ({coords: [x, y], children}) => {
-  const [isOver, setIsOver] = useState(false);
-  // for simultaneously change overlay color
-  const [canDrop, setCanDrop] = useState(false);
+const BoardSquare = ({coords: [x, y], children, isHovered}) => {
 
-  const {hoveredSquare, allHoveredSquares, canDrop: canDropRedux, item: draggedItem, xDown, yDown} =
+  const {hoveredSquare, canDrop: canDropRedux, item: draggedItem} =
     // @ts-ignore - AppBoard does not exists on DefaultRootState
     useSelector(({draggedItem}) => draggedItem);
 
@@ -55,20 +52,6 @@ const BoardSquare = ({coords: [x, y], children}) => {
   // });
   const drop = null;
 
-  useEffect(() => {
-    if (allHoveredSquares && typeof allHoveredSquares === 'object') {
-      const idx = allHoveredSquares.findIndex((el) => el[0] === x && el[1] === y);
-      if (idx !== -1) {
-        setIsOver(true);
-      } else {
-        setIsOver(false);
-      }
-    } else {
-      setIsOver(false);
-    }
-    setCanDrop(canDropRedux);
-  }, [x, y, allHoveredSquares]);
-
   let boardSquareStyles;
 
    boardSquareStyles = {
@@ -96,10 +79,10 @@ const BoardSquare = ({coords: [x, y], children}) => {
   // if (children) {
   //   boardSquareStyles = boardSquareStyles;
   // }
-  if (isOver) {
-    // @ts-ignore
-    // boardSquareStyles = {...boardSquareStyles, outline: `0.25px solid rgba(109, 114, 125, 0.8)`};
-  }
+  // if (isOver) {
+  //   // @ts-ignore
+  //   // boardSquareStyles = {...boardSquareStyles, outline: `0.25px solid rgba(109, 114, 125, 0.8)`};
+  // }
 
   if(draggedItem) {
     boardSquareStyles = {...boardSquareStyles, zIndex: 200};
@@ -108,10 +91,10 @@ const BoardSquare = ({coords: [x, y], children}) => {
   return (
     // @ts-ignore
     <div ref={drop} className={classes.BoardSquare} style={boardSquareStyles}
-         onMouseOver={squareMouseOverHandler} onMouseUp={() => console.log('boardSq mouse up')}>
+         onMouseOver={squareMouseOverHandler}>
       <Square>{children}</Square>
-      {isOver && !canDrop && <Overlay color={theme.colors.danger}/>}
-      {isOver && canDrop && <Overlay color={theme.colors.success}/>}
+      {isHovered && !canDropRedux && <Overlay color={theme.colors.danger}/>}
+      {isHovered && canDropRedux && <Overlay color={theme.colors.success}/>}
     </div>
   )
 }

@@ -7,16 +7,12 @@ interface Props {
   mainCell: boolean;
 }
 
-const CommonItem: React.FC<Props> = ({
-                                       children, imageContainerForwardedRef, mainCell}) => {
-
+const CommonItem: React.FC<Props> = ({ children, imageContainerForwardedRef }) => {
   return (
-    <>
-      <div ref={imageContainerForwardedRef} className={classes.CommonItem}
-           onDragStart={(e) => {e.preventDefault();return false}}>
-          {children}
-      </div>
-    </>
+    <div ref={imageContainerForwardedRef} className={classes.CommonItem}
+         onDragStart={(e) => {e.stopPropagation();e.preventDefault();return false}}>
+        {children}
+    </div>
   );
 };
 
