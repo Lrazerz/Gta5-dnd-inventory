@@ -14,7 +14,7 @@ import {openOrRefreshInventory} from "./redux/actions/board";
 
 const App: React.FC = () => {
   console.log('App renders');
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
 
   // @ts-ignore
   if(!window.openInventory || !window.refreshInventory) {
