@@ -38,7 +38,6 @@ const SquareEquippedItem = ({item}: { item: any }) => {
 
       if(item.mainCell === 1 || item.mainCell === 2 || item.mainCell === 3) {
         // @ts-ignore
-        // setImageWidth(imageContainerWidth * item.width * 0.24);
         setImageWidth(imageContainerWidth * item.width * 0.44);
         // @ts-ignore
         setImageHeight(imageContainerHeight * item.height * 1);
@@ -48,30 +47,6 @@ const SquareEquippedItem = ({item}: { item: any }) => {
         // @ts-ignore
         setImageHeight(imageContainerHeight * item.height * 1.4);
       }
-
-      // function imageToDataUri(img, width, height) {
-      //
-      //   // create an off-screen canvas
-      //   let canvas = document.createElement('canvas'),
-      //     ctx = canvas.getContext('2d');
-      //
-      //   // set its dimension to target size
-      //   canvas.width = width;
-      //   canvas.height = height;
-      //
-      //   // draw source image into the off-screen canvas:
-      //   ctx.drawImage(img, 0, 0, width, height);
-      //
-      //   // encode image to data-uri with base64 version of compressed image
-      //   return canvas.toDataURL();
-      // }
-
-      // const resizeImage = () => {
-      //   setResultDataUri(imageToDataUri(newImage, imageWidth, imageHeight));
-      // }
-      // const newImage = new Image();
-      // newImage.onload = resizeImage;
-      // newImage.src = item.imageUrl;
     }
 
     // Add event listener
@@ -85,49 +60,36 @@ const SquareEquippedItem = ({item}: { item: any }) => {
   }, []);
 
   const dispatch = useDispatch();
-  // const [{}, drag, preview] = useDrag({
-  //   item: {type: item.category, isInventory: true},
-  //   begin() {
-  //     dispatch(addDraggedItem([0, 0], item, true));
-  //   },
-  //   end() {
-  //     dispatch(draggedItemRelease());
-  //   },
-  //   collect: () => {
-  //     return ({});
-  //   }
-  // });
 
   const imageOnMouseDown = (event) => {
+    console.log('event target',event.target);
+    console.log('event target',event.target);
     dispatch(addDraggedItem([0, 0], item));
     event.persist();
+
+    const savedTarget = event.currentTarget;
+    savedTarget.style.zIndex = 0;
+
     const newClone = event.currentTarget.cloneNode(true);
     // event.target.style.width = '100%';
     if(item.mainCell === 1 || item.mainCell === 2 || item.mainCell === 3) {
+      // careful
       newClone.children[0].children[0].style.width = '100%'
     }
 
     newClone.style.width = imageWidth + 'px';
     newClone.style.height = imageHeight + 'px';
     newClone.addEventListener('dragstart', (e) => {e.stopPropagation();e.preventDefault();return false});
-    // event.currentTarget.style.opacity=0.2;
-    event.currentTarget.style.pointerEvents = 'none';
+
     event.target.style.pointerEvents = 'none';
-    // (2) подготовить к перемещению:
-    // разместить поверх остального содержимого и в абсолютных координатах
+
     newClone.style.position = 'absolute';
-    newClone.style.zIndex = 100;
-    // переместим в body, чтобы мяч был точно не внутри position:relative
+    newClone.style.zIndex = 150;
 
-
-    // document.body.append(event.target);
     document.body.append(newClone);
-    // и установим абсолютно спозиционированный мяч под курсор
 
     moveAt(event.pageX, event.pageY);
 
-    // передвинуть мяч под координаты курсора
-    // и сдвинуть на половину ширины/высоты для центрирования
     function moveAt(pageX, pageY) {
       newClone.style.left = pageX - newClone.offsetWidth / 2 + 'px';
       newClone.style.top = pageY - newClone.offsetHeight / 2 + 'px';
@@ -139,34 +101,27 @@ const SquareEquippedItem = ({item}: { item: any }) => {
 
     document.addEventListener('mousemove', onMouseMove);
 
-    // удалить более ненужные обработчики событий
     newClone.onmouseup = function() {
       document.body.removeChild(newClone);
       document.removeEventListener('mousemove', onMouseMove);
       newClone.onmouseup = null;
-      console.log('onmouseup');
+      savedTarget.style.zIndex = 100;
 
       if(canDropRef.current) {
         dispatch(removeEquippedItem(item.mainCell));
 
-        // checks
         if(typeof hoveredSquareRef.current === 'number') {
-          // add to equipped
           try {
             dispatch(setEquippedItem(hoveredSquareRef.current));
           } catch (e) {}
         } else {
-           // add to board
           try {
             dispatch(addItem());
           } catch (e) {}
         }
-        // debugger;
       } else {
-        if(event.target) event.target.style.pointerEvents = 'auto';
-        if(event.currentTarget) event.currentTarget.style.pointerEvents = 'auto';
+        event.target.style.pointerEvents = 'inherit';
       }
-      console.log('draggedRelease');
       dispatch(draggedItemRelease());
     };
 

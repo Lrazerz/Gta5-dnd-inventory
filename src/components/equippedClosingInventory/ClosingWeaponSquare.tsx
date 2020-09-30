@@ -58,6 +58,7 @@ const ClosingWeaponSquare = ({children, acceptedItemType, coords, itemId}) => {
   // });
 
   const squareMouseOverHandler = (e) => {
+    console.log('mouseOver');
     e.persist();
     if (draggedItem) {
       if (!hoveredSquare || typeof hoveredSquare !== 'number' || hoveredSquare !== coords) {
@@ -69,7 +70,7 @@ const ClosingWeaponSquare = ({children, acceptedItemType, coords, itemId}) => {
   let closingWeaponSquareTypes;
 
   closingWeaponSquareTypes = {
-    pointerEvents: (typeof hoveredSquare === 'number' && hoveredSquare === coords ) ? 'none' : 'auto',
+      pointerEvents: (typeof hoveredSquare === 'number' && hoveredSquare === coords ) ? 'none' : 'auto',
   }
 
   const isOver = hoveredSquare === coords;
@@ -87,7 +88,7 @@ const ClosingWeaponSquare = ({children, acceptedItemType, coords, itemId}) => {
 
 
   if(draggedItem) {
-    closingWeaponSquareTypes = {...closingWeaponSquareTypes, zIndex: 1000};
+    closingWeaponSquareTypes = {...closingWeaponSquareTypes, zIndex: 200};
   }
 
   return (

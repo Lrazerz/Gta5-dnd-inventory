@@ -56,14 +56,13 @@ const BoardSquare = ({coords: [x, y], children, isHovered}) => {
 
    boardSquareStyles = {
     pointerEvents: (hoveredSquare && typeof hoveredSquare === 'object' && (hoveredSquare[0] === x && hoveredSquare[1] === y) ) ? 'none' : 'inherit',
-  }
+   }
 
 
   // if(x === 0 && y === 0) console.log('pointerevents', boardSquareStyles.pointerEvents + '\n', hoveredSquare);
 
 
   const squareMouseOverHandler = (e) => {
-     if(draggedItem) console.log('sq mouse over',x,y);
      e.persist();
     if (draggedItem) {
       if (!hoveredSquare || typeof hoveredSquare !== 'object' || hoveredSquare[0] !== x || hoveredSquare[1] !== y) {
@@ -77,9 +76,7 @@ const BoardSquare = ({coords: [x, y], children, isHovered}) => {
   // @ts-ignore
   boardSquareStyles = {...boardSquareStyles, outline: `0.25px solid rgba(109, 114, 125, 0.8)`};
 
-  // if (children) {
-  //   boardSquareStyles = boardSquareStyles;
-  // }
+
   // if (isOver) {
   //   // @ts-ignore
   //   // boardSquareStyles = {...boardSquareStyles, outline: `0.25px solid rgba(109, 114, 125, 0.8)`};
@@ -87,6 +84,9 @@ const BoardSquare = ({coords: [x, y], children, isHovered}) => {
 
   if(draggedItem) {
     boardSquareStyles = {...boardSquareStyles, zIndex: 200};
+    if (children) {
+      boardSquareStyles = {...boardSquareStyles, outline: 'none'};
+    }
   }
 
   return (

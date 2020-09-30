@@ -157,47 +157,17 @@ const SquareCommonItem = ({coords: [x, y], item, draggedItem}) => {
     }
 
     imageElement = (
-      <>
-          <div className={classes.ImageContainer} style={imageElementStyles}
-               onMouseDown={imageOnMouseDown}
-               onMouseOver={(e) => {console.log('mouse over imageCOnt')}}
-               onDragStart={(e) => {e.stopPropagation();e.preventDefault();return false}}>
-          {/*backgroundImage: `url(${item.imageUrl})`, backgroundSize: `100% 100%`}}*/}
-          {/*>*/}
-            <img src={item.imageUrl}
-                 className={classes.Image}/>
-            {currentCountText}
-          </div>
-      </>
+        <div className={classes.ImageContainer} style={imageElementStyles}
+             onMouseDown={imageOnMouseDown}
+             onDragStart={(e) => {e.stopPropagation();e.preventDefault();return false}}>
+        {/*backgroundImage: `url(${item.imageUrl})`, backgroundSize: `100% 100%`}}*/}
+        {/*>*/}
+          <img src={item.imageUrl}
+               className={classes.Image}/>
+          {currentCountText}
+        </div>
     );
   }
-
-  // useEffect(() => {
-  //   function imageToDataUri(img, width, height) {
-  //
-  //     // create an off-screen canvas
-  //     let canvas = document.createElement('canvas'),
-  {/*      ctx = canvas.getContext('2d');*/}
-
-  //     // set its dimension to target size
-  //     canvas.width = width;
-  //     canvas.height = height;
-  //
-  //     // draw source image into the off-screen canvas:
-  //     ctx.drawImage(img, 0, 0, width, height);
-  //
-  //     // encode image to data-uri with base64 version of compressed image
-  //     return canvas.toDataURL();
-  //   }
-  //
-  //   const resizeImage = () => {
-  //     setResultDataUri(imageToDataUri(newImage, imageWidth, imageHeight));
-  //   }
-  //   const newImage = new Image();
-  //   newImage.onload = resizeImage;
-  //   newImage.src = item.imageUrl;
-  //
-  // }, [item, imageWidth, imageHeight]);
 
   return (
     <CommonItem imageContainerForwardedRef={imageContainerRef} mainCell={x === item.mainCell[0] && y === item.mainCell[1]}>
