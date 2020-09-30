@@ -9,7 +9,7 @@ interface Props {
 
 const CommonItem: React.FC<Props> = ({ children, imageContainerForwardedRef }) => {
   return (
-    <div ref={imageContainerForwardedRef} className={classes.CommonItem}
+    <div ref={imageContainerForwardedRef} className={classes.CommonItem} onMouseUp={() => console.log('mouseUp commonitem')}
          onDragStart={(e) => {e.stopPropagation();e.preventDefault();return false}}>
         {children}
     </div>

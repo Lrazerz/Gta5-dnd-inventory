@@ -55,7 +55,7 @@ const BoardSquare = ({coords: [x, y], children, isHovered}) => {
   let boardSquareStyles;
 
    boardSquareStyles = {
-    pointerEvents: (hoveredSquare && typeof hoveredSquare === 'object' && (hoveredSquare[0] === x && hoveredSquare[1] === y) ) ? 'none' : 'auto',
+    pointerEvents: (hoveredSquare && typeof hoveredSquare === 'object' && (hoveredSquare[0] === x && hoveredSquare[1] === y) ) ? 'none' : 'inherit',
   }
 
 
@@ -63,7 +63,7 @@ const BoardSquare = ({coords: [x, y], children, isHovered}) => {
 
 
   const squareMouseOverHandler = (e) => {
-     if(draggedItem) console.log('sq mouse over');
+     if(draggedItem) console.log('sq mouse over',x,y);
      e.persist();
     if (draggedItem) {
       if (!hoveredSquare || typeof hoveredSquare !== 'object' || hoveredSquare[0] !== x || hoveredSquare[1] !== y) {

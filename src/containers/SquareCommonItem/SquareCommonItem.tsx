@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {CSSProperties, useEffect, useRef, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {addDraggedItem, draggedItemRelease} from "../../redux/actions/draggedItem";
 import CommonItem from "../../components/items/CommonItem/CommonItem";
@@ -79,14 +79,14 @@ const SquareCommonItem = ({coords: [x, y], item, draggedItem}) => {
     const newClone = event.currentTarget.cloneNode(true);
     newClone.addEventListener('dragstart', (e) => {e.stopPropagation();e.preventDefault();return false});
     // event.currentTarget.style.opacity=0.2;
-    event.currentTarget.style.pointerEvents = 'none';
-    event.target.style.pointerEvents = 'none';
+
+    savedTarget.style.pointerEvents = 'none';
+    // event.target.style.pointerEvents = 'none';
 
     newClone.style.position = 'absolute';
-    newClone.style.zIndex = 100;
+    newClone.style.zIndex = 150;
 
     document.body.append(newClone);
-    console.log('eTarget', event.currentTarget);
 
     moveAt(event.pageX, event.pageY);
 
@@ -130,7 +130,7 @@ const SquareCommonItem = ({coords: [x, y], item, draggedItem}) => {
         }
         // debugger;
       } else {
-        event.target.style.pointerEvents = 'auto';
+        event.target.style.pointerEvents = 'inherit';
       }
       dispatch(draggedItemRelease());
 
@@ -150,16 +150,23 @@ const SquareCommonItem = ({coords: [x, y], item, draggedItem}) => {
         </div>);
     }
 
+    const imageElementStyles: CSSProperties = {
+      width: imageWidth,
+      height: imageHeight,
+      pointerEvents: draggedItem ? 'none' : 'inherit',
+    }
+
     imageElement = (
       <>
-          <div className={classes.ImageContainer} style={{width: imageWidth, height: imageHeight}}
+          <div className={classes.ImageContainer} style={imageElementStyles}
                onMouseDown={imageOnMouseDown}
+               onMouseOver={(e) => {console.log('mouse over imageCOnt')}}
                onDragStart={(e) => {e.stopPropagation();e.preventDefault();return false}}>
           {/*backgroundImage: `url(${item.imageUrl})`, backgroundSize: `100% 100%`}}*/}
           {/*>*/}
             <img src={item.imageUrl}
-                 className={classes.Image} style={item.isEquipped ? {opacity: '0.3'} : null}/>
-            {/*{currentCountText}*/}
+                 className={classes.Image}/>
+            {currentCountText}
           </div>
       </>
     );

@@ -9,7 +9,7 @@ import BoardInfo from "../../components/board/BoardInfo";
 
 const AppBoard = () => {
   const squares = [];
-  const {board: {board: boardItems}, draggedItem: {allHoveredSquares, draggedItem}} = useSelector((state) => state);
+  const {board: {board: boardItems}, draggedItem: {allHoveredSquares, item: draggedItem}} = useSelector((state) => state);
 
   const renderSquare = (y: number, x: number) => {
     if (!boardItems) {
