@@ -63,6 +63,7 @@ const BoardSquare = ({coords: [x, y], children, isHovered}) => {
 
 
   const squareMouseOverHandler = (e) => {
+     if(draggedItem) console.log('sq mouse over');
      e.persist();
     if (draggedItem) {
       if (!hoveredSquare || typeof hoveredSquare !== 'object' || hoveredSquare[0] !== x || hoveredSquare[1] !== y) {

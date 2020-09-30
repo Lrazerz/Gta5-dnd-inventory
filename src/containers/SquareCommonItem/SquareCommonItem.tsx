@@ -7,7 +7,7 @@ import SecondaryText from "../../components/layout/SecondaryText";
 import {addItem, removeItem} from "../../redux/actions/board";
 import {setEquippedItem} from "../../redux/actions/equippedItems";
 
-const SquareCommonItem = ({coords: [x, y], item}) => {
+const SquareCommonItem = ({coords: [x, y], item, draggedItem}) => {
 
   const [imageWidth, setImageWidth] = useState();
   const [imageHeight, setImageHeight] = useState();
@@ -86,6 +86,7 @@ const SquareCommonItem = ({coords: [x, y], item}) => {
     newClone.style.zIndex = 100;
 
     document.body.append(newClone);
+    console.log('eTarget', event.currentTarget);
 
     moveAt(event.pageX, event.pageY);
 
@@ -100,11 +101,12 @@ const SquareCommonItem = ({coords: [x, y], item}) => {
 
     document.addEventListener('mousemove', onMouseMove);
 
-    newClone.onmouseup = () => {
-      document.removeEventListener('mousemove', onMouseMove);
-    }
+    // newClone.onmouseup = () => {
+    //   document.removeEventListener('mousemove', onMouseMove);
+    // }
 
     newClone.onmouseup = function() {
+      console.log('newClone mouse up');
       document.body.removeChild(newClone);
       document.removeEventListener('mousemove', onMouseMove);
       newClone.onmouseup = null;
@@ -122,7 +124,6 @@ const SquareCommonItem = ({coords: [x, y], item}) => {
           } catch (e) {}
         } else {
           // add to board
-          console.log('addItem');
           try {
             dispatch(addItem());
           } catch(e) {}
@@ -131,7 +132,6 @@ const SquareCommonItem = ({coords: [x, y], item}) => {
       } else {
         event.target.style.pointerEvents = 'auto';
       }
-      console.log('draggedRelease');
       dispatch(draggedItemRelease());
 
     };
@@ -153,13 +153,13 @@ const SquareCommonItem = ({coords: [x, y], item}) => {
     imageElement = (
       <>
           <div className={classes.ImageContainer} style={{width: imageWidth, height: imageHeight}}
-               onMouseDown={imageOnMouseDown}>
+               onMouseDown={imageOnMouseDown}
+               onDragStart={(e) => {e.stopPropagation();e.preventDefault();return false}}>
           {/*backgroundImage: `url(${item.imageUrl})`, backgroundSize: `100% 100%`}}*/}
           {/*>*/}
             <img src={item.imageUrl}
-                 className={classes.Image} style={item.isEquipped ? {opacity: '0.3'} : null}
-                 onDragStart={(e) => {e.stopPropagation();e.preventDefault();return false}}/>
-            {currentCountText}
+                 className={classes.Image} style={item.isEquipped ? {opacity: '0.3'} : null}/>
+            {/*{currentCountText}*/}
           </div>
       </>
     );

@@ -93,7 +93,6 @@ const addDraggedItem = ([x, y], item) => {
 };
 
 const setHoveredSquares = (hoveredSquare, isHoveredEquipped = false, allowedCategory = null) => {
-  console.log('setHovSquares');
   return (dispatch, getState) => {
     const {draggedItem: {xDown, xUp, yDown, yUp, item}, board: {board}, equippedItems: {cells: equippedCells}} = getState();
 
