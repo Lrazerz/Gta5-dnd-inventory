@@ -4,7 +4,7 @@ import EquippedItem from "../../components/items/EquippedItem";
 import classes from '../../styles/equippedClosingInventory/SquareEquippedItem.module.scss';
 import SecondaryText from "../../components/layout/SecondaryText";
 import {addDraggedItem, draggedItemRelease} from "../../redux/actions/draggedItem";
-import {addItem, removeItem} from "../../redux/actions/board";
+import {addItem, removeEquippedWeapon, removeItem} from "../../redux/actions/board";
 import {removeEquippedItem, setEquippedItem} from "../../redux/actions/equippedItems";
 import {ItemTypes} from "../../constants/dnd/types";
 
@@ -118,9 +118,8 @@ const SquareEquippedItem = ({item}: { item: any }) => {
           // if add to board
           if(item.category === ItemTypes.WEAPON_RIFLE || item.category === ItemTypes.WEAPON_PISTOL
           || item.category === ItemTypes.WEAPON_LAUNCHER) {
-            // if item is weapon - remove prev item from board and set isWeaponEquipped to false\
-            console.log('it maincellonboard', item.mainCellOnBoard);
-            dispatch(removeItem(item.mainCellOnBoard, item.width, item.height));
+            // if item is weapon - remove prev item from board and set isWeaponEquipped to false
+            dispatch(removeEquippedWeapon(item.id));
           }
           try {
             dispatch(addItem());

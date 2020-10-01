@@ -6,15 +6,14 @@ import classes from '../../styles/board/SquareCommonItem.module.scss';
 import SecondaryText from "../../components/layout/SecondaryText";
 import {addItem, changeEquippedState, removeItem} from "../../redux/actions/board";
 import {setEquippedItem} from "../../redux/actions/equippedItems";
-import {ItemCategories} from "../../constants/dnd/categories";
 import {ItemTypes} from "../../constants/dnd/types";
 
-const SquareCommonItem = ({coords: [x, y], item, draggedItem}) => {
+const SquareCommonItem = ({coords: [x, y], item}) => {
 
   const [imageWidth, setImageWidth] = useState();
   const [imageHeight, setImageHeight] = useState();
 
-  const {canDrop, hoveredSquare} = useSelector(state => {return state.draggedItem;});
+  const {canDrop, hoveredSquare, item: draggedItem} = useSelector(state =>  state.draggedItem);
 
   // refs to pass to event handler
   const canDropRef = useRef();
@@ -23,19 +22,6 @@ const SquareCommonItem = ({coords: [x, y], item, draggedItem}) => {
   hoveredSquareRef.current = hoveredSquare;
 
   const dispatch = useDispatch();
-  // Allow drag
-  // const [{}, drag, preview] = useDrag({
-  //   item: {type: item.category, isInventory: false},
-  //   begin() {
-  //     dispatch(addDraggedItem([x, y], item));
-  //   },
-  //   end() {
-  //     dispatch(draggedItemRelease());
-  //   },
-  //   collect: (monitor) => {
-  //     return ({});
-  //   }
-  // });
 
   const imageContainerRef = useRef();
   useEffect(() => {
@@ -85,7 +71,7 @@ const SquareCommonItem = ({coords: [x, y], item, draggedItem}) => {
     savedTarget.style.pointerEvents = 'none';
     // event.target.style.pointerEvents = 'none';
 
-    newClone.style.position = 'absolute';
+    // newClone.style.position = 'absolute';
     newClone.style.zIndex = 150;
 
     document.body.append(newClone);
@@ -118,8 +104,6 @@ const SquareCommonItem = ({coords: [x, y], item, draggedItem}) => {
           // if add to equipped
           if(item.category === ItemTypes.WEAPON_RIFLE || item.category === ItemTypes.WEAPON_PISTOL
             || item.category === ItemTypes.WEAPON_LAUNCHER) {
-            console.log('this is not weapon', item.category, ItemTypes.WEAPON_RIFLE, ItemTypes.WEAPON_PISTOL,
-              ItemTypes.WEAPON_LAUNCHER);
             // if weapon make transparent color
             dispatch(changeEquippedState(item, true));
           } else {

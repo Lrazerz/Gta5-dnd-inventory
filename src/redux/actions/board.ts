@@ -2,7 +2,7 @@ import {EQUIPPED_STATE_CHANGE, SINGLE_ITEM_SQUARES_FILL, SQUARES_FILL, SQUARES_R
 import store from "../store";
 import {setEquippedItems} from "./equippedItems";
 import {ItemCategories} from "../../constants/dnd/categories";
-import {xMax} from "../../constants/boardDimensions";
+import {xMax, xMin, yMax, yMin} from "../../constants/boardDimensions";
 import Item from "../../models/Item";
 import DummyImage from '../../assets/dummy/weapon.png';
 import {translateToServerItem} from "../../utils/translateToServerItem";
@@ -146,6 +146,35 @@ const removeItem = ([x, y], width = 1, height = 1) => {
     dispatch(_removeItem(itemsToRemove));
   }
 }
+// mainCell, width, height
+const removeEquippedWeapon = (id) => {
+  return (dispatch, getState) => {
+    const {board} = getState().board;
+
+    console.log('board',board);
+    let itemOnBoard;
+
+    for(let y = yMin; y <= yMax; y++) {
+      for(let x = xMin; x <= xMax; x++) {
+        if(board[y][x] && board[y][x].id === id) itemOnBoard = board[y][x];
+      }
+    }
+
+    if(itemOnBoard) {
+      const {mainCell, width, height} = itemOnBoard;
+
+      // more precisely "squares to remove"
+      const itemsToRemove = [];
+      for (let currX = mainCell[0]; currX < mainCell[0] + width; currX++) {
+        for (let currY = mainCell[1]; currY < mainCell[1] + height; currY++) {
+          itemsToRemove.push([currX, currY]);
+        }
+      }
+
+      dispatch(_removeItem(itemsToRemove));
+    }
+  }
+}
 
 const changeEquippedState = (item, newState) => dispatch => {
   const newItem = {...item};
@@ -169,5 +198,6 @@ export {
   addItem,
   removeItem,
   openOrRefreshInventory,
-  changeEquippedState
+  changeEquippedState,
+  removeEquippedWeapon
 }

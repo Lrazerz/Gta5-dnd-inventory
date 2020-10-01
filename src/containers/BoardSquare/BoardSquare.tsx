@@ -52,14 +52,6 @@ const BoardSquare = ({coords: [x, y], children, isHovered}) => {
   // });
   const drop = null;
 
-  let boardSquareStyles;
-
-   boardSquareStyles = {
-    pointerEvents: (hoveredSquare && typeof hoveredSquare === 'object' && (hoveredSquare[0] === x && hoveredSquare[1] === y) ) ? 'none' : 'inherit',
-   }
-
-
-  // if(x === 0 && y === 0) console.log('pointerevents', boardSquareStyles.pointerEvents + '\n', hoveredSquare);
 
 
   const squareMouseOverHandler = (e) => {
@@ -71,10 +63,12 @@ const BoardSquare = ({coords: [x, y], children, isHovered}) => {
     }
   }
 
-  // todo was div ref=drop style=styles
-  // let styles = {outline: `1px solid rgba(109, 114, 125, 0.8)`};
-  // @ts-ignore
-  boardSquareStyles = {...boardSquareStyles, outline: `0.25px solid rgba(109, 114, 125, 0.8)`};
+  let boardSquareStyles;
+
+  boardSquareStyles = {
+    pointerEvents: (hoveredSquare && typeof hoveredSquare === 'object' && (hoveredSquare[0] === x && hoveredSquare[1] === y) ) ? 'none' : 'auto',
+    outline: `0.25px solid rgba(109, 114, 125, 0.8)`
+  }
 
 
   // if (isOver) {
