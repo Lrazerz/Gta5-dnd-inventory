@@ -6,6 +6,7 @@ import SecondaryText from "../../components/layout/SecondaryText";
 import {addDraggedItem, draggedItemRelease} from "../../redux/actions/draggedItem";
 import {addItem, removeItem} from "../../redux/actions/board";
 import {removeEquippedItem, setEquippedItem} from "../../redux/actions/equippedItems";
+import {ItemTypes} from "../../constants/dnd/types";
 
 const SquareEquippedItem = ({item}: { item: any }) => {
   // const [resultDataUri, setResultDataUri] = useState(null);
@@ -62,8 +63,6 @@ const SquareEquippedItem = ({item}: { item: any }) => {
   const dispatch = useDispatch();
 
   const imageOnMouseDown = (event) => {
-    console.log('event target',event.target);
-    console.log('event target',event.target);
     dispatch(addDraggedItem([0, 0], item));
     event.persist();
 
@@ -111,10 +110,18 @@ const SquareEquippedItem = ({item}: { item: any }) => {
         dispatch(removeEquippedItem(item.mainCell));
 
         if(typeof hoveredSquareRef.current === 'number') {
+          // if add to equipped
           try {
             dispatch(setEquippedItem(hoveredSquareRef.current));
           } catch (e) {}
         } else {
+          // if add to board
+          if(item.category === ItemTypes.WEAPON_RIFLE || item.category === ItemTypes.WEAPON_PISTOL
+          || item.category === ItemTypes.WEAPON_LAUNCHER) {
+            // if item is weapon - remove prev item from board and set isWeaponEquipped to false\
+            console.log('it maincellonboard', item.mainCellOnBoard);
+            dispatch(removeItem(item.mainCellOnBoard, item.width, item.height));
+          }
           try {
             dispatch(addItem());
           } catch (e) {}

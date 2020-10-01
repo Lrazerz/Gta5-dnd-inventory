@@ -4,8 +4,10 @@ import {addDraggedItem, draggedItemRelease} from "../../redux/actions/draggedIte
 import CommonItem from "../../components/items/CommonItem/CommonItem";
 import classes from '../../styles/board/SquareCommonItem.module.scss';
 import SecondaryText from "../../components/layout/SecondaryText";
-import {addItem, removeItem} from "../../redux/actions/board";
+import {addItem, changeEquippedState, removeItem} from "../../redux/actions/board";
 import {setEquippedItem} from "../../redux/actions/equippedItems";
+import {ItemCategories} from "../../constants/dnd/categories";
+import {ItemTypes} from "../../constants/dnd/types";
 
 const SquareCommonItem = ({coords: [x, y], item, draggedItem}) => {
 
@@ -106,24 +108,29 @@ const SquareCommonItem = ({coords: [x, y], item, draggedItem}) => {
     // }
 
     newClone.onmouseup = function() {
-      console.log('newClone mouse up');
       document.body.removeChild(newClone);
       document.removeEventListener('mousemove', onMouseMove);
       newClone.onmouseup = null;
-      savedTarget.style.zIndex = 100;
-
-      // debugger;
+      savedTarget.style.zIndex = 100
       if(canDropRef.current) {
-        dispatch(removeItem(item.mainCell, item.width, item.height));
-
         // checks
         if(typeof hoveredSquareRef.current === 'number') {
-          // add to equipped
+          // if add to equipped
+          if(item.category === ItemTypes.WEAPON_RIFLE || item.category === ItemTypes.WEAPON_PISTOL
+            || item.category === ItemTypes.WEAPON_LAUNCHER) {
+            console.log('this is not weapon', item.category, ItemTypes.WEAPON_RIFLE, ItemTypes.WEAPON_PISTOL,
+              ItemTypes.WEAPON_LAUNCHER);
+            // if weapon make transparent color
+            dispatch(changeEquippedState(item, true));
+          } else {
+            dispatch(removeItem(item.mainCell, item.width, item.height));
+          }
           try {
             dispatch(setEquippedItem(hoveredSquareRef.current));
           } catch (e) {}
         } else {
           // add to board
+          dispatch(removeItem(item.mainCell, item.width, item.height));
           try {
             dispatch(addItem());
           } catch(e) {}
@@ -156,13 +163,14 @@ const SquareCommonItem = ({coords: [x, y], item, draggedItem}) => {
       pointerEvents: draggedItem ? 'none' : 'inherit',
     }
 
+    // if(x === 0 && y === 0) console.log('SqCommItem coords', x,y,item);
     imageElement = (
         <div className={classes.ImageContainer} style={imageElementStyles}
              onMouseDown={imageOnMouseDown}
              onDragStart={(e) => {e.stopPropagation();e.preventDefault();return false}}>
         {/*backgroundImage: `url(${item.imageUrl})`, backgroundSize: `100% 100%`}}*/}
         {/*>*/}
-          <img src={item.imageUrl}
+          <img src={item.imageUrl} style={item.isWeaponEquipped ? {opacity: '0.5'} : null}
                className={classes.Image}/>
           {currentCountText}
         </div>

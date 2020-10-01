@@ -65,7 +65,7 @@ export default (state = _fillInitialState(), action) => {
       const newBoard = [...state.board];
       action.squares.forEach(square => {
         const [x,y] = square;
-        newBoard[y][x] = {...newBoard[y][x],isEquipped: action.state};
+        newBoard[y][x] = action.item;
       });
       return {
         ...state,

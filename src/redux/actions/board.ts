@@ -79,7 +79,7 @@ const openOrRefreshInventory = async (info) => {
         }
       }
 
-      FullItem.mainCell = [mainCellX, mainCellY];
+      FullItem.mainCell = FullItem.mainCellOnBoard = [mainCellX, mainCellY];
 
       boardItems.push({...FullItem, squares: filledSquares});
     }
@@ -101,8 +101,8 @@ const _removeItem = (coordsArr) => {
   return {type: SQUARES_RELEASE, squares: coordsArr};
 }
 
-const _changeEquippedState = (squares, newState) => {
-  return {type: EQUIPPED_STATE_CHANGE, squares, state: newState};
+const _changeEquippedState = (squares, item) => {
+  return {type: EQUIPPED_STATE_CHANGE, squares, item};
 }
 
 // add item fetched from draggedItem
@@ -110,12 +110,23 @@ const addItem = () => {
   return (dispatch, getState) => {
     const {hoveredSquare, allHoveredSquares, xDown, yDown, item} = getState().draggedItem;
 
-    item.mainCell = [hoveredSquare[0] - xDown, hoveredSquare[1] - yDown];
-    item.isEquipped = false;
+    const newDraggedItem = {...item};
 
-    dispatch(_addItem(allHoveredSquares, item));
+
+    newDraggedItem.mainCell = [hoveredSquare[0] - xDown, hoveredSquare[1] - yDown];
+    newDraggedItem.mainCellOnBoard = newDraggedItem.mainCell;
+
+    if(typeof hoveredSquare === 'number' && newDraggedItem.isWeaponEquipped) {
+      // if item derived from eq items and it is weapon (isWeaponEquipped can be true only on weapons)
+
+      console.log('hello');
+      newDraggedItem.isWeaponEquipped = false;
+      // dispatch(removeItem(item.mainCellOnBoard, item.width, item.height))
+    }
+
+    dispatch(_addItem(allHoveredSquares, newDraggedItem));
     // translate to Server Item
-    const itemToServer = translateToServerItem(item);
+    const itemToServer = translateToServerItem(newDraggedItem);
     //@ts-ignore
     mp.trigger(itemToServer);
   }
@@ -124,6 +135,7 @@ const addItem = () => {
 // mainCell, width, height
 const removeItem = ([x, y], width = 1, height = 1) => {
   return dispatch => {
+    // more precisely "squares to remove"
     const itemsToRemove = [];
     for (let currX = x; currX < x + width; currX++) {
       for (let currY = y; currY < y + height; currY++) {
@@ -136,15 +148,21 @@ const removeItem = ([x, y], width = 1, height = 1) => {
 }
 
 const changeEquippedState = (item, newState) => dispatch => {
+  const newItem = {...item};
+  // newState === isEquipped
   const squares = [];
 
-  for(let y = item.mainCell[1]; y < item.mainCell[1] + item.height; y++) {
-    for(let x = item.mainCell[0]; x < item.mainCell[0] + item.width; x++) {
+  // set mainCellOnBoard if dragged item to equipped
+  // but we can drag item on the board too
+  if(newState) newItem.mainCellOnBoard = newItem.mainCell;
+  newItem.isWeaponEquipped = newState;
+
+  for(let y = newItem.mainCell[1]; y < newItem.mainCell[1] + newItem.height; y++) {
+    for(let x = newItem.mainCell[0]; x < newItem.mainCell[0] + newItem.width; x++) {
       squares.push([x,y]);
     }
   }
-
-  dispatch(_changeEquippedState(squares, newState));
+  dispatch(_changeEquippedState(squares, newItem));
 }
 
 export {

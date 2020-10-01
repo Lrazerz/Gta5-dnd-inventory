@@ -29,8 +29,12 @@ export default class Item {
 
   public rest: any;
 
-  constructor(id: string, name: string, category: ItemCategories | string, mainCell: [number, number] | number, width: number, height: number,
-              currentCount: number, imageUrl: string | null, isEquipped: boolean, rest: any) {
+  // weapons still exists in the inventory, even if equipped
+  public isWeaponEquipped: boolean;
+
+  constructor(id: string, name: string, category: ItemCategories | string, mainCell: [number, number] | number,
+              width: number, height: number, currentCount: number, imageUrl: string | null, isEquipped: boolean,
+              rest: any, isWeaponEquipped: boolean = false) {
     this.id = id;
     this.name = name;
     this.category = category;
@@ -41,5 +45,6 @@ export default class Item {
     this.imageUrl = imageUrl;
     this.isEquipped = isEquipped;
     this.rest = rest;
+    this.isWeaponEquipped = isWeaponEquipped;
   }
 }

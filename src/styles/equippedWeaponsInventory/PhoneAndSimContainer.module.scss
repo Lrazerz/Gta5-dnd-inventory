@@ -80,6 +80,7 @@
           box-sizing: border-box;
           border: 1px solid #576c8a;
           position: relative;
+          overflow: hidden;
 
           @media(min-width: 2400px) {
             border: 2px solid #576c8a;
