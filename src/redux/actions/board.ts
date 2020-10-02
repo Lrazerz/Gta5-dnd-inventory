@@ -112,14 +112,11 @@ const addItem = () => {
 
     const newDraggedItem = {...item};
 
-
     newDraggedItem.mainCell = [hoveredSquare[0] - xDown, hoveredSquare[1] - yDown];
     newDraggedItem.mainCellOnBoard = newDraggedItem.mainCell;
 
     if(typeof hoveredSquare === 'number' && newDraggedItem.isWeaponEquipped) {
       // if item derived from eq items and it is weapon (isWeaponEquipped can be true only on weapons)
-
-      console.log('hello');
       newDraggedItem.isWeaponEquipped = false;
       // dispatch(removeItem(item.mainCellOnBoard, item.width, item.height))
     }
@@ -151,7 +148,6 @@ const removeEquippedWeapon = (id) => {
   return (dispatch, getState) => {
     const {board} = getState().board;
 
-    console.log('board',board);
     let itemOnBoard;
 
     for(let y = yMin; y <= yMax; y++) {

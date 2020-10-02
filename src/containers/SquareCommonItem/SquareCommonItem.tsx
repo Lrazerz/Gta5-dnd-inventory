@@ -13,13 +13,19 @@ const SquareCommonItem = ({coords: [x, y], item}) => {
   const [imageWidth, setImageWidth] = useState();
   const [imageHeight, setImageHeight] = useState();
 
-  const {canDrop, hoveredSquare, item: draggedItem} = useSelector(state =>  state.draggedItem);
+  const {canDrop, hoveredSquare, item: draggedItem, xDown, yDown} = useSelector(state =>  state.draggedItem);
 
   // refs to pass to event handler
   const canDropRef = useRef();
   const hoveredSquareRef = useRef();
+  const draggedItemRef = useRef();
+  const xDownRef = useRef();
+  const yDownRef = useRef();
   canDropRef.current = canDrop;
   hoveredSquareRef.current = hoveredSquare;
+  draggedItemRef.current = draggedItem;
+  xDownRef.current = xDown;
+  yDownRef.current = yDown;
 
   const dispatch = useDispatch();
 
@@ -99,7 +105,7 @@ const SquareCommonItem = ({coords: [x, y], item}) => {
       newClone.onmouseup = null;
       savedTarget.style.zIndex = 100
       if(canDropRef.current) {
-        // checks
+        // if can drop
         if(typeof hoveredSquareRef.current === 'number') {
           // if add to equipped
           if(item.category === ItemTypes.WEAPON_RIFLE || item.category === ItemTypes.WEAPON_PISTOL
@@ -113,11 +119,15 @@ const SquareCommonItem = ({coords: [x, y], item}) => {
             dispatch(setEquippedItem(hoveredSquareRef.current));
           } catch (e) {}
         } else {
-          // add to board
-          dispatch(removeItem(item.mainCell, item.width, item.height));
-          try {
-            dispatch(addItem());
-          } catch(e) {}
+          // add to board (from board too)
+          // @ts-ignore
+          if(item.mainCell[0] !== hoveredSquareRef.current[0] - xDownRef.current || item.mainCell[1] !== hoveredSquareRef.current[1] - yDownRef.current) {
+            // check if this is not the current item square
+            dispatch(removeItem(item.mainCell, item.width, item.height));
+            try {
+              dispatch(addItem());
+            } catch(e) {}
+          }
         }
         // debugger;
       } else {
@@ -147,7 +157,6 @@ const SquareCommonItem = ({coords: [x, y], item}) => {
       pointerEvents: draggedItem ? 'none' : 'inherit',
     }
 
-    // if(x === 0 && y === 0) console.log('SqCommItem coords', x,y,item);
     imageElement = (
         <div className={classes.ImageContainer} style={imageElementStyles}
              onMouseDown={imageOnMouseDown}

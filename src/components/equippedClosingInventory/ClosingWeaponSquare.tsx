@@ -58,7 +58,6 @@ const ClosingWeaponSquare = ({children, acceptedItemType, coords, itemId}) => {
   // });
 
   const squareMouseOverHandler = (e) => {
-    console.log('mouseOver');
     e.persist();
     if (draggedItem) {
       if (!hoveredSquare || typeof hoveredSquare !== 'number' || hoveredSquare !== coords) {

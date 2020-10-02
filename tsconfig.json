@@ -22,7 +22,9 @@
       "components/*": [
         "src/components/*"
       ]
-    }
+    },
+    "strictNullChecks": false,
+    "strict": false
   },
   "include": [
     "./index.tsx",

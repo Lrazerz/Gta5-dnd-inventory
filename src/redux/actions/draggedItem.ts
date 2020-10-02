@@ -96,7 +96,7 @@ const setHoveredSquares = (hoveredSquare, isHoveredEquipped = false, allowedCate
         }
       }
 
-      // here we check canDrop
+      // check canDrop
         if(canDrop) {
           allHoveredSquares.forEach(hoveredSquare => {
             const [hoveredX, hoveredY] = hoveredSquare;
@@ -113,11 +113,11 @@ const setHoveredSquares = (hoveredSquare, isHoveredEquipped = false, allowedCate
     else {
       // check category and check can we drop if drop to equippedItem
       // allHoveredSquares = [hoveredSquare];
-
       if(allowedCategory !== item.category) {
         //check category
         canDrop = false;
       } else if (equippedCells[hoveredSquare].item !== null && equippedCells[hoveredSquare].item.id !== item.id) {
+        // check if required cell already has another item
         canDrop = false;
       }
     }

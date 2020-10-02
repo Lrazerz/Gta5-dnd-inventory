@@ -7,10 +7,14 @@ import {addDraggedItem, draggedItemRelease} from "../../redux/actions/draggedIte
 import {addItem, removeEquippedWeapon, removeItem} from "../../redux/actions/board";
 import {removeEquippedItem, setEquippedItem} from "../../redux/actions/equippedItems";
 import {ItemTypes} from "../../constants/dnd/types";
+import {Simulate} from "react-dom/test-utils";
+import drag = Simulate.drag;
 
 const SquareEquippedItem = ({item}: { item: any }) => {
   // const [resultDataUri, setResultDataUri] = useState(null);
-  const {canDrop, hoveredSquare} = useSelector(state => {return state.draggedItem;});
+  const {canDrop, hoveredSquare, item: draggedItem} = useSelector(state => {return state.draggedItem;});
+  const draggedItemRef = useRef();
+  draggedItemRef.current = draggedItem;
   const [imageWidth, setImageWidth] = useState();
   const [imageHeight, setImageHeight] = useState();
 
@@ -21,6 +25,7 @@ const SquareEquippedItem = ({item}: { item: any }) => {
   hoveredSquareRef.current = hoveredSquare;
 
 
+  // set image dimensions to resize
   const imageContainerRef = useRef();
   useEffect(() => {
     // Handler to call on window resize
@@ -107,14 +112,20 @@ const SquareEquippedItem = ({item}: { item: any }) => {
       savedTarget.style.zIndex = 100;
 
       if(canDropRef.current) {
-        dispatch(removeEquippedItem(item.mainCell));
 
         if(typeof hoveredSquareRef.current === 'number') {
-          // if add to equipped
-          try {
-            dispatch(setEquippedItem(hoveredSquareRef.current));
-          } catch (e) {}
+          // if add to equipped, from equipped too
+          // @ts-ignore
+          if(item.mainCell !== hoveredSquareRef.current) {
+            // check if not the same item
+            dispatch(removeEquippedItem(item.mainCell));
+            try {
+              // try coz mp.trigger
+              dispatch(setEquippedItem(hoveredSquareRef.current));
+            } catch (e) {}
+          }
         } else {
+          dispatch(removeEquippedItem(item.mainCell));
           // if add to board
           if(item.category === ItemTypes.WEAPON_RIFLE || item.category === ItemTypes.WEAPON_PISTOL
           || item.category === ItemTypes.WEAPON_LAUNCHER) {
@@ -125,9 +136,8 @@ const SquareEquippedItem = ({item}: { item: any }) => {
             dispatch(addItem());
           } catch (e) {}
         }
-      } else {
-        event.target.style.pointerEvents = 'inherit';
       }
+      event.target.style.pointerEvents = 'inherit';
       dispatch(draggedItemRelease());
     };
 
