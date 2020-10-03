@@ -89,6 +89,7 @@ const SquareEquippedItem = ({item}: { item: any }) => {
 
     newClone.style.position = 'absolute';
     newClone.style.zIndex = 150;
+    newClone.id = 'curr-dragged-item';
 
     document.body.append(newClone);
 

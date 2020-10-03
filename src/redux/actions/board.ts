@@ -145,6 +145,7 @@ const removeItem = ([x, y], width = 1, height = 1) => {
 }
 // mainCell, width, height
 const removeEquippedWeapon = (id) => {
+  // invoke only in SquareEquippedItem
   return (dispatch, getState) => {
     const {board} = getState().board;
 
@@ -166,20 +167,17 @@ const removeEquippedWeapon = (id) => {
           itemsToRemove.push([currX, currY]);
         }
       }
-
       dispatch(_removeItem(itemsToRemove));
     }
   }
 }
 
 const changeEquippedState = (item, newState) => dispatch => {
+  // invoke only in SquareCommonItem
   const newItem = {...item};
   // newState === isEquipped
   const squares = [];
 
-  // set mainCellOnBoard if dragged item to equipped
-  // but we can drag item on the board too
-  if(newState) newItem.mainCellOnBoard = newItem.mainCell;
   newItem.isWeaponEquipped = newState;
 
   for(let y = newItem.mainCell[1]; y < newItem.mainCell[1] + newItem.height; y++) {

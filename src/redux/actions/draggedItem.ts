@@ -126,9 +126,18 @@ const setHoveredSquares = (hoveredSquare, isHoveredEquipped = false, allowedCate
   }
 };
 
+// non-relative to redux, fix bug with invoking onmouseup on BoardSquare, when pointer-events did not have
+// time to become true
+const invokeOnMouseUp = () => {
+  const draggedItem = document.getElementById('curr-dragged-item');
+  const event = new Event('mouseup');
+  draggedItem.dispatchEvent(event);
+}
+
 export {
   addDraggedItem,
   draggedItemRelease,
   setHoveredSquares,
-  removeHoveredSquares
+  removeHoveredSquares,
+  invokeOnMouseUp
 }

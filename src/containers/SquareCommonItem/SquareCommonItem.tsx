@@ -72,13 +72,11 @@ const SquareCommonItem = ({coords: [x, y], item}) => {
 
     const newClone = event.currentTarget.cloneNode(true);
     newClone.addEventListener('dragstart', (e) => {e.stopPropagation();e.preventDefault();return false});
-    // event.currentTarget.style.opacity=0.2;
 
     savedTarget.style.pointerEvents = 'none';
-    // event.target.style.pointerEvents = 'none';
 
-    // newClone.style.position = 'absolute';
     newClone.style.zIndex = 150;
+    newClone.id = 'curr-dragged-item';
 
     document.body.append(newClone);
 
@@ -94,10 +92,6 @@ const SquareCommonItem = ({coords: [x, y], item}) => {
     }
 
     document.addEventListener('mousemove', onMouseMove);
-
-    // newClone.onmouseup = () => {
-    //   document.removeEventListener('mousemove', onMouseMove);
-    // }
 
     newClone.onmouseup = function() {
       document.body.removeChild(newClone);
@@ -130,9 +124,8 @@ const SquareCommonItem = ({coords: [x, y], item}) => {
           }
         }
         // debugger;
-      } else {
-        event.target.style.pointerEvents = 'inherit';
       }
+      event.target.style.pointerEvents = 'inherit';
       dispatch(draggedItemRelease());
 
     };
@@ -161,8 +154,6 @@ const SquareCommonItem = ({coords: [x, y], item}) => {
         <div className={classes.ImageContainer} style={imageElementStyles}
              onMouseDown={imageOnMouseDown}
              onDragStart={(e) => {e.stopPropagation();e.preventDefault();return false}}>
-        {/*backgroundImage: `url(${item.imageUrl})`, backgroundSize: `100% 100%`}}*/}
-        {/*>*/}
           <img src={item.imageUrl} style={item.isWeaponEquipped ? {opacity: '0.5'} : null}
                className={classes.Image}/>
           {currentCountText}

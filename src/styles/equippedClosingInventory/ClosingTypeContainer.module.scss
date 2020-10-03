@@ -3,9 +3,6 @@
 .ClosingTypeContainer {
   height: 15%;
   width: 100%;
-  //display: flex;
-  //flex-direction: row;
-  //align-items: flex-end;
   padding-right: 14%;
 
   .TitleContainer {
@@ -43,7 +40,6 @@
       background-color: rgba(47, 55, 71, 0.3);
       clip-path: polygon(0 0, 100% 50%, 0 100%);
     }
-
   }
 }
 

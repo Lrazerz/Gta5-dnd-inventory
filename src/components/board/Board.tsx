@@ -20,7 +20,8 @@ const Board = ({children}) => {
       const regex = /^((\d|\.)+)/;
       const widthNumber: number = parseFloat(widthString.match(regex)[0]);
 
-      setBoardHeight(widthNumber * 0.376);
+      // setBoardHeight(widthNumber * 0.376);
+      setBoardHeight(widthNumber * 0.395);
     }
 
     // Add event listener

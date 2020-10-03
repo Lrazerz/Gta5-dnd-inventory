@@ -1,14 +1,11 @@
 import React, {useState} from 'react';
 import AppBoard from "./containers/AppBoard/AppBoard";
-// @ts-ignore
 import classes from './styles/App.module.scss';
 import EquippedClosingInventoryContainer
   from "./containers/equippedClosingInventory/EquippedClosingInventoryContainer";
 import EquippedWeaponsInventoryContainer from "./containers/equippedWeaponsInventory/EquippedWeaponsInventoryContainer";
 import SecondaryText from "./components/layout/SecondaryText";
-// @ts-ignore
 import leftSparksSvg from "./assets/images/UI/left-sparks.svg";
-// @ts-ignore
 import rightSparksSvg from "./assets/images/UI/right-sparks.svg";
 import {openOrRefreshInventory} from "./redux/actions/board";
 
