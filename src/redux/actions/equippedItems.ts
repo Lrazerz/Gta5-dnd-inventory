@@ -27,4 +27,19 @@ const removeEquippedItem = (cellId) => {
   }
 }
 
-export {setEquippedItem, removeEquippedItem, setEquippedItems};
+const removeEquippedWeaponFromEquipped = (id) => {
+  return (dispatch, getState) => {
+    //find weapon by id and just remove item *
+    const weaponCells = getState().equippedItems.cells.slice(1,4);
+    console.log('weaponCells',weaponCells);
+    // remove item from equipped if item exists
+    let weaponCellIdx = weaponCells.findIndex(cell => cell.item && cell.item.id === id);
+
+    if(weaponCellIdx !== -1) {
+      // +1 coz weaponCells indexes dont corresponds to cells indexes
+      dispatch(_removeEquippedItem(weaponCellIdx + 1));
+    }
+  }
+}
+
+export {setEquippedItem, removeEquippedItem, setEquippedItems, removeEquippedWeaponFromEquipped};

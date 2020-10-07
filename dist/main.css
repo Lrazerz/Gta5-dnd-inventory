@@ -359,33 +359,59 @@ html, body, #root {
     user-select: none;
 }
 
+html {
+    font-size: 10px;
+}
+
+@media(min-width: 1200px) {
+    html {
+        font-size: 11px;
+    }
+}
+
+@media(min-width: 1500px) {
+    html {
+        font-size: 15px;
+    }
+}
+
+@media(min-width: 1900px) {
+    html {
+        font-size: 17px;
+    }
+}
+
+@media(min-width: 2200px) {
+    html {
+        font-size: 19px;
+    }
+}
+
+@media(min-width: 2400px) {
+    html {
+        font-size: 20px;
+    }
+}
+
+@media(min-width: 3000px) {
+    html {
+        font-size: 22px;
+    }
+}
+
+@media(min-width: 3500px) {
+    html {
+        font-size: 24px;
+    }
+}
+
 body * {
     cursor: default !important;
 }
 
 #root {
     overflow: hidden;
-    /*background-image: url("./src/assets/dummy/dummybackground.jpg");*/
-    /*background-image: url("./src/assets/images/UI/root-background.png");*/
-
-    /* screens */
-    /*background-image: url("./src/assets/dummy/game-screen-1.jpg");*/
-    /*background-image: url("./src/assets/dummy/game-screen-2.jpg");*/
-    /*background-image: url("./src/assets/dummy/game-screen-3.jpg");*/
-
-    /*background-size: cover;*/
 }
-
-/*#rootWrapper {*/
-/*    width: 100%;*/
-/*    height: 100%;*/
-
-/*    background-image: url("./src/assets/dummy/game-screen-1.jpg");*/
-/*    !*background-image: url("./src/assets/dummy/game-screen-2.jpg");*!*/
-/*    !*background-image: url("./src/assets/images/UI/root-background.png");*!*/
-/*    background-size: cover;*/
-
-/*}*/
 
 @font-face {
     font-family: 'Montserrat-Bold';

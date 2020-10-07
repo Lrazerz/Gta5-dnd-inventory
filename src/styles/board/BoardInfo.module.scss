@@ -5,6 +5,8 @@
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  position: relative;
+  z-index: 200;
 
   height: 15%;
   max-height: 15%;

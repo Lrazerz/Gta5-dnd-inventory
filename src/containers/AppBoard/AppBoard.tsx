@@ -6,6 +6,7 @@ import SquareCommonItem from "../SquareCommonItem/SquareCommonItem";
 import Board from "../../components/board/Board";
 import classes from '../../styles/board/AppBoard.module.scss';
 import BoardInfo from "../../components/board/BoardInfo";
+import draggedItem from "../../redux/reducers/draggedItem";
 
 const AppBoard = () => {
   const squares = [];
@@ -35,6 +36,10 @@ const AppBoard = () => {
       squares.push(renderSquare(y, x));
     }
   }
+
+  // const styles = {
+  //   zIndex: draggedItem ? '' : '0'
+  // }
 
   return (
     <div className={classes.AppBoard}>

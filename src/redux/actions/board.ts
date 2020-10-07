@@ -8,6 +8,7 @@ import DummyImage from '../../assets/dummy/weapon.png';
 import {translateToServerItem} from "../../utils/translateToServerItem";
 import {ItemTypes} from "../../constants/dnd/types";
 import WeaponItem from "../../models/WeaponItem";
+import {AnyAction} from 'redux';
 //'https://i.ibb.co/HCn40jg/weapon-2.png'
 
 const openOrRefreshInventory = async (info) => {
@@ -144,7 +145,7 @@ const removeItem = ([x, y], width = 1, height = 1) => {
   }
 }
 // mainCell, width, height
-const removeEquippedWeapon = (id) => {
+const removeEquippedWeaponFromBoard = (id) => {
   // invoke only in SquareEquippedItem
   return (dispatch, getState) => {
     const {board} = getState().board;
@@ -193,5 +194,5 @@ export {
   removeItem,
   openOrRefreshInventory,
   changeEquippedState,
-  removeEquippedWeapon
+  removeEquippedWeaponFromBoard
 }

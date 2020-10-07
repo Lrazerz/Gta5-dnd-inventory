@@ -2,7 +2,8 @@ import {
   DRAGGED_ITEM_SET,
   DRAGGED_ITEM_RELEASE,
   HOVERED_SQUARES_SET,
-  HOVERED_SQUARES_REMOVE
+  HOVERED_SQUARES_REMOVE,
+  GOING_TO_DROP_SET
 } from "../actions/types";
 
 interface State {
@@ -18,6 +19,8 @@ interface State {
   allHoveredSquares: Array<Array<number>> | number | null;
 
   canDrop: boolean;
+
+  goingToDrop : false,
 }
 
 const initialState: State = {
@@ -35,6 +38,8 @@ const initialState: State = {
   allHoveredSquares: [],
 
   canDrop: false,
+
+  goingToDrop : false,
 }
 
 export default (state = initialState, action) => {
@@ -47,16 +52,15 @@ export default (state = initialState, action) => {
         xUp,
         xDown,
         yUp,
-        yDown
+        yDown,
+        goingToDrop: false
       }
     }
     case DRAGGED_ITEM_RELEASE: {
       return initialState;
     }
     case HOVERED_SQUARES_REMOVE: {
-      return {
-        ...initialState
-      }
+      return initialState;
     }
     case HOVERED_SQUARES_SET: {
       return {
@@ -64,6 +68,16 @@ export default (state = initialState, action) => {
         isHoveredEquipped: action.isHoveredEquipped,
         hoveredSquare: action.square,
         allHoveredSquares: action.squares,
+        canDrop: action.canDrop,
+        goingToDrop: false,
+      }
+    }
+    case GOING_TO_DROP_SET: {
+      return {
+        ...state,
+        hoveredSquare: null,
+        allHoveredSquares: [],
+        goingToDrop: action.goingToDrop,
         canDrop: action.canDrop,
       }
     }

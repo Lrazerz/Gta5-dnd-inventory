@@ -1,11 +1,9 @@
 import React, {CSSProperties, useRef} from 'react';
-import {useSelector, useDispatch} from 'react-redux';
-import classes from '../../styles/board/BoardInfo.module.scss';
-import cashImage from '../../assets/images/board/cash.png';
-import SecondaryText from "../../components/layout/SecondaryText";
+import {useDispatch, useSelector} from 'react-redux';
+import classes from '../../styles/layout/BackDrop.module.scss';
 import {setGoingToDrop} from "../../redux/actions/draggedItem";
 
-const BoardInfo = ({cash}) => {
+const BackDrop = () => {
   const dispatch = useDispatch();
   const {goingToDrop, item: draggedItem} = useSelector(state => state.draggedItem);
   const goingToDropRef = useRef();
@@ -20,23 +18,15 @@ const BoardInfo = ({cash}) => {
     }
   }
 
-  // allow to be BackDrop
-  const styles: CSSProperties = {
+  const style: CSSProperties = {
     pointerEvents: goingToDrop ? 'none' : 'inherit',
     // backgroundColor: goingToDrop ? 'red' : 'transparent',
   }
 
   return (
-    <div className={classes.BoardInfo} style={styles} onMouseOver={mouseOverHandler}>
-      <img src={cashImage}/>
-      <SecondaryText styles={{width: 'auto', fontWeight: 500}}>
-        &nbsp;Наличные:{' '}
-        <span className={classes.CurrentCashText}>
-            ${cash}
-          </span>
-      </SecondaryText>
+    <div className={classes.BackDrop} onMouseOver={mouseOverHandler} style={style}>
     </div>
   );
 };
 
-export default BoardInfo;
+export default BackDrop;

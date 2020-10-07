@@ -6,12 +6,11 @@ const translateToServerItem = (item: Item) => {
     height, currentCount, isEquipped} = item;
   let {rest} = item;
 
-  // translate coords to 1-dimension
   let posNumberLeftAngle = mainCell;
 
+  // translate coords to 1-dimension
   if(!isEquipped) {
     posNumberLeftAngle = mainCell[1] * (xMax + 1) + (mainCell[0] + 1);
-  } else {
   }
 
   return JSON.stringify({

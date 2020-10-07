@@ -1,4 +1,4 @@
-import {DRAGGED_ITEM_SET, HOVERED_SQUARES_SET, HOVERED_SQUARES_REMOVE, DRAGGED_ITEM_RELEASE} from "./types";
+import {DRAGGED_ITEM_SET, HOVERED_SQUARES_SET, DRAGGED_ITEM_RELEASE, GOING_TO_DROP_SET} from "./types";
 import {xMin, xMax, yMin, yMax} from "../../constants/boardDimensions";
 
 const _addDraggedItem = (item, xUp, xDown, yUp, yDown) => {
@@ -10,13 +10,13 @@ const _setHoveredSquares = (squareCoords, allHoveredSquares, canDrop, isHoveredE
     isHoveredEquipped: isHoveredEquipped};
 };
 
+const _setGoingToDrop = (newState, canDrop) => {
+  return {type: GOING_TO_DROP_SET, goingToDrop: newState, canDrop};
+}
+
 const draggedItemRelease = () => {
   return {type: DRAGGED_ITEM_RELEASE};
 };
-
-const removeHoveredSquares = () => {
-  return {type: HOVERED_SQUARES_REMOVE};
-}
 
 const addDraggedItem = ([x, y], item) => {
   return dispatch => {
@@ -134,10 +134,18 @@ const invokeOnMouseUp = () => {
   draggedItem.dispatchEvent(event);
 }
 
+const setGoingToDrop = (newState) => {
+  return dispatch => {
+    // todo limit on clothes
+    const canDrop = newState;
+    dispatch(_setGoingToDrop(newState, canDrop));
+  }
+}
+
 export {
   addDraggedItem,
   draggedItemRelease,
   setHoveredSquares,
-  removeHoveredSquares,
-  invokeOnMouseUp
+  invokeOnMouseUp,
+  setGoingToDrop
 }

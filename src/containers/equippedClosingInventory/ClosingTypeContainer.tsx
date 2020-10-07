@@ -1,12 +1,18 @@
-import React from 'react';
+import React, {CSSProperties} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 // @ts-ignore
 import classes from '../../styles/equippedClosingInventory/ClosingTypeContainer.module.scss';
 import ClosingWeaponSquare from "../../components/equippedClosingInventory/ClosingWeaponSquare";
 import Octagon from "../../components/equippedClosingInventory/Octagon";
 import LeadText from "../../components/layout/LeadText";
 import SquareEquippedItem from "./SquareEquippedItem";
+import {setGoingToDrop} from "../../redux/actions/draggedItem";
 
 const ClosingTypeContainer = ({typeTitle, typeImage, acceptedType, cells}) => {
+
+  const dispatch = useDispatch();
+  const {item: draggedItem, goingToDrop} = useSelector(state => state.draggedItem);
+
   const squaresContent = cells.map(({id,cell}) => {
     let squareContent = null;
 
@@ -24,8 +30,21 @@ const ClosingTypeContainer = ({typeTitle, typeImage, acceptedType, cells}) => {
     )
   });
 
+  const mouseOverHandler = (e) => {
+    if(draggedItem && goingToDrop) {
+      console.log('mouse over closingTypeContainer');
+      dispatch(setGoingToDrop(false));
+    }
+    e.stopPropagation();
+  }
+
+  const styles: CSSProperties = {
+    zIndex: draggedItem ? 200 : 'auto',
+    pointerEvents: goingToDrop ? 'inherit' : 'none',
+  }
+
   return (
-    <div className={classes.ClosingTypeContainer}>
+    <div className={classes.ClosingTypeContainer} onMouseUp={e => e.stopPropagation()} onMouseOver={mouseOverHandler} style={styles}>
       <div className={classes.TitleContainer}>
         <div className={classes.ImageContainer}>
           <img src={typeImage}/>

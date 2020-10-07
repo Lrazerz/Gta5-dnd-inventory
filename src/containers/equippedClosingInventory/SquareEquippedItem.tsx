@@ -4,17 +4,20 @@ import EquippedItem from "../../components/items/EquippedItem";
 import classes from '../../styles/equippedClosingInventory/SquareEquippedItem.module.scss';
 import SecondaryText from "../../components/layout/SecondaryText";
 import {addDraggedItem, draggedItemRelease} from "../../redux/actions/draggedItem";
-import {addItem, removeEquippedWeapon, removeItem} from "../../redux/actions/board";
-import {removeEquippedItem, setEquippedItem} from "../../redux/actions/equippedItems";
+import {addItem, removeEquippedWeaponFromBoard, removeItem} from "../../redux/actions/board";
+import {removeEquippedItem, removeEquippedWeaponFromEquipped, setEquippedItem} from "../../redux/actions/equippedItems";
 import {ItemTypes} from "../../constants/dnd/types";
 import {Simulate} from "react-dom/test-utils";
 import drag = Simulate.drag;
+import {mpTriggerDropItem, openContextMenu} from "../../redux/actions/contextMenu";
 
 const SquareEquippedItem = ({item}: { item: any }) => {
   // const [resultDataUri, setResultDataUri] = useState(null);
-  const {canDrop, hoveredSquare, item: draggedItem} = useSelector(state => {return state.draggedItem;});
+  const {canDrop, hoveredSquare, item: draggedItem, goingToDrop} = useSelector(state => state.draggedItem);
+  const goingToDropRef = useRef();
   const draggedItemRef = useRef();
   draggedItemRef.current = draggedItem;
+  goingToDropRef.current = goingToDrop;
   const [imageWidth, setImageWidth] = useState();
   const [imageHeight, setImageHeight] = useState();
 
@@ -23,7 +26,6 @@ const SquareEquippedItem = ({item}: { item: any }) => {
   const hoveredSquareRef = useRef();
   canDropRef.current = canDrop;
   hoveredSquareRef.current = hoveredSquare;
-
 
   // set image dimensions to resize
   const imageContainerRef = useRef();
@@ -67,7 +69,15 @@ const SquareEquippedItem = ({item}: { item: any }) => {
 
   const dispatch = useDispatch();
 
+  const imageOnContextMenuOpen = (e) => {
+    const rect = e.target.getBoundingClientRect();
+    const averX = Math.floor(rect.left) + e.target.offsetWidth / 2;
+    const requiredTop = Math.floor(rect.top + e.target.offsetHeight * 0.935);
+    dispatch(openContextMenu(item, averX, requiredTop));
+  };
+
   const imageOnMouseDown = (event) => {
+    if(event.button !== 0) return;
     dispatch(addDraggedItem([0, 0], item));
     event.persist();
 
@@ -113,8 +123,36 @@ const SquareEquippedItem = ({item}: { item: any }) => {
       savedTarget.style.zIndex = 100;
 
       if(canDropRef.current) {
-
-        if(typeof hoveredSquareRef.current === 'number') {
+        if(goingToDropRef.current) {
+          // already have no hovered squares
+          // @ts-ignore
+          if(typeof draggedItemRef.current.mainCell === 'object') {
+            // if drop item from board
+            // @ts-ignore
+            if(draggedItemRef.current.category === ItemTypes.WEAPON_RIFLE || draggedItemRef.current.category === ItemTypes.WEAPON_PISTOL
+              // @ts-ignore
+              || draggedItemRef.current.category === ItemTypes.WEAPON_LAUNCHER) {
+              // @ts-ignore
+              dispatch(removeEquippedWeaponFromEquipped(draggedItemRef.current.id));
+            }
+            // @ts-ignore
+            dispatch(removeItem(draggedItemRef.current.mainCell, draggedItemRef.current.width, draggedItemRef.current.height));
+          }
+          else {
+            // drop item from equipped
+            // @ts-ignore
+            if(draggedItemRef.current.category === ItemTypes.WEAPON_RIFLE || draggedItemRef.current.category === ItemTypes.WEAPON_PISTOL
+              // @ts-ignore
+              || draggedItemRef.current.category === ItemTypes.WEAPON_LAUNCHER) {
+              // @ts-ignore
+              dispatch(removeEquippedWeaponFromBoard(draggedItemRef.current.id));
+            }
+            // @ts-ignore
+            dispatch(removeEquippedItem(draggedItemRef.current.mainCell));
+          }
+          mpTriggerDropItem(draggedItemRef.current);
+        }
+        else if(typeof hoveredSquareRef.current === 'number') {
           // if add to equipped, from equipped too
           // @ts-ignore
           if(item.mainCell !== hoveredSquareRef.current) {
@@ -125,13 +163,14 @@ const SquareEquippedItem = ({item}: { item: any }) => {
               dispatch(setEquippedItem(hoveredSquareRef.current));
             } catch (e) {}
           }
-        } else {
+        }
+        else {
           dispatch(removeEquippedItem(item.mainCell));
           // if add to board
           if(item.category === ItemTypes.WEAPON_RIFLE || item.category === ItemTypes.WEAPON_PISTOL
           || item.category === ItemTypes.WEAPON_LAUNCHER) {
             // if item is weapon - remove prev item from board and set isWeaponEquipped to false
-            dispatch(removeEquippedWeapon(item.id));
+            dispatch(removeEquippedWeaponFromBoard(item.id));
           }
           try {
             dispatch(addItem());
@@ -144,9 +183,10 @@ const SquareEquippedItem = ({item}: { item: any }) => {
 
   };
 
+  // todo make wrapper to image
   let imageElement = (
     <>
-      <img src={item.imageUrl} className={classes.Image} onMouseDown={imageOnMouseDown}
+      <img src={item.imageUrl} className={classes.Image} onMouseDown={imageOnMouseDown} onContextMenu={imageOnContextMenuOpen}
            onDragStart={(e) => {e.stopPropagation();e.preventDefault();return false}}/>
       {item.currentCount > 1 &&
       (<div className={classes.CurrentCount}>
@@ -166,7 +206,7 @@ const SquareEquippedItem = ({item}: { item: any }) => {
     }
 
     imageElement = (
-      <div style={{width: '100%', height: '100%'}} onMouseDown={imageOnMouseDown}>
+      <div style={{width: '100%', height: '100%'}} onMouseDown={imageOnMouseDown} onContextMenu={imageOnContextMenuOpen}>
         <div className={classes.ClosingSquareWrapper}>
           <img src={item.imageUrl} className={classes.Image} style={imageStyles}
                onDragStart={(e) => {e.stopPropagation();e.preventDefault();return false}}/>

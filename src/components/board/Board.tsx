@@ -6,6 +6,8 @@ const Board = ({children}) => {
   // proportional to width (16x6)
   const [boardHeight, setBoardHeight] = useState(null);
 
+  const isGoingToDrop = useSelector(state => state.draggedItem.goingToDrop);
+
   const boardEl: React.MutableRefObject<null> | null = useRef(null);
 
   // Make element proportional no matter where it placed
@@ -21,7 +23,7 @@ const Board = ({children}) => {
       const widthNumber: number = parseFloat(widthString.match(regex)[0]);
 
       // setBoardHeight(widthNumber * 0.376);
-      setBoardHeight(widthNumber * 0.395);
+      setBoardHeight(widthNumber * 0.39837);
     }
 
     // Add event listener
@@ -35,7 +37,8 @@ const Board = ({children}) => {
   }, []);
 
   return (
-    <div ref={boardEl} style={{height: `${boardHeight + 0}px`}} className={classes.Board}>
+    <div ref={boardEl} style={{height: `${boardHeight + 0}px`}} className={classes.Board}
+    onMouseOver={e => e.stopPropagation()} onMouseUp={e => e.stopPropagation()}>
       {children}
     </div>
   )
