@@ -1,4 +1,4 @@
-import React, {CSSProperties} from 'react';
+import React, {CSSProperties, useRef} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 // @ts-ignore
 import classes from '../../styles/equippedClosingInventory/ClosingTypeContainer.module.scss';
@@ -12,6 +12,10 @@ const ClosingTypeContainer = ({typeTitle, typeImage, acceptedType, cells}) => {
 
   const dispatch = useDispatch();
   const {item: draggedItem, goingToDrop} = useSelector(state => state.draggedItem);
+  const draggedItemRef = useRef();
+  const goingToDropRef = useRef();
+  draggedItemRef.current = draggedItem;
+  goingToDropRef.current = goingToDrop;
 
   const squaresContent = cells.map(({id,cell}) => {
     let squareContent = null;
@@ -31,7 +35,7 @@ const ClosingTypeContainer = ({typeTitle, typeImage, acceptedType, cells}) => {
   });
 
   const mouseOverHandler = (e) => {
-    if(draggedItem && goingToDrop) {
+    if(draggedItemRef.current && goingToDropRef.current) {
       console.log('mouse over closingTypeContainer');
       dispatch(setGoingToDrop(false));
     }

@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {CSSProperties, useRef} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import standardClasses from '../../styles/equippedClosingInventory/ClosingTypeContainer.module.scss';
 import classes from '../../styles/equippedClosingInventory/AccessoriesTypeContainer.module.scss';
 import Octagon from "../../components/equippedClosingInventory/Octagon";
@@ -6,6 +7,7 @@ import ClosingWeaponSquare from "../../components/equippedClosingInventory/Closi
 import LeadText from "../../components/layout/LeadText";
 import {SingleCell} from "../equippedWeaponsInventory/EquippedWeaponsInventoryContainer";
 import SquareEquippedItem from "./SquareEquippedItem";
+import {setGoingToDrop} from "../../redux/actions/draggedItem";
 
 interface Props {
   typeTitle: string;
@@ -15,6 +17,13 @@ interface Props {
 }
 
 const AccessoriesTypeContainer = ({typeTitle, typeImage, acceptedType, cells}) => {
+
+  const dispatch = useDispatch();
+  const {item: draggedItem, goingToDrop} = useSelector(state => state.draggedItem);
+  const draggedItemRef = useRef();
+  const goingToDropRef = useRef();
+  draggedItemRef.current = draggedItem;
+  goingToDropRef.current = goingToDrop;
 
   const squaresContent = cells.map(({id, cell}) => {
     let squareContent = null;
@@ -33,8 +42,21 @@ const AccessoriesTypeContainer = ({typeTitle, typeImage, acceptedType, cells}) =
     );
   });
 
+  const mouseOverHandler = (e) => {
+    if(draggedItemRef.current && goingToDropRef.current) {
+      console.log('mouse over closingTypeContainer');
+      dispatch(setGoingToDrop(false));
+    }
+    e.stopPropagation();
+  }
+
+  const styles: CSSProperties = {
+    zIndex: draggedItem ? 200 : 'auto',
+    pointerEvents: goingToDrop ? 'inherit' : 'none',
+  }
+
   return (
-    <div className={standardClasses.ClosingTypeContainer}>
+    <div className={standardClasses.ClosingTypeContainer} style={styles} onMouseOver={mouseOverHandler}>
       <div className={standardClasses.TitleContainer}>
         <img src={typeImage}/>
         <LeadText>&nbsp;{typeTitle.toUpperCase()}</LeadText>

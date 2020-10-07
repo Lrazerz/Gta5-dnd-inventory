@@ -1,4 +1,5 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {CSSProperties, useRef} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import classes from '../../styles/equippedWeaponsInventory/WeaponTypeContainer.module.scss';
 import Octagon from "../../components/equippedClosingInventory/Octagon";
 import ClosingWeaponSquare from "../../components/equippedClosingInventory/ClosingWeaponSquare";
@@ -6,6 +7,7 @@ import LeadText from "../../components/layout/LeadText";
 import SecondaryText from "../../components/layout/SecondaryText";
 import {WeaponTypeContainerCells} from './EquippedWeaponsInventoryContainer';
 import SquareEquippedItem from "../equippedClosingInventory/SquareEquippedItem";
+import {setGoingToDrop} from "../../redux/actions/draggedItem";
 
 interface Props {
   typeTitle: string;
@@ -14,6 +16,13 @@ interface Props {
 }
 
 const WeaponTypeContainer = ({typeTitle, acceptedTypes, cells}: Props) => {
+
+  const dispatch = useDispatch();
+  const {item: draggedItem, goingToDrop} = useSelector(state => state.draggedItem);
+  const draggedItemRef = useRef();
+  const goingToDropRef = useRef();
+  draggedItemRef.current = draggedItem;
+  goingToDropRef.current = goingToDrop;
 
   const {mainSquareType, ammoType, toolsType} = acceptedTypes;
 
@@ -46,8 +55,20 @@ const WeaponTypeContainer = ({typeTitle, acceptedTypes, cells}: Props) => {
     );
   });
 
+  const mouseOverHandler = (e) => {
+    if(draggedItemRef.current && goingToDropRef.current) {
+      dispatch(setGoingToDrop(false));
+    }
+    e.stopPropagation();
+  }
+
+  const styles: CSSProperties = {
+    zIndex: draggedItem ? 200 : 'auto',
+    pointerEvents: goingToDrop ? 'inherit' : 'none',
+  }
+
   return (
-    <div className={classes.WeaponTypeContainer}>
+    <div className={classes.WeaponTypeContainer} style={styles} onMouseOver={mouseOverHandler}>
         <div className={classes.TypeAndWeaponTitle}>
           <LeadText styles={{textAlign: 'right'}}>{typeTitle.toUpperCase()}</LeadText>
           <SecondaryText styles={{textAlign: 'right'}}>
