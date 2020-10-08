@@ -1,6 +1,6 @@
 import React, {CSSProperties, useEffect, useRef, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {addDraggedItem, draggedItemRelease} from "../../redux/actions/draggedItem";
+import {addDraggedItem, draggedItemRelease, stackItem} from "../../redux/actions/draggedItem";
 import CommonItem from "../../components/items/CommonItem/CommonItem";
 import classes from '../../styles/board/SquareCommonItem.module.scss';
 import SecondaryText from "../../components/layout/SecondaryText";
@@ -17,7 +17,7 @@ const SquareCommonItem = ({coords: [x, y], item}) => {
   const [leftOffset, setLeftOffset] = useState();
   const [topOffset, setTopOffset] = useState();
 
-  const {canDrop, hoveredSquare, item: draggedItem, xDown, yDown, goingToDrop} = useSelector(state => state.draggedItem);
+  const {canDrop, hoveredSquare, item: draggedItem, xDown, yDown, goingToDrop, goingToStack} = useSelector(state => state.draggedItem);
 
   // refs to pass to event handler
   const canDropRef = useRef();
@@ -26,12 +26,14 @@ const SquareCommonItem = ({coords: [x, y], item}) => {
   const xDownRef = useRef();
   const yDownRef = useRef();
   const goingToDropRef = useRef();
+  const goingToStackRef = useRef();
   canDropRef.current = canDrop;
   hoveredSquareRef.current = hoveredSquare;
   draggedItemRef.current = draggedItem;
   xDownRef.current = xDown;
   yDownRef.current = yDown;
-  goingToDropRef.current = goingToDrop
+  goingToDropRef.current = goingToDrop;
+  goingToStackRef.current = goingToStack;
 
   const dispatch = useDispatch();
 
@@ -125,36 +127,41 @@ const SquareCommonItem = ({coords: [x, y], item}) => {
 
     document.addEventListener('mousemove', onMouseMove);
 
+
     newClone.onmouseover = e => {
       e.stopPropagation();
     }
 
     newClone.onmouseup = function () {
+      console.log('onMOUSEUP');
       event.stopPropagation();
       document.body.removeChild(newClone);
       document.removeEventListener('mousemove', onMouseMove);
       newClone.onmouseup = null;
       savedTarget.style.zIndex = 100;
       if (canDropRef.current) {
-        if(goingToDropRef.current) {
+        if(goingToStackRef.current) {
+          console.log('stackItem');
+          dispatch(stackItem());
+        }
+        else if (goingToDropRef.current) {
           // already have no hovered squares
           // @ts-ignore
-          if(typeof draggedItemRef.current.mainCell === 'object') {
+          if (typeof draggedItemRef.current.mainCell === 'object') {
             // if drop item from board
             // @ts-ignore
-            if(draggedItemRef.current.category === ItemTypes.WEAPON_RIFLE || draggedItemRef.current.category === ItemTypes.WEAPON_PISTOL
+            if (draggedItemRef.current.category === ItemTypes.WEAPON_RIFLE || draggedItemRef.current.category === ItemTypes.WEAPON_PISTOL
               // @ts-ignore
-            || draggedItemRef.current.category === ItemTypes.WEAPON_LAUNCHER) {
+              || draggedItemRef.current.category === ItemTypes.WEAPON_LAUNCHER) {
               // @ts-ignore
               dispatch(removeEquippedWeaponFromEquipped(draggedItemRef.current.id));
             }
             // @ts-ignore
             dispatch(removeItem(draggedItemRef.current.mainCell, draggedItemRef.current.width, draggedItemRef.current.height));
-          }
-          else {
+          } else {
             // drop item from equipped
             // @ts-ignore
-            if(draggedItemRef.current.category === ItemTypes.WEAPON_RIFLE || draggedItemRef.current.category === ItemTypes.WEAPON_PISTOL
+            if (draggedItemRef.current.category === ItemTypes.WEAPON_RIFLE || draggedItemRef.current.category === ItemTypes.WEAPON_PISTOL
               // @ts-ignore
               || draggedItemRef.current.category === ItemTypes.WEAPON_LAUNCHER) {
               // @ts-ignore
@@ -165,7 +172,6 @@ const SquareCommonItem = ({coords: [x, y], item}) => {
           }
           mpTriggerDropItem(draggedItemRef.current);
         }
-        // if can drop
         else if (typeof hoveredSquareRef.current === 'number') {
           // if add to equipped
           if (item.category === ItemTypes.WEAPON_RIFLE || item.category === ItemTypes.WEAPON_PISTOL
@@ -192,7 +198,6 @@ const SquareCommonItem = ({coords: [x, y], item}) => {
             }
           }
         }
-        // debugger;
       }
       event.target.style.pointerEvents = 'inherit';
       dispatch(draggedItemRelease());

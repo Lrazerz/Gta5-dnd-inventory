@@ -1,6 +1,6 @@
 import {
   EQUIPPED_ITEM_SET,
-  EQUIPPED_ITEM_REMOVE, EQUIPPED_ITEMS_SET
+  EQUIPPED_ITEM_REMOVE, EQUIPPED_ITEMS_SET, EQUIPPED_CURRENT_COUNT_CHANGE
 } from "../actions/types";
 import EquippedItemsCell from "../../models/EquippedItemsCell";
 
@@ -99,6 +99,14 @@ export default (state = fillInitialState(), action) => {
         ...state,
         cells,
       };
+    }
+    case EQUIPPED_CURRENT_COUNT_CHANGE: {
+      const cells = [...state.cells];
+      cells[action.squareId].item = {...cells[action.squareId].item, currentCount: action.newCurrentCount};
+      return {
+        ...state,
+        cells
+      }
     }
     default: {
       return state;

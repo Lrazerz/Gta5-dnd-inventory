@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import EquippedItem from "../../components/items/EquippedItem";
 import classes from '../../styles/equippedClosingInventory/SquareEquippedItem.module.scss';
 import SecondaryText from "../../components/layout/SecondaryText";
-import {addDraggedItem, draggedItemRelease} from "../../redux/actions/draggedItem";
+import {addDraggedItem, draggedItemRelease, stackItem} from "../../redux/actions/draggedItem";
 import {addItem, removeEquippedWeaponFromBoard, removeItem} from "../../redux/actions/board";
 import {removeEquippedItem, removeEquippedWeaponFromEquipped, setEquippedItem} from "../../redux/actions/equippedItems";
 import {ItemTypes} from "../../constants/dnd/types";
@@ -13,7 +13,7 @@ import {mpTriggerDropItem, openContextMenu} from "../../redux/actions/contextMen
 
 const SquareEquippedItem = ({item}: { item: any }) => {
   // const [resultDataUri, setResultDataUri] = useState(null);
-  const {canDrop, hoveredSquare, item: draggedItem, goingToDrop} = useSelector(state => state.draggedItem);
+  const {canDrop, hoveredSquare, item: draggedItem, goingToDrop, goingToStack} = useSelector(state => state.draggedItem);
   const goingToDropRef = useRef();
   const draggedItemRef = useRef();
   draggedItemRef.current = draggedItem;
@@ -24,8 +24,10 @@ const SquareEquippedItem = ({item}: { item: any }) => {
   // refs to pass to event handler
   const canDropRef = useRef();
   const hoveredSquareRef = useRef();
+  const goingToStackRef = useRef();
   canDropRef.current = canDrop;
   hoveredSquareRef.current = hoveredSquare;
+  goingToStackRef.current = goingToStack;
 
   // set image dimensions to resize
   const imageContainerRef = useRef();
@@ -123,7 +125,11 @@ const SquareEquippedItem = ({item}: { item: any }) => {
       savedTarget.style.zIndex = 100;
 
       if(canDropRef.current) {
-        if(goingToDropRef.current) {
+        if(goingToStackRef.current) {
+          console.log('stackItem');
+          dispatch(stackItem());
+        }
+        else if(goingToDropRef.current) {
           // already have no hovered squares
           // @ts-ignore
           if(typeof draggedItemRef.current.mainCell === 'object') {
@@ -180,8 +186,9 @@ const SquareEquippedItem = ({item}: { item: any }) => {
       event.target.style.pointerEvents = 'inherit';
       dispatch(draggedItemRelease());
     };
-
   };
+
+  console.log('RERENDER EQUIPPED ITEM', item.currentCount, item);
 
   // todo make wrapper to image
   let imageElement = (

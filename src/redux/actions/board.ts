@@ -1,4 +1,10 @@
-import {EQUIPPED_STATE_CHANGE, SINGLE_ITEM_SQUARES_FILL, SQUARES_FILL, SQUARES_RELEASE} from "./types";
+import {
+  BOARD_CURRENT_COUNT_CHANGE,
+  EQUIPPED_STATE_CHANGE,
+  SINGLE_ITEM_SQUARES_FILL,
+  SQUARES_FILL,
+  SQUARES_RELEASE
+} from "./types";
 import store from "../store";
 import {setEquippedItems} from "./equippedItems";
 import {ItemCategories} from "../../constants/dnd/categories";
@@ -26,7 +32,7 @@ const openOrRefreshInventory = async (info) => {
 
     // Square numbers starts from 1 instead of 0
     const {
-      Name, PosNumberLeftAngle, SizeX, SizeY, Enabled, CurrentCount = 1, ...rest
+      Name, PosNumberLeftAngle, SizeX, SizeY, Enabled, CurrentCount, MaxCount, ...rest
     } = item;
     const ID = item.ID.toString();
 
@@ -55,12 +61,12 @@ const openOrRefreshInventory = async (info) => {
     if(category === ItemTypes.WEAPON_RIFLE || category === ItemTypes.WEAPON_PISTOL
       || category === ItemTypes.WEAPON_LAUNCHER) {
       FullItem = new WeaponItem(ID, Name, category, PosNumberLeftAngle,
-        SizeX, SizeY, CurrentCount,
+        SizeX, SizeY, CurrentCount, MaxCount,
         ImageUrl, Enabled, rest);
     } else {
       // If is not weapon
       FullItem = new Item(ID, Name, category, PosNumberLeftAngle,
-        SizeX, SizeY, CurrentCount,
+        SizeX, SizeY, CurrentCount, MaxCount,
         ImageUrl, Enabled, rest);
     }
 
@@ -189,10 +195,15 @@ const changeEquippedState = (item, newState) => dispatch => {
   dispatch(_changeEquippedState(squares, newItem));
 }
 
+const boardChangeCurrentCount = (squares, newCurrentCount) => {
+  return {type: BOARD_CURRENT_COUNT_CHANGE, squares, newCurrentCount}
+}
+
 export {
   addItem,
   removeItem,
   openOrRefreshInventory,
   changeEquippedState,
-  removeEquippedWeaponFromBoard
+  removeEquippedWeaponFromBoard,
+  boardChangeCurrentCount
 }

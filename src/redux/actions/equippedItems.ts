@@ -1,4 +1,9 @@
-import {EQUIPPED_ITEM_SET, EQUIPPED_ITEMS_SET, EQUIPPED_ITEM_REMOVE} from "./types";
+import {
+  EQUIPPED_ITEM_SET,
+  EQUIPPED_ITEMS_SET,
+  EQUIPPED_ITEM_REMOVE,
+  EQUIPPED_CURRENT_COUNT_CHANGE,
+} from "./types";
 import Item from "../../models/Item";
 import {translateToServerItem} from "../../utils/translateToServerItem";
 
@@ -30,16 +35,26 @@ const removeEquippedItem = (cellId) => {
 const removeEquippedWeaponFromEquipped = (id) => {
   return (dispatch, getState) => {
     //find weapon by id and just remove item *
-    const weaponCells = getState().equippedItems.cells.slice(1,4);
-    console.log('weaponCells',weaponCells);
+    const weaponCells = getState().equippedItems.cells.slice(1, 4);
+    console.log('weaponCells', weaponCells);
     // remove item from equipped if item exists
     let weaponCellIdx = weaponCells.findIndex(cell => cell.item && cell.item.id === id);
 
-    if(weaponCellIdx !== -1) {
+    if (weaponCellIdx !== -1) {
       // +1 coz weaponCells indexes dont corresponds to cells indexes
       dispatch(_removeEquippedItem(weaponCellIdx + 1));
     }
   }
 }
 
-export {setEquippedItem, removeEquippedItem, setEquippedItems, removeEquippedWeaponFromEquipped};
+const equippedChangeCurrentCount = (squareId, newCurrentCount) => {
+  return {type: EQUIPPED_CURRENT_COUNT_CHANGE, squareId, newCurrentCount}
+}
+
+export {
+  setEquippedItem,
+  removeEquippedItem,
+  setEquippedItems,
+  removeEquippedWeaponFromEquipped,
+  equippedChangeCurrentCount
+};

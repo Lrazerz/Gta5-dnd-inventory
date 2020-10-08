@@ -1,5 +1,11 @@
 import {xMin, xMax, yMin, yMax} from "../../constants/boardDimensions";
-import {EQUIPPED_STATE_CHANGE, SINGLE_ITEM_SQUARES_FILL, SQUARES_FILL, SQUARES_RELEASE} from "../actions/types";
+import {
+  BOARD_CURRENT_COUNT_CHANGE,
+  EQUIPPED_STATE_CHANGE,
+  SINGLE_ITEM_SQUARES_FILL,
+  SQUARES_FILL,
+  SQUARES_RELEASE
+} from "../actions/types";
 
 // board - matrix;
 // board[y][x] - single cell, if null - empty,
@@ -55,7 +61,7 @@ export default (state = _fillInitialState(), action) => {
       action.squares.forEach(square => {
         const [x, y] = square;
         newBoard[y][x] = null;
-      })
+      });
       return {
         ...state,
         board: newBoard,
@@ -70,6 +76,17 @@ export default (state = _fillInitialState(), action) => {
       return {
         ...state,
         board: newBoard
+      }
+    }
+    case BOARD_CURRENT_COUNT_CHANGE: {
+      const newBoard = [...state.board];
+      action.squares.forEach(square => {
+        const [x,y] = square;
+        newBoard[y][x].currentCount = action.newCurrentCount;
+      });
+      return {
+        ...state,
+        board: newBoard,
       }
     }
     default: {

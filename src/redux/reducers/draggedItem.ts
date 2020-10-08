@@ -3,8 +3,15 @@ import {
   DRAGGED_ITEM_RELEASE,
   HOVERED_SQUARES_SET,
   HOVERED_SQUARES_REMOVE,
-  GOING_TO_DROP_SET
+  GOING_TO_DROP_SET,
 } from "../actions/types";
+import Item from "../../models/Item";
+
+export interface GoingToStack {
+  stackableItem: Item,
+  stackableItemNewCurrentCount: number,
+  draggedItemNewCurrentCount: number,
+}
 
 interface State {
   item: any;
@@ -20,7 +27,8 @@ interface State {
 
   canDrop: boolean;
 
-  goingToDrop : false,
+  goingToDrop : boolean,
+  goingToStack: null | GoingToStack,
 }
 
 const initialState: State = {
@@ -40,6 +48,7 @@ const initialState: State = {
   canDrop: false,
 
   goingToDrop : false,
+  goingToStack: null,
 }
 
 export default (state = initialState, action) => {
@@ -53,7 +62,8 @@ export default (state = initialState, action) => {
         xDown,
         yUp,
         yDown,
-        goingToDrop: false
+        goingToDrop: false,
+        goingToStack: false,
       }
     }
     case DRAGGED_ITEM_RELEASE: {
@@ -70,6 +80,7 @@ export default (state = initialState, action) => {
         allHoveredSquares: action.squares,
         canDrop: action.canDrop,
         goingToDrop: false,
+        goingToStack: action.goingToStack,
       }
     }
     case GOING_TO_DROP_SET: {
@@ -79,6 +90,7 @@ export default (state = initialState, action) => {
         allHoveredSquares: [],
         goingToDrop: action.goingToDrop,
         canDrop: action.canDrop,
+        goingToStack: false,
       }
     }
     default: {

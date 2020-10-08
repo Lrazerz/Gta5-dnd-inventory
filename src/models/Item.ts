@@ -21,7 +21,9 @@ export default class Item {
   // public enabled: boolean;
 
   // count of items (stack, number in the right top corner)
-  public currentCount: number;
+  public currentCount: number | undefined;
+
+  public maxCount: number | undefined;
 
   public imageUrl: string | null;
 
@@ -33,8 +35,8 @@ export default class Item {
   public isWeaponEquipped: boolean;
 
   constructor(id: string, name: string, category: ItemCategories | string, mainCell: [number, number] | number,
-              width: number, height: number, currentCount: number, imageUrl: string | null, isEquipped: boolean,
-              rest: any, isWeaponEquipped: boolean = false) {
+              width: number, height: number, currentCount: number, maxCount: number | undefined, imageUrl: string | null,
+              isEquipped: boolean, rest: any, isWeaponEquipped: boolean = false) {
     this.id = id;
     this.name = name;
     this.category = category;
@@ -42,6 +44,7 @@ export default class Item {
     this.width = width;
     this.height = height;
     this.currentCount = currentCount;
+    this.maxCount = maxCount;
     this.imageUrl = imageUrl;
     this.isEquipped = isEquipped;
     this.rest = rest;
