@@ -223,6 +223,7 @@ const SquareCommonItem = ({coords: [x, y], item}) => {
       top: topOffset,
       left: leftOffset,
       pointerEvents: draggedItem ? 'none' : 'inherit',
+      zIndex: draggedItem ? 0 : 100,
     }
 
     imageElement = (
