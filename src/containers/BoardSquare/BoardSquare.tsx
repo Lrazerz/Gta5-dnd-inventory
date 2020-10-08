@@ -1,4 +1,4 @@
-import React, {useRef} from 'react'
+import React, {CSSProperties, useRef} from 'react'
 import {useDispatch, useSelector} from "react-redux";
 import Overlay from "../../components/UI/Overlay";
 import {invokeOnMouseUp, setHoveredSquares} from "../../redux/actions/draggedItem";
@@ -14,6 +14,7 @@ const BoardSquare = ({coords: [x, y], children, isHovered}) => {
   const dispatch = useDispatch();
   const drop = null;
   const squareMouseOverHandler = (e) => {
+    console.log('squareMouseOverHandler');
      e.persist();
     if (draggedItemRef.current) {
       if (!hoveredSquare || typeof hoveredSquare !== 'object' || hoveredSquare[0] !== x || hoveredSquare[1] !== y) {
@@ -23,25 +24,34 @@ const BoardSquare = ({coords: [x, y], children, isHovered}) => {
   }
   let boardSquareStyles;
 
+
   boardSquareStyles = {
-    pointerEvents: (hoveredSquare && typeof hoveredSquare === 'object' && (hoveredSquare[0] === x && hoveredSquare[1] === y) ) ? 'none' : 'auto',
     outline: `0.25px solid rgba(109, 114, 125, 0.8)`
   }
 
-  if(draggedItem) {
-    boardSquareStyles = {...boardSquareStyles, zIndex: 200};
+  let mouseOverElStyles: CSSProperties = {
+    pointerEvents: (hoveredSquare && typeof hoveredSquare === 'object' && (hoveredSquare[0] === x && hoveredSquare[1] === y) ) ? 'none' : 'auto',
   }
+
   if (children) {
     boardSquareStyles = {...boardSquareStyles, outline: 'none'};
+  }
+
+  if(draggedItem) {
+    mouseOverElStyles = {...mouseOverElStyles, zIndex: 200};
+    // if(isHovered) {
+    //   boardSquareStyles = {...boardSquareStyles, outline: `0.25px solid rgba(109, 114, 125, 0.8)`}
+    // }
   }
 
   return (
     // @ts-ignore
     <div ref={drop} className={classes.BoardSquare} style={boardSquareStyles}
-         onMouseOver={squareMouseOverHandler} onMouseUp={() => {if(draggedItem) invokeOnMouseUp()}}>
+         onMouseUp={() => {if(draggedItem) invokeOnMouseUp()}}>
         {children}
       {isHovered && !canDropRedux && <Overlay color={theme.colors.danger}/>}
       {isHovered && canDropRedux && <Overlay color={theme.colors.success}/>}
+      <div className={classes.MouseOverEl} style={mouseOverElStyles} onMouseOver={squareMouseOverHandler}/>
     </div>
   )
 }

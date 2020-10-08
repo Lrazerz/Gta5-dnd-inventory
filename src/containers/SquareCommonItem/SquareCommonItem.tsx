@@ -132,7 +132,7 @@ const SquareCommonItem = ({coords: [x, y], item}) => {
       e.stopPropagation();
     }
 
-    newClone.onmouseup = function () {
+    newClone.onmouseup = () => {
       console.log('onMOUSEUP');
       event.stopPropagation();
       document.body.removeChild(newClone);
@@ -202,6 +202,10 @@ const SquareCommonItem = ({coords: [x, y], item}) => {
       event.target.style.pointerEvents = 'inherit';
       dispatch(draggedItemRelease());
     };
+
+    // newClone.onmouseup = () => {
+    //   document.removeEventListener('mousemove', onMouseMove);
+    // }
   };
 
   if (x === item.mainCell[0] && y === item.mainCell[1]) {

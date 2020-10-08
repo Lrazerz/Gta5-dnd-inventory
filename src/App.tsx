@@ -45,15 +45,11 @@ const App: React.FC = () => {
     return null;
   }
 
-  // window.oncontextmenu = e => {
-  //   e.preventDefault();
-  // };
-
-  document.oncontextmenu = e => {
+  window.oncontextmenu = e => {
     e.preventDefault();
   }
 
-  document.ondragstart = e => {
+  window.ondragstart = e => {
     e.stopPropagation();
     e.preventDefault();
     return false
