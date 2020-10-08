@@ -9,8 +9,7 @@ interface Props {
 
 const CommonItem: React.FC<Props> = ({ children, imageContainerForwardedRef }) => {
   return (
-    <div ref={imageContainerForwardedRef} className={classes.CommonItem}
-         onDragStart={(e) => {e.stopPropagation();e.preventDefault();return false}}>
+    <div ref={imageContainerForwardedRef} className={classes.CommonItem}>
         {children}
     </div>
   );

@@ -124,13 +124,13 @@ const setHoveredSquares = (hoveredSquare, isHoveredEquipped = false, allowedCate
       // check canDrop
       allHoveredSquares.forEach(hoveredSquare => {
         const [hoveredX, hoveredY] = hoveredSquare;
-        const boardSquare = board[hoveredY][hoveredX];
         // if outside the border
         if (hoveredX < xMin || hoveredX > xMax || hoveredY < yMin || hoveredY > yMax) {
           canDrop = false;
           // if has item on board and item is not the dragged item
         }
-        else if (boardSquare !== null && boardSquare.id !== item.id) { // id check just to set up canDrop = false
+        else if (board[hoveredY][hoveredX] !== null && board[hoveredY][hoveredX].id !== item.id) { // id check just to set up canDrop = false
+          const boardSquare = board[hoveredY][hoveredX];
           canDrop = false;
           // can check "allow to stack" here coz all items has different id's
           const isAllowToStack = boardSquare.name === item.name

@@ -1,5 +1,4 @@
-import React from 'react'
-import Square from "../../components/Square/Square";
+import React, {useRef} from 'react'
 import {useDispatch, useSelector} from "react-redux";
 import Overlay from "../../components/UI/Overlay";
 import {invokeOnMouseUp, setHoveredSquares} from "../../redux/actions/draggedItem";
@@ -9,12 +8,14 @@ import theme from "../../constants/css/theme";
 const BoardSquare = ({coords: [x, y], children, isHovered}) => {
 
   const {hoveredSquare, canDrop: canDropRedux, item: draggedItem} = useSelector(({draggedItem}) => draggedItem);
+  const draggedItemRef = useRef();
+  draggedItemRef.current = draggedItem;
 
   const dispatch = useDispatch();
   const drop = null;
   const squareMouseOverHandler = (e) => {
      e.persist();
-    if (draggedItem) {
+    if (draggedItemRef.current) {
       if (!hoveredSquare || typeof hoveredSquare !== 'object' || hoveredSquare[0] !== x || hoveredSquare[1] !== y) {
         dispatch(setHoveredSquares([x, y]));
       }
@@ -38,7 +39,7 @@ const BoardSquare = ({coords: [x, y], children, isHovered}) => {
     // @ts-ignore
     <div ref={drop} className={classes.BoardSquare} style={boardSquareStyles}
          onMouseOver={squareMouseOverHandler} onMouseUp={() => {if(draggedItem) invokeOnMouseUp()}}>
-      <Square>{children}</Square>
+        {children}
       {isHovered && !canDropRedux && <Overlay color={theme.colors.danger}/>}
       {isHovered && canDropRedux && <Overlay color={theme.colors.success}/>}
     </div>
