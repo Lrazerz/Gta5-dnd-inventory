@@ -16,14 +16,7 @@ interface Props {
   cells: SingleCell[];
 }
 
-const AccessoriesTypeContainer = ({typeTitle, typeImage, acceptedType, cells}) => {
-
-  const dispatch = useDispatch();
-  const {item: draggedItem, goingToDrop} = useSelector(state => state.draggedItem);
-  const draggedItemRef = useRef();
-  const goingToDropRef = useRef();
-  draggedItemRef.current = draggedItem;
-  goingToDropRef.current = goingToDrop;
+const AccessoriesTypeContainer: React.FC<Props> = ({typeTitle, typeImage, acceptedType, cells}) => {
 
   const squaresContent = cells.map(({id, cell}) => {
     let squareContent = null;
@@ -33,30 +26,16 @@ const AccessoriesTypeContainer = ({typeTitle, typeImage, acceptedType, cells}) =
     }
 
     return (
-      <Octagon key={id} width={'19.8%'}>
-        <ClosingWeaponSquare acceptedItemType={acceptedType} coords={id}
-                             itemId={cell.item && cell.item.id}>
+      <Octagon key={id} width={'19.8%'} coords={id}>
+        <ClosingWeaponSquare acceptedItemType={acceptedType} coords={id}>
           {squareContent}
         </ClosingWeaponSquare>
       </Octagon>
     );
   });
 
-  const mouseOverHandler = (e) => {
-    if(draggedItemRef.current && goingToDropRef.current) {
-      console.log('mouse over closingTypeContainer');
-      dispatch(setGoingToDrop(false));
-    }
-    e.stopPropagation();
-  }
-
-  const styles: CSSProperties = {
-    zIndex: draggedItem ? 200 : 'auto',
-    pointerEvents: goingToDrop ? 'inherit' : 'none',
-  }
-
   return (
-    <div className={standardClasses.ClosingTypeContainer} style={styles} onMouseOver={mouseOverHandler}>
+    <div className={standardClasses.ClosingTypeContainer}>
       <div className={standardClasses.TitleContainer}>
         <img src={typeImage}/>
         <LeadText>&nbsp;{typeTitle.toUpperCase()}</LeadText>

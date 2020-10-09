@@ -1,10 +1,11 @@
-import React from 'react';
+import React, {CSSProperties} from 'react';
 import classes from '../../styles/equippedWeaponsInventory/EquippedWeaponsInventoryContainer.module.scss';
 import WeaponTypeContainer from "./WeaponTypeContainer";
 import PhoneAndSimContainer from "./PhoneAndSimContainer";
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import {ItemTypes} from "../../constants/dnd/types";
 import EquippedItemsCell from "../../models/EquippedItemsCell";
+import {setGoingToDrop} from "../../redux/actions/draggedItem";
 
 export interface SingleCell {
   id: number,
@@ -18,7 +19,9 @@ export interface WeaponTypeContainerCells {
 }
 
 const EquippedWeaponsInventoryContainer = () => {
-  const equippedCells = useSelector(({equippedItems}) => equippedItems.cells);
+  const dispatch = useDispatch();
+  const {equippedItems: {cells: equippedCells},
+    draggedItem: {goingToDrop, hoveredSquare, item: draggedItem}} = useSelector((state) => state);
 
   // accepted types
   const primaryWeaponAcceptedTypes = {
@@ -59,8 +62,27 @@ const EquippedWeaponsInventoryContainer = () => {
   const phoneCell: SingleCell = {id: 40, cell: equippedCells[40]};
   const simCell: SingleCell = {id: 41, cell: equippedCells[41]};
 
+  const goingToDropOnThisSquare: boolean = goingToDrop && goingToDrop.areaId === 0;
+  // to keep item at the to of the screen, while
+  const hoveredSquareFromClosingInventory: boolean = typeof hoveredSquare === 'number' && hoveredSquare < 50;
+  // to keep item at the top of the screen
+  // z-index: 200, when draggedItem and goingToDrop === false || true and areaId !== 0
+  const conditions_to_z_index_200 = draggedItem &&
+    !goingToDropOnThisSquare &&
+    !hoveredSquareFromClosingInventory;
+
+  const equippedContainerMouseOverHandler = e => {
+    console.log('mouse Over equippedContainer');
+    if(draggedItem) dispatch(setGoingToDrop(true, 0));
+  }
+
+  const equippedContainerStyles: CSSProperties = {
+    zIndex: conditions_to_z_index_200 ? 200 : 'auto',
+  }
+
   return (
-    <div className={classes.EquippedWeaponsInventoryContainer}>
+    <div className={classes.EquippedWeaponsInventoryContainer} style={equippedContainerStyles}
+    onMouseOver={equippedContainerMouseOverHandler}>
       <WeaponTypeContainer typeTitle={'Основное Оружие'} acceptedTypes={primaryWeaponAcceptedTypes}
                            cells={primaryWeaponCells}/>
       <WeaponTypeContainer typeTitle={'Пистолет'} acceptedTypes={pistolAcceptedTypes}

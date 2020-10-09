@@ -14,7 +14,7 @@ const ContextMenu = ({contextActions, leftOffset, topOffset}) => {
         {
           contextActions.map((action,i) => {
             return (
-              <div key={i} className={classes.Button} onClick={(e) => {console.log('ContextMenu click');action.handler(e)}}
+              <div key={i} className={classes.Button} onClick={(e) => action.handler(e)}
               style={{ backgroundColor: action.label.toLowerCase() === 'выкинуть' ? '#FF5306' : '#3A72F7' }}>
                 <SecondaryText styles={{fontWeight: '800', textAlign: 'center', letterSpacing: '.01rem'}}>{action.label}</SecondaryText>
               </div>

@@ -126,7 +126,6 @@ const SquareEquippedItem = ({item}: { item: any }) => {
 
       if(canDropRef.current) {
         if(goingToStackRef.current) {
-          console.log('stackItem');
           dispatch(stackItem());
         }
         else if(goingToDropRef.current) {
@@ -187,8 +186,6 @@ const SquareEquippedItem = ({item}: { item: any }) => {
       dispatch(draggedItemRelease());
     };
   };
-
-  console.log('RERENDER EQUIPPED ITEM', item.currentCount, item);
 
   // todo make wrapper to image
   let imageElement = (

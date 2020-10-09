@@ -1,5 +1,5 @@
-import React from 'react';
-import {useSelector} from 'react-redux';
+import React, {CSSProperties} from 'react';
+import {useSelector, useDispatch} from 'react-redux';
 import classes from '../../styles/equippedClosingInventory/EquippedClosingInventoryContainer.module.scss';
 import AccessoriesTypeContainer from "./AccessoriesTypeContainer";
 import ClosingTypeContainer from "./ClosingTypeContainer";
@@ -11,9 +11,13 @@ import glassesImage from '../../assets/images/equippedClosingInventory/glasses.p
 import UniqueServerDescription from "../../components/UI/UniqueServerDescription";
 import {ItemTypes} from "../../constants/dnd/types";
 import {SingleCell} from "../equippedWeaponsInventory/EquippedWeaponsInventoryContainer";
+import {setGoingToDrop} from "../../redux/actions/draggedItem";
 
 const EquippedClosingInventoryContainer = () => {
+
+  const dispatch = useDispatch();
   const equippedCells = useSelector(({equippedItems}) => equippedItems.cells);
+  const {goingToDrop, hoveredSquare, item: draggedItem} = useSelector(({draggedItem}) => draggedItem);
 
   const headdressCells: SingleCell[] = [
     {id: 50, cell: equippedCells[50]},
@@ -42,8 +46,27 @@ const EquippedClosingInventoryContainer = () => {
     {id: 93, cell: equippedCells[92]},
   ];
 
+  const equippedContainerMouseOverHandler = e => {
+    console.log('mouse Over equippedContainer');
+    if(draggedItem) dispatch(setGoingToDrop(true, 0));
+  }
+
+  const goingToDropOnThisSquare: boolean = goingToDrop && goingToDrop.areaId === 0;
+  // to keep item at the to of the screen, while
+  const hoveredSquareFromClosingInventory: boolean = typeof hoveredSquare === 'number' && hoveredSquare >= 50;
+  // to keep item at the top of the screen
+  // z-index: 200, when draggedItem and goingToDrop === false || true and areaId !== 0
+  const conditions_to_z_index_200 = draggedItem &&
+    !goingToDropOnThisSquare &&
+    !hoveredSquareFromClosingInventory;
+
+  const equippedContainerStyles: CSSProperties = {
+    zIndex: conditions_to_z_index_200 ? 200 : 'auto',
+  }
+
   return (
-    <div className={classes.EquippedClosingInventoryContainer}>
+    <div className={classes.EquippedClosingInventoryContainer} style={equippedContainerStyles}
+         onMouseOver={equippedContainerMouseOverHandler}>
       <ClosingTypeContainer typeTitle={'Головной убор'}
                             typeImage={capImage} acceptedType={ItemTypes.HEADDRESS}
                             cells={headdressCells}/>

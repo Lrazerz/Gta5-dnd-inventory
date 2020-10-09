@@ -1,5 +1,5 @@
-import React, {CSSProperties, useRef} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
+import React, {CSSProperties} from 'react';
+import {useSelector} from 'react-redux';
 import classes from '../../styles/equippedWeaponsInventory/WeaponTypeContainer.module.scss';
 import Octagon from "../../components/equippedClosingInventory/Octagon";
 import ClosingWeaponSquare from "../../components/equippedClosingInventory/ClosingWeaponSquare";
@@ -7,7 +7,6 @@ import LeadText from "../../components/layout/LeadText";
 import SecondaryText from "../../components/layout/SecondaryText";
 import {WeaponTypeContainerCells} from './EquippedWeaponsInventoryContainer';
 import SquareEquippedItem from "../equippedClosingInventory/SquareEquippedItem";
-import {setGoingToDrop} from "../../redux/actions/draggedItem";
 
 interface Props {
   typeTitle: string;
@@ -17,12 +16,7 @@ interface Props {
 
 const WeaponTypeContainer = ({typeTitle, acceptedTypes, cells}: Props) => {
 
-  const dispatch = useDispatch();
-  const {item: draggedItem, goingToDrop} = useSelector(state => state.draggedItem);
-  const draggedItemRef = useRef();
-  const goingToDropRef = useRef();
-  draggedItemRef.current = draggedItem;
-  goingToDropRef.current = goingToDrop;
+  const {hoveredSquare} = useSelector(({draggedItem}) => draggedItem);
 
   const {mainSquareType, ammoType, toolsType} = acceptedTypes;
 
@@ -30,7 +24,7 @@ const WeaponTypeContainer = ({typeTitle, acceptedTypes, cells}: Props) => {
   const {weaponCell, ammoCell, toolsCells} = cells;
 
   const weaponSquareContent = weaponCell.cell.item ?
-    (<SquareEquippedItem item={weaponCell.cell.item}/>) : null;
+    (<SquareEquippedItem key={weaponCell.id} item={weaponCell.cell.item}/>) : null;
 
   const ammoSquareContent = ammoCell.cell.item ?
     (<SquareEquippedItem key={ammoCell.id}
@@ -41,52 +35,42 @@ const WeaponTypeContainer = ({typeTitle, acceptedTypes, cells}: Props) => {
 
     if (toolsCell.cell.item) {
       toolsSquareContent = (
-        <SquareEquippedItem item={toolsCell.cell.item}/>
+        <SquareEquippedItem key={toolsCell.cell.item.id} item={toolsCell.cell.item}/>
       );
     }
 
     return (
-      <Octagon key={toolsCell.id} width={'19.85%'}>
-        <ClosingWeaponSquare acceptedItemType={toolsType} coords={toolsCell.id}
-                             itemId={toolsCell.cell.item && toolsCell.cell.item.id}>
+      <Octagon key={toolsCell.id} width={'19.85%'} coords={toolsCell.id}>
+        <ClosingWeaponSquare acceptedItemType={toolsType} coords={toolsCell.id}>
           {toolsSquareContent}
         </ClosingWeaponSquare>
       </Octagon>
     );
   });
 
-  const mouseOverHandler = (e) => {
-    if(draggedItemRef.current && goingToDropRef.current) {
-      dispatch(setGoingToDrop(false));
-    }
-    e.stopPropagation();
-  }
-
-  const styles: CSSProperties = {
-    zIndex: draggedItem ? 200 : 'auto',
-    pointerEvents: goingToDrop ? 'inherit' : 'none',
+  // to keep dragged item at the top of the screen
+  const weaponSquareContainerStyles: CSSProperties = {
+    zIndex: hoveredSquare === weaponCell.id ? 'auto' : 200,
   }
 
   return (
-    <div className={classes.WeaponTypeContainer} style={styles} onMouseOver={mouseOverHandler}>
+    <div className={classes.WeaponTypeContainer}>
         <div className={classes.TypeAndWeaponTitle}>
           <LeadText styles={{textAlign: 'right'}}>{typeTitle.toUpperCase()}</LeadText>
           <SecondaryText styles={{textAlign: 'right'}}>
             {weaponCell.cell.item && weaponCell.cell.item.name}
           </SecondaryText>
         </div>
-        <div className={classes.WeaponSquareContainer}>
+        <div className={classes.WeaponSquareContainer} style={weaponSquareContainerStyles}>
             <ClosingWeaponSquare acceptedItemType={mainSquareType}
-                                 coords={weaponCell.id}
-                                 itemId={weaponCell.cell.item && weaponCell.cell.item.id}>
+                                 coords={weaponCell.id}>
               {weaponSquareContent}
             </ClosingWeaponSquare>
         </div>
         <div className={classes.AttachmentsSquaresContainer}>
           <div className={classes.LeftArrow}/>
-          <Octagon width={'19.85%'}>
-            <ClosingWeaponSquare acceptedItemType={ammoType} coords={ammoCell.id}
-                                 itemId={ammoCell.cell.item && ammoCell.cell.item.id}>
+          <Octagon width={'19.85%'} coords={ammoCell.id}>
+            <ClosingWeaponSquare acceptedItemType={ammoType} coords={ammoCell.id}>
               {ammoSquareContent}
             </ClosingWeaponSquare>
           </Octagon>

@@ -15,7 +15,7 @@ import BackDrop from "./components/layout/BackDrop";
 import {setGoingToDrop} from "./redux/actions/draggedItem";
 
 const App: React.FC = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
   const dispatch = useDispatch();
 
   // todo check App rerender
@@ -45,19 +45,18 @@ const App: React.FC = () => {
     return null;
   }
 
-  window.oncontextmenu = e => {
+  document.oncontextmenu = e => {
     e.preventDefault();
   }
 
-  window.ondragstart = e => {
-    e.stopPropagation();
-    e.preventDefault();
-    return false
-  }
+  // window.ondragstart = e => {
+  //   e.stopPropagation();
+  //   e.preventDefault();
+  //   return false;
+  // }
 
   // todo onmousedown too and etc
   window.onclick = e => {
-    console.log('app onclick');
     if(contextMenu) {
       dispatch(closeContextMenu());
     }
@@ -79,7 +78,7 @@ const App: React.FC = () => {
 
   return (
     <>
-      {/*<div className={classes.BlurredWrapper}/>*/}
+      <div className={classes.BlurredWrapper}/>
       <div className={classes.AppContainer}>
         <div className={classes.TopTooltip} style={tooltipStyles} onMouseOver={tooltipMouseOverHandler}>
           <SecondaryText styles={{fontWeight: 600, color: '#fcfdff', width: 'auto'}}>

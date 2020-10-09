@@ -14,7 +14,6 @@ const BoardSquare = ({coords: [x, y], children, isHovered}) => {
   const dispatch = useDispatch();
   const drop = null;
   const squareMouseOverHandler = (e) => {
-    console.log('squareMouseOverHandler');
      e.persist();
     if (draggedItemRef.current) {
       if (!hoveredSquare || typeof hoveredSquare !== 'object' || hoveredSquare[0] !== x || hoveredSquare[1] !== y) {

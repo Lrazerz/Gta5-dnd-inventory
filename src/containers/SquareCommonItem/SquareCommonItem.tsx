@@ -133,7 +133,6 @@ const SquareCommonItem = ({coords: [x, y], item}) => {
     }
 
     newClone.onmouseup = () => {
-      console.log('onMOUSEUP');
       event.stopPropagation();
       document.body.removeChild(newClone);
       document.removeEventListener('mousemove', onMouseMove);
@@ -141,7 +140,6 @@ const SquareCommonItem = ({coords: [x, y], item}) => {
       savedTarget.style.zIndex = 100;
       if (canDropRef.current) {
         if(goingToStackRef.current) {
-          console.log('stackItem');
           dispatch(stackItem());
         }
         else if (goingToDropRef.current) {

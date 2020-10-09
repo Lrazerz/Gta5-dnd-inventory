@@ -8,7 +8,7 @@ import theme from "../../constants/css/theme";
 import {WeaponItemTypes} from "../../constants/dnd/types";
 
 //itemId - an item inside if exists
-const ClosingWeaponSquare = ({children, acceptedItemType, coords, itemId}) => {
+const ClosingWeaponSquare = ({children, acceptedItemType, coords}) => {
   const dispatch = useDispatch();
 
   const {item: draggedItem, hoveredSquare, canDrop} = useSelector(({draggedItem}) => draggedItem);
@@ -27,7 +27,7 @@ const ClosingWeaponSquare = ({children, acceptedItemType, coords, itemId}) => {
   let closingWeaponSquareTypes;
 
   closingWeaponSquareTypes = {
-    pointerEvents: (typeof hoveredSquare === 'number' && hoveredSquare === coords) ? 'none' : 'auto',
+    pointerEvents: hoveredSquare === coords ? 'none' : 'auto',
   }
 
   // overlay colors
@@ -39,9 +39,9 @@ const ClosingWeaponSquare = ({children, acceptedItemType, coords, itemId}) => {
     dangerColor = `linear-gradient(90deg, transparent, ${theme.colors.danger} 50%, transparent)`;
   }
 
-  if (draggedItem) {
-    closingWeaponSquareTypes = {...closingWeaponSquareTypes, zIndex: 200};
-  }
+  // if (draggedItem) {
+  //   closingWeaponSquareTypes = {...closingWeaponSquareTypes, zIndex: 100};
+  // }
 
   return (
     <div className={classes.ClosingWeaponSquare} style={closingWeaponSquareTypes}

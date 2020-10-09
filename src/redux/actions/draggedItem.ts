@@ -21,8 +21,8 @@ const _setHoveredSquares = (squareCoords, allHoveredSquares, canDrop, isHoveredE
   };
 };
 
-const _setGoingToDrop = (newState, canDrop) => {
-  return {type: GOING_TO_DROP_SET, goingToDrop: newState, canDrop};
+const _setGoingToDrop = (newState, canDrop, areaId) => {
+  return {type: GOING_TO_DROP_SET, goingToDrop: newState, canDrop, areaId};
 }
 
 const draggedItemRelease = () => {
@@ -263,7 +263,6 @@ const stackItem = () => {
       }
       else {
         // stack to equipped (from equipped inv)
-        console.log('Actions draggedItem mainCell stackable', stackableItem.mainCell);
         dispatch(equippedChangeCurrentCount(stackableItem.mainCell,stackableItemNewCurrentCount));
       }
 
@@ -278,11 +277,11 @@ const stackItem = () => {
   }
 }
 
-const setGoingToDrop = (newState) => {
+const setGoingToDrop = (newState, areaId = 2) => {
   return dispatch => {
     // todo limit on clothes
     const canDrop = newState;
-    dispatch(_setGoingToDrop(newState, canDrop));
+    dispatch(_setGoingToDrop(newState, canDrop, areaId));
   }
 }
 

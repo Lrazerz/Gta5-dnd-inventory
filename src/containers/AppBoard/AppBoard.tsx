@@ -37,10 +37,6 @@ const AppBoard = () => {
     }
   }
 
-  // const styles = {
-  //   zIndex: draggedItem ? '' : '0'
-  // }
-
   return (
     <div className={classes.AppBoard}>
       <Board>

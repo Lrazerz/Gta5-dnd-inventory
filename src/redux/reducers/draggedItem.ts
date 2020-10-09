@@ -27,7 +27,7 @@ interface State {
 
   canDrop: boolean;
 
-  goingToDrop : boolean,
+  goingToDrop : null | {areaId: number},
   goingToStack: null | GoingToStack,
 }
 
@@ -47,7 +47,7 @@ const initialState: State = {
 
   canDrop: false,
 
-  goingToDrop : false,
+  goingToDrop : null,
   goingToStack: null,
 }
 
@@ -84,11 +84,12 @@ export default (state = initialState, action) => {
       }
     }
     case GOING_TO_DROP_SET: {
+      const newGoingToDrop = action.goingToDrop ? {areaId: action.areaId} : null;
       return {
         ...state,
         hoveredSquare: null,
         allHoveredSquares: [],
-        goingToDrop: action.goingToDrop,
+        goingToDrop: newGoingToDrop,
         canDrop: action.canDrop,
         goingToStack: false,
       }

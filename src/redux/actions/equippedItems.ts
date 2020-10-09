@@ -36,7 +36,6 @@ const removeEquippedWeaponFromEquipped = (id) => {
   return (dispatch, getState) => {
     //find weapon by id and just remove item *
     const weaponCells = getState().equippedItems.cells.slice(1, 4);
-    console.log('weaponCells', weaponCells);
     // remove item from equipped if item exists
     let weaponCellIdx = weaponCells.findIndex(cell => cell.item && cell.item.id === id);
 
