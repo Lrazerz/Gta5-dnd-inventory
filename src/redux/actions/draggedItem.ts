@@ -1,6 +1,7 @@
 import {
   DRAGGED_ITEM_SET,
   HOVERED_SQUARES_SET,
+  HOVERED_SQUARES_REMOVE,
   DRAGGED_ITEM_RELEASE,
   GOING_TO_DROP_SET
 } from "./types";
@@ -23,6 +24,10 @@ const _setHoveredSquares = (squareCoords, allHoveredSquares, canDrop, isHoveredE
 
 const _setGoingToDrop = (newState, canDrop, areaId) => {
   return {type: GOING_TO_DROP_SET, goingToDrop: newState, canDrop, areaId};
+}
+
+const hoveredSquaresRemove = () => {
+  return {type: HOVERED_SQUARES_REMOVE};
 }
 
 const draggedItemRelease = () => {
@@ -292,5 +297,6 @@ export {
   setHoveredSquares,
   invokeOnMouseUp,
   stackItem,
-  setGoingToDrop
+  setGoingToDrop,
+  hoveredSquaresRemove
 }

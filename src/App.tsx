@@ -15,7 +15,7 @@ import BackDrop from "./components/layout/BackDrop";
 import {setGoingToDrop} from "./redux/actions/draggedItem";
 
 const App: React.FC = () => {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   const dispatch = useDispatch();
 
   // todo check App rerender
@@ -78,7 +78,7 @@ const App: React.FC = () => {
 
   return (
     <>
-      <div className={classes.BlurredWrapper}/>
+      {/*<div className={classes.BlurredWrapper}/>*/}
       <div className={classes.AppContainer}>
         <div className={classes.TopTooltip} style={tooltipStyles} onMouseOver={tooltipMouseOverHandler}>
           <SecondaryText styles={{fontWeight: 600, color: '#fcfdff', width: 'auto'}}>

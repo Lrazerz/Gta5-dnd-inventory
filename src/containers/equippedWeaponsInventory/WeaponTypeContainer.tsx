@@ -48,6 +48,7 @@ const WeaponTypeContainer = ({typeTitle, acceptedTypes, cells}: Props) => {
     );
   });
 
+  // console.log('weaponSquareContainerStyles', hoveredSquare, weaponCell.id);
   // to keep dragged item at the top of the screen
   const weaponSquareContainerStyles: CSSProperties = {
     zIndex: hoveredSquare === weaponCell.id ? 'auto' : 200,
@@ -61,7 +62,7 @@ const WeaponTypeContainer = ({typeTitle, acceptedTypes, cells}: Props) => {
             {weaponCell.cell.item && weaponCell.cell.item.name}
           </SecondaryText>
         </div>
-        <div className={classes.WeaponSquareContainer} style={weaponSquareContainerStyles}>
+        <div className={classes.WeaponSquareContainer} style={weaponSquareContainerStyles} onMouseOver={e => e.stopPropagation()}>
             <ClosingWeaponSquare acceptedItemType={mainSquareType}
                                  coords={weaponCell.id}>
               {weaponSquareContent}

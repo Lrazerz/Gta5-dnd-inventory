@@ -70,7 +70,11 @@ export default (state = initialState, action) => {
       return initialState;
     }
     case HOVERED_SQUARES_REMOVE: {
-      return initialState;
+      return {
+        ...state,
+        hoveredSquare: null,
+        allHoveredSquares: [],
+      }
     }
     case HOVERED_SQUARES_SET: {
       return {

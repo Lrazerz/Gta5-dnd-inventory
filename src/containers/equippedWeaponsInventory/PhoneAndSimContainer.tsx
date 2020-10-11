@@ -26,7 +26,7 @@ const PhoneAndSimContainer = ({phoneType, simType, phoneCell, simCell}: Props) =
 
   // to keep draggedItem at the top of the screen
   const clipPathedElStyles: CSSProperties = {
-    zIndex: hoveredSquare === 40 || hoveredSquare === 41 ? 'auto' : 200,
+    zIndex: hoveredSquare === 40 || hoveredSquare === 41 ? 200 : 200,
   }
 
   return (
@@ -36,7 +36,7 @@ const PhoneAndSimContainer = ({phoneType, simType, phoneCell, simCell}: Props) =
           <LeadText styles={{textAlign: 'right'}}>ТЕЛЕФОН И СИМКАРТА</LeadText>
         </div>
       </div>
-      <div className={classes.WeaponSquareContainer}>
+      <div className={classes.WeaponSquareContainer} style={clipPathedElStyles} onMouseOver={e => e.stopPropagation()}>
         <div className={classes.SquaresContainer}>
           <div className={classes.CirclesWrapper}>
             <div className={classes.Circle}>
