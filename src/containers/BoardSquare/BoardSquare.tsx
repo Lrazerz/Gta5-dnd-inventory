@@ -21,10 +21,8 @@ const BoardSquare = ({coords: [x, y], children, isHovered}) => {
       }
     }
   }
-  let boardSquareStyles;
 
-
-  boardSquareStyles = {
+  let boardSquareStyles: CSSProperties = {
     outline: `0.25px solid rgba(109, 114, 125, 0.8)`
   }
 
@@ -38,9 +36,9 @@ const BoardSquare = ({coords: [x, y], children, isHovered}) => {
 
   if(draggedItem) {
     mouseOverElStyles = {...mouseOverElStyles, zIndex: 200};
-    // if(isHovered) {
-    //   boardSquareStyles = {...boardSquareStyles, outline: `0.25px solid rgba(109, 114, 125, 0.8)`}
-    // }
+    if(isHovered) {
+      boardSquareStyles = {...boardSquareStyles, outline: `0.25px solid rgba(109, 114, 125, 0.8)`}
+    }
   }
 
   return (

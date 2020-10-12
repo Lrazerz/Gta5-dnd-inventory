@@ -3,7 +3,7 @@ import classes from '../../styles/equippedClosingInventory/ClosingWeaponSquare.m
 import {useDispatch} from 'react-redux';
 import Overlay from "../UI/Overlay";
 import {useSelector} from 'react-redux';
-import {hoveredSquaresRemove, setHoveredSquares} from "../../redux/actions/draggedItem";
+import {setHoveredSquares} from "../../redux/actions/draggedItem";
 import theme from "../../constants/css/theme";
 import {WeaponItemTypes} from "../../constants/dnd/types";
 
@@ -23,15 +23,13 @@ const ClosingWeaponSquare = ({children, acceptedItemType, coords}) => {
     e.persist();
     if (draggedItemRef.current) {
       if (!hoveredSquareRef.current || typeof hoveredSquareRef.current !== 'number' || hoveredSquareRef.current !== coords) {
-        if(hoveredSquareRef.current === 40 || hoveredSquareRef.current === 41) console.log('mouse over dispatch', coords);
         dispatch(setHoveredSquares(coords, true, acceptedItemType));
       }
     }
   }
 
-  // only for phone and sim right now
   const closingWeaponSquareStyles: CSSProperties = {
-    pointerEvents: hoveredSquare === coords ? 'none' : 'auto',
+    pointerEvents: isOver ? 'none' : 'auto',
   }
 
   // overlay colors
@@ -42,8 +40,6 @@ const ClosingWeaponSquare = ({children, acceptedItemType, coords}) => {
     successColor = `linear-gradient(90deg, transparent, ${theme.colors.success} 50%, transparent)`;
     dangerColor = `linear-gradient(90deg, transparent, ${theme.colors.danger} 50%, transparent)`;
   }
-
-  if(coords === 1) console.log('isOver', isOver, hoveredSquare, coords);
 
   return (
     <div className={classes.ClosingWeaponSquare} style={closingWeaponSquareStyles}

@@ -16,8 +16,8 @@ import {setGoingToDrop} from "../../redux/actions/draggedItem";
 const EquippedClosingInventoryContainer = () => {
 
   const dispatch = useDispatch();
-  const equippedCells = useSelector(({equippedItems}) => equippedItems.cells);
-  const {goingToDrop, hoveredSquare, item: draggedItem} = useSelector(({draggedItem}) => draggedItem);
+  const {equippedItems: {cells: equippedCells},
+    draggedItem: {goingToDrop, hoveredSquare, item: draggedItem}} = useSelector(state => state);
 
   const headdressCells: SingleCell[] = [
     {id: 50, cell: equippedCells[50]},
@@ -47,8 +47,8 @@ const EquippedClosingInventoryContainer = () => {
   ];
 
   const equippedContainerMouseOverHandler = e => {
-    console.log('mouse Over equippedContainer');
-    if(draggedItem) dispatch(setGoingToDrop(true, 0));
+    e.persist();
+    if (draggedItem) dispatch(setGoingToDrop(true, 0));
   }
 
   const goingToDropOnThisSquare: boolean = goingToDrop && goingToDrop.areaId === 0;
@@ -81,7 +81,7 @@ const EquippedClosingInventoryContainer = () => {
                             cells={shoesCells}/>
       <AccessoriesTypeContainer typeTitle={'Аксессуары'}
                                 typeImage={glassesImage} acceptedType={ItemTypes.ACCESSORIES}
-                            cells={accessoriesCells}/>
+                                cells={accessoriesCells}/>
       <UniqueServerDescription/>
     </div>
 

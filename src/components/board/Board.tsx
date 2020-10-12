@@ -1,12 +1,9 @@
 import React, {useEffect, useRef, useState} from 'react';
 import classes from '../../styles/board/Board.module.scss';
-import {useSelector} from "react-redux";
 
 const Board = ({children}) => {
   // proportional to width (16x6)
   const [boardHeight, setBoardHeight] = useState(null);
-
-  const isGoingToDrop = useSelector(state => state.draggedItem.goingToDrop);
 
   const boardEl: React.MutableRefObject<null> | null = useRef(null);
 

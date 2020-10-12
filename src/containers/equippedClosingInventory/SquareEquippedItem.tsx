@@ -7,12 +7,9 @@ import {addDraggedItem, draggedItemRelease, stackItem} from "../../redux/actions
 import {addItem, removeEquippedWeaponFromBoard, removeItem} from "../../redux/actions/board";
 import {removeEquippedItem, removeEquippedWeaponFromEquipped, setEquippedItem} from "../../redux/actions/equippedItems";
 import {ItemTypes} from "../../constants/dnd/types";
-import {Simulate} from "react-dom/test-utils";
-import drag = Simulate.drag;
 import {mpTriggerDropItem, openContextMenu} from "../../redux/actions/contextMenu";
 
 const SquareEquippedItem = ({item}: { item: any }) => {
-  // const [resultDataUri, setResultDataUri] = useState(null);
   const {canDrop, hoveredSquare, item: draggedItem, goingToDrop, goingToStack} = useSelector(state => state.draggedItem);
   const goingToDropRef = useRef();
   const draggedItemRef = useRef();
@@ -78,13 +75,14 @@ const SquareEquippedItem = ({item}: { item: any }) => {
     dispatch(openContextMenu(item, averX, requiredTop));
   };
 
-  const imageOnMouseDown = (event) => {
+  const imageMouseDownHandler = (event) => {
     if(event.button !== 0) return;
     dispatch(addDraggedItem([0, 0], item));
     event.persist();
 
-    const savedTarget = event.currentTarget;
-    savedTarget.style.zIndex = 0;
+    // last-remove
+    // const savedTarget = event.currentTarget;
+    // savedTarget.style.zIndex = 0;
 
     const newClone = event.currentTarget.cloneNode(true);
     // event.target.style.width = '100%';
@@ -97,7 +95,8 @@ const SquareEquippedItem = ({item}: { item: any }) => {
     newClone.style.height = imageHeight + 'px';
     newClone.addEventListener('dragstart', (e) => {e.stopPropagation();e.preventDefault();return false});
 
-    event.target.style.pointerEvents = 'none';
+    // last-remove
+    // event.target.style.pointerEvents = 'none';
 
     newClone.style.position = 'absolute';
     newClone.style.zIndex = 150;
@@ -122,7 +121,8 @@ const SquareEquippedItem = ({item}: { item: any }) => {
       document.body.removeChild(newClone);
       document.removeEventListener('mousemove', onMouseMove);
       newClone.onmouseup = null;
-      savedTarget.style.zIndex = 100;
+      // last-remove
+      // savedTarget.style.zIndex = 100;
 
       if(canDropRef.current) {
         if(goingToStackRef.current) {
@@ -182,7 +182,8 @@ const SquareEquippedItem = ({item}: { item: any }) => {
           } catch (e) {}
         }
       }
-      event.target.style.pointerEvents = 'inherit';
+      // last-remove
+      // event.target.style.pointerEvents = 'inherit';
       dispatch(draggedItemRelease());
     };
   };
@@ -190,7 +191,7 @@ const SquareEquippedItem = ({item}: { item: any }) => {
   // todo make wrapper to image
   let imageElement = (
     <>
-      <img src={item.imageUrl} className={classes.Image} onMouseDown={imageOnMouseDown} onContextMenu={imageOnContextMenuOpen}
+      <img src={item.imageUrl} className={classes.Image} onMouseDown={imageMouseDownHandler} onContextMenu={imageOnContextMenuOpen}
            onDragStart={(e) => {e.stopPropagation();e.preventDefault();return false}}/>
       {item.currentCount > 1 &&
       (<div className={classes.CurrentCount}>
@@ -210,7 +211,7 @@ const SquareEquippedItem = ({item}: { item: any }) => {
     }
 
     imageElement = (
-      <div style={{width: '100%', height: '100%'}} onMouseDown={imageOnMouseDown} onContextMenu={imageOnContextMenuOpen}>
+      <div style={{width: '100%', height: '100%'}} onMouseDown={imageMouseDownHandler} onContextMenu={imageOnContextMenuOpen}>
         <div className={classes.ClosingSquareWrapper}>
           <img src={item.imageUrl} className={classes.Image} style={imageStyles}
                onDragStart={(e) => {e.stopPropagation();e.preventDefault();return false}}/>

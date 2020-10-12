@@ -1,5 +1,4 @@
 import React from 'react';
-// @ts-ignore
 import classes from '../../styles/equippedClosingInventory/ClosingTypeContainer.module.scss';
 import ClosingWeaponSquare from "../../components/equippedClosingInventory/ClosingWeaponSquare";
 import Octagon from "../../components/equippedClosingInventory/Octagon";
@@ -24,8 +23,13 @@ const ClosingTypeContainer = ({typeTitle, typeImage, acceptedType, cells}) => {
     )
   });
 
+  // last-remove
+  // const outerContainerMouseUpHandler = e => {
+  //   e.stopPropagation();
+  // }
+
   return (
-    <div className={classes.ClosingTypeContainer} onMouseUp={e => e.stopPropagation()}>
+    <div className={classes.ClosingTypeContainer}>
       <div className={classes.TitleContainer}>
         <div className={classes.ImageContainer}>
           <img src={typeImage}/>

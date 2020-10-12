@@ -8,7 +8,6 @@ import {addItem, changeEquippedState, removeEquippedWeaponFromBoard, removeItem}
 import {removeEquippedItem, removeEquippedWeaponFromEquipped, setEquippedItem} from "../../redux/actions/equippedItems";
 import {ItemTypes} from "../../constants/dnd/types";
 import {mpTriggerDropItem, openContextMenu} from "../../redux/actions/contextMenu";
-import {translateToServerItem} from "../../utils/translateToServerItem";
 
 const SquareCommonItem = ({coords: [x, y], item}) => {
 
@@ -82,7 +81,9 @@ const SquareCommonItem = ({coords: [x, y], item}) => {
   let imageElement = null;
 
   const imageOnContextMenuOpen = (e) => {
-    e.stopPropagation();
+    // last-remove
+    // e.stopPropagation();
+    e.persist();
     const rect = e.target.getBoundingClientRect();
     const averX = Math.floor(rect.left) + e.target.offsetWidth / 2;
     const requiredTop = Math.floor(rect.top + e.target.offsetHeight * 0.935);
@@ -97,7 +98,8 @@ const SquareCommonItem = ({coords: [x, y], item}) => {
 
     // save target
     const savedTarget = event.currentTarget;
-    savedTarget.style.zIndex = 0;
+    // last-remove
+    // savedTarget.style.zIndex = 0;
 
     const newClone = event.currentTarget.cloneNode(true);
     newClone.addEventListener('dragstart', (e) => {
@@ -106,7 +108,8 @@ const SquareCommonItem = ({coords: [x, y], item}) => {
       return false
     });
 
-    savedTarget.style.pointerEvents = 'none';
+    // last-remove
+    // savedTarget.style.pointerEvents = 'none';
 
     newClone.style.zIndex = 150;
     newClone.id = 'curr-dragged-item';
@@ -120,13 +123,12 @@ const SquareCommonItem = ({coords: [x, y], item}) => {
       newClone.style.top = pageY - newClone.offsetHeight / 2 + 'px';
     }
 
-    function onMouseMove(event) {
+    const onMouseMove = (event) => {
       event.stopPropagation();
       moveAt(event.pageX, event.pageY);
     }
 
     document.addEventListener('mousemove', onMouseMove);
-
 
     newClone.onmouseover = e => {
       e.stopPropagation();
@@ -137,7 +139,8 @@ const SquareCommonItem = ({coords: [x, y], item}) => {
       document.body.removeChild(newClone);
       document.removeEventListener('mousemove', onMouseMove);
       newClone.onmouseup = null;
-      savedTarget.style.zIndex = 100;
+      // last-remove
+      // savedTarget.style.zIndex = 100;
       if (canDropRef.current) {
         if(goingToStackRef.current) {
           dispatch(stackItem());
@@ -197,13 +200,10 @@ const SquareCommonItem = ({coords: [x, y], item}) => {
           }
         }
       }
-      event.target.style.pointerEvents = 'inherit';
+      // last-remove
+      // event.target.style.pointerEvents = 'inherit';
       dispatch(draggedItemRelease());
     };
-
-    // newClone.onmouseup = () => {
-    //   document.removeEventListener('mousemove', onMouseMove);
-    // }
   };
 
   if (x === item.mainCell[0] && y === item.mainCell[1]) {
@@ -240,8 +240,7 @@ const SquareCommonItem = ({coords: [x, y], item}) => {
   }
 
   return (
-    <CommonItem imageContainerForwardedRef={imageContainerRef}
-                mainCell={x === item.mainCell[0] && y === item.mainCell[1]}>
+    <CommonItem imageContainerForwardedRef={imageContainerRef}>
       {imageElement}
     </CommonItem>
   )
