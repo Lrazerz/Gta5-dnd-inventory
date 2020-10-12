@@ -1,4 +1,4 @@
-import React, {CSSProperties} from 'react';
+import React, {memo, CSSProperties} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import classes from '../../styles/equippedClosingInventory/EquippedClosingInventoryContainer.module.scss';
 import AccessoriesTypeContainer from "./AccessoriesTypeContainer";
@@ -13,7 +13,7 @@ import {ItemTypes} from "../../constants/dnd/types";
 import {SingleCell} from "../equippedWeaponsInventory/EquippedWeaponsInventoryContainer";
 import {setGoingToDrop} from "../../redux/actions/draggedItem";
 
-const EquippedClosingInventoryContainer = () => {
+const EquippedClosingInventoryContainer = React.memo(function EquippedClosingInventoryContainer() {
 
   const dispatch = useDispatch();
   const {equippedItems: {cells: equippedCells},
@@ -86,6 +86,6 @@ const EquippedClosingInventoryContainer = () => {
     </div>
 
   );
-};
+});
 
 export default EquippedClosingInventoryContainer;

@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import classes from '../../styles/layout/BackDrop.module.scss';
 import {setGoingToDrop} from "../../redux/actions/draggedItem";
 
-const BackDrop = () => {
+const BackDrop = React.memo(function BackDrop() {
   const dispatch = useDispatch();
   const {goingToDrop, item: draggedItem} = useSelector(state => state.draggedItem);
   const goingToDropRef = useRef();
@@ -27,6 +27,6 @@ const BackDrop = () => {
     <div className={classes.BackDrop} onMouseOver={mouseOverHandler} style={style}>
     </div>
   );
-};
+});
 
 export default BackDrop;

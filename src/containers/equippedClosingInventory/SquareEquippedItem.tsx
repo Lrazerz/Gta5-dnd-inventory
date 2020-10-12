@@ -8,8 +8,13 @@ import {addItem, removeEquippedWeaponFromBoard, removeItem} from "../../redux/ac
 import {removeEquippedItem, removeEquippedWeaponFromEquipped, setEquippedItem} from "../../redux/actions/equippedItems";
 import {ItemTypes} from "../../constants/dnd/types";
 import {mpTriggerDropItem, openContextMenu} from "../../redux/actions/contextMenu";
+import Item from "../../models/Item";
 
-const SquareEquippedItem = ({item}: { item: any }) => {
+interface Props {
+  item: Item;
+}
+
+const SquareEquippedItem: React.FC<Props> = React.memo(function SquareEquippedItem ({item}) {
   const {canDrop, hoveredSquare, item: draggedItem, goingToDrop, goingToStack} = useSelector(state => state.draggedItem);
   const goingToDropRef = useRef();
   const draggedItemRef = useRef();
@@ -47,7 +52,7 @@ const SquareEquippedItem = ({item}: { item: any }) => {
         // @ts-ignore
         setImageWidth(imageContainerWidth * item.width * 0.44);
         // @ts-ignore
-        setImageHeight(imageContainerHeight * item.height * 1);
+        setImageHeight(imageContainerHeight * item.height);
       } else {
         // @ts-ignore
         setImageWidth(imageContainerWidth * item.width * 1.4);
@@ -232,6 +237,6 @@ const SquareEquippedItem = ({item}: { item: any }) => {
       {item.imageUrl && imageElement}
     </EquippedItem>
   );
-}
+});
 
 export default SquareEquippedItem;

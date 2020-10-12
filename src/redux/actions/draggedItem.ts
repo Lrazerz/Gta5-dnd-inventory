@@ -10,6 +10,7 @@ import Item from "../../models/Item";
 import {GoingToStack} from "../reducers/draggedItem";
 import {boardChangeCurrentCount, removeItem} from "./board";
 import {equippedChangeCurrentCount, removeEquippedItem} from "./equippedItems";
+import {translateToServerItem} from "../../utils/translateToServerItem";
 
 const _addDraggedItem = (item, xUp, xDown, yUp, yDown) => {
   return {type: DRAGGED_ITEM_SET, item, xUp, xDown, yUp, yDown};
@@ -238,6 +239,7 @@ const stackItem = () => {
       dispatch(boardChangeCurrentCount(allItemSquares, stackableItemNewCurrentCount));
     }
 
+    // fill droppable, then work with dragged
     if(typeof draggedItem.mainCell === 'object') {
       // stack from board
 
@@ -255,9 +257,15 @@ const stackItem = () => {
       if(draggedItemNewCurrentCount === 0) {
         // remove item
         dispatch(removeItem(draggedItem.mainCell, draggedItem.width, draggedItem.height));
+
+        //change draggedItem position to droppable to send to server?
+        draggedItem.mainCell = stackableItem.mainCell;
       } else if(draggedItemNewCurrentCount > 0) {
         const allItemSquares = _getItemSquares(draggedItem.mainCell, draggedItem.width, draggedItem.height);
         dispatch(boardChangeCurrentCount(allItemSquares, draggedItemNewCurrentCount));
+
+        // to server
+        draggedItem.currentCount = draggedItemNewCurrentCount;
       }
     }
     else {
@@ -265,20 +273,34 @@ const stackItem = () => {
       if(typeof stackableItem.mainCell === 'object') {
         // stack to board (from equipped inv)
         _stackToBoard();
+
       }
       else {
         // stack to equipped (from equipped inv)
         dispatch(equippedChangeCurrentCount(stackableItem.mainCell,stackableItemNewCurrentCount));
+
       }
 
       // or remove item or just change currentCount
       if(draggedItemNewCurrentCount === 0) {
         // remove item
         dispatch(removeEquippedItem(draggedItem.mainCell));
+
+        // to server
+        draggedItem.mainCell = stackableItem.mainCell;
       } else if(draggedItemNewCurrentCount > 0) {
         dispatch(equippedChangeCurrentCount(draggedItem.mainCell, draggedItemNewCurrentCount));
       }
     }
+    draggedItem.currentCount = draggedItemNewCurrentCount;
+    stackableItem.currentCount = stackableItemNewCurrentCount;
+
+    const translatedToServerDraggedItem = translateToServerItem(draggedItem);
+    const translatedToServerStackableItem = translateToServerItem(stackableItem);
+    try {
+      //@ts-ignore
+      mp.trigger('cel_cf_stackItem', translatedToServerDraggedItem, translatedToServerStackableItem);
+    } catch(e) {}
   }
 }
 

@@ -5,7 +5,15 @@ import Octagon from "../../components/equippedClosingInventory/Octagon";
 import LeadText from "../../components/layout/LeadText";
 import SquareEquippedItem from "./SquareEquippedItem";
 
-const ClosingTypeContainer = ({typeTitle, typeImage, acceptedType, cells}) => {
+interface Props {
+  typeTitle: string;
+  typeImage: string;
+  acceptedType: string;
+  cells: any[];
+}
+
+const ClosingTypeContainer: React.FC<Props> =
+    React.memo(function ClosingTypeContainer({typeTitle, typeImage, acceptedType, cells}) {
 
   const squaresContent = cells.map(({id,cell}) => {
     let squareContent = null;
@@ -45,6 +53,6 @@ const ClosingTypeContainer = ({typeTitle, typeImage, acceptedType, cells}) => {
       </div>
     </div>
   );
-};
+});
 
 export default ClosingTypeContainer;

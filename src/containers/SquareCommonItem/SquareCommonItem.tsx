@@ -8,8 +8,14 @@ import {addItem, changeEquippedState, removeEquippedWeaponFromBoard, removeItem}
 import {removeEquippedItem, removeEquippedWeaponFromEquipped, setEquippedItem} from "../../redux/actions/equippedItems";
 import {ItemTypes} from "../../constants/dnd/types";
 import {mpTriggerDropItem, openContextMenu} from "../../redux/actions/contextMenu";
+import Item from "../../models/Item";
 
-const SquareCommonItem = ({coords: [x, y], item}) => {
+interface Props {
+  coords: [number, number];
+  item: Item;
+}
+
+const SquareCommonItem: React.FC<Props> = React.memo(function SquareCommonItem({coords: [x, y], item}) {
 
   const [imageWidth, setImageWidth] = useState();
   const [imageHeight, setImageHeight] = useState();
@@ -180,6 +186,7 @@ const SquareCommonItem = ({coords: [x, y], item}) => {
             // if weapon make transparent color
             dispatch(changeEquippedState(item, true));
           } else {
+            // @ts-ignore
             dispatch(removeItem(item.mainCell, item.width, item.height));
           }
           try {
@@ -192,6 +199,7 @@ const SquareCommonItem = ({coords: [x, y], item}) => {
           // @ts-ignore
           if (item.mainCell[0] !== hoveredSquareRef.current[0] - xDownRef.current || item.mainCell[1] !== hoveredSquareRef.current[1] - yDownRef.current) {
             // check if this is not the current item square
+            // @ts-ignore
             dispatch(removeItem(item.mainCell, item.width, item.height));
             try {
               dispatch(addItem());
@@ -244,7 +252,6 @@ const SquareCommonItem = ({coords: [x, y], item}) => {
       {imageElement}
     </CommonItem>
   )
-}
-
+});
 
 export default SquareCommonItem;

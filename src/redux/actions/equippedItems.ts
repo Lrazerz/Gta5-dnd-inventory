@@ -19,7 +19,7 @@ const setEquippedItem = (cellId) => (dispatch, getState) => {
   dispatch({type: EQUIPPED_ITEM_SET, id: cellId, item});
   const itemToServer = translateToServerItem(item);
   //@ts-ignore
-  mp.trigger(itemToServer);
+  mp.trigger('cef_cl_moveItem', itemToServer);
 }
 
 const setEquippedItems = (items: Item[] | []) => {

@@ -132,7 +132,7 @@ const addItem = () => {
     // translate to Server Item
     const itemToServer = translateToServerItem(newDraggedItem);
     //@ts-ignore
-    mp.trigger(itemToServer);
+    mp.trigger('cef_cl_moveItem', itemToServer);
   }
 }
 

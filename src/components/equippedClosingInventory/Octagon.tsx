@@ -2,7 +2,12 @@ import React, {CSSProperties} from 'react';
 import {useSelector} from 'react-redux';
 import classes from '../../styles/equippedClosingInventory/Octagon.module.scss';
 
-const Octagon = ({children, width='26%', coords}) => {
+interface Props {
+  width?: string;
+  coords: number;
+}
+
+const Octagon: React.FC<Props> = React.memo(function Octagon({children, width='26%', coords}) {
 
   const {hoveredSquare} = useSelector(({draggedItem}) => draggedItem);
 
@@ -19,6 +24,6 @@ const Octagon = ({children, width='26%', coords}) => {
       <div className={classes.BottomBorder}/>
     </div>
   );
-};
+});
 
 export default Octagon;

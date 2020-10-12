@@ -1,5 +1,4 @@
-import React, {CSSProperties, useRef} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
+import React from 'react';
 import standardClasses from '../../styles/equippedClosingInventory/ClosingTypeContainer.module.scss';
 import classes from '../../styles/equippedClosingInventory/AccessoriesTypeContainer.module.scss';
 import Octagon from "../../components/equippedClosingInventory/Octagon";
@@ -7,7 +6,6 @@ import ClosingWeaponSquare from "../../components/equippedClosingInventory/Closi
 import LeadText from "../../components/layout/LeadText";
 import {SingleCell} from "../equippedWeaponsInventory/EquippedWeaponsInventoryContainer";
 import SquareEquippedItem from "./SquareEquippedItem";
-import {setGoingToDrop} from "../../redux/actions/draggedItem";
 
 interface Props {
   typeTitle: string;
@@ -16,7 +14,8 @@ interface Props {
   cells: SingleCell[];
 }
 
-const AccessoriesTypeContainer: React.FC<Props> = ({typeTitle, typeImage, acceptedType, cells}) => {
+const AccessoriesTypeContainer: React.FC<Props> =
+  React.memo(function AccessoriesTypeContainer({typeTitle, typeImage, acceptedType, cells}) {
 
   const squaresContent = cells.map(({id, cell}) => {
     let squareContent = null;
@@ -49,6 +48,6 @@ const AccessoriesTypeContainer: React.FC<Props> = ({typeTitle, typeImage, accept
       </div>
     </div>
   );
-};
+});
 
 export default AccessoriesTypeContainer;

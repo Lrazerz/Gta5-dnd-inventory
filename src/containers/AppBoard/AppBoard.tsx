@@ -7,7 +7,7 @@ import Board from "../../components/board/Board";
 import classes from '../../styles/board/AppBoard.module.scss';
 import BoardInfo from "../../components/board/BoardInfo";
 
-const AppBoard = () => {
+const AppBoard = React.memo(function AppBoard() {
   const squares = [];
   const {board: {board: boardItems}, draggedItem: {allHoveredSquares}} = useSelector((state) => state);
 
@@ -28,7 +28,7 @@ const AppBoard = () => {
         {squareContent}
       </BoardSquare>
     );
-  }
+  };
 
   for (let y = yMin; y <= yMax; y++) {
     for (let x = xMin; x <= xMax; x++) {
@@ -44,6 +44,6 @@ const AppBoard = () => {
       <BoardInfo cash={'50.000'}/>
     </div>
   )
-};
+});
 
 export default AppBoard;

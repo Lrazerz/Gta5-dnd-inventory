@@ -14,7 +14,7 @@ import {closeContextMenu, getContextActionsForCell} from "./redux/actions/contex
 import BackDrop from "./components/layout/BackDrop";
 import {setGoingToDrop} from "./redux/actions/draggedItem";
 
-const App: React.FC = () => {
+const App = React.memo(function App() {
   const [isOpen, setIsOpen] = useState(false);
   const dispatch = useDispatch();
 
@@ -100,13 +100,11 @@ const App: React.FC = () => {
         </div>
         <object type="image/svg+xml" data={leftSparksSvg} className={classes.LeftSparksSvgContainer} />
         <object type="image/svg+xml" data={rightSparksSvg} className={classes.RightSparksSvgContainer} />
-        {/*@ts-ignore*/}
         {contextMenu.contextItem && (<ContextMenu contextActions={contextActions}
         leftOffset={contextMenu.leftOffset} topOffset={contextMenu.topOffset}/>)}
       </div>
     </>
   );
-}
-
+});
 
 export default App;

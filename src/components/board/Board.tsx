@@ -1,7 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 import classes from '../../styles/board/Board.module.scss';
 
-const Board = ({children}) => {
+const Board = React.memo(function Board({children}) {
   // proportional to width (16x6)
   const [boardHeight, setBoardHeight] = useState(null);
 
@@ -10,7 +10,7 @@ const Board = ({children}) => {
   // Make element proportional no matter where it placed
   useEffect(() => {
     // Handler to call on window resize
-    function handleResize() {
+    const handleResize = () => {
       const current: HTMLElement | null = boardEl.current;
 
       // const width = current.clientWidth;
@@ -19,7 +19,6 @@ const Board = ({children}) => {
       const regex = /^((\d|\.)+)/;
       const widthNumber: number = parseFloat(widthString.match(regex)[0]);
 
-      // setBoardHeight(widthNumber * 0.376);
       setBoardHeight(widthNumber * 0.39837);
     }
 
@@ -39,6 +38,6 @@ const Board = ({children}) => {
       {children}
     </div>
   )
-}
+});
 
 export default Board;

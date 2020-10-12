@@ -14,7 +14,7 @@ interface Props {
   simCell: SingleCell;
 }
 
-const PhoneAndSimContainer = ({phoneType, simType, phoneCell, simCell}: Props) => {
+const PhoneAndSimContainer = React.memo(function PhoneAndSimContainer({phoneType, simType, phoneCell, simCell}: Props) {
 
   const hoveredSquare = useSelector(({draggedItem}) => draggedItem.hoveredSquare);
 
@@ -54,6 +54,6 @@ const PhoneAndSimContainer = ({phoneType, simType, phoneCell, simCell}: Props) =
       </div>
     </div>
   );
-};
+});
 
 export default PhoneAndSimContainer;

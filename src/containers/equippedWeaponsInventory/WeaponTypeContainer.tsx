@@ -14,7 +14,7 @@ interface Props {
   cells: WeaponTypeContainerCells;
 }
 
-const WeaponTypeContainer = ({typeTitle, acceptedTypes, cells}: Props) => {
+const WeaponTypeContainer: React.FC<Props> = React.memo(function WeaponTypeContainer({typeTitle, acceptedTypes, cells}) {
 
   const {hoveredSquare} = useSelector(({draggedItem}) => draggedItem);
 
@@ -79,6 +79,6 @@ const WeaponTypeContainer = ({typeTitle, acceptedTypes, cells}: Props) => {
         </div>
     </div>
   );
-};
+});
 
 export default WeaponTypeContainer;

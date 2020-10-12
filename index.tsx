@@ -5,7 +5,6 @@ import store from './src/redux/store';
 import './src/styles/normalize.css';
 import './index.css';
 import App from "./src/App";
-// import {HTML5Backend} from "react-dnd-html5-backend";
 
 //fonts
 import './src/assets/fonts/Montserrat-Bold.ttf';

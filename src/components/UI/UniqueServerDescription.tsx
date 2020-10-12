@@ -4,7 +4,7 @@ import serverLogo from '../../assets/images/serverLogo/logo.png';
 import LeadText from "../../components/layout/LeadText";
 import SecondaryText from "../../components/layout/SecondaryText";
 
-const UniqueServerDescription = () => {
+const UniqueServerDescription = React.memo(function UniqueServerDescription() {
   return (
     <div className={classes.UniqueServerDescriptionContainer}>
       <div className={classes.UniqueServerDescription}>
@@ -27,6 +27,6 @@ const UniqueServerDescription = () => {
       </div>
     </div>
   );
-};
+});
 
 export default UniqueServerDescription;

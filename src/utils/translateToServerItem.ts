@@ -1,6 +1,7 @@
 import Item from "../models/Item";
 import {xMax} from '../constants/boardDimensions';
 
+// change PosNumberLeftAngle, Enableds
 const translateToServerItem = (item: Item) => {
   const {id, name, category, mainCell, width,
     height, currentCount, isEquipped} = item;
@@ -16,7 +17,7 @@ const translateToServerItem = (item: Item) => {
   return JSON.stringify({
     ID: id,
     Name: name,
-    category: category,
+    Category: category,
     PosNumberLeftAngle: posNumberLeftAngle,
     SizeX: width,
     SizeY: height,

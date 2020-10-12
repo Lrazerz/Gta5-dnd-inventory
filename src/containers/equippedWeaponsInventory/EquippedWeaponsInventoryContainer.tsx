@@ -18,7 +18,7 @@ export interface WeaponTypeContainerCells {
   toolsCells: SingleCell[],
 }
 
-const EquippedWeaponsInventoryContainer = () => {
+const EquippedWeaponsInventoryContainer = React.memo(function EquippedWeaponsInventoryContainer() {
   const dispatch = useDispatch();
   const {equippedItems: {cells: equippedCells},
     draggedItem: {goingToDrop, hoveredSquare, item: draggedItem}} = useSelector((state) => state);
@@ -72,7 +72,6 @@ const EquippedWeaponsInventoryContainer = () => {
     !hoveredSquareFromClosingInventory;
 
   const equippedContainerMouseOverHandler = e => {
-    console.log('mouse Over equippedContainer');
     if(draggedItem) dispatch(setGoingToDrop(true, 0));
   }
 
@@ -93,6 +92,6 @@ const EquippedWeaponsInventoryContainer = () => {
                             phoneCell={phoneCell} simCell={simCell}/>
     </div>
   );
-};
+});
 
 export default EquippedWeaponsInventoryContainer;

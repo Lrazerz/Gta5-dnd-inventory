@@ -7,8 +7,14 @@ import {setHoveredSquares} from "../../redux/actions/draggedItem";
 import theme from "../../constants/css/theme";
 import {WeaponItemTypes} from "../../constants/dnd/types";
 
+interface Props {
+  children: any;
+  acceptedItemType: string;
+  coords: number;
+}
+
 //itemId - an item inside if exists
-const ClosingWeaponSquare = ({children, acceptedItemType, coords}) => {
+const ClosingWeaponSquare: React.FC<Props> = React.memo(function ClosingWeaponSquare({children, acceptedItemType, coords}) {
   const dispatch = useDispatch();
 
   const {item: draggedItem, hoveredSquare, canDrop} = useSelector(({draggedItem}) => draggedItem);
@@ -49,6 +55,6 @@ const ClosingWeaponSquare = ({children, acceptedItemType, coords}) => {
       {isOver && !canDrop && <Overlay color={dangerColor}/>}
     </div>
   );
-};
+});
 
 export default ClosingWeaponSquare;//
