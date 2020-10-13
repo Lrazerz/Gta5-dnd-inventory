@@ -9,7 +9,7 @@ interface Props {
   cash: string;
 }
 
-const BoardInfo: React.FC<Props> = React.memo(({cash}) => {
+const BoardInfo: React.FC<Props> = React.memo(function BoardInfo({cash}) {
   const dispatch = useDispatch();
   const {goingToDrop, item: draggedItem} = useSelector(state => state.draggedItem);
   const goingToDropRef = useRef();
@@ -27,6 +27,7 @@ const BoardInfo: React.FC<Props> = React.memo(({cash}) => {
   // allow to be BackDrop
   const styles: CSSProperties = {
     pointerEvents: goingToDrop ? 'none' : 'inherit',
+    zIndex: goingToDrop ? 'auto' : 200,
     // backgroundColor: goingToDrop ? 'red' : 'transparent',
   }
 

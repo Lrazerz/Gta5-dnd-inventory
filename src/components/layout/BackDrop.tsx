@@ -20,6 +20,7 @@ const BackDrop = React.memo(function BackDrop() {
 
   const style: CSSProperties = {
     pointerEvents: goingToDrop ? 'none' : 'inherit',
+    zIndex: goingToDrop ? 'auto' : 200,
     // backgroundColor: goingToDrop ? 'red' : 'transparent',
   }
 

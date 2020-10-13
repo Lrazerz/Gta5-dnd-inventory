@@ -24,6 +24,7 @@ const UniqueServerDescription = React.memo(function UniqueServerDescription() {
   // allow to be BackDrop
   const styles: CSSProperties = {
     pointerEvents: goingToDrop ? 'none' : 'inherit',
+    zIndex: goingToDrop ? 'auto' : 200,
     // backgroundColor: goingToDrop ? 'red' : 'transparent',
   }
 

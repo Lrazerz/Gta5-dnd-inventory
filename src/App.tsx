@@ -73,6 +73,7 @@ const App = React.memo(function App() {
   //Allow ToolTip to be BackDrop
   const tooltipStyles: CSSProperties = {
     pointerEvents: goingToDrop ? 'none' : 'inherit',
+    zIndex: goingToDrop ? 'auto' : 200,
     // backgroundColor: goingToDrop ? 'red' : 'transparent',
   }
 
