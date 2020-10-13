@@ -20,7 +20,7 @@
     background: linear-gradient(90deg, transparent, rgba(20, 91, 105, 0.7));
     clip-path: polygon(0% 10.56792%, 77.45% 10.56792%, 81.0447% 0%, 100% 0%,
             100% 100%, 81.0447% 100%, 77.45% 89.43208%, 0% 89.43208%);
-    position: relative;
+    position: absolute;
 
     // top border
     &::before {
@@ -58,7 +58,7 @@
     //background-color: red;
     //opacity: 0.5;
 
-    position: absolute;
+    position: relative;
 
     .SquaresContainer {
       width: 54.45%;

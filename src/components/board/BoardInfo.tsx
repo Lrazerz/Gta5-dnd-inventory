@@ -5,7 +5,11 @@ import cashImage from '../../assets/images/board/cash.png';
 import SecondaryText from "../../components/layout/SecondaryText";
 import {setGoingToDrop} from "../../redux/actions/draggedItem";
 
-const BoardInfo = ({cash}) => {
+interface Props {
+  cash: string;
+}
+
+const BoardInfo: React.FC<Props> = React.memo(({cash}) => {
   const dispatch = useDispatch();
   const {goingToDrop, item: draggedItem} = useSelector(state => state.draggedItem);
   const goingToDropRef = useRef();
@@ -37,6 +41,6 @@ const BoardInfo = ({cash}) => {
       </SecondaryText>
     </div>
   );
-};
+});
 
 export default BoardInfo;

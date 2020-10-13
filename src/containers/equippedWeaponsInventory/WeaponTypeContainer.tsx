@@ -1,5 +1,4 @@
-import React, {CSSProperties} from 'react';
-import {useSelector} from 'react-redux';
+import React, {useEffect, useRef, useState} from 'react';
 import classes from '../../styles/equippedWeaponsInventory/WeaponTypeContainer.module.scss';
 import Octagon from "../../components/equippedClosingInventory/Octagon";
 import ClosingWeaponSquare from "../../components/equippedClosingInventory/ClosingWeaponSquare";
@@ -16,7 +15,7 @@ interface Props {
 
 const WeaponTypeContainer: React.FC<Props> = React.memo(function WeaponTypeContainer({typeTitle, acceptedTypes, cells}) {
 
-  const {hoveredSquare} = useSelector(({draggedItem}) => draggedItem);
+  // const {hoveredSquare} = useSelector(({draggedItem}) => draggedItem);
 
   const {mainSquareType, ammoType, toolsType} = acceptedTypes;
 
@@ -52,9 +51,9 @@ const WeaponTypeContainer: React.FC<Props> = React.memo(function WeaponTypeConta
 
   // console.log('weaponSquareContainerStyles', hoveredSquare, weaponCell.id);
   // to keep dragged item at the top of the screen
-  const weaponSquareContainerStyles: CSSProperties = {
-    zIndex: hoveredSquare === weaponCell.id ? 'auto' : 200,
-  }
+  // const weaponSquareContainerStyles: CSSProperties = {
+  //   zIndex: hoveredSquare === weaponCell.id ? 'auto' : 200,
+  // }
 
   return (
     <div className={classes.WeaponTypeContainer}>
@@ -64,11 +63,14 @@ const WeaponTypeContainer: React.FC<Props> = React.memo(function WeaponTypeConta
             {weaponCell.cell.item && weaponCell.cell.item.name}
           </SecondaryText>
         </div>
-        <div className={classes.WeaponSquareContainer} style={weaponSquareContainerStyles} onMouseOver={e => e.stopPropagation()}>
-            <ClosingWeaponSquare acceptedItemType={mainSquareType}
-                                 coords={weaponCell.id}>
-              {weaponSquareContent}
-            </ClosingWeaponSquare>
+        <div className={classes.WeaponSquareContainer} onMouseOver={e => e.stopPropagation()}>
+        </div>
+        <div className={classes.TransparentHoveredEl}
+             onMouseOver={e => e.stopPropagation()}>
+          <ClosingWeaponSquare acceptedItemType={mainSquareType}
+                               coords={weaponCell.id}>
+            {weaponSquareContent}
+          </ClosingWeaponSquare>
         </div>
         <div className={classes.AttachmentsSquaresContainer}>
           <div className={classes.LeftArrow}/>

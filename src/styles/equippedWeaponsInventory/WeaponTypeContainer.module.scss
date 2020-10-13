@@ -17,18 +17,6 @@
   justify-content: flex-end;
 }
 
-//.WeaponSquareContainer {
-//  height: 32.156%;
-//  width: 100%;
-//  //background: linear-gradient(90deg, transparent, rgba(44, 60, 97, 1));
-//  background: linear-gradient(90deg, transparent, rgba(53, 78, 163, 1));
-//  box-sizing: border-box;
-//  border-top: 2px solid;
-//  border-bottom: 2px solid;
-//  border-image: linear-gradient(90deg, transparent 50%, rgba(63,118,243,0.6) 60%, rgba(63,118,243,1)) 2;
-//  position: relative;
-//}
-
 .WeaponSquareContainer {
   //pointer-events: none;
   height: 40.78%;
@@ -37,7 +25,7 @@
   background: linear-gradient(90deg, transparent, rgba(53, 78, 163, 0.7));
   clip-path: polygon(0% 10.56792%, 77.45% 10.56792%, 81.0447% 0%, 100% 0%,
           100% 100%, 81.0447% 100%, 77.45% 89.43208%, 0% 89.43208%);
-  position: relative;
+  position: absolute;
   // top border
   &::before {
     content: "";
@@ -86,63 +74,10 @@
   }
 }
 
-
-//.UIBordersContainer {
-//  // all ok
-//  width: 23%;
-//  height: 100%;
-//  box-sizing: border-box;
-//  position: relative;
-//
-//  .UIBorders {
-//    height: 40.78%;
-//    width: 102%;
-//    position: absolute;
-//    top: 16.9%;
-//    left: -2%;
-//    //clip-path: polygon(0 10.568%, 17.15% 0, 100% 0, 100% 100%, 17.15% 100%, 0 89.432%);
-//    clip-path: polygon(0 10.568%, 17.15% 0, 100% 0, 100% 100%, 17.15% 100%, 0 91%);
-//    background: linear-gradient(180deg, #3f76f3 0%, #3f76f3 12%, transparent 13%),
-//    linear-gradient(0deg, #3f76f3 0%, #3f76f3 12%, transparent 13%);
-//    overflow: hidden;
-//
-//    @media(min-width: 1900px) {
-//      width: 101%;
-//      left: -1%;
-//    }
-//    @media(min-width: 2500px) {
-//      width: 101.5%;
-//      left: -1.5%;
-//    }
-//
-//    .ClippedElement {
-//      height: 95%;
-//      width: 100%;
-//      //background: linear-gradient(90deg, rgba(44, 60, 97, 1), rgba(48, 68, 112, 1));
-//      background: linear-gradient(90deg, rgba(53, 78, 163, 1), rgb(52, 75, 128));
-//      //clip-path: polygon(0 12.568%, 19.15% 0, 100% 0, 100% 100%, 19.15% 100%, 0 90%);
-//      clip-path: polygon(0 12.568%, 19.15% 0, 100% 0, 100% 100%, 19.15% 100%, 0 90%);
-//      box-sizing: border-box;
-//      position: absolute;
-//      left: 0;
-//      top: 2.5%;
-//    }
-//  }
-//}
-//
-//@media (min-width: 2000px) {
-//  .MainContent {
-//    .WeaponSquareContainer {
-//      border-top: 3px solid;
-//      border-bottom: 3px solid;
-//    }
-//  }
-//}
-//@media (min-width: 2500px) {
-//  .MainContent {
-//    .WeaponSquareContainer {
-//      border-top: 4px solid;
-//      border-bottom: 4px solid;
-//    }
-//  }
-//}
+.TransparentHoveredEl {
+  height: 40.78%;
+  width: 100%;
+  position: relative;
+  left: 0;
+  top: 0;
+}

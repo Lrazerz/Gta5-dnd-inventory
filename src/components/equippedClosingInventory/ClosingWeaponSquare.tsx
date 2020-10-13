@@ -45,8 +45,8 @@ const ClosingWeaponSquare: React.FC<Props> = React.memo(function ClosingWeaponSq
   let dangerColor = theme.colors.danger;
 
   if (WeaponItemTypes.includes(acceptedItemType)) {
-    successColor = `linear-gradient(90deg, transparent, ${theme.colors.success} 50%, transparent)`;
-    dangerColor = `linear-gradient(90deg, transparent, ${theme.colors.danger} 50%, transparent)`;
+    successColor = `linear-gradient(90deg, transparent, ${theme.colors.success} 100%)`;
+    dangerColor = `linear-gradient(90deg, transparent, ${theme.colors.danger} 100%)`;
   }
 
   const isFromOctagon = coords !== 1 && coords !== 2 && coords !== 3;
@@ -55,8 +55,8 @@ const ClosingWeaponSquare: React.FC<Props> = React.memo(function ClosingWeaponSq
     <div className={classes.ClosingWeaponSquare} style={closingWeaponSquareStyles}
          onMouseOver={squareMouseOverHandler}>
       {children}
-      {isOver && canDrop && <Overlay color={successColor} fromOctagon={isFromOctagon}/>}
-      {isOver && !canDrop && <Overlay color={dangerColor} fromOctagon={isFromOctagon}/>}
+      {isOver && canDrop && <Overlay color={successColor} fromOctagon={isFromOctagon} fromWeapon={!isFromOctagon}/>}
+      {isOver && !canDrop && <Overlay color={dangerColor} fromOctagon={isFromOctagon} fromWeapon={!isFromOctagon}/>}
     </div>
   );
 });

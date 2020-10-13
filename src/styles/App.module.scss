@@ -1,15 +1,15 @@
 @use '../constants/scss/theme';
 
-.BlurredWrapper {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  z-index: -100;
-  //background-image: url("../assets/images/UI/root-background.png");
-  background-image: url("../assets/dummy/game-screen-1.jpg");
-  background-size: 100% 100%;
-  filter: blur(0.3rem);
-}
+//.BlurredWrapper {
+//  width: 100%;
+//  height: 100%;
+//  position: absolute;
+//  z-index: -100;
+//  //background-image: url("../assets/images/UI/root-background.png");
+//  background-image: url("../assets/dummy/game-screen-1.jpg");
+//  background-size: 100% 100%;
+//  filter: blur(0.3rem);
+//}
 
 .AppContainer {
   background: rgba(56, 69, 168, 0.1);
