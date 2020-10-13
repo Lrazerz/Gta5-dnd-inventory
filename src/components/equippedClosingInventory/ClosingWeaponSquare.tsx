@@ -35,8 +35,9 @@ const ClosingWeaponSquare: React.FC<Props> = React.memo(function ClosingWeaponSq
     }
   }
 
-  const closingWeaponSquareStyles: CSSProperties = {
+  let closingWeaponSquareStyles: CSSProperties = {
     pointerEvents: isOver ? 'none' : 'auto',
+    zIndex: hoveredSquare === coords ? 'auto' : 200,
   }
 
   // overlay colors
@@ -48,10 +49,7 @@ const ClosingWeaponSquare: React.FC<Props> = React.memo(function ClosingWeaponSq
     dangerColor = `linear-gradient(90deg, transparent, ${theme.colors.danger} 50%, transparent)`;
   }
 
-
   const isFromOctagon = coords !== 1 && coords !== 2 && coords !== 3;
-
-  if(coords === 1) console.log('isFromOctagon', isFromOctagon);
 
   return (
     <div className={classes.ClosingWeaponSquare} style={closingWeaponSquareStyles}

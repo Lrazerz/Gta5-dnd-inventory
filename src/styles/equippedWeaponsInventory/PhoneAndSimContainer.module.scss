@@ -17,13 +17,10 @@
   .WeaponSquareContainer {
     height: 40.78%;
     width: 100%;
-    //background: linear-gradient(90deg, transparent, rgba(44, 60, 97, 1));
-    //background: linear-gradient(90deg, transparent, rgba(18, 72, 82, 0.7));
     background: linear-gradient(90deg, transparent, rgba(20, 91, 105, 0.7));
     clip-path: polygon(0% 10.56792%, 77.45% 10.56792%, 81.0447% 0%, 100% 0%,
             100% 100%, 81.0447% 100%, 77.45% 89.43208%, 0% 89.43208%);
     position: relative;
-    //z-index: 200;
 
     // top border
     &::before {
@@ -39,6 +36,7 @@
       background: linear-gradient(90deg, transparent 40%, rgba(9,198,187,0.8) 60%, rgba(9,198,187,1));
     }
 
+    // bottom border
     &::after {
       content: "";
       position: absolute;
@@ -51,6 +49,16 @@
 
       background: linear-gradient(90deg, transparent 40%, rgba(9,198,187,0.8) 60%, rgba(9,198,187,1));
     }
+  }
+
+  .TransparentHoverEl {
+    height: 40.78%;
+    width: 100%;
+    left: 0;
+    //background-color: red;
+    //opacity: 0.5;
+
+    position: absolute;
 
     .SquaresContainer {
       width: 54.45%;
