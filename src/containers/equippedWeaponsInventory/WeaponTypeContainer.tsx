@@ -40,11 +40,13 @@ const WeaponTypeContainer: React.FC<Props> = React.memo(function WeaponTypeConta
     }
 
     return (
-      <Octagon key={toolsCell.id} width={'19.85%'} coords={toolsCell.id}>
-        <ClosingWeaponSquare acceptedItemType={toolsType} coords={toolsCell.id}>
-          {toolsSquareContent}
-        </ClosingWeaponSquare>
-      </Octagon>
+      <div key={toolsCell.id} style={{width: '19.85%', position: 'relative'}}>
+        <Octagon coords={toolsCell.id}>
+          <ClosingWeaponSquare acceptedItemType={toolsType} coords={toolsCell.id}>
+            {toolsSquareContent}
+          </ClosingWeaponSquare>
+        </Octagon>
+      </div>
     );
   });
 
@@ -70,11 +72,13 @@ const WeaponTypeContainer: React.FC<Props> = React.memo(function WeaponTypeConta
         </div>
         <div className={classes.AttachmentsSquaresContainer}>
           <div className={classes.LeftArrow}/>
-          <Octagon width={'19.85%'} coords={ammoCell.id}>
-            <ClosingWeaponSquare acceptedItemType={ammoType} coords={ammoCell.id}>
-              {ammoSquareContent}
-            </ClosingWeaponSquare>
-          </Octagon>
+          <div style={{width: '19.85%', position: 'relative'}}>
+            <Octagon coords={ammoCell.id}>
+              <ClosingWeaponSquare acceptedItemType={ammoType} coords={ammoCell.id}>
+                {ammoSquareContent}
+              </ClosingWeaponSquare>
+            </Octagon>
+          </div>
           {toolsSquares}
         </div>
     </div>

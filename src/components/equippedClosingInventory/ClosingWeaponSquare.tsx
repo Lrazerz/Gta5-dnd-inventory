@@ -26,6 +26,7 @@ const ClosingWeaponSquare: React.FC<Props> = React.memo(function ClosingWeaponSq
   const isOver = hoveredSquare === coords;
 
   const squareMouseOverHandler = (e) => {
+    console.log('mouse over weapon square');
     e.persist();
     if (draggedItemRef.current) {
       if (!hoveredSquareRef.current || typeof hoveredSquareRef.current !== 'number' || hoveredSquareRef.current !== coords) {
@@ -47,12 +48,17 @@ const ClosingWeaponSquare: React.FC<Props> = React.memo(function ClosingWeaponSq
     dangerColor = `linear-gradient(90deg, transparent, ${theme.colors.danger} 50%, transparent)`;
   }
 
+
+  const isFromOctagon = coords !== 1 && coords !== 2 && coords !== 3;
+
+  if(coords === 1) console.log('isFromOctagon', isFromOctagon);
+
   return (
     <div className={classes.ClosingWeaponSquare} style={closingWeaponSquareStyles}
          onMouseOver={squareMouseOverHandler}>
       {children}
-      {isOver && canDrop && <Overlay color={successColor}/>}
-      {isOver && !canDrop && <Overlay color={dangerColor}/>}
+      {isOver && canDrop && <Overlay color={successColor} fromOctagon={isFromOctagon}/>}
+      {isOver && !canDrop && <Overlay color={dangerColor} fromOctagon={isFromOctagon}/>}
     </div>
   );
 });

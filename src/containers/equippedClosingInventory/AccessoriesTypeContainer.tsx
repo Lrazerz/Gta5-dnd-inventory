@@ -25,11 +25,13 @@ const AccessoriesTypeContainer: React.FC<Props> =
     }
 
     return (
-      <Octagon key={id} width={'19.8%'} coords={id}>
-        <ClosingWeaponSquare acceptedItemType={acceptedType} coords={id}>
-          {squareContent}
-        </ClosingWeaponSquare>
-      </Octagon>
+      <div key={id} style={{width: '19.8%', position: 'relative'}}>
+        <Octagon coords={id}>
+          <ClosingWeaponSquare acceptedItemType={acceptedType} coords={id}>
+            {squareContent}
+          </ClosingWeaponSquare>
+        </Octagon>
+      </div>
     );
   });
 

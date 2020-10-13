@@ -1,6 +1,6 @@
 .Octagon {
   //pointer-events: none;
-  width: 26%;
+  width: 100%;
   clip-path: polygon(0 21.4%, 21.4% 0, 78.6% 0, 100% 21.4%, 100% 78.6%, 78.6% 100%, 21.4% 100%, 0 78.6%);
   //background-color: rgba(120, 147, 192, 0.6);
   background-color: rgba(53, 73, 94, 0.6);
@@ -37,4 +37,12 @@
     clip-path: polygon(0 50%, 0% 78.6%, 21.4% 100%, 78.6% 100%, 100% 78.6%, 100% 50%,
             98.2% 50%, 98.2% 77.5%, 77.5% 98.2%, 22.5% 98.2%, 1.8% 77.5%, 1.8% 50%, 0 50%);
   }
+}
+
+.TransparentHoveEl {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  position: absolute;
 }

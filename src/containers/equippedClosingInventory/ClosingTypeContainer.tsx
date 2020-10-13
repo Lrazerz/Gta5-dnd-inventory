@@ -23,11 +23,13 @@ const ClosingTypeContainer: React.FC<Props> =
     }
 
     return (
-      <Octagon key={id} coords={id}>
-        <ClosingWeaponSquare acceptedItemType={acceptedType} coords={id}>
-          {squareContent}
-        </ClosingWeaponSquare>
-      </Octagon>
+      <div key={id} style={{width: '26%', position: 'relative'}}>
+        <Octagon coords={id}>
+          <ClosingWeaponSquare acceptedItemType={acceptedType} coords={id}>
+            {squareContent}
+          </ClosingWeaponSquare>
+        </Octagon>
+      </div>
     )
   });
 

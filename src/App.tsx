@@ -91,7 +91,7 @@ const App = React.memo(function App() {
             <div style={{height: '20%'}}>
               <BackDrop/>
             </div>
-            <AppBoard/>
+              <AppBoard/>
             <div style={{flexGrow: 1}}>
               <BackDrop/>
             </div>

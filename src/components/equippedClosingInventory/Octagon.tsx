@@ -7,22 +7,25 @@ interface Props {
   coords: number;
 }
 
-const Octagon: React.FC<Props> = React.memo(function Octagon({children, width='26%', coords}) {
+const Octagon: React.FC<Props> = React.memo(function Octagon({children, coords}) {
 
   const {hoveredSquare} = useSelector(({draggedItem}) => draggedItem);
 
   // to keep dragged item at the top of the screen
-  const octagonStyles: CSSProperties = {
-    width: width,
+  const transparentHoverEl: CSSProperties = {
     zIndex: hoveredSquare === coords ? 'auto' : 200,
   }
 
   return (
-    <div className={classes.Octagon} style={octagonStyles} onMouseOver={e => e.stopPropagation()}>
-      {children}
-      <div className={classes.TopBorder}/>
-      <div className={classes.BottomBorder}/>
-    </div>
+    <>
+      <div className={classes.Octagon}>
+        <div className={classes.TopBorder}/>
+        <div className={classes.BottomBorder}/>
+      </div>
+      <div className={classes.TransparentHoveEl} style={transparentHoverEl} onMouseOver={e => e.stopPropagation()}>
+        {children}
+      </div>
+    </>
   );
 });
 
