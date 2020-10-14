@@ -82,7 +82,7 @@ const SquareEquippedItem: React.FC<Props> = React.memo(function SquareEquippedIt
 
   const imageMouseDownHandler = (event) => {
     if(event.button !== 0) return;
-    dispatch(addDraggedItem([0, 0], item));
+    dispatch(addDraggedItem(item));
     event.persist();
 
     // last-remove
@@ -190,13 +190,14 @@ const SquareEquippedItem: React.FC<Props> = React.memo(function SquareEquippedIt
       // last-remove
       // event.target.style.pointerEvents = 'inherit';
       dispatch(draggedItemRelease());
-    };
+    }
   };
 
   // todo make wrapper to image
   let imageElement = (
     <>
       <img src={item.imageUrl} className={classes.Image} onMouseDown={imageMouseDownHandler} onContextMenu={imageOnContextMenuOpen}
+           onMouseOver={e => console.log('mouse over image')}
            onDragStart={(e) => {e.stopPropagation();e.preventDefault();return false}}/>
       {item.currentCount > 1 &&
       (<div className={classes.CurrentCount}>
@@ -219,7 +220,8 @@ const SquareEquippedItem: React.FC<Props> = React.memo(function SquareEquippedIt
       <div style={{width: '100%', height: '100%'}} onMouseDown={imageMouseDownHandler} onContextMenu={imageOnContextMenuOpen}>
         <div className={classes.ClosingSquareWrapper}>
           <img src={item.imageUrl} className={classes.Image} style={imageStyles}
-               onDragStart={(e) => {e.stopPropagation();e.preventDefault();return false}}/>
+               onDragStart={(e) => {e.stopPropagation();e.preventDefault();return false}}
+               onMouseOver={e => console.log('mouse over image')}/>
           {item.currentCount > 1 &&
           (<div className={classes.CurrentCount} style={{top: '1%', right: '1%'}}>
             <SecondaryText>

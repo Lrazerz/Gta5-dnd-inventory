@@ -9,15 +9,10 @@ import SquareEquippedItem from "../equippedClosingInventory/SquareEquippedItem";
 
 interface Props {
   typeTitle: string;
-  acceptedTypes: { mainSquareType: string, ammoType: string, toolsType: string };
   cells: WeaponTypeContainerCells;
 }
 
-const WeaponTypeContainer: React.FC<Props> = React.memo(function WeaponTypeContainer({typeTitle, acceptedTypes, cells}) {
-
-  // const {hoveredSquare} = useSelector(({draggedItem}) => draggedItem);
-
-  const {mainSquareType, ammoType, toolsType} = acceptedTypes;
+const WeaponTypeContainer: React.FC<Props> = React.memo(function WeaponTypeContainer({typeTitle, cells}) {
 
   // every has id and item
   const {weaponCell, ammoCell, toolsCells} = cells;
@@ -41,19 +36,13 @@ const WeaponTypeContainer: React.FC<Props> = React.memo(function WeaponTypeConta
     return (
       <div key={toolsCell.id} style={{width: '19.85%', position: 'relative'}}>
         <Octagon coords={toolsCell.id}>
-          <ClosingWeaponSquare acceptedItemType={toolsType} coords={toolsCell.id}>
+          <ClosingWeaponSquare coords={toolsCell.id}>
             {toolsSquareContent}
           </ClosingWeaponSquare>
         </Octagon>
       </div>
     );
   });
-
-  // console.log('weaponSquareContainerStyles', hoveredSquare, weaponCell.id);
-  // to keep dragged item at the top of the screen
-  // const weaponSquareContainerStyles: CSSProperties = {
-  //   zIndex: hoveredSquare === weaponCell.id ? 'auto' : 200,
-  // }
 
   return (
     <div className={classes.WeaponTypeContainer}>
@@ -67,8 +56,7 @@ const WeaponTypeContainer: React.FC<Props> = React.memo(function WeaponTypeConta
         </div>
         <div className={classes.TransparentHoveredEl}
              onMouseOver={e => e.stopPropagation()}>
-          <ClosingWeaponSquare acceptedItemType={mainSquareType}
-                               coords={weaponCell.id}>
+          <ClosingWeaponSquare coords={weaponCell.id}>
             {weaponSquareContent}
           </ClosingWeaponSquare>
         </div>
@@ -76,7 +64,7 @@ const WeaponTypeContainer: React.FC<Props> = React.memo(function WeaponTypeConta
           <div className={classes.LeftArrow}/>
           <div style={{width: '19.85%', position: 'relative'}}>
             <Octagon coords={ammoCell.id}>
-              <ClosingWeaponSquare acceptedItemType={ammoType} coords={ammoCell.id}>
+              <ClosingWeaponSquare coords={ammoCell.id}>
                 {ammoSquareContent}
               </ClosingWeaponSquare>
             </Octagon>

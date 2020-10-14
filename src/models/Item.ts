@@ -34,9 +34,12 @@ export default class Item {
   // weapons still exists in the inventory, even if equipped
   public isWeaponEquipped: boolean;
 
+  // is rotated 90 degrees
+  public isRotated: boolean;
+
   constructor(id: string, name: string, category: ItemCategories | string, mainCell: [number, number] | number,
               width: number, height: number, currentCount: number, maxCount: number | undefined, imageUrl: string | null,
-              isEquipped: boolean, rest: any, isWeaponEquipped: boolean = false) {
+              isEquipped: boolean, rest: any, isWeaponEquipped: boolean = false, isRotated = false) {
     this.id = id;
     this.name = name;
     this.category = category;
@@ -49,5 +52,6 @@ export default class Item {
     this.isEquipped = isEquipped;
     this.rest = rest;
     this.isWeaponEquipped = isWeaponEquipped;
+    this.isRotated = isRotated;
   }
 }

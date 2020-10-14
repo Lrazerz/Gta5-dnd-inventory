@@ -16,7 +16,7 @@ module.exports = {
     rules: [
       {
         enforce: "pre",
-        test: /\.js$/,
+        test: /\.(ts|js|tsx|jsx)$/,
         use: ['source-map-loader'],
       },
       {
@@ -34,7 +34,7 @@ module.exports = {
       },
       {
         test: /\.(ts|tsx)$/,
-        loader: "awesome-typescript-loader",
+        use: ["source-map-loader","awesome-typescript-loader"],
       },
       {
         test: /\.css$/i,

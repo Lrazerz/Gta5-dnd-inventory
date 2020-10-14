@@ -82,12 +82,9 @@ const EquippedWeaponsInventoryContainer = React.memo(function EquippedWeaponsInv
   return (
     <div className={classes.EquippedWeaponsInventoryContainer} style={equippedContainerStyles}
     onMouseOver={equippedContainerMouseOverHandler}>
-      <WeaponTypeContainer typeTitle={'Основное Оружие'} acceptedTypes={primaryWeaponAcceptedTypes}
-                           cells={primaryWeaponCells}/>
-      <WeaponTypeContainer typeTitle={'Пистолет'} acceptedTypes={pistolAcceptedTypes}
-                           cells={secondaryWeaponCells}/>
-      <WeaponTypeContainer typeTitle={'Тяжелое Оружие'} acceptedTypes={heavyWeaponAcceptedTypes}
-                           cells={heavyWeaponCells}/>
+      <WeaponTypeContainer typeTitle={'Основное Оружие'} cells={primaryWeaponCells}/>
+      <WeaponTypeContainer typeTitle={'Пистолет'} cells={secondaryWeaponCells}/>
+      <WeaponTypeContainer typeTitle={'Тяжелое Оружие'} cells={heavyWeaponCells}/>
       <PhoneAndSimContainer phoneType={ItemTypes.PHONE} simType={ItemTypes.SIM_CARD}
                             phoneCell={phoneCell} simCell={simCell}/>
     </div>

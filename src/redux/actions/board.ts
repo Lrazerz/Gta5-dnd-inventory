@@ -120,6 +120,7 @@ const addItem = () => {
     const newDraggedItem = {...item};
 
     newDraggedItem.mainCell = [hoveredSquare[0] - xDown, hoveredSquare[1] - yDown];
+    newDraggedItem.isEquipped = false;
     newDraggedItem.mainCellOnBoard = newDraggedItem.mainCell;
 
     if(typeof hoveredSquare === 'number' && newDraggedItem.isWeaponEquipped) {

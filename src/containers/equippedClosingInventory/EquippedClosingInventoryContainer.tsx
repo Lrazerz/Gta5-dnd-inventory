@@ -68,20 +68,15 @@ const EquippedClosingInventoryContainer = React.memo(function EquippedClosingInv
     <div className={classes.EquippedClosingInventoryContainer} style={equippedContainerStyles}
          onMouseOver={equippedContainerMouseOverHandler}>
       <ClosingTypeContainer typeTitle={'Головной убор'}
-                            typeImage={capImage} acceptedType={ItemTypes.HEADDRESS}
-                            cells={headdressCells}/>
+                            typeImage={capImage} cells={headdressCells}/>
       <ClosingTypeContainer typeTitle={'Верхняя Одежда'}
-                            typeImage={hoodieImage} acceptedType={ItemTypes.OUTERWEAR}
-                            cells={outerwearCells}/>
+                            typeImage={hoodieImage} cells={outerwearCells}/>
       <ClosingTypeContainer typeTitle={'Низ'}
-                            typeImage={pantsImage} acceptedType={ItemTypes.PANTS}
-                            cells={pantsCells}/>
+                            typeImage={pantsImage} cells={pantsCells}/>
       <ClosingTypeContainer typeTitle={'Обувь'}
-                            typeImage={bootsImage} acceptedType={ItemTypes.SHOES}
-                            cells={shoesCells}/>
+                            typeImage={bootsImage} cells={shoesCells}/>
       <AccessoriesTypeContainer typeTitle={'Аксессуары'}
-                                typeImage={glassesImage} acceptedType={ItemTypes.ACCESSORIES}
-                                cells={accessoriesCells}/>
+                                typeImage={glassesImage} cells={accessoriesCells}/>
       <UniqueServerDescription/>
     </div>
 

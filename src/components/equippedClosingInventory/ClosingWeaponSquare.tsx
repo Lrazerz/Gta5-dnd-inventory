@@ -6,15 +6,15 @@ import {useSelector} from 'react-redux';
 import {setHoveredSquares} from "../../redux/actions/draggedItem";
 import theme from "../../constants/css/theme";
 import {WeaponItemTypes} from "../../constants/dnd/types";
+import {EquippedCategoriesToCells} from "../../constants/dnd/equippedCategoriesToCells";
 
 interface Props {
   children: any;
-  acceptedItemType: string;
   coords: number;
 }
 
 //itemId - an item inside if exists
-const ClosingWeaponSquare: React.FC<Props> = React.memo(function ClosingWeaponSquare({children, acceptedItemType, coords}) {
+const ClosingWeaponSquare: React.FC<Props> = React.memo(function ClosingWeaponSquare({children, coords}) {
   const dispatch = useDispatch();
 
   const {item: draggedItem, hoveredSquare, canDrop} = useSelector(({draggedItem}) => draggedItem);
@@ -26,11 +26,10 @@ const ClosingWeaponSquare: React.FC<Props> = React.memo(function ClosingWeaponSq
   const isOver = hoveredSquare === coords;
 
   const squareMouseOverHandler = (e) => {
-    console.log('mouse over weapon square');
     e.persist();
     if (draggedItemRef.current) {
       if (!hoveredSquareRef.current || typeof hoveredSquareRef.current !== 'number' || hoveredSquareRef.current !== coords) {
-        dispatch(setHoveredSquares(coords, true, acceptedItemType));
+        dispatch(setHoveredSquares(coords, true));
       }
     }
   }
@@ -44,6 +43,7 @@ const ClosingWeaponSquare: React.FC<Props> = React.memo(function ClosingWeaponSq
   let successColor = theme.colors.success;
   let dangerColor = theme.colors.danger;
 
+  const acceptedItemType = EquippedCategoriesToCells[coords];
   if (WeaponItemTypes.includes(acceptedItemType)) {
     successColor = `linear-gradient(90deg, transparent, ${theme.colors.success} 100%)`;
     dangerColor = `linear-gradient(90deg, transparent, ${theme.colors.danger} 100%)`;

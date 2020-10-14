@@ -82,7 +82,7 @@ const SquareCommonItem: React.FC<Props> = React.memo(function SquareCommonItem({
 
     // Remove event listener on cleanup
     return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  }, [item]);
 
   let imageElement = null;
 
@@ -99,7 +99,7 @@ const SquareCommonItem: React.FC<Props> = React.memo(function SquareCommonItem({
   const imageOnMouseDown = (event) => {
     if (event.button !== 0) return;
     event.stopPropagation();
-    dispatch(addDraggedItem([x, y], item));
+    dispatch(addDraggedItem(item, [x,y]));
     event.persist();
 
     // save target
@@ -227,13 +227,17 @@ const SquareCommonItem: React.FC<Props> = React.memo(function SquareCommonItem({
         </div>);
     }
 
+
     const imageElementStyles: CSSProperties = {
       width: imageWidth,
       height: imageHeight,
-      top: topOffset,
-      left: leftOffset,
+      //@ts-ignore
+      top: imageHeight && imageWidth && item.isRotated ? -(imageHeight/2 - imageWidth/2) : topOffset,
+      //@ts-ignore
+      left: imageHeight && imageWidth && item.isRotated ? -(imageWidth/2 - imageHeight/2) : leftOffset,
       pointerEvents: draggedItem ? 'none' : 'inherit',
       zIndex: draggedItem ? 0 : 100,
+      transform: item.isRotated ? 'rotate3d(0,0,1,90deg)' : 'none',
     }
 
     imageElement = (

@@ -57,7 +57,7 @@ export default (state = initialState, action) => {
       const {item,xUp,xDown,yUp,yDown} = action;
       return {
         ...state,
-        item,
+        item: {...item},
         xUp,
         xDown,
         yUp,

@@ -12,7 +12,7 @@ import {openOrRefreshInventory} from "./redux/actions/board";
 import ContextMenu from "./components/UI/ContextMenu";
 import {closeContextMenu, getContextActionsForCell} from "./redux/actions/contextMenu";
 import BackDrop from "./components/layout/BackDrop";
-import {setGoingToDrop} from "./redux/actions/draggedItem";
+import {rotateItem, setGoingToDrop} from "./redux/actions/draggedItem";
 
 const App = React.memo(function App() {
   const [isOpen, setIsOpen] = useState(false);
@@ -49,6 +49,12 @@ const App = React.memo(function App() {
     e.preventDefault();
   }
 
+  document.onkeydown = e => {
+    if(e.code.toLowerCase() === 'space' && draggedItem && draggedItem.width > 1 && draggedItem.height > 1) {
+      dispatch(rotateItem());
+    }
+  }
+
   // window.ondragstart = e => {
   //   e.stopPropagation();
   //   e.preventDefault();
@@ -74,7 +80,6 @@ const App = React.memo(function App() {
   const tooltipStyles: CSSProperties = {
     pointerEvents: goingToDrop ? 'none' : 'inherit',
     zIndex: goingToDrop ? 'auto' : 200,
-    // backgroundColor: goingToDrop ? 'red' : 'transparent',
   }
 
   return (

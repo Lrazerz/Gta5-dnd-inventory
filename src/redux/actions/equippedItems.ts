@@ -16,6 +16,7 @@ const setEquippedItem = (cellId) => (dispatch, getState) => {
   const item: Item = {...getState().draggedItem.item};
   item.mainCell = cellId;
   item.isEquipped = true;
+  item.isRotated = false;
   dispatch({type: EQUIPPED_ITEM_SET, id: cellId, item});
   const itemToServer = translateToServerItem(item);
   //@ts-ignore

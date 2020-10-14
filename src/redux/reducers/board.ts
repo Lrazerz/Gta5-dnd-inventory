@@ -42,8 +42,8 @@ export default (state = _fillInitialState(), action) => {
     }
     case SQUARES_FILL: {
       const newBoard = _fillInitialState().board;
-      action.items.forEach(item => {
-        const {squares, ...itemProps} = item;
+      action.items.forEach(itemAndSquares => {
+        const {squares, ...itemProps} = itemAndSquares;
         squares.forEach(square => {
           newBoard[square[1]][square[0]] = {
             ...itemProps

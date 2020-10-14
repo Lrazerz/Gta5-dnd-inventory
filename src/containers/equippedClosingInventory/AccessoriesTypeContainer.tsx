@@ -10,12 +10,11 @@ import SquareEquippedItem from "./SquareEquippedItem";
 interface Props {
   typeTitle: string;
   typeImage: any;
-  acceptedType: string;
   cells: SingleCell[];
 }
 
 const AccessoriesTypeContainer: React.FC<Props> =
-  React.memo(function AccessoriesTypeContainer({typeTitle, typeImage, acceptedType, cells}) {
+  React.memo(function AccessoriesTypeContainer({typeTitle, typeImage, cells}) {
 
   const squaresContent = cells.map(({id, cell}) => {
     let squareContent = null;
@@ -27,7 +26,7 @@ const AccessoriesTypeContainer: React.FC<Props> =
     return (
       <div key={id} style={{width: '19.8%', position: 'relative'}}>
         <Octagon coords={id}>
-          <ClosingWeaponSquare acceptedItemType={acceptedType} coords={id}>
+          <ClosingWeaponSquare coords={id}>
             {squareContent}
           </ClosingWeaponSquare>
         </Octagon>

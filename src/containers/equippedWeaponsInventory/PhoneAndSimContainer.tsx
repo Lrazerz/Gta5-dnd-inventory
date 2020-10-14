@@ -35,12 +35,12 @@ const PhoneAndSimContainer = React.memo(function PhoneAndSimContainer({phoneType
         <div className={classes.SquaresContainer}>
           <div className={classes.CirclesWrapper}>
             <div className={classes.Circle}>
-              <ClosingWeaponSquare acceptedItemType={phoneType} coords={phoneCell.id}>
+              <ClosingWeaponSquare coords={phoneCell.id}>
                 {phoneSquareContent}
               </ClosingWeaponSquare>
             </div>
             <div className={classes.Circle}>
-              <ClosingWeaponSquare acceptedItemType={simType} coords={simCell.id}>
+              <ClosingWeaponSquare coords={simCell.id}>
                 {simSquareContent}
               </ClosingWeaponSquare>
             </div>
