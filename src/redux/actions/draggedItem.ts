@@ -36,7 +36,8 @@ const draggedItemRelease = () => {
   return {type: DRAGGED_ITEM_RELEASE};
 };
 
-const addDraggedItem = (item, [x, y] = [0, 0], fromRotate = false) => {
+// [x,y] - hoveredSquare
+const addDraggedItem = (item, [x, y] = [0, 0], fromRotate = false, hoveredSquareIfEquippedHovered = null) => {
   return dispatch => {
     let xUp, yUp, xDown, yDown, xAver, yAver;
 
@@ -79,14 +80,13 @@ const addDraggedItem = (item, [x, y] = [0, 0], fromRotate = false) => {
         }
       }
 
-      dispatch(_addDraggedItem(item, xUp, xDown, yUp, yDown));
+      dispatch(_addDraggedItem({...item}, xUp, xDown, yUp, yDown));
       if (x !== -100 && !fromRotate) {
         dispatch(_setHoveredSquares([x, y], hoveredSquares, true, false));
       } else if (x !== -100) {
         dispatch(setHoveredSquares([x, y], false));
       }
     } else {
-      console.log('item is equipped');
       // item is equipped
       if (itemWidth % 2 === 0) {
         xUp = itemWidth / 2;
@@ -104,10 +104,15 @@ const addDraggedItem = (item, [x, y] = [0, 0], fromRotate = false) => {
         yDown = Math.floor(itemHeight / 2);
       }
 
-      dispatch(_addDraggedItem(item, xUp, xDown, yUp, yDown));
-      if(!fromRotate) {
+      dispatch(_addDraggedItem({...item}, xUp, xDown, yUp, yDown));
+      if (!fromRotate) {
         dispatch(setHoveredSquares(item.mainCell, true));
       }
+    }
+
+    // can't be 0, coz equipped starts from 1
+    if(hoveredSquareIfEquippedHovered) {
+      dispatch(setHoveredSquares(hoveredSquareIfEquippedHovered, true));
     }
   };
 };
@@ -122,7 +127,6 @@ const __fillHoveredSquares = (hoveredSquare: [number, number], xDown: number, yD
       allHoveredSquares.push([i, j]);
     }
   }
-
   return allHoveredSquares;
 }
 
@@ -140,8 +144,8 @@ const setHoveredSquares = (hoveredSquare, isHoveredEquipped = false) => {
 
     let allHoveredSquares = [];
 
+    // --------------------------------------- If board hovered -------------------------------------------
     if (!isHoveredEquipped) {
-      // if board hovered (the same except check allHoveredSquares)
       allHoveredSquares = __fillHoveredSquares(hoveredSquare, xDown, yDown, xUp, yUp);
       // check canDrop
       allHoveredSquares.forEach(hoveredSquare => {
@@ -150,11 +154,15 @@ const setHoveredSquares = (hoveredSquare, isHoveredEquipped = false) => {
         if (hoveredX < xMin || hoveredX > xMax || hoveredY < yMin || hoveredY > yMax) {
           canDrop = false;
           // if has item on board and item is not the dragged item
-        } else if (board[hoveredY][hoveredX] !== null && board[hoveredY][hoveredX].id !== item.id) { // id check just to set up canDrop = false
+        } else if (board[hoveredY][hoveredX] !== null) { // id check just to set up canDrop = false
           const boardSquare = board[hoveredY][hoveredX];
-          canDrop = false;
-          // can check "allow to stack" here coz all items has different id's
+
+          if(board[hoveredY][hoveredX].id !== item.id) {
+            canDrop = false;
+          }
+
           const isAllowToStack = boardSquare.name === item.name
+            && boardSquare.mainCell !== item.mainCell
             && boardSquare.currentCount && boardSquare.maxCount
             && boardSquare.currentCount < boardSquare.maxCount;
           if (isAllowToStack) {
@@ -168,28 +176,34 @@ const setHoveredSquares = (hoveredSquare, isHoveredEquipped = false) => {
             } else if (stackableItem.maxCount < stackableItem.currentCount + item.currentCount) {
               // can stack only part of draggedItem
               stackableItemNewCurrentCount = stackableItem.maxCount;
-              draggedItemNewCurrentCount = stackableItem.maxCount - stackableItem.currentCount;
+              // тут не так считать надо а
+              draggedItemNewCurrentCount = item.currentCount - (stackableItem.maxCount - stackableItem.currentCount);
             }
           }
         }
       });
-    } else {
+    }
+    // --------------------------------------------------------------------------------------------------
+    // --------------------------------------- If equipped hovered --------------------------------------
+    else {
       // if equipped inventory hovered
-      console.log('hoveredSquare', hoveredSquare);
       const equippedSquareItem = equippedCells[hoveredSquare].item; // stackable square
       const allowedCategory = EquippedCategoriesToCells[hoveredSquare];
       if (allowedCategory !== item.category) {
         //check category
         canDrop = false;
-      } else if (equippedSquareItem !== null && equippedSquareItem.id !== item.id) {
-        canDrop = false;
+      } else if (equippedSquareItem !== null) {
+        if(equippedSquareItem.id !== item.id) {
+          canDrop = false;
+        }
         // check if required cell already has another item
         const isAllowToStack = equippedSquareItem.name === item.name
+          && equippedSquareItem.mainCell !== item.mainCell
           && equippedSquareItem.currentCount && equippedSquareItem.maxCount
           && equippedSquareItem.currentCount < equippedSquareItem.maxCount;
 
         if (isAllowToStack) {
-          stackableItem = equippedSquareItem;
+          stackableItem = {...equippedSquareItem};
           // no matter dragged from board or equipped to equipped
           if (equippedSquareItem.maxCount >= equippedSquareItem.currentCount + item.currentCount) {
             // can stack full item
@@ -198,11 +212,12 @@ const setHoveredSquares = (hoveredSquare, isHoveredEquipped = false) => {
           } else if (equippedSquareItem.maxCount < equippedSquareItem.currentCount + item.currentCount) {
             // can't stack full item
             stackableItemNewCurrentCount = equippedSquareItem.maxCount;
-            draggedItemNewCurrentCount = equippedSquareItem.maxCount - equippedSquareItem.currentCount;
+            draggedItemNewCurrentCount = item.currentCount - (stackableItem.maxCount - stackableItem.currentCount);
           }
         }
       }
     }
+    // --------------------------------------------------------------------------------------------------
 
     if (stackableItem) {
       // similar dispatch, but with canDrop === true
@@ -216,7 +231,6 @@ const setHoveredSquares = (hoveredSquare, isHoveredEquipped = false) => {
     } else {
       dispatch(_setHoveredSquares(hoveredSquare, allHoveredSquares, canDrop, isHoveredEquipped));
     }
-
   }
 };
 
@@ -228,10 +242,9 @@ const invokeOnMouseUp = () => {
   draggedItem.dispatchEvent(event);
 }
 
-const stackItem = () => {
+const stackItem = (fromSplit = false) => {
   return (dispatch, getState) => {
     // distinct action for stack (invoke in SquareCommonItem and SquareEquippedItem on mouse up
-    // if draggedItem.goingToStack !== null)
     const
       {
         item: draggedItem,
@@ -253,34 +266,47 @@ const stackItem = () => {
       dispatch(boardChangeCurrentCount(allItemSquares, stackableItemNewCurrentCount));
     }
 
+    // ------------------------------------- If stack from board -------------------------------------
     // fill droppable, then work with dragged
     if (typeof draggedItem.mainCell === 'object') {
-      // stack from board
 
       // add item to board / equipped depend on conditions
+      // ------------------------------------- If stack to board (from board) ------------------------
       if (typeof stackableItem.mainCell === 'object') {
         // stack to board (from board)
         _stackToBoard();
-      } else {
+      }
+        //------------------------------------------------------------------------------------------------
+      // ------------------------------------- If stack to equipped (from board) -------------------------
+      else {
         // stack to equipped (from board)
+        console.log('stack to eq from board', stackableItem, stackableItemNewCurrentCount, draggedItemNewCurrentCount);
         dispatch(equippedChangeCurrentCount(stackableItem.mainCell, stackableItemNewCurrentCount));
       }
+      //-------------------------------------------------------------------------------------------------
 
       // or remove item or just change currentCount
       if (draggedItemNewCurrentCount === 0) {
         // remove item
-        dispatch(removeItem(draggedItem.mainCell, draggedItem.width, draggedItem.height));
+        if(!fromSplit) {
+          dispatch(removeItem(draggedItem.mainCell, draggedItem.width, draggedItem.height));
+          //change draggedItem position to droppable to send to server?
+          draggedItem.mainCell = stackableItem.mainCell;
+        }
 
-        //change draggedItem position to droppable to send to server?
-        draggedItem.mainCell = stackableItem.mainCell;
       } else if (draggedItemNewCurrentCount > 0) {
-        const allItemSquares = _getItemSquares(draggedItem.mainCell, draggedItem.width, draggedItem.height);
-        dispatch(boardChangeCurrentCount(allItemSquares, draggedItemNewCurrentCount));
-
-        // to server
-        draggedItem.currentCount = draggedItemNewCurrentCount;
+        console.log('draggedItemNewCurrentCount > 0');
+        if(!fromSplit) {
+          const allItemSquares = _getItemSquares(draggedItem.mainCell, draggedItem.width, draggedItem.height);
+          dispatch(boardChangeCurrentCount(allItemSquares, draggedItemNewCurrentCount));
+          // to server
+          draggedItem.currentCount = draggedItemNewCurrentCount;
+        }
       }
-    } else {
+    }
+    //------------------------------------------------------------------------------------------------------
+    //-------------------------------------If stack from equipped items-------------------------------------
+    else {
       // stack from equipped inv
       if (typeof stackableItem.mainCell === 'object') {
         // stack to board (from equipped inv)
@@ -294,24 +320,29 @@ const stackItem = () => {
       // or remove item or just change currentCount
       if (draggedItemNewCurrentCount === 0) {
         // remove item
-        dispatch(removeEquippedItem(draggedItem.mainCell));
-
+        if(!fromSplit) {
+          dispatch(removeEquippedItem(draggedItem.mainCell));
+        }
         // to server
         draggedItem.mainCell = stackableItem.mainCell;
       } else if (draggedItemNewCurrentCount > 0) {
         dispatch(equippedChangeCurrentCount(draggedItem.mainCell, draggedItemNewCurrentCount));
       }
     }
-    draggedItem.currentCount = draggedItemNewCurrentCount;
-    stackableItem.currentCount = stackableItemNewCurrentCount;
+    //------------------------------------------------------------------------------------------------------
 
+    if(!fromSplit) {
+      draggedItem.currentCount = draggedItemNewCurrentCount;
+      stackableItem.currentCount = stackableItemNewCurrentCount;
+    }
+
+    // todo change current count
     const translatedToServerDraggedItem = translateToServerItem(draggedItem);
     const translatedToServerStackableItem = translateToServerItem(stackableItem);
     try {
       //@ts-ignore
       mp.trigger('cel_cf_stackItem', translatedToServerDraggedItem, translatedToServerStackableItem);
-    } catch (e) {
-    }
+    } catch (e) {}
   }
 }
 
@@ -340,11 +371,14 @@ const rotateItem = () => {
     } else {
       draggedItem.style.transform = 'none';
     }
+    //------------------------------------------------------
 
     if (oldDraggedItemInfo.hoveredSquare && typeof oldDraggedItemInfo.hoveredSquare === 'object') {
-      dispatch(addDraggedItem(oldDraggedItem, oldDraggedItemInfo.hoveredSquare, true));
+      oldDraggedItem.mainCell = [oldDraggedItemInfo.hoveredSquare[0] - oldDraggedItemInfo.yDown,
+                                oldDraggedItemInfo.hoveredSquare[1] - oldDraggedItemInfo.xDown]
+      dispatch(addDraggedItem({...oldDraggedItem}, oldDraggedItemInfo.hoveredSquare, true));
     } else {
-      dispatch(addDraggedItem(oldDraggedItem, [-100, -100], true));
+      dispatch(addDraggedItem({...oldDraggedItem}, [-100, -100], true, oldDraggedItemInfo.hoveredSquare));
     }
   }
 }

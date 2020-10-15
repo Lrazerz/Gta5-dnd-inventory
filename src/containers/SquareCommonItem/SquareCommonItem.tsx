@@ -91,20 +91,18 @@ const SquareCommonItem: React.FC<Props> = React.memo(function SquareCommonItem({
     // e.stopPropagation();
     e.persist();
     const rect = e.target.getBoundingClientRect();
-    const averX = Math.floor(rect.left) + e.target.offsetWidth / 2;
-    const requiredTop = Math.floor(rect.top + e.target.offsetHeight * 0.935);
-    dispatch(openContextMenu(item, averX, requiredTop));
+    dispatch(openContextMenu(item, rect));
   };
 
   const imageOnMouseDown = (event) => {
     if (event.button !== 0) return;
     event.stopPropagation();
-    dispatch(addDraggedItem(item, [x,y]));
+    dispatch(addDraggedItem({...item}, [x,y]));
     event.persist();
 
-    // save target
-    const savedTarget = event.currentTarget;
     // last-remove
+    // save target
+    // const savedTarget = event.currentTarget;
     // savedTarget.style.zIndex = 0;
 
     const newClone = event.currentTarget.cloneNode(true);
@@ -241,7 +239,7 @@ const SquareCommonItem: React.FC<Props> = React.memo(function SquareCommonItem({
     }
 
     imageElement = (
-      <div className={classes.ImageContainer} style={imageElementStyles}
+      <div className={classes.ImageContainer} style={imageElementStyles} id={`square-common-item-${x}-${y}`}
            onMouseDown={imageOnMouseDown}
            onContextMenu={imageOnContextMenuOpen}>
         <img src={item.imageUrl} style={item.isWeaponEquipped ? {opacity: '0.5'} : null}

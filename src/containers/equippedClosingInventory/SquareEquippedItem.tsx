@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {CSSProperties, useEffect, useRef, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import EquippedItem from "../../components/items/EquippedItem";
 import classes from '../../styles/equippedClosingInventory/SquareEquippedItem.module.scss';
@@ -75,14 +75,12 @@ const SquareEquippedItem: React.FC<Props> = React.memo(function SquareEquippedIt
 
   const imageOnContextMenuOpen = (e) => {
     const rect = e.target.getBoundingClientRect();
-    const averX = Math.floor(rect.left) + e.target.offsetWidth / 2;
-    const requiredTop = Math.floor(rect.top + e.target.offsetHeight * 0.935);
-    dispatch(openContextMenu(item, averX, requiredTop));
+    dispatch(openContextMenu(item, rect));
   };
 
   const imageMouseDownHandler = (event) => {
     if(event.button !== 0) return;
-    dispatch(addDraggedItem(item));
+    dispatch(addDraggedItem({...item}));
     event.persist();
 
     // last-remove
@@ -191,13 +189,13 @@ const SquareEquippedItem: React.FC<Props> = React.memo(function SquareEquippedIt
       // event.target.style.pointerEvents = 'inherit';
       dispatch(draggedItemRelease());
     }
-  };
+  }
 
   // todo make wrapper to image
   let imageElement = (
-    <>
-      <img src={item.imageUrl} className={classes.Image} onMouseDown={imageMouseDownHandler} onContextMenu={imageOnContextMenuOpen}
-           onMouseOver={e => console.log('mouse over image')}
+    <div className={classes.ImageContainer} onMouseDown={imageMouseDownHandler} onContextMenu={imageOnContextMenuOpen}
+         id={`square-equipped-item-${item.mainCell}`}>
+      <img src={item.imageUrl} className={classes.Image}
            onDragStart={(e) => {e.stopPropagation();e.preventDefault();return false}}/>
       {item.currentCount > 1 &&
       (<div className={classes.CurrentCount}>
@@ -205,23 +203,23 @@ const SquareEquippedItem: React.FC<Props> = React.memo(function SquareEquippedIt
           {item.currentCount}
         </SecondaryText>
       </div>)}
-    </>
+    </div>
     );
 
   if (item.mainCell === 1 || item.mainCell === 2 || item.mainCell === 3) {
-    const imageStyles = {
+    const imageStyles: CSSProperties = {
       top: '1%',
       right: '1%',
       height: '98%',
-      width: '60%'
+      width: '60%',
+      pointerEvents: 'none',
     }
 
     imageElement = (
-      <div style={{width: '100%', height: '100%'}} onMouseDown={imageMouseDownHandler} onContextMenu={imageOnContextMenuOpen}>
-        <div className={classes.ClosingSquareWrapper}>
+      <div style={{width: '100%', height: '100%'}} onMouseDown={imageMouseDownHandler} id={`square-equipped-item-${item.mainCell}`}>
+        <div className={classes.ClosingSquareWrapper} onContextMenu={imageOnContextMenuOpen}>
           <img src={item.imageUrl} className={classes.Image} style={imageStyles}
-               onDragStart={(e) => {e.stopPropagation();e.preventDefault();return false}}
-               onMouseOver={e => console.log('mouse over image')}/>
+               onDragStart={(e) => {e.stopPropagation();e.preventDefault();return false}}/>
           {item.currentCount > 1 &&
           (<div className={classes.CurrentCount} style={{top: '1%', right: '1%'}}>
             <SecondaryText>

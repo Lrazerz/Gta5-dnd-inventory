@@ -10,6 +10,7 @@ import leftSparksSvg from "./assets/images/UI/left-sparks.svg";
 import rightSparksSvg from "./assets/images/UI/right-sparks.svg";
 import {openOrRefreshInventory} from "./redux/actions/board";
 import ContextMenu from "./components/UI/ContextMenu";
+import RangeComponent from "./components/UI/RangeComponent";
 import {closeContextMenu, getContextActionsForCell} from "./redux/actions/contextMenu";
 import BackDrop from "./components/layout/BackDrop";
 import {rotateItem, setGoingToDrop} from "./redux/actions/draggedItem";
@@ -24,8 +25,6 @@ const App = React.memo(function App() {
   const draggedItemRef = useRef();
   goingToDropRef.current = goingToDrop;
   draggedItemRef.current = draggedItem;
-
-  const contextActions = contextMenu.contextItem ? getContextActionsForCell(contextMenu.contextItem) : null;
 
   // @ts-ignore
   if(!window.openInventory || !window.refreshInventory) {
@@ -62,7 +61,8 @@ const App = React.memo(function App() {
   // }
 
   // todo onmousedown too and etc
-  window.onclick = e => {
+  window.onclick = () => {
+    console.log('appOnclick');
     if(contextMenu) {
       dispatch(closeContextMenu());
     }
@@ -106,8 +106,12 @@ const App = React.memo(function App() {
         </div>
         <object type="image/svg+xml" data={leftSparksSvg} className={classes.LeftSparksSvgContainer} />
         <object type="image/svg+xml" data={rightSparksSvg} className={classes.RightSparksSvgContainer} />
-        {contextMenu.contextItem && (<ContextMenu contextActions={contextActions}
+        {contextMenu.contextItem && !contextMenu.splitMenuOpen && (<ContextMenu contextItem={contextMenu.contextItem}
         leftOffset={contextMenu.leftOffset} topOffset={contextMenu.topOffset}/>)}
+        <RangeComponent leftOffset={contextMenu.leftOffset}
+                                                      topOffset={contextMenu.topOffsetTopContext}
+                                                      contextItem={contextMenu.contextItem}
+                                                      splitMenuOpen={contextMenu.splitMenuOpen}/>
       </div>
     </>
   );

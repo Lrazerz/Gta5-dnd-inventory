@@ -1,17 +1,26 @@
-.Image {
+.ImageContainer {
   position: absolute;
   top: 10%;
   right: 10%;
   height: 80%;
   width: 80%;
+
+  .Image {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+  }
+  .CurrentCount {
+    pointer-events: none;
+    position: absolute;
+    top: 2%;
+    right: 2%;
+  }
 }
 
-.CurrentCount {
-  pointer-events: none;
-  position: absolute;
-  top: 8%;
-  right: 8%;
-}
+
 
 // only for weapons
 .ClosingSquareWrapper {

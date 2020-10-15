@@ -1,25 +1,24 @@
 import Item from "../../models/Item";
 import {ContextAction} from "../../models/Context/ContextAction";
-import {CONTEXT_MENU_OPEN, CONTEXT_MENU_CLOSE, DRAGGED_ITEM_SET} from "../actions/types";
+import {CONTEXT_MENU_OPEN, CONTEXT_MENU_CLOSE, DRAGGED_ITEM_SET, CONTEXT_MENU_SPLIT_OPEN} from "../actions/types";
 
 interface State {
   contextItem: null | Item;
 
   leftOffset: null | number;
   topOffset: null | number;
+  topOffsetTopContext: null | number;
 
-  // can't save func to redux
-  // contextActions: null | ContextAction[];
+  splitMenuOpen: boolean;
 }
 
 const initialState: State = {
   contextItem: null,
-
   // offsets from document edge
   leftOffset: null,
   topOffset: null,
-
-  // contextActions: null,
+  topOffsetTopContext: null,
+  splitMenuOpen: false,
 }
 
 export default (state = initialState, action) => {
@@ -30,6 +29,15 @@ export default (state = initialState, action) => {
         contextItem: action.item,
         leftOffset: action.leftOffset,
         topOffset: action.topOffset,
+        topOffsetTopContext: action.topOffsetTopContext,
+        splitMenuOpen: false,
+      }
+    }
+    case CONTEXT_MENU_SPLIT_OPEN: {
+      console.log('split menu open');
+      return {
+        ...state,
+        splitMenuOpen: true,
       }
     }
     case CONTEXT_MENU_CLOSE:

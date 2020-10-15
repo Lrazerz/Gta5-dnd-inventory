@@ -1,4 +1,4 @@
-import {CONTEXT_MENU_OPEN, CONTEXT_MENU_CLOSE} from "./types";
+import {CONTEXT_MENU_OPEN, CONTEXT_MENU_CLOSE, CONTEXT_MENU_SPLIT_OPEN} from "./types";
 import {translateToServerItem} from "../../utils/translateToServerItem";
 import {ItemTypes} from "../../constants/dnd/types";
 import {removeEquippedWeaponFromBoard, removeItem} from "./board";
@@ -6,6 +6,49 @@ import {removeEquippedItem, removeEquippedWeaponFromEquipped} from "./equippedIt
 import {ContextAction} from "../../models/Context/ContextAction";
 import store from "../store";
 const {dispatch} = store;
+
+const _openContextMenu = (item, leftOffset, topOffset, topOffsetTopContext) => {
+  return {type: CONTEXT_MENU_OPEN, item, leftOffset, topOffset, topOffsetTopContext}
+};
+
+const _openRangeComponent = () => {
+  return {type: CONTEXT_MENU_SPLIT_OPEN}
+}
+
+const _closeContextMenu = () => {
+  return {type: CONTEXT_MENU_CLOSE};
+};
+
+// rect - getBoundingClientRect() - computed styles
+const openContextMenu = (item, rect) => {
+  return dispatch => {
+    // offsets from left screen angle to positioning items
+    let averX, bottomContext, topContext;
+
+    if(item.isEquipped) {
+      averX = item.mainCell === 1 || item.mainCell === 2 || item.mainCell === 3 ? rect.left + rect.width / 3
+        // @ts-ignore
+        : rect.left - rect.width/ 1.18;
+
+      averX = Math.floor(averX);
+      bottomContext = Math.floor(rect.top + rect.height * 0.935);
+      topContext = Math.floor(rect.top + rect.height * 0.065)
+    }
+    else {
+      averX = Math.floor(rect.left + (item.width - 2) * rect.width / item.width / 2);
+      bottomContext = Math.floor(rect.top + rect.height * 0.935);
+      topContext = Math.floor(rect.top + rect.height * 0.065)
+    }
+
+    dispatch(_openContextMenu(item, averX, bottomContext, topContext));
+  }
+}
+
+const closeContextMenu = () => {
+  return dispatch => {
+    dispatch(_closeContextMenu())
+  }
+}
 
 const mpTriggerDropItem = (item) => {
   const translatedItem = translateToServerItem(item);
@@ -52,9 +95,19 @@ const _dropItemHandler = (removeItemFunc, item) => () => {
   mpTriggerDropItem(item);
 }
 
+// add action _openRangeComponent to split item (dispatch...)
+const _openRangeComponentHandler = () => {
+  dispatch(_openRangeComponent());
+}
+
 // build list of actions and bind handlers
 const getContextActionsForCell = (item) => {
   const contextActions: ContextAction[] = [];
+
+  if(item.currentCount && item.maxCount && item.currentCount > 1) {
+    contextActions.push(new ContextAction('Разделить', _openRangeComponentHandler))
+  }
+
   if(typeof item.mainCell === 'object') {
     // if item from board
     switch(item.category) {
@@ -68,26 +121,6 @@ const getContextActionsForCell = (item) => {
     contextActions.push(new ContextAction('Выкинуть', _dropItemHandler(_removeEquippedItemHandler, item)));
   }
   return contextActions;
-}
-
-const _openContextMenu = (item, leftOffset, topOffset) => {
-  return {type: CONTEXT_MENU_OPEN, item, leftOffset, topOffset};
-};
-
-const _closeContextMenu = () => {
-  return {type: CONTEXT_MENU_CLOSE};
-};
-
-const openContextMenu = (item, leftOffset, topOffset) => {
-  return dispatch => {
-    dispatch(_openContextMenu(item, leftOffset, topOffset));
-  }
-}
-
-const closeContextMenu = () => {
-  return dispatch => {
-    dispatch(_closeContextMenu())
-  }
 }
 
 export {

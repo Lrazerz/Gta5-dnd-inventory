@@ -197,6 +197,11 @@ const changeEquippedState = (item, newState) => dispatch => {
 }
 
 const boardChangeCurrentCount = (squares, newCurrentCount) => {
+  console.log('boardChangeCurrentCount', newCurrentCount, '\n', squares);
+  if(newCurrentCount === 0) {
+    console.log('REMOVE ITEM');
+    return _removeItem(squares);
+  }
   return {type: BOARD_CURRENT_COUNT_CHANGE, squares, newCurrentCount}
 }
 
