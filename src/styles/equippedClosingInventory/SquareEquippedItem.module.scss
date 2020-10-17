@@ -29,5 +29,7 @@
   height: 76%;
   /*position: abs; / with pseudo-elements with display: block;*/
   position: absolute;
+  display: flex;
+  justify-content: flex-end;
   top: 12%;
 }
