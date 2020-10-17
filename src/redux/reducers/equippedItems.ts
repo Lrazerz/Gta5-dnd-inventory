@@ -79,10 +79,11 @@ export default (state = fillInitialState(), action) => {
       };
     }
     case EQUIPPED_ITEMS_SET: {
+      console.log('eq items set', action.items);
       const {cells} = fillInitialState();
       action.items.forEach(item => {
-        const {mainCell, ...newItem} = item;
-        cells[mainCell] = newItem;
+        const newItem = {...item};
+        cells[newItem.mainCell].item = newItem;
       });
       return {
         ...state,

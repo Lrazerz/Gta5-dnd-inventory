@@ -91,6 +91,8 @@ const openOrRefreshInventory = async (info) => {
     }
   }
 
+  console.log('boardItems', boardItems);
+  console.log('enabledItems', enabledItems);
   if(boardItems.length > 0) store.dispatch(_addItems(boardItems));
   if(enabledItems.length > 0) store.dispatch(setEquippedItems(enabledItems));
 }
