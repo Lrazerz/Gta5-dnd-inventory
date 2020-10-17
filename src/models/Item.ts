@@ -39,7 +39,7 @@ export default class Item {
 
   constructor(id: string, name: string, category: ItemCategories | string, mainCell: [number, number] | number,
               width: number, height: number, currentCount: number, maxCount: number | undefined, imageUrl: string | null,
-              isEquipped: boolean, rest: any, isWeaponEquipped: boolean = false, isRotated = false) {
+              isEquipped: boolean, isRotated = false, rest: any, isWeaponEquipped: boolean = false) {
     this.id = id;
     this.name = name;
     this.category = category;
@@ -50,8 +50,8 @@ export default class Item {
     this.maxCount = maxCount;
     this.imageUrl = imageUrl;
     this.isEquipped = isEquipped;
+    this.isRotated = isRotated;
     this.rest = rest;
     this.isWeaponEquipped = isWeaponEquipped;
-    this.isRotated = isRotated;
   }
 }

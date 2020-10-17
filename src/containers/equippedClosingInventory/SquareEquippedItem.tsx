@@ -4,7 +4,7 @@ import EquippedItem from "../../components/items/EquippedItem";
 import classes from '../../styles/equippedClosingInventory/SquareEquippedItem.module.scss';
 import SecondaryText from "../../components/layout/SecondaryText";
 import {addDraggedItem, draggedItemRelease, stackItem} from "../../redux/actions/draggedItem";
-import {addItem, removeEquippedWeaponFromBoard, removeItem} from "../../redux/actions/board";
+import {addItem, removeItemFromBoard, removeItem} from "../../redux/actions/board";
 import {removeEquippedItem, removeEquippedWeaponFromEquipped, setEquippedItem} from "../../redux/actions/equippedItems";
 import {ItemTypes} from "../../constants/dnd/types";
 import {mpTriggerDropItem, openContextMenu} from "../../redux/actions/contextMenu";
@@ -153,7 +153,7 @@ const SquareEquippedItem: React.FC<Props> = React.memo(function SquareEquippedIt
               // @ts-ignore
               || draggedItemRef.current.category === ItemTypes.WEAPON_LAUNCHER) {
               // @ts-ignore
-              dispatch(removeEquippedWeaponFromBoard(draggedItemRef.current.id));
+              dispatch(removeItemFromBoard(draggedItemRef.current.id));
             }
             // @ts-ignore
             dispatch(removeEquippedItem(draggedItemRef.current.mainCell));
@@ -178,7 +178,7 @@ const SquareEquippedItem: React.FC<Props> = React.memo(function SquareEquippedIt
           if(item.category === ItemTypes.WEAPON_RIFLE || item.category === ItemTypes.WEAPON_PISTOL
           || item.category === ItemTypes.WEAPON_LAUNCHER) {
             // if item is weapon - remove prev item from board and set isWeaponEquipped to false
-            dispatch(removeEquippedWeaponFromBoard(item.id));
+            dispatch(removeItemFromBoard(item.id));
           }
           try {
             dispatch(addItem());

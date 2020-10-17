@@ -1,7 +1,7 @@
 import {CONTEXT_MENU_OPEN, CONTEXT_MENU_CLOSE, CONTEXT_MENU_SPLIT_OPEN} from "./types";
 import {translateToServerItem} from "../../utils/translateToServerItem";
 import {ItemTypes} from "../../constants/dnd/types";
-import {removeEquippedWeaponFromBoard, removeItem} from "./board";
+import {removeItemFromBoard, removeItem} from "./board";
 import {removeEquippedItem, removeEquippedWeaponFromEquipped} from "./equippedItems";
 import {ContextAction} from "../../models/Context/ContextAction";
 import store from "../store";
@@ -82,7 +82,7 @@ const _removeEquippedItemHandler = (item) => {
     || category === ItemTypes.WEAPON_LAUNCHER) {
     // if item is weapon remove transparent weapon from board too
     // @ts-ignore AnyAction, but I use redux-thunk
-    dispatch(removeEquippedWeaponFromBoard(id));
+    dispatch(removeItemFromBoard(id));
   }
   // @ts-ignore
   dispatch(removeEquippedItem(mainCell));

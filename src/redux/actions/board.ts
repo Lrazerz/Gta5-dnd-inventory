@@ -13,8 +13,8 @@ import Item from "../../models/Item";
 import DummyImage from '../../assets/dummy/weapon.png';
 import {translateToServerItem} from "../../utils/translateToServerItem";
 import {ItemTypes} from "../../constants/dnd/types";
-import WeaponItem from "../../models/WeaponItem";
 import {AnyAction} from 'redux';
+import get = Reflect.get;
 //'https://i.ibb.co/HCn40jg/weapon-2.png'
 
 const openOrRefreshInventory = async (info) => {
@@ -22,7 +22,6 @@ const openOrRefreshInventory = async (info) => {
 
   // equipped
   const enabledItems = [];
-
   const boardItems = [];
 
   for(const propName in values) {
@@ -32,10 +31,11 @@ const openOrRefreshInventory = async (info) => {
 
     // Square numbers starts from 1 instead of 0
     const {
-      Name, PosNumberLeftAngle, SizeX, SizeY, Enabled, CurrentCount, MaxCount, ...rest
+      Name, PosNumberLeftAngle, SizeX, SizeY, Enabled, CurrentCount, MaxCount, IsRotated, ...rest
     } = item;
     const ID = item.ID.toString();
 
+    //region ------------------------------ Import image ------------------------------
     let ImageUrl;
     try {
       ImageUrl = await import(`../../assets/images/items/${Name.toLowerCase()}.png`);
@@ -52,22 +52,21 @@ const openOrRefreshInventory = async (info) => {
     } else {
       ImageUrl = DummyImage;
     }
+    //endregion
 
     const category: ItemCategories | string = item.Category.toLowerCase();
 
-    let FullItem;
+    let FullItem: Item;
 
-    // create separate item for weapon
-    if(category === ItemTypes.WEAPON_RIFLE || category === ItemTypes.WEAPON_PISTOL
-      || category === ItemTypes.WEAPON_LAUNCHER) {
-      FullItem = new WeaponItem(ID, Name, category, PosNumberLeftAngle,
-        SizeX, SizeY, CurrentCount, MaxCount,
-        ImageUrl, Enabled, rest);
-    } else {
-      // If is not weapon
+    if(!IsRotated) {
       FullItem = new Item(ID, Name, category, PosNumberLeftAngle,
         SizeX, SizeY, CurrentCount, MaxCount,
-        ImageUrl, Enabled, rest);
+        ImageUrl, Enabled, IsRotated, rest);
+    } else {
+      // swap width and height
+      FullItem = new Item(ID, Name, category, PosNumberLeftAngle,
+        SizeY, SizeX, CurrentCount, MaxCount,
+        ImageUrl, Enabled, IsRotated, rest);
     }
 
     if (Enabled === true) {
@@ -86,14 +85,14 @@ const openOrRefreshInventory = async (info) => {
         }
       }
 
-      FullItem.mainCell = FullItem.mainCellOnBoard = [mainCellX, mainCellY];
+      FullItem.mainCell = [mainCellX, mainCellY];
 
       boardItems.push({...FullItem, squares: filledSquares});
     }
   }
 
-  store.dispatch(_addItems(boardItems));
-  store.dispatch(setEquippedItems(enabledItems));
+  if(boardItems.length > 0) store.dispatch(_addItems(boardItems));
+  if(enabledItems.length > 0) store.dispatch(setEquippedItems(enabledItems));
 }
 
 const _addItem = (squares, item: Item) => {
@@ -115,19 +114,18 @@ const _changeEquippedState = (squares, item) => {
 // add item fetched from draggedItem
 const addItem = () => {
   return (dispatch, getState) => {
-    const {hoveredSquare, allHoveredSquares, xDown, yDown, item} = getState().draggedItem;
+    const {hoveredSquare, allHoveredSquares, xDown, yDown, item: draggedItem} = getState().draggedItem;
 
-    const newDraggedItem = {...item};
+    const newDraggedItem = {...draggedItem};
 
     newDraggedItem.mainCell = [hoveredSquare[0] - xDown, hoveredSquare[1] - yDown];
+
     newDraggedItem.isEquipped = false;
-    newDraggedItem.mainCellOnBoard = newDraggedItem.mainCell;
 
     if(typeof hoveredSquare === 'number' && newDraggedItem.isWeaponEquipped) {
       // if item derived from eq items and it is weapon (isWeaponEquipped can be true only on weapons)
       newDraggedItem.isWeaponEquipped = false;
-      // dispatch(removeItem(item.mainCellOnBoard, item.width, item.height))
-    }
+     }
 
     dispatch(_addItem(allHoveredSquares, newDraggedItem));
     // translate to Server Item
@@ -151,32 +149,23 @@ const removeItem = ([x, y], width = 1, height = 1) => {
     dispatch(_removeItem(itemsToRemove));
   }
 }
-// mainCell, width, height
-const removeEquippedWeaponFromBoard = (id) => {
-  // invoke only in SquareEquippedItem
+
+const removeItemFromBoard = (id) => {
   return (dispatch, getState) => {
     const {board} = getState().board;
+    console.log('board', board);
 
-    let itemOnBoard;
+    const squaresToRemove = [];
 
     for(let y = yMin; y <= yMax; y++) {
       for(let x = xMin; x <= xMax; x++) {
-        if(board[y][x] && board[y][x].id === id) itemOnBoard = board[y][x];
-      }
-    }
-
-    if(itemOnBoard) {
-      const {mainCell, width, height} = itemOnBoard;
-
-      // more precisely "squares to remove"
-      const itemsToRemove = [];
-      for (let currX = mainCell[0]; currX < mainCell[0] + width; currX++) {
-        for (let currY = mainCell[1]; currY < mainCell[1] + height; currY++) {
-          itemsToRemove.push([currX, currY]);
+        if(board[y][x] && board[y][x].id === id) {
+          squaresToRemove.push([x,y]);
         }
       }
-      dispatch(_removeItem(itemsToRemove));
     }
+
+    dispatch(_removeItem(squaresToRemove));
   }
 }
 
@@ -196,20 +185,34 @@ const changeEquippedState = (item, newState) => dispatch => {
   dispatch(_changeEquippedState(squares, newItem));
 }
 
-const boardChangeCurrentCount = (squares, newCurrentCount) => {
-  console.log('boardChangeCurrentCount', newCurrentCount, '\n', squares);
-  if(newCurrentCount === 0) {
-    console.log('REMOVE ITEM');
-    return _removeItem(squares);
+const boardChangeCurrentCountByItemId = (id, newCurrentCount) => {
+  return (dispatch, getState) => {
+    const boardCells = getState().board.board;
+
+    const requiredCells = [];
+
+    boardCells.forEach((row, yPos) => {
+      row.forEach((item, xPos) => {
+        if(item && item.id === id) {
+          requiredCells.push([xPos, yPos]);
+        }
+      });
+    });
+
+    if(newCurrentCount === 0) {
+      return _removeItem(requiredCells);
+    }
+    dispatch({type: BOARD_CURRENT_COUNT_CHANGE, squares: requiredCells, newCurrentCount});
   }
-  return {type: BOARD_CURRENT_COUNT_CHANGE, squares, newCurrentCount}
 }
+
+
 
 export {
   addItem,
   removeItem,
   openOrRefreshInventory,
   changeEquippedState,
-  removeEquippedWeaponFromBoard,
-  boardChangeCurrentCount
+  removeItemFromBoard,
+  boardChangeCurrentCountByItemId
 }

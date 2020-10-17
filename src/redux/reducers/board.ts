@@ -29,6 +29,7 @@ const _fillInitialState = () => {
 export default (state = _fillInitialState(), action) => {
   switch (action.type) {
     case SINGLE_ITEM_SQUARES_FILL: {
+      console.log('SINGLE_ITEM_SQUARES_FILL', action.squares);
       const newBoard = [...state.board];
       const {squares, item} = action;
       squares.forEach(square => {
@@ -57,6 +58,7 @@ export default (state = _fillInitialState(), action) => {
       }
     }
     case SQUARES_RELEASE: {
+      console.log('SQUARES_RELEASE', action.squares);
       const newBoard = [...state.board];
       action.squares.forEach(square => {
         const [x, y] = square;
@@ -79,6 +81,7 @@ export default (state = _fillInitialState(), action) => {
       }
     }
     case BOARD_CURRENT_COUNT_CHANGE: {
+      console.log('BOARD_CURRENT_COUNT_CHANGE', action);
       const newBoard = [...state.board];
       action.squares.forEach(square => {
         const [x,y] = square;

@@ -1,10 +1,15 @@
 import React, {CSSProperties, useEffect, useRef, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {addDraggedItem, draggedItemRelease, stackItem} from "../../redux/actions/draggedItem";
+import {addDraggedItem, dragEndHandler, draggedItemRelease, stackItem} from "../../redux/actions/draggedItem";
 import CommonItem from "../../components/items/CommonItem/CommonItem";
 import classes from '../../styles/board/SquareCommonItem.module.scss';
 import SecondaryText from "../../components/layout/SecondaryText";
-import {addItem, changeEquippedState, removeEquippedWeaponFromBoard, removeItem} from "../../redux/actions/board";
+import {
+  addItem,
+  changeEquippedState,
+  removeItem,
+  removeItemFromBoard
+} from "../../redux/actions/board";
 import {removeEquippedItem, removeEquippedWeaponFromEquipped, setEquippedItem} from "../../redux/actions/equippedItems";
 import {ItemTypes} from "../../constants/dnd/types";
 import {mpTriggerDropItem, openContextMenu} from "../../redux/actions/contextMenu";
@@ -109,7 +114,7 @@ const SquareCommonItem: React.FC<Props> = React.memo(function SquareCommonItem({
     newClone.addEventListener('dragstart', (e) => {
       e.stopPropagation();
       e.preventDefault();
-      return false
+      return false;
     });
 
     // last-remove
@@ -143,72 +148,73 @@ const SquareCommonItem: React.FC<Props> = React.memo(function SquareCommonItem({
       document.body.removeChild(newClone);
       document.removeEventListener('mousemove', onMouseMove);
       newClone.onmouseup = null;
-      // last-remove
-      // savedTarget.style.zIndex = 100;
-      if (canDropRef.current) {
-        if(goingToStackRef.current) {
-          dispatch(stackItem());
-        }
-        else if (goingToDropRef.current) {
-          // already have no hovered squares
-          // @ts-ignore
-          if (typeof draggedItemRef.current.mainCell === 'object') {
-            // if drop item from board
-            // @ts-ignore
-            if (draggedItemRef.current.category === ItemTypes.WEAPON_RIFLE || draggedItemRef.current.category === ItemTypes.WEAPON_PISTOL
-              // @ts-ignore
-              || draggedItemRef.current.category === ItemTypes.WEAPON_LAUNCHER) {
-              // @ts-ignore
-              dispatch(removeEquippedWeaponFromEquipped(draggedItemRef.current.id));
-            }
-            // @ts-ignore
-            dispatch(removeItem(draggedItemRef.current.mainCell, draggedItemRef.current.width, draggedItemRef.current.height));
-          } else {
-            // drop item from equipped
-            // @ts-ignore
-            if (draggedItemRef.current.category === ItemTypes.WEAPON_RIFLE || draggedItemRef.current.category === ItemTypes.WEAPON_PISTOL
-              // @ts-ignore
-              || draggedItemRef.current.category === ItemTypes.WEAPON_LAUNCHER) {
-              // @ts-ignore
-              dispatch(removeEquippedWeaponFromBoard(draggedItemRef.current.id));
-            }
-            // @ts-ignore
-            dispatch(removeEquippedItem(draggedItemRef.current.mainCell));
-          }
-          mpTriggerDropItem(draggedItemRef.current);
-        }
-        else if (typeof hoveredSquareRef.current === 'number') {
-          // if add to equipped
-          if (item.category === ItemTypes.WEAPON_RIFLE || item.category === ItemTypes.WEAPON_PISTOL
-            || item.category === ItemTypes.WEAPON_LAUNCHER) {
-            // if weapon make transparent color
-            dispatch(changeEquippedState(item, true));
-          } else {
-            // @ts-ignore
-            dispatch(removeItem(item.mainCell, item.width, item.height));
-          }
-          try {
-            dispatch(setEquippedItem(hoveredSquareRef.current));
-          } catch (e) {
-          }
-        }
-        else {
-          // add to board (from board too)
-          // @ts-ignore
-          if (item.mainCell[0] !== hoveredSquareRef.current[0] - xDownRef.current || item.mainCell[1] !== hoveredSquareRef.current[1] - yDownRef.current) {
-            // check if this is not the current item square
-            // @ts-ignore
-            dispatch(removeItem(item.mainCell, item.width, item.height));
-            try {
-              dispatch(addItem());
-            } catch (e) {
-            }
-          }
-        }
-      }
-      // last-remove
-      // event.target.style.pointerEvents = 'inherit';
-      dispatch(draggedItemRelease());
+
+      dispatch(dragEndHandler());
+
+      //region legacy
+      // if (canDropRef.current) {
+      //   if(goingToStackRef.current) {
+      //     dispatch(stackItem());
+      //   }
+      //   else if (goingToDropRef.current) {
+      //     // already have no hovered squares
+      //     // @ts-ignore
+      //     if (typeof draggedItemRef.current.mainCell === 'object') {
+      //       // if drop item from board
+      //       // @ts-ignore
+      //       if (draggedItemRef.current.category === ItemTypes.WEAPON_RIFLE || draggedItemRef.current.category === ItemTypes.WEAPON_PISTOL
+      //         // @ts-ignore
+      //         || draggedItemRef.current.category === ItemTypes.WEAPON_LAUNCHER) {
+      //         // @ts-ignore
+      //         dispatch(removeEquippedWeaponFromEquipped(draggedItemRef.current.id));
+      //       }
+      //       // @ts-ignore
+      //       dispatch(removeItem(draggedItemRef.current.mainCell, draggedItemRef.current.width, draggedItemRef.current.height));
+      //     } else {
+      //       // drop item from equipped
+      //       // @ts-ignore
+      //       if (draggedItemRef.current.category === ItemTypes.WEAPON_RIFLE || draggedItemRef.current.category === ItemTypes.WEAPON_PISTOL
+      //         // @ts-ignore
+      //         || draggedItemRef.current.category === ItemTypes.WEAPON_LAUNCHER) {
+      //         // @ts-ignore
+      //         dispatch(removeItemFromBoard(draggedItemRef.current.id));
+      //       }
+      //       // @ts-ignore
+      //       dispatch(removeEquippedItem(draggedItemRef.current.mainCell));
+      //     }
+      //     mpTriggerDropItem(draggedItemRef.current);
+      //   }
+      //   else if (typeof hoveredSquareRef.current === 'number') {
+      //     // if add to equipped
+      //     if (item.category === ItemTypes.WEAPON_RIFLE || item.category === ItemTypes.WEAPON_PISTOL
+      //       || item.category === ItemTypes.WEAPON_LAUNCHER) {
+      //       // if weapon make transparent color
+      //       dispatch(changeEquippedState(item, true));
+      //     } else {
+      //       // @ts-ignore
+      //       dispatch(removeItem(item.mainCell, item.width, item.height));
+      //     }
+      //     try {
+      //       dispatch(setEquippedItem(hoveredSquareRef.current));
+      //     } catch (e) {
+      //     }
+      //   }
+      //   else {
+      //     // add to board (from board too)
+      //     // @ts-ignore
+      //     if (item.mainCell[0] !== hoveredSquareRef.current[0] - xDownRef.current || item.mainCell[1] !== hoveredSquareRef.current[1] - yDownRef.current) {
+      //       // check if this is not the current item square
+      //       // @ts-ignore
+      //       dispatch(removeItem(item.mainCell, item.width, item.height));
+      //       try {
+      //         dispatch(addItem());
+      //       } catch (e) {
+      //       }
+      //     }
+      //   }
+      // }
+      // dispatch(draggedItemRelease());
+      //endregion
     };
   };
 

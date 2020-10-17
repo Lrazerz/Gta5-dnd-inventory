@@ -20,6 +20,7 @@ const BoardSquare: React.FC<Props> = React.memo(function BoardSquare({coords: [x
   const dispatch = useDispatch();
   const drop = null;
   const squareMouseOverHandler = useCallback((e) => {
+    console.log('SquareMouseOver');
      e.persist();
     if (draggedItemRef.current) {
       if (!hoveredSquare || typeof hoveredSquare !== 'object' || hoveredSquare[0] !== x || hoveredSquare[1] !== y) {

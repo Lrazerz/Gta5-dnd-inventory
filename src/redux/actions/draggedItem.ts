@@ -8,10 +8,23 @@ import {
 import {xMin, xMax, yMin, yMax} from "../../constants/boardDimensions";
 import Item from "../../models/Item";
 import {GoingToStack} from "../reducers/draggedItem";
-import {boardChangeCurrentCount, removeItem} from "./board";
-import {equippedChangeCurrentCount, removeEquippedItem} from "./equippedItems";
+import {
+  addItem,
+  boardChangeCurrentCountByItemId,
+  changeEquippedState,
+  removeItem,
+  removeItemFromBoard
+} from "./board";
+import {
+  equippedChangeCurrentCount,
+  removeEquippedItem,
+  removeEquippedWeaponFromEquipped,
+  setEquippedItem
+} from "./equippedItems";
 import {translateToServerItem} from "../../utils/translateToServerItem";
 import {EquippedCategoriesToCells} from "../../constants/dnd/equippedCategoriesToCells";
+import {ItemTypes} from "../../constants/dnd/types";
+import {mpTriggerDropItem} from "./contextMenu";
 
 const _addDraggedItem = (item, xUp, xDown, yUp, yDown) => {
   return {type: DRAGGED_ITEM_SET, item, xUp, xDown, yUp, yDown};
@@ -36,11 +49,14 @@ const draggedItemRelease = () => {
   return {type: DRAGGED_ITEM_RELEASE};
 };
 
-// [x,y] - hoveredSquare
-const addDraggedItem = (item, [x, y] = [0, 0], fromRotate = false, hoveredSquareIfEquippedHovered = null) => {
+// need to know item, x,y - hoveredSquare, if came from board, fromRotate to
+// hoveredSquareIfEquippedHovered means that item is rotating equippedInv was hovered
+const addDraggedItem = (item, [x, y] = [-100, -100], fromRotate = false,
+                        hoveredSquareIfEquippedHovered = null, goingToDropAreaId = null) => {
   return dispatch => {
-    let xUp, yUp, xDown, yDown, xAver, yAver;
+    let xUp, yUp, xDown, yDown;
 
+    //region ------------------------------ To check if item is rotating ------------------------------
     let itemWidth = item.width;
     let itemHeight = item.height;
 
@@ -48,54 +64,26 @@ const addDraggedItem = (item, [x, y] = [0, 0], fromRotate = false, hoveredSquare
       itemWidth = item.height;
       itemHeight = item.width;
     }
+    //endregion
 
-    if (!item.isEquipped) {
-      const [mainCellX, mainCellY] = item.mainCell;
+    //region ------------------------------ Utils (set offsets) ------------------------------
+    let setItemOffsets: () => void;
+    setItemOffsets = () => {
 
-      // average X and Y for aligning
-      if (itemWidth % 2 === 0) {
-        xAver = mainCellX + itemWidth / 2 - 1;
-      } else {
-        xAver = mainCellX + Math.floor(itemWidth / 2);
-      }
-
-      if (itemHeight % 2 === 0) {
-        yAver = mainCellY + itemHeight / 2 - 1;
-      } else {
-        yAver = mainCellY + Math.floor(itemHeight / 2);
-      }
-
-      xUp = mainCellX + itemWidth - 1 - xAver;
-      xDown = xAver - mainCellX;
-
-      yUp = mainCellY + itemHeight - 1 - yAver;
-      yDown = yAver - mainCellY;
-
-      // set hovered squares
-      const hoveredSquares = [];
-
-      for (let i = x - xDown; i <= x + xUp; i++) {
-        for (let j = y - yDown; j <= y + yUp; j++) {
-          hoveredSquares.push([i, j]);
-        }
-      }
-
-      dispatch(_addDraggedItem({...item}, xUp, xDown, yUp, yDown));
-      if (x !== -100 && !fromRotate) {
-        dispatch(_setHoveredSquares([x, y], hoveredSquares, true, false));
-      } else if (x !== -100) {
-        dispatch(setHoveredSquares([x, y], false));
-      }
-    } else {
-      // item is equipped
+      // region ------------------------------ Horizontal offsets ------------------------------
+      // If even
       if (itemWidth % 2 === 0) {
         xUp = itemWidth / 2;
         xDown = itemWidth / 2 - 1;
-      } else {
+      }
+      // If odd
+      else {
         xUp = Math.floor(itemWidth / 2);
         xDown = Math.floor(itemWidth / 2);
       }
+      //endregion
 
+      // region ------------------------------ Vertical offsets ------------------------------
       if (itemHeight % 2 === 0) {
         yUp = itemHeight / 2;
         yDown = itemHeight / 2 - 1;
@@ -103,17 +91,56 @@ const addDraggedItem = (item, [x, y] = [0, 0], fromRotate = false, hoveredSquare
         yUp = Math.floor(itemHeight / 2);
         yDown = Math.floor(itemHeight / 2);
       }
+      //endregion
+    }
+    //endregion
+    setItemOffsets();
 
+    //region ------------------------------ If item from the board ------------------------------
+    if (!item.isEquipped) {
+
+      //region ------------------------------ Find hovered squares ------------------------------
+      const hoveredSquares = [];
+
+      for (let i = x - xDown; i <= x + xUp; i++) {
+        for (let j = y - yDown; j <= y + yUp; j++) {
+          hoveredSquares.push([i, j]);
+        }
+      }
+      //endregion
+      // just add draggedItem (from board)
+      dispatch(_addDraggedItem({...item}, xUp, xDown, yUp, yDown));
+      // last-remove
+      // if (x !== -100 && !fromRotate) {
+      //   dispatch(_setHoveredSquares([x, y], hoveredSquares, true, false));
+      // }
+    }
+    //endregion
+
+    //region ------------------------------ If item from the equipped ------------------------------
+    else {
       dispatch(_addDraggedItem({...item}, xUp, xDown, yUp, yDown));
       if (!fromRotate) {
         dispatch(setHoveredSquares(item.mainCell, true));
       }
     }
+    //endregion
 
-    // can't be 0, coz equipped starts from 1
-    if(hoveredSquareIfEquippedHovered) {
+    //region ------------------------------ If from rotate set hoveredSq and canDrop etc ------------------------------
+
+    // if was goingToDrop - save it
+    if(fromRotate && goingToDropAreaId) {
+      dispatch(_setGoingToDrop(true, true, goingToDropAreaId));
+    }
+    // setHoveredSquare on board
+    else if (fromRotate && !hoveredSquareIfEquippedHovered) {
+      dispatch(setHoveredSquares([x, y], false));
+    }
+    // setHoveredSquare on equipped
+    else if(hoveredSquareIfEquippedHovered) {
       dispatch(setHoveredSquares(hoveredSquareIfEquippedHovered, true));
     }
+    //endregion
   };
 };
 
@@ -141,10 +168,9 @@ const setHoveredSquares = (hoveredSquare, isHoveredEquipped = false) => {
     let stackableItemNewCurrentCount: number = 0;
     // indicates should remove draggedItem
     let draggedItemNewCurrentCount: number = 0;
-
     let allHoveredSquares = [];
 
-    // --------------------------------------- If board hovered -------------------------------------------
+    //region ------------------------------ If board hovered ------------------------------
     if (!isHoveredEquipped) {
       allHoveredSquares = __fillHoveredSquares(hoveredSquare, xDown, yDown, xUp, yUp);
       // check canDrop
@@ -161,8 +187,10 @@ const setHoveredSquares = (hoveredSquare, isHoveredEquipped = false) => {
             canDrop = false;
           }
 
+          // mainCells is not equal
           const isAllowToStack = boardSquare.name === item.name
             && boardSquare.mainCell !== item.mainCell
+            && boardSquare.id !== item.id
             && boardSquare.currentCount && boardSquare.maxCount
             && boardSquare.currentCount < boardSquare.maxCount;
           if (isAllowToStack) {
@@ -183,8 +211,8 @@ const setHoveredSquares = (hoveredSquare, isHoveredEquipped = false) => {
         }
       });
     }
-    // --------------------------------------------------------------------------------------------------
-    // --------------------------------------- If equipped hovered --------------------------------------
+    //endregion
+    //region ------------------------------ If equipped hovered ----------------------------------------
     else {
       // if equipped inventory hovered
       const equippedSquareItem = equippedCells[hoveredSquare].item; // stackable square
@@ -217,7 +245,7 @@ const setHoveredSquares = (hoveredSquare, isHoveredEquipped = false) => {
         }
       }
     }
-    // --------------------------------------------------------------------------------------------------
+    //endregion
 
     if (stackableItem) {
       // similar dispatch, but with canDrop === true
@@ -244,68 +272,59 @@ const invokeOnMouseUp = () => {
 
 const stackItem = (fromSplit = false) => {
   return (dispatch, getState) => {
-    // distinct action for stack (invoke in SquareCommonItem and SquareEquippedItem on mouse up
+    // distinct action for stack (invoke in SquareCommonItem and SquareEquippedItem and RangeComponent on mouse up
     const
       {
-        item: draggedItem,
-        goingToStack: {stackableItem, stackableItemNewCurrentCount, draggedItemNewCurrentCount}
-      } = getState().draggedItem;
-
-    const _getItemSquares = (mainCell, width, height) => {
-      const allItemSquares = [];
-      for (let y = mainCell[1]; y < mainCell[1] + height; y++) {
-        for (let x = mainCell[0]; x < mainCell[0] + width; x++) {
-          allItemSquares.push([x, y]);
+        draggedItem: {
+          item: draggedItem,
+          goingToStack: {stackableItem, stackableItemNewCurrentCount, draggedItemNewCurrentCount}
         }
-      }
-      return allItemSquares;
-    }
+      } = getState();
 
+    //region ------------------------------ Utils ------------------------------
     const _stackToBoard = () => {
-      const allItemSquares = _getItemSquares(stackableItem.mainCell, stackableItem.width, stackableItem.height);
-      dispatch(boardChangeCurrentCount(allItemSquares, stackableItemNewCurrentCount));
+      dispatch(boardChangeCurrentCountByItemId(stackableItem.id, stackableItemNewCurrentCount));
     }
+    //endregion
 
-    // ------------------------------------- If stack from board -------------------------------------
+    //region ------------------------------------- If stack from board -------------------------------------
     // fill droppable, then work with dragged
     if (typeof draggedItem.mainCell === 'object') {
 
-      // add item to board / equipped depend on conditions
-      // ------------------------------------- If stack to board (from board) ------------------------
+      //region ------------------------------------- If stack to board (from board) ------------------------
       if (typeof stackableItem.mainCell === 'object') {
         // stack to board (from board)
         _stackToBoard();
       }
-        //------------------------------------------------------------------------------------------------
-      // ------------------------------------- If stack to equipped (from board) -------------------------
+      //endregion
+      //region ------------------------------------- If stack to equipped (from board) -------------------------
       else {
         // stack to equipped (from board)
-        console.log('stack to eq from board', stackableItem, stackableItemNewCurrentCount, draggedItemNewCurrentCount);
         dispatch(equippedChangeCurrentCount(stackableItem.mainCell, stackableItemNewCurrentCount));
       }
-      //-------------------------------------------------------------------------------------------------
+      //endregion
 
-      // or remove item or just change currentCount
+      //region ------------------------------ DraggedItem change currCount ------------------------------
       if (draggedItemNewCurrentCount === 0) {
         // remove item
         if(!fromSplit) {
-          dispatch(removeItem(draggedItem.mainCell, draggedItem.width, draggedItem.height));
+          dispatch(removeItemFromBoard(draggedItem.id));
           //change draggedItem position to droppable to send to server?
           draggedItem.mainCell = stackableItem.mainCell;
         }
-
       } else if (draggedItemNewCurrentCount > 0) {
-        console.log('draggedItemNewCurrentCount > 0');
         if(!fromSplit) {
-          const allItemSquares = _getItemSquares(draggedItem.mainCell, draggedItem.width, draggedItem.height);
-          dispatch(boardChangeCurrentCount(allItemSquares, draggedItemNewCurrentCount));
+          // change here too
+          // need to know all squaresOnBoard
+          dispatch(boardChangeCurrentCountByItemId(draggedItem.id, draggedItemNewCurrentCount));
           // to server
           draggedItem.currentCount = draggedItemNewCurrentCount;
         }
       }
+      //endregion
     }
-    //------------------------------------------------------------------------------------------------------
-    //-------------------------------------If stack from equipped items-------------------------------------
+  //endregion
+    //region -------------------------------------If stack from equipped items------------------------------
     else {
       // stack from equipped inv
       if (typeof stackableItem.mainCell === 'object') {
@@ -329,14 +348,13 @@ const stackItem = (fromSplit = false) => {
         dispatch(equippedChangeCurrentCount(draggedItem.mainCell, draggedItemNewCurrentCount));
       }
     }
-    //------------------------------------------------------------------------------------------------------
+    //endregion
 
     if(!fromSplit) {
       draggedItem.currentCount = draggedItemNewCurrentCount;
       stackableItem.currentCount = stackableItemNewCurrentCount;
     }
 
-    // todo change current count
     const translatedToServerDraggedItem = translateToServerItem(draggedItem);
     const translatedToServerStackableItem = translateToServerItem(stackableItem);
     try {
@@ -359,11 +377,9 @@ const rotateItem = () => {
     const oldDraggedItemInfo = {...getState().draggedItem};
     const oldDraggedItem = oldDraggedItemInfo.item;
 
-    dispatch(draggedItemRelease());
-
     oldDraggedItem.isRotated = !oldDraggedItem.isRotated;
 
-    // visual rotate dragged image
+    //region ------------------------------ Visual rotate item ------------------------------
     const draggedItem = document.getElementById('curr-dragged-item');
 
     if (oldDraggedItem.isRotated) {
@@ -371,11 +387,21 @@ const rotateItem = () => {
     } else {
       draggedItem.style.transform = 'none';
     }
-    //------------------------------------------------------
+    //endregion
+    dispatch(draggedItemRelease());
 
-    if (oldDraggedItemInfo.hoveredSquare && typeof oldDraggedItemInfo.hoveredSquare === 'object') {
-      oldDraggedItem.mainCell = [oldDraggedItemInfo.hoveredSquare[0] - oldDraggedItemInfo.yDown,
-                                oldDraggedItemInfo.hoveredSquare[1] - oldDraggedItemInfo.xDown]
+
+    // if goingToDrop ?) (if goingToDrop hoveredSquare sets to null
+
+    //region ------------------------------ Save goingToDrop ------------------------------
+    console.log('goingToDorp', oldDraggedItemInfo.goingToDrop);
+    if(oldDraggedItemInfo.goingToDrop) {
+      dispatch(addDraggedItem({...oldDraggedItem}, [-100,-100], true, null, oldDraggedItemInfo.goingToDrop.areaId));
+    }
+    //endregion
+    else if (oldDraggedItemInfo.hoveredSquare && typeof oldDraggedItemInfo.hoveredSquare === 'object') {
+      // oldDraggedItem.mainCell = [oldDraggedItemInfo.hoveredSquare[0] - oldDraggedItemInfo.yDown,
+      //                           oldDraggedItemInfo.hoveredSquare[1] - oldDraggedItemInfo.xDown]
       dispatch(addDraggedItem({...oldDraggedItem}, oldDraggedItemInfo.hoveredSquare, true));
     } else {
       dispatch(addDraggedItem({...oldDraggedItem}, [-100, -100], true, oldDraggedItemInfo.hoveredSquare));
@@ -383,6 +409,63 @@ const rotateItem = () => {
   }
 }
 
+const dragEndHandler = () => {
+  return async (dispatch, getState) => {
+    const {canDrop, goingToStack, goingToDrop, item: draggedItem, hoveredSquare, xDown, yDown} = getState().draggedItem;
+
+    if (canDrop) {
+      if(goingToStack) {
+        await dispatch(stackItem());
+      }
+      else if (goingToDrop) {
+        // already have no hovered squares
+        if (typeof draggedItem.mainCell === 'object') {
+          // if drop item from board
+          if (draggedItem.category === ItemTypes.WEAPON_RIFLE || draggedItem.category === ItemTypes.WEAPON_PISTOL
+            || draggedItem.category === ItemTypes.WEAPON_LAUNCHER) {
+            await dispatch(removeEquippedWeaponFromEquipped(draggedItem.id));
+          }
+          // @ts-ignore
+          await dispatch(removeItem(draggedItem.mainCell, draggedItem.width, draggedItem.height));
+        } else {
+          // drop item from equipped
+          if (draggedItem.category === ItemTypes.WEAPON_RIFLE || draggedItem.category === ItemTypes.WEAPON_PISTOL
+            || draggedItem.category === ItemTypes.WEAPON_LAUNCHER) {
+            await dispatch(removeItemFromBoard(draggedItem.id));
+          }
+          // @ts-ignore
+          await dispatch(removeEquippedItem(draggedItem.mainCell));
+        }
+        mpTriggerDropItem(draggedItem);
+      }
+      else if (typeof hoveredSquare === 'number') {
+        // if add to equipped
+        if (draggedItem.category === ItemTypes.WEAPON_RIFLE || draggedItem.category === ItemTypes.WEAPON_PISTOL
+          || draggedItem.category === ItemTypes.WEAPON_LAUNCHER) {
+          // if weapon make transparent color
+          await dispatch(changeEquippedState(draggedItem, true));
+        } else {
+          await dispatch(removeItemFromBoard(draggedItem.id));
+        }
+        try {
+          await dispatch(setEquippedItem(hoveredSquare));
+        } catch (e) {}
+      }
+      else {
+        // add to board (from board too)
+        // if (draggedItem.mainCell[0] !== hoveredSquare[0] - xDown || draggedItem.mainCell[1] !== hoveredSquare[1] - yDown) {
+          // check if this is not the current item square
+          await dispatch(removeItemFromBoard(draggedItem.id));
+          try {
+            dispatch(addItem());
+          } catch (e) {
+          }
+        // }
+      }
+    }
+    await dispatch(draggedItemRelease());
+  }
+}
 
 export {
   addDraggedItem,
@@ -392,5 +475,6 @@ export {
   stackItem,
   setGoingToDrop,
   hoveredSquaresRemove,
-  rotateItem
+  rotateItem,
+  dragEndHandler
 }

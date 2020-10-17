@@ -4,7 +4,7 @@ import classes from '../../styles/UI/RangeComponent.module.scss';
 import {closeContextMenu, mpTriggerDropItem} from "../../redux/actions/contextMenu";
 import {addDraggedItem, draggedItemRelease, stackItem} from "../../redux/actions/draggedItem";
 import {equippedChangeCurrentCount, removeEquippedItem, setEquippedItem} from "../../redux/actions/equippedItems";
-import {addItem, boardChangeCurrentCount} from "../../redux/actions/board";
+import {addItem, boardChangeCurrentCountByItemId} from "../../redux/actions/board";
 
 // todo change count remove splitMenuOpen
 const RangeComponent = ({leftOffset, topOffset, contextItem, splitMenuOpen}) => {
@@ -12,27 +12,34 @@ const RangeComponent = ({leftOffset, topOffset, contextItem, splitMenuOpen}) => 
   const containerRef = useRef();
 
   // todo change count remove contextItem &&
-  const [splittedCount, setSplittedCount] = useState(Math.floor(contextItem && contextItem.currentCount/2));
+  const [splittedCount, setSplittedCount] = useState(0);
   const [reducedTopOffset, setReducedTopOffset] = useState();
   const dispatch = useDispatch();
 
-  const {canDrop, hoveredSquare, item: draggedItem, xDown, yDown, goingToDrop, goingToStack} = useSelector(state => state.draggedItem);
+  const {
+    draggedItem: {canDrop, hoveredSquare, allHoveredSquares, item: draggedItem, xDown, yDown, goingToDrop, goingToStack},
+    board: {board: boardCells},
+  } = useSelector(state => state);
 
   // refs to pass to event handler
   const canDropRef = useRef();
   const hoveredSquareRef = useRef();
+  const allHoveredSquaresRef = useRef();
   const draggedItemRef = useRef();
   const xDownRef = useRef();
   const yDownRef = useRef();
   const goingToDropRef = useRef();
   const goingToStackRef = useRef();
+  const boardCellsRef = useRef();
   canDropRef.current = canDrop;
   hoveredSquareRef.current = hoveredSquare;
+  allHoveredSquaresRef.current = allHoveredSquares;
   draggedItemRef.current = draggedItem;
   xDownRef.current = xDown;
   yDownRef.current = yDown;
   goingToDropRef.current = goingToDrop;
   goingToStackRef.current = goingToStack;
+  boardCellsRef.current = boardCells;
 
 
   useEffect(() => {
@@ -43,13 +50,17 @@ const RangeComponent = ({leftOffset, topOffset, contextItem, splitMenuOpen}) => 
     }
   }, [containerRef.current]);
 
+  useEffect(() => {
+    //@ts-ignore
+    setSplittedCount(Math.floor(contextItem && contextItem.currentCount/2));
+  },[contextItem]);
+
   // similar logic to squareCommonItem
   const successButtonMouseDownHandler = event => {
     event.persist();
     if (event.button !== 0) return;
     event.stopPropagation();
     const contextItemWithChangedCount = {...contextItem, currentCount: Number(splittedCount)};
-    console.log('contextItemWithChangedCount', contextItemWithChangedCount);
     dispatch(addDraggedItem(contextItemWithChangedCount, contextItemWithChangedCount.mainCell));
 
     // last-remove
@@ -61,7 +72,6 @@ const RangeComponent = ({leftOffset, topOffset, contextItem, splitMenuOpen}) => 
 
     let requiredItem: HTMLElement;
 
-    console.log('requiredItem', requiredItem, contextItem);
     if(typeof contextItem.mainCell === 'number') {
       requiredItem = document.getElementById(`square-equipped-item-${contextItem.mainCell}`);
     } else {
@@ -92,8 +102,8 @@ const RangeComponent = ({leftOffset, topOffset, contextItem, splitMenuOpen}) => 
     if(typeof contextItem.mainCell === 'number') {
       // board square width
       const squareWidth = document.body.clientWidth * 0.0323;
-      newClone.style.width = squareWidth + 'px';
-      newClone.style.height = squareWidth + 'px';
+      newClone.style.width = squareWidth * contextItem.width + 'px';
+      newClone.style.height = squareWidth * contextItem.height + 'px';
       console.log('new width', newClone.style.width);
     }
 
@@ -121,18 +131,6 @@ const RangeComponent = ({leftOffset, topOffset, contextItem, splitMenuOpen}) => 
       const goingToStackSaved = goingToStackRef.current;
       // if can't move all part (stack) - save draggedItem witl less count
 
-      // ----------------------------- utils ----------------------------
-      const _getItemSquares = (mainCell, width, height) => {
-        const allItemSquares = [];
-        for (let y = mainCell[1]; y < mainCell[1] + height; y++) {
-          for (let x = mainCell[0]; x < mainCell[0] + width; x++) {
-            allItemSquares.push([x, y]);
-          }
-        }
-        return allItemSquares;
-      }
-      // ----------------------------------------------------------------
-
       // ----------------------------- If can't stack all part of the item ---------------------------------
       if (canDropRef.current) {
         if (goingToStackRef.current) {
@@ -158,9 +156,8 @@ const RangeComponent = ({leftOffset, topOffset, contextItem, splitMenuOpen}) => 
               //@ts-ignore
               dispatch(equippedChangeCurrentCount(contextItem.mainCell, contextItem.currentCount - (splittedCount - goingToStackSaved.draggedItemNewCurrentCount)));
             } else {
-              const splittedItemSquares = _getItemSquares(contextItem.mainCell, contextItem.width, contextItem.height);
               //@ts-ignore
-              dispatch(boardChangeCurrentCount(splittedItemSquares, contextItem.currentCount - (splittedCount - goingToStackSaved.draggedItemNewCurrentCount)));
+              dispatch(boardChangeCurrentCountByItemId(contextItem.id, contextItem.currentCount - (splittedCount - goingToStackSaved.draggedItemNewCurrentCount)));
             }
             return;
           }
@@ -180,11 +177,11 @@ const RangeComponent = ({leftOffset, topOffset, contextItem, splitMenuOpen}) => 
           if (goingToStackRef.current.stackableItem.mainCell !== contextItem.mainCell) {
             dispatch(stackItem(true));
             if(contextItem.isEquipped) {
+              //@ts-ignore
               dispatch(equippedChangeCurrentCount(contextItem.mainCell, contextItem.currentCount - splittedCount));
             } else {
-              const splittedItemSquares = _getItemSquares(contextItem.mainCell, contextItem.width, contextItem.height);
               //@ts-ignore
-              dispatch(boardChangeCurrentCount(splittedItemSquares, contextItem.currentCount - splittedCount));
+              dispatch(boardChangeCurrentCountByItemId(contextItem.id, contextItem.currentCount - splittedCount));
             }
           }
         }
@@ -193,10 +190,8 @@ const RangeComponent = ({leftOffset, topOffset, contextItem, splitMenuOpen}) => 
           // @ts-ignore
           if (typeof draggedItemRef.current.mainCell === 'object') {
             // if drop item from board
-            // @ts-ignore
-            const splittedItemSquares = _getItemSquares(contextItem.mainCell, contextItem.width, contextItem.height);
             //@ts-ignore
-            dispatch(boardChangeCurrentCount(splittedItemSquares, contextItem.currentCount - draggedItemRef.current.currentCount));
+            dispatch(boardChangeCurrentCountByItemId(contextItem.id, contextItem.currentCount - draggedItemRef.current.currentCount));
           } else {
             // drop item from equipped
             // @ts-ignore
@@ -213,9 +208,8 @@ const RangeComponent = ({leftOffset, topOffset, contextItem, splitMenuOpen}) => 
             // ------------------------------------- Add from board (to eq) -----------------------------
             if(typeof contextItem.mainCell === 'object') {
 
-              const splittedItemSquares = _getItemSquares(contextItem.mainCell, contextItem.width, contextItem.height);
               //@ts-ignore
-              dispatch(boardChangeCurrentCount(splittedItemSquares, contextItem.currentCount - draggedItemRef.current.currentCount));
+              dispatch(boardChangeCurrentCountByItemId(contextItem.id, contextItem.currentCount - draggedItemRef.current.currentCount));
             }
             // ---------------------------------------------------------------------------------------------
             // ------------------------------------- Add from equipped (to eq) -----------------------------
@@ -245,11 +239,20 @@ const RangeComponent = ({leftOffset, topOffset, contextItem, splitMenuOpen}) => 
           // ------------------------------------------- Add from board (to board) ------------------------------
           else {
             // @ts-ignore
-            if (contextItem.mainCell[0] !== hoveredSquareRef.current[0] - xDownRef.current || contextItem.mainCell[1] !== hoveredSquareRef.current[1] - yDownRef.current) {
+            // check all squares, not only mainCell
+
+            // if any square of the source splitted item hovered
+            let isPartOfItemHovered = false;
+
+            // @ts-ignore
+            allHoveredSquaresRef.current.forEach(hovSquare => {
+              if(boardCells[hovSquare[1]][hovSquare[0]] && boardCells[hovSquare[1]][hovSquare[0]].id === contextItem.id) isPartOfItemHovered = true;
+            });
+
+            if (!isPartOfItemHovered) {
               // check if this is not the current item square
-              const splittedItemSquares = _getItemSquares(contextItem.mainCell, contextItem.width, contextItem.height);
               //@ts-ignore
-              dispatch(boardChangeCurrentCount(splittedItemSquares, contextItem.currentCount - draggedItemRef.current.currentCount));
+              dispatch(boardChangeCurrentCountByItemId(contextItem.id, contextItem.currentCount - draggedItemRef.current.currentCount));
               try {
                 dispatch(addItem());
               } catch (e) {}
@@ -264,116 +267,6 @@ const RangeComponent = ({leftOffset, topOffset, contextItem, splitMenuOpen}) => 
       dispatch(draggedItemRelease());
     }
   }
-
-    // todo change count rewrite (find node to clone etc)
-//     else {
-//       // from equipped
-//       dispatch(addDraggedItem(contextItem));
-//
-//       // last-remove
-//       // const savedTarget = event.currentTarget;
-//       // savedTarget.style.zIndex = 0;
-//
-//     const newClone = event.currentTarget.cloneNode(true);
-//     event.target.style.width = '100%';
-//
-//       newClone.style.width = imageWidth + 'px';
-//       newClone.style.height = imageHeight + 'px';
-//       newClone.addEventListener('dragstart', (e) => {e.stopPropagation();e.preventDefault();return false});
-//
-//       // last-remove
-//       // event.target.style.pointerEvents = 'none';
-//
-//       newClone.style.position = 'absolute';
-//       newClone.style.zIndex = 150;
-//       newClone.id = 'curr-dragged-item';
-//
-//       document.body.append(newClone);
-//
-//       moveAt(event.pageX, event.pageY);
-//
-//       function moveAt(pageX, pageY) {
-//     //     newClone.style.left = pageX - newClone.offsetWidth / 2 + 'px';
-//     //     newClone.style.top = pageY - newClone.offsetHeight / 2 + 'px';
-//     //   }
-//     //
-//     //   function onMouseMove(event) {
-//     //     moveAt(event.pageX, event.pageY);
-//     //   }
-//     //
-//     //   document.addEventListener('mousemove', onMouseMove);
-//     //
-//     //   newClone.onmouseup = function() {
-//     //     document.body.removeChild(newClone);
-//     {/*    document.removeEventListener('mousemove', onMouseMove);*/}
-//     //     newClone.onmouseup = null;
-//     //     // last-remove
-//     //     // savedTarget.style.zIndex = 100;
-//     //
-//     //     if(canDropRef.current) {
-//     //       if(goingToStackRef.current) {
-//     //         dispatch(stackItem());
-//     //       }
-//     //       else if(goingToDropRef.current) {
-//     //         // already have no hovered squares
-//     //         // @ts-ignore
-//     //         if(typeof draggedItemRef.current.mainCell === 'object') {
-//     //           // if drop item from board
-//     //           // @ts-ignore
-//     //           if(draggedItemRef.current.category === ItemTypes.WEAPON_RIFLE || draggedItemRef.current.category === ItemTypes.WEAPON_PISTOL
-//     //             // @ts-ignore
-//     //             || draggedItemRef.current.category === ItemTypes.WEAPON_LAUNCHER) {
-//     //             // @ts-ignore
-//     //             dispatch(removeEquippedWeaponFromEquipped(draggedItemRef.current.id));
-//     //           }
-//     //           // @ts-ignore
-//     //           dispatch(removeItem(draggedItemRef.current.mainCell, draggedItemRef.current.width, draggedItemRef.current.height));
-//     //         }
-//     //         else {
-//     //           // drop item from equipped
-//     //           // @ts-ignore
-//     //           if(draggedItemRef.current.category === ItemTypes.WEAPON_RIFLE || draggedItemRef.current.category === ItemTypes.WEAPON_PISTOL
-//     //             // @ts-ignore
-//     //             || draggedItemRef.current.category === ItemTypes.WEAPON_LAUNCHER) {
-//     //             // @ts-ignore
-//     //             dispatch(removeEquippedWeaponFromBoard(draggedItemRef.current.id));
-//     //           }
-//     //           // @ts-ignore
-//     //           dispatch(removeEquippedItem(draggedItemRef.current.mainCell));
-//     //         }
-//     //         mpTriggerDropItem(draggedItemRef.current);
-//     //       }
-//     //       else if(typeof hoveredSquareRef.current === 'number') {
-//     //         // if add to equipped, from equipped too
-//     //         // @ts-ignore
-//     //         if(item.mainCell !== hoveredSquareRef.current) {
-//     //           // check if not the same item
-//     //           dispatch(removeEquippedItem(item.mainCell));
-//     //           try {
-//     //             // try coz mp.trigger
-//     //             dispatch(setEquippedItem(hoveredSquareRef.current));
-//     //           } catch (e) {}
-//     //         }
-//     //       }
-//     //       else {
-//     //         dispatch(removeEquippedItem(item.mainCell));
-//     //         // if add to board
-//     //         if(item.category === ItemTypes.WEAPON_RIFLE || item.category === ItemTypes.WEAPON_PISTOL
-//     //           || item.category === ItemTypes.WEAPON_LAUNCHER) {
-//     //           // if item is weapon - remove prev item from board and set isWeaponEquipped to false
-//     //           dispatch(removeEquippedWeaponFromBoard(item.id));
-//     //         }
-//     //         try {
-//     //           dispatch(addItem());
-//     //         } catch (e) {}
-//     //       }
-//     //     }
-//     //     // last-remove
-//     //     // event.target.style.pointerEvents = 'inherit';
-//     //     dispatch(draggedItemRelease());
-//     //   }
-//     //
-//
   const cancelButtonMouseDownHandler = () => {
     dispatch(closeContextMenu());
   }
@@ -396,7 +289,7 @@ const RangeComponent = ({leftOffset, topOffset, contextItem, splitMenuOpen}) => 
       <div className={classes.RangeComponentBG}>
         <div className={classes.InputRangeWrapper}>
           <input type='range' className={classes.Input} value={splittedCount} onChange={splittedCountChangeHandler}
-                 min={1} max={contextItem && contextItem.currentCount} step={1}/>
+                 min={1} max={contextItem && contextItem.currentCount - 1} step={1}/>
         </div>
         <div className={classes.SplitCurrentCount}>
           {splittedCount}

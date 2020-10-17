@@ -2,7 +2,6 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
-
 module.exports = {
   entry: './index.tsx',
   output: {
@@ -14,11 +13,6 @@ module.exports = {
   },
   module: {
     rules: [
-      {
-        enforce: "pre",
-        test: /\.(ts|js|tsx|jsx)$/,
-        use: ['source-map-loader'],
-      },
       {
         test: /\.m?js$/,
         exclude: /(node_modules|bower_components)/,
@@ -34,7 +28,7 @@ module.exports = {
       },
       {
         test: /\.(ts|tsx)$/,
-        use: ["source-map-loader","awesome-typescript-loader"],
+        use: ["awesome-typescript-loader"],
       },
       {
         test: /\.css$/i,
@@ -84,65 +78,3 @@ module.exports = {
     new MiniCssExtractPlugin(),
   ]
 };
-
-
-
-
-// const path = require("path");
-// const webpack = require("webpack");
-// const HtmlWebpackPlugin = require("html-webpack-plugin");
-// const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
-//
-// const webpackConfig = (env) => ({
-//   entry: "./src/index.tsx",
-//   output: {
-//     path: path.join(__dirname, "/dist"),
-//     filename: "build.js"
-//   },
-//   module: {
-//     rules: [
-//       {
-//         test: /\.(ts|js)x?$/,
-//         loader: "ts-loader",
-//         options: {
-//           transpileOnly: true
-//         },
-//         exclude: /dist/
-//       },
-//       {
-//         test: /\.m?js$/,
-//         exclude: /(node_modules|bower_components)/,
-//         use: {
-//           loader: 'babel-loader',
-//           options: {
-//             presets: ['@babel/preset-env', '@babel/preset-react']
-//           }
-//         }
-//       },
-//       {
-//         test: /\.css$/i,
-//         use: ['style-loader', 'css-loader'],
-//       },
-//     ]
-//   },
-//   plugins: [
-//     new HtmlWebpackPlugin({
-//       template: "./public/index.html",
-//       filename: 'main.html',
-//     }),
-//     // System vars
-//     new webpack.DefinePlugin({
-//       "process.env.PRODUCTION": env.production || !env.development,
-//       "process.env.NAME": JSON.stringify(require("./package.json").name),
-//       "process.env.VERSION": JSON.stringify(require("./package.json").version)
-//     }),
-//     new ForkTsCheckerWebpackPlugin({
-//       eslint: {
-//         files: "./src/**/*.{ts,tsx,js,jsx}" // required - same as command `eslint ./src/**/*.{ts,tsx,js,jsx} --ext .ts,.tsx,.js,.jsx`
-//       }
-//     })
-//   ]
-// });
-
-
-// module.exports = webpackConfig;
