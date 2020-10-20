@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import EquippedItem from "../../components/items/EquippedItem";
 import classes from '../../styles/equippedClosingInventory/SquareEquippedItem.module.scss';
 import SecondaryText from "../../components/layout/SecondaryText";
-import {addDraggedItem, draggedItemRelease, stackItem} from "../../redux/actions/draggedItem";
+import {addDraggedItem, dragEndHandler, draggedItemRelease, stackItem} from "../../redux/actions/draggedItem";
 import {addItem, removeItemFromBoard, removeItem} from "../../redux/actions/board";
 import {removeEquippedItem, removeEquippedWeaponFromEquipped, setEquippedItem} from "../../redux/actions/equippedItems";
 import {ItemTypes} from "../../constants/dnd/types";
@@ -134,65 +134,7 @@ const SquareEquippedItem: React.FC<Props> = React.memo(function SquareEquippedIt
       newClone.onmouseup = null;
       // last-remove
       // event.target.style.zIndex = 100;
-
-      if(canDropRef.current) {
-        if(goingToStackRef.current) {
-          dispatch(stackItem());
-        }
-        else if(goingToDropRef.current) {
-          // already have no hovered squares
-          // @ts-ignore
-          if(typeof draggedItemRef.current.mainCell === 'object') {
-            // if drop item from board
-            // @ts-ignore
-            if(draggedItemRef.current.category === ItemTypes.WEAPON_RIFLE || draggedItemRef.current.category === ItemTypes.WEAPON_PISTOL
-              // @ts-ignore
-              || draggedItemRef.current.category === ItemTypes.WEAPON_LAUNCHER) {
-              // @ts-ignore
-              dispatch(removeEquippedWeaponFromEquipped(draggedItemRef.current.id));
-            }
-            // @ts-ignore
-            dispatch(removeItem(draggedItemRef.current.mainCell, draggedItemRef.current.width, draggedItemRef.current.height));
-          }
-          else {
-            // drop item from equipped
-            // @ts-ignore
-            if(draggedItemRef.current.category === ItemTypes.WEAPON_RIFLE || draggedItemRef.current.category === ItemTypes.WEAPON_PISTOL
-              // @ts-ignore
-              || draggedItemRef.current.category === ItemTypes.WEAPON_LAUNCHER) {
-              // @ts-ignore
-              dispatch(removeItemFromBoard(draggedItemRef.current.id));
-            }
-            // @ts-ignore
-            dispatch(removeEquippedItem(draggedItemRef.current.mainCell));
-          }
-          mpTriggerDropItem(draggedItemRef.current);
-        }
-        else if(typeof hoveredSquareRef.current === 'number') {
-          // if add to equipped, from equipped too
-          // @ts-ignore
-          if(item.mainCell !== hoveredSquareRef.current) {
-            // check if not the same item
-            dispatch(removeEquippedItem(item.mainCell));
-            try {
-              // try coz mp.trigger
-              dispatch(setEquippedItem(hoveredSquareRef.current));
-            } catch (e) {}
-          }
-        }
-        else {
-          dispatch(removeEquippedItem(item.mainCell));
-          // if add to board
-          if(item.category === ItemTypes.WEAPON_RIFLE || item.category === ItemTypes.WEAPON_PISTOL
-          || item.category === ItemTypes.WEAPON_LAUNCHER) {
-            // if item is weapon - remove prev item from board and set isWeaponEquipped to false
-            dispatch(removeItemFromBoard(item.id));
-          }
-          try {
-            dispatch(addItem());
-          } catch (e) {}
-        }
-      }
+      dispatch(dragEndHandler(true));
       // last-remove
       // event.target.style.pointerEvents = 'auto';
       dispatch(draggedItemRelease());

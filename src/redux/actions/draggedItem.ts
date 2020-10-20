@@ -445,14 +445,15 @@ const rotateItemOnBoard = (item) => {
   // and add new Item
 }
 
-const dragEndHandler = () => {
+const dragEndHandler = (fromEquipped = false) => {
   return (dispatch, getState) => {
     const {canDrop, goingToStack, goingToDrop, item: draggedItem, hoveredSquare, xDown, yDown} = getState().draggedItem;
 
     if (canDrop) {
-      if(goingToStack) {
+      if (goingToStack) {
         dispatch(stackItem());
       }
+      //region ------------------------------ Drop out ------------------------------
       else if (goingToDrop) {
         // already have no hovered squares
         if (typeof draggedItem.mainCell === 'object') {
@@ -473,29 +474,59 @@ const dragEndHandler = () => {
         }
         mpTriggerDropItem(draggedItem);
       }
+        //endregion
+
+      //region ------------------------------ Drop to equipped items ------------------------------
       else if (typeof hoveredSquare === 'number') {
-        // if add to equipped
-        if (draggedItem.category === ItemTypes.WEAPON_RIFLE || draggedItem.category === ItemTypes.WEAPON_PISTOL
-          || draggedItem.category === ItemTypes.WEAPON_LAUNCHER) {
-          // if weapon make transparent color
-          dispatch(changeEquippedState(draggedItem, true));
+
+        if (fromEquipped) {
+          // invoke from equipped
+          if (draggedItem.mainCell !== hoveredSquare) {
+            // check if not the same item
+            dispatch(removeEquippedItem(draggedItem.mainCell));
+            try {
+              // try coz mp.trigger
+              dispatch(setEquippedItem(hoveredSquare));
+            } catch (e) {
+            }
+          }
+        } else {
+          // invoke from board
+          if (draggedItem.category === ItemTypes.WEAPON_RIFLE || draggedItem.category === ItemTypes.WEAPON_PISTOL
+            || draggedItem.category === ItemTypes.WEAPON_LAUNCHER) {
+            // if weapon make transparent color
+            dispatch(changeEquippedState(draggedItem, true));
+          } else {
+            dispatch(removeItemFromBoard(draggedItem.id));
+          }
+          try {
+            dispatch(setEquippedItem(hoveredSquare));
+          } catch (e) {
+          }
+        }
+      }
+        //endregion
+
+      //region ------------------------------ Drop to board ------------------------------
+      else {
+        // add to board (from board too)
+        // if (draggedItem.mainCell[0] !== hoveredSquare[0] - xDown || draggedItem.mainCell[1] !== hoveredSquare[1] - yDown) {
+        if (fromEquipped) {
+          dispatch(removeEquippedItem(draggedItem.mainCell));
+          // if add to board
+          if (draggedItem.category === ItemTypes.WEAPON_RIFLE || draggedItem.category === ItemTypes.WEAPON_PISTOL
+            || draggedItem.category === ItemTypes.WEAPON_LAUNCHER) {
+            // if item is weapon - remove prev item from board and set isWeaponEquipped to false
+            dispatch(removeItemFromBoard(draggedItem.id));
+          }
         } else {
           dispatch(removeItemFromBoard(draggedItem.id));
         }
         try {
-          dispatch(setEquippedItem(hoveredSquare));
-        } catch (e) {}
-      }
-      else {
-        // add to board (from board too)
-        // if (draggedItem.mainCell[0] !== hoveredSquare[0] - xDown || draggedItem.mainCell[1] !== hoveredSquare[1] - yDown) {
-          // check if this is not the current item square
-          dispatch(removeItemFromBoard(draggedItem.id));
-          try {
-            dispatch(addItem());
-          } catch (e) {
-          }
-        // }
+          dispatch(addItem());
+        } catch (e) {
+        }
+        //endregion
       }
     }
     dispatch(draggedItemRelease());

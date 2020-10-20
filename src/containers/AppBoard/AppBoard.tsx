@@ -18,13 +18,13 @@ const AppBoard = React.memo(function AppBoard() {
     let squareContent = null;
     // Check if filled
     const item = boardItems[y][x];
-    if (item) {
+    if (item && item.mainCell[0] === x && item.mainCell[1] === y) {
       squareContent = <SquareCommonItem coords={[x, y]} item={item}/>;
     }
     const isHovered = allHoveredSquares.findIndex(sq => sq[0] === x && sq[1] === y) !== -1;
 
     return (
-      <BoardSquare key={x * 30 + y} coords={[x, y]} isHovered={isHovered}>
+      <BoardSquare key={x * 30 + y} coords={[x, y]} isHovered={isHovered} isPartOfItem={Boolean(item)}>
         {squareContent}
       </BoardSquare>
     );

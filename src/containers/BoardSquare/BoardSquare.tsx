@@ -10,9 +10,11 @@ interface Props {
   coords: [number, number];
   isHovered: boolean;
   children: any;
+  // to check outline instead of children
+  isPartOfItem: boolean;
 }
 
-const BoardSquare: React.FC<Props> = React.memo(function BoardSquare({coords: [x, y], children, isHovered}) {
+const BoardSquare: React.FC<Props> = React.memo(function BoardSquare({coords: [x, y], children, isHovered, isPartOfItem}) {
 
   const {
     draggedItem: {hoveredSquare, canDrop: canDropRedux, item: draggedItem},
@@ -49,7 +51,7 @@ const BoardSquare: React.FC<Props> = React.memo(function BoardSquare({coords: [x
     pointerEvents: (hoveredSquare && typeof hoveredSquare === 'object' && (hoveredSquare[0] === x && hoveredSquare[1] === y) ) ? 'none' : 'auto',
   }
 
-  if (children) {
+  if (isPartOfItem) {
     boardSquareStyles = {...boardSquareStyles, outline: 'none'};
   }
 
