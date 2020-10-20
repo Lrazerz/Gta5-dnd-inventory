@@ -91,13 +91,11 @@ const openOrRefreshInventory = async (info) => {
     }
   }
 
-  console.log('boardItems', boardItems);
-  console.log('enabledItems', enabledItems);
-  if(boardItems.length > 0) store.dispatch(_addItems(boardItems));
-  if(enabledItems.length > 0) store.dispatch(setEquippedItems(enabledItems));
+  store.dispatch(_addItems(boardItems));
+  store.dispatch(setEquippedItems(enabledItems));
 }
 
-const _addItem = (squares, item: Item) => {
+const addItemBySquares = (squares, item: Item) => {
   return {type: SINGLE_ITEM_SQUARES_FILL, squares, item};
 }
 
@@ -129,7 +127,7 @@ const addItem = () => {
       newDraggedItem.isWeaponEquipped = false;
      }
 
-    dispatch(_addItem(allHoveredSquares, newDraggedItem));
+    dispatch(addItemBySquares(allHoveredSquares, newDraggedItem));
     // translate to Server Item
     const itemToServer = translateToServerItem(newDraggedItem);
     //@ts-ignore
@@ -155,7 +153,6 @@ const removeItem = ([x, y], width = 1, height = 1) => {
 const removeItemFromBoard = (id) => {
   return (dispatch, getState) => {
     const {board} = getState().board;
-    console.log('board', board);
 
     const squaresToRemove = [];
 
@@ -179,6 +176,7 @@ const changeEquippedState = (item, newState) => dispatch => {
 
   newItem.isWeaponEquipped = newState;
 
+  // todo if rotated maybe change logic?
   for(let y = newItem.mainCell[1]; y < newItem.mainCell[1] + newItem.height; y++) {
     for(let x = newItem.mainCell[0]; x < newItem.mainCell[0] + newItem.width; x++) {
       squares.push([x,y]);
@@ -212,6 +210,8 @@ const boardChangeCurrentCountByItemId = (id, newCurrentCount) => {
 
 export {
   addItem,
+  // to rotate non-dragged item
+  addItemBySquares,
   removeItem,
   openOrRefreshInventory,
   changeEquippedState,

@@ -4,6 +4,7 @@ import Overlay from "../../components/UI/Overlay";
 import {invokeOnMouseUp, setHoveredSquares} from "../../redux/actions/draggedItem";
 import classes from '../../styles/board/BoardSquare.module.scss';
 import theme from "../../constants/css/theme";
+import {removeHoveredItem} from "../../redux/actions/hoveredItem";
 
 interface Props {
   coords: [number, number];
@@ -13,21 +14,32 @@ interface Props {
 
 const BoardSquare: React.FC<Props> = React.memo(function BoardSquare({coords: [x, y], children, isHovered}) {
 
-  const {hoveredSquare, canDrop: canDropRedux, item: draggedItem} = useSelector(({draggedItem}) => draggedItem);
+  const {
+    draggedItem: {hoveredSquare, canDrop: canDropRedux, item: draggedItem},
+    hoveredItem: {item: hoveredItem},
+  } = useSelector((state) => state);
   const draggedItemRef = useRef();
   draggedItemRef.current = draggedItem;
 
   const dispatch = useDispatch();
   const drop = null;
-  const squareMouseOverHandler = useCallback((e) => {
-    console.log('SquareMouseOver');
+  const squareMouseOverHandler = (e) => {
      e.persist();
+     //region ------------------------------ Set squares if drag item ------------------------------
     if (draggedItemRef.current) {
       if (!hoveredSquare || typeof hoveredSquare !== 'object' || hoveredSquare[0] !== x || hoveredSquare[1] !== y) {
         dispatch(setHoveredSquares([x, y]));
       }
     }
-  }, [draggedItem, hoveredSquare, setHoveredSquares, dispatch]);
+    //endregion
+    //region ------------------------------ Release hovered item if don't drag item ------------------------------
+    else {
+      if(hoveredItem) {
+        dispatch(removeHoveredItem());
+      }
+    }
+    //endregion
+  }
 
   let boardSquareStyles: CSSProperties = {
     outline: `0.25px solid rgba(109, 114, 125, 0.8)`

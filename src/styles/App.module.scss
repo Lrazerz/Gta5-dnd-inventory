@@ -1,15 +1,25 @@
 @use '../constants/scss/theme';
 
-.BlurredWrapper {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  z-index: -100;
-  //background-image: url("../assets/images/UI/root-background.png");
-  background-image: url("../assets/dummy/game-screen-1.jpg");
-  background-size: 100% 100%;
-  filter: blur(0.3rem);
-}
+//.BgWrapper {
+//  width: 100%;
+//  height: 100%;
+//  position: absolute;
+//  z-index: -100;
+//  //background-image: url("../assets/images/UI/root-background.png");
+//  background-image: url("../assets/dummy/game-screen-1.jpg");
+//  background-size: 100% 100%;
+//}
+//
+//.BlurredWrapper {
+//  width: 100%;
+//  height: 100%;
+//  position: absolute;
+//  z-index: -90;
+//  //background: linear-gradient(90deg, rgba(31, 52, 163, 0.7), rgba(31, 52, 163, 0.7));
+//  background: url("../assets/dummy/dummy-blurred-bg.png");
+//  background-size: 100% 100%;
+//  //filter: blur(0.3rem);
+//}
 
 .AppContainer {
   background: rgba(56, 69, 168, 0.1);

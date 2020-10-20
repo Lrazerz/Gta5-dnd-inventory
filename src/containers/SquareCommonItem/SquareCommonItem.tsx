@@ -1,19 +1,12 @@
 import React, {CSSProperties, useEffect, useRef, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {addDraggedItem, dragEndHandler, draggedItemRelease, stackItem} from "../../redux/actions/draggedItem";
+import {addDraggedItem, dragEndHandler} from "../../redux/actions/draggedItem";
 import CommonItem from "../../components/items/CommonItem/CommonItem";
 import classes from '../../styles/board/SquareCommonItem.module.scss';
 import SecondaryText from "../../components/layout/SecondaryText";
-import {
-  addItem,
-  changeEquippedState,
-  removeItem,
-  removeItemFromBoard
-} from "../../redux/actions/board";
-import {removeEquippedItem, removeEquippedWeaponFromEquipped, setEquippedItem} from "../../redux/actions/equippedItems";
-import {ItemTypes} from "../../constants/dnd/types";
-import {mpTriggerDropItem, openContextMenu} from "../../redux/actions/contextMenu";
+import {openContextMenu} from "../../redux/actions/contextMenu";
 import Item from "../../models/Item";
+import {addHoveredItem} from "../../redux/actions/hoveredItem";
 
 interface Props {
   coords: [number, number];
@@ -24,10 +17,11 @@ const SquareCommonItem: React.FC<Props> = React.memo(function SquareCommonItem({
 
   const [imageWidth, setImageWidth] = useState();
   const [imageHeight, setImageHeight] = useState();
-  const [leftOffset, setLeftOffset] = useState();
-  const [topOffset, setTopOffset] = useState();
 
-  const {canDrop, hoveredSquare, item: draggedItem, xDown, yDown, goingToDrop, goingToStack} = useSelector(state => state.draggedItem);
+  const {
+    draggedItem: {canDrop, hoveredSquare, item: draggedItem, xDown, yDown, goingToDrop, goingToStack},
+    hoveredItem: {item: hoveredItem}
+  } = useSelector(state => state);
 
   // refs to pass to event handler
   const canDropRef = useRef();
@@ -70,13 +64,9 @@ const SquareCommonItem: React.FC<Props> = React.memo(function SquareCommonItem({
 
       // new sizes
       // @ts-ignore
-      setImageWidth(imageContainerWidth * (item.width - 0.2));
+      setImageWidth(imageContainerWidth * item.width);
       // @ts-ignore
-      setImageHeight(imageContainerHeight * (item.height - 0.2));
-      // @ts-ignore
-      setLeftOffset(imageContainerWidth * 0.1);
-      // @ts-ignore
-      setTopOffset(imageContainerHeight * 0.1);
+      setImageHeight(imageContainerHeight * item.height);
     }
 
     // Add event listener
@@ -91,7 +81,7 @@ const SquareCommonItem: React.FC<Props> = React.memo(function SquareCommonItem({
 
   let imageElement = null;
 
-  const imageOnContextMenuOpen = (e) => {
+  const handleContextMenuOpen = (e) => {
     // last-remove
     // e.stopPropagation();
     e.persist();
@@ -99,7 +89,7 @@ const SquareCommonItem: React.FC<Props> = React.memo(function SquareCommonItem({
     dispatch(openContextMenu(item, rect));
   };
 
-  const imageOnMouseDown = (event) => {
+  const handleMouseDown = (event) => {
     if (event.button !== 0) return;
     event.stopPropagation();
     dispatch(addDraggedItem({...item}, [x,y]));
@@ -120,6 +110,8 @@ const SquareCommonItem: React.FC<Props> = React.memo(function SquareCommonItem({
     // last-remove
     // savedTarget.style.pointerEvents = 'none';
 
+    newClone.style.outline = 'none';
+    newClone.style.backgroundColor = 'transparent';
     newClone.style.zIndex = 150;
     newClone.id = 'curr-dragged-item';
 
@@ -150,73 +142,14 @@ const SquareCommonItem: React.FC<Props> = React.memo(function SquareCommonItem({
       newClone.onmouseup = null;
 
       dispatch(dragEndHandler());
-
-      //region legacy
-      // if (canDropRef.current) {
-      //   if(goingToStackRef.current) {
-      //     dispatch(stackItem());
-      //   }
-      //   else if (goingToDropRef.current) {
-      //     // already have no hovered squares
-      //     // @ts-ignore
-      //     if (typeof draggedItemRef.current.mainCell === 'object') {
-      //       // if drop item from board
-      //       // @ts-ignore
-      //       if (draggedItemRef.current.category === ItemTypes.WEAPON_RIFLE || draggedItemRef.current.category === ItemTypes.WEAPON_PISTOL
-      //         // @ts-ignore
-      //         || draggedItemRef.current.category === ItemTypes.WEAPON_LAUNCHER) {
-      //         // @ts-ignore
-      //         dispatch(removeEquippedWeaponFromEquipped(draggedItemRef.current.id));
-      //       }
-      //       // @ts-ignore
-      //       dispatch(removeItem(draggedItemRef.current.mainCell, draggedItemRef.current.width, draggedItemRef.current.height));
-      //     } else {
-      //       // drop item from equipped
-      //       // @ts-ignore
-      //       if (draggedItemRef.current.category === ItemTypes.WEAPON_RIFLE || draggedItemRef.current.category === ItemTypes.WEAPON_PISTOL
-      //         // @ts-ignore
-      //         || draggedItemRef.current.category === ItemTypes.WEAPON_LAUNCHER) {
-      //         // @ts-ignore
-      //         dispatch(removeItemFromBoard(draggedItemRef.current.id));
-      //       }
-      //       // @ts-ignore
-      //       dispatch(removeEquippedItem(draggedItemRef.current.mainCell));
-      //     }
-      //     mpTriggerDropItem(draggedItemRef.current);
-      //   }
-      //   else if (typeof hoveredSquareRef.current === 'number') {
-      //     // if add to equipped
-      //     if (item.category === ItemTypes.WEAPON_RIFLE || item.category === ItemTypes.WEAPON_PISTOL
-      //       || item.category === ItemTypes.WEAPON_LAUNCHER) {
-      //       // if weapon make transparent color
-      //       dispatch(changeEquippedState(item, true));
-      //     } else {
-      //       // @ts-ignore
-      //       dispatch(removeItem(item.mainCell, item.width, item.height));
-      //     }
-      //     try {
-      //       dispatch(setEquippedItem(hoveredSquareRef.current));
-      //     } catch (e) {
-      //     }
-      //   }
-      //   else {
-      //     // add to board (from board too)
-      //     // @ts-ignore
-      //     if (item.mainCell[0] !== hoveredSquareRef.current[0] - xDownRef.current || item.mainCell[1] !== hoveredSquareRef.current[1] - yDownRef.current) {
-      //       // check if this is not the current item square
-      //       // @ts-ignore
-      //       dispatch(removeItem(item.mainCell, item.width, item.height));
-      //       try {
-      //         dispatch(addItem());
-      //       } catch (e) {
-      //       }
-      //     }
-      //   }
-      // }
-      // dispatch(draggedItemRelease());
-      //endregion
     };
   };
+
+  const handleMouseOver = () => {
+    if(!draggedItem && (!hoveredItem || hoveredItem.mainCell !== item.mainCell)) {
+      dispatch(addHoveredItem(item));
+    }
+  }
 
   if (x === item.mainCell[0] && y === item.mainCell[1]) {
 
@@ -231,23 +164,27 @@ const SquareCommonItem: React.FC<Props> = React.memo(function SquareCommonItem({
         </div>);
     }
 
+    // if item is hovered when we have no dragged item
+    const isItemHovered = hoveredItem && hoveredItem.mainCell === item.mainCell;
 
-    const imageElementStyles: CSSProperties = {
+    const imageContainerStyles: CSSProperties = {
       width: imageWidth,
       height: imageHeight,
       //@ts-ignore
-      top: imageHeight && imageWidth && item.isRotated ? -(imageHeight/2 - imageWidth/2) : topOffset,
+      top: imageHeight && imageWidth && item.isRotated ? -(imageHeight/2 - imageWidth/2) : 0,
       //@ts-ignore
-      left: imageHeight && imageWidth && item.isRotated ? -(imageWidth/2 - imageHeight/2) : leftOffset,
+      left: imageHeight && imageWidth && item.isRotated ? -(imageWidth/2 - imageHeight/2) : 0,
       pointerEvents: draggedItem ? 'none' : 'inherit',
       zIndex: draggedItem ? 0 : 100,
       transform: item.isRotated ? 'rotate3d(0,0,1,90deg)' : 'none',
+      backgroundColor: isItemHovered ? 'rgba(151, 159, 161, 0.5)' : 'transparent',
     }
 
     imageElement = (
-      <div className={classes.ImageContainer} style={imageElementStyles} id={`square-common-item-${x}-${y}`}
-           onMouseDown={imageOnMouseDown}
-           onContextMenu={imageOnContextMenuOpen}>
+      <div className={classes.ImageContainer} style={imageContainerStyles} id={`square-common-item-${x}-${y}`}
+           onMouseDown={handleMouseDown}
+           onContextMenu={handleContextMenuOpen}
+           onMouseOver={handleMouseOver}>
         <img src={item.imageUrl} style={item.isWeaponEquipped ? {opacity: '0.5'} : null}
              className={classes.Image}/>
         {currentCountText}

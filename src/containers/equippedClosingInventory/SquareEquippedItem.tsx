@@ -9,13 +9,19 @@ import {removeEquippedItem, removeEquippedWeaponFromEquipped, setEquippedItem} f
 import {ItemTypes} from "../../constants/dnd/types";
 import {mpTriggerDropItem, openContextMenu} from "../../redux/actions/contextMenu";
 import Item from "../../models/Item";
+import {addHoveredItem} from "../../redux/actions/hoveredItem";
 
 interface Props {
   item: Item;
 }
 
 const SquareEquippedItem: React.FC<Props> = React.memo(function SquareEquippedItem ({item}) {
-  const {canDrop, hoveredSquare, item: draggedItem, goingToDrop, goingToStack} = useSelector(state => state.draggedItem);
+
+  const {
+    draggedItem: {canDrop, hoveredSquare, item: draggedItem, goingToDrop, goingToStack},
+    hoveredItem: {item: hoveredItem}
+  } = useSelector(state => state);
+
   const goingToDropRef = useRef();
   const draggedItemRef = useRef();
   draggedItemRef.current = draggedItem;
@@ -73,19 +79,19 @@ const SquareEquippedItem: React.FC<Props> = React.memo(function SquareEquippedIt
 
   const dispatch = useDispatch();
 
-  const imageOnContextMenuOpen = (e) => {
+  const handleContextMenuOpen = (e) => {
     const rect = e.target.getBoundingClientRect();
     dispatch(openContextMenu(item, rect));
   };
 
-  const imageMouseDownHandler = (event) => {
+  const handleMouseDown = (event) => {
     if(event.button !== 0) return;
     dispatch(addDraggedItem({...item}));
     event.persist();
 
     // last-remove
     // const savedTarget = event.currentTarget;
-    // savedTarget.style.zIndex = 0;
+    // event.target.style.zIndex = 0;
 
     const newClone = event.currentTarget.cloneNode(true);
     // event.target.style.width = '100%';
@@ -103,6 +109,8 @@ const SquareEquippedItem: React.FC<Props> = React.memo(function SquareEquippedIt
 
     newClone.style.position = 'absolute';
     newClone.style.zIndex = 150;
+    newClone.style.backgroundColor = 'transparent';
+    newClone.style.background = 'transparent';
     newClone.id = 'curr-dragged-item';
 
     document.body.append(newClone);
@@ -125,7 +133,7 @@ const SquareEquippedItem: React.FC<Props> = React.memo(function SquareEquippedIt
       document.removeEventListener('mousemove', onMouseMove);
       newClone.onmouseup = null;
       // last-remove
-      // savedTarget.style.zIndex = 100;
+      // event.target.style.zIndex = 100;
 
       if(canDropRef.current) {
         if(goingToStackRef.current) {
@@ -186,17 +194,33 @@ const SquareEquippedItem: React.FC<Props> = React.memo(function SquareEquippedIt
         }
       }
       // last-remove
-      // event.target.style.pointerEvents = 'inherit';
+      // event.target.style.pointerEvents = 'auto';
       dispatch(draggedItemRelease());
     }
   }
 
-  // todo make wrapper to image
+  const handleMouseOver = (e) => {
+    if(!draggedItem && (!hoveredItem || hoveredItem.mainCell !== item.mainCell)) {
+      dispatch(addHoveredItem(item));
+    }
+  }
+
+  const isItemHovered = hoveredItem && hoveredItem.mainCell === item.mainCell;
+
+  let additionalImageContainerStyles: CSSProperties = {
+    backgroundColor: isItemHovered ? 'rgba(151, 159, 161, 0.5)' : 'transparent',
+  }
+
   let imageElement = (
-    <div className={classes.ImageContainer} onMouseDown={imageMouseDownHandler} onContextMenu={imageOnContextMenuOpen}
-         id={`square-equipped-item-${item.mainCell}`}>
+    <div className={classes.ImageContainer}
+         style={additionalImageContainerStyles}
+         id={`square-equipped-item-${item.mainCell}`}
+         onMouseDown={handleMouseDown}
+         onContextMenu={handleContextMenuOpen}
+         onMouseOver={handleMouseOver}>
       <img src={item.imageUrl} className={classes.Image}
-           onDragStart={(e) => {e.stopPropagation();e.preventDefault();return false}}/>
+           onDragStart={(e) => {e.stopPropagation();e.preventDefault();return false}}
+           onMouseUp={e => console.log('mouse up image')}/>
       {item.currentCount > 1 &&
       (<div className={classes.CurrentCount}>
         <SecondaryText>
@@ -215,13 +239,22 @@ const SquareEquippedItem: React.FC<Props> = React.memo(function SquareEquippedIt
       pointerEvents: 'none',
     }
 
+    const additionalImageContainerStyles = {
+      background: isItemHovered ? 'linear-gradient(90deg, transparent, rgba(151, 159, 161, 0.5))' : 'transparent',
+      clipPath: `polygon(0% 10.56792%, 77.45% 10.56792%, 81.0447% 0%, 100% 0%,
+      100% 100%, 81.0447% 100%, 77.45% 89.43208%, 0% 89.43208%)`
+    }
+
     imageElement = (
-      <div style={{width: '100%', height: '100%'}} onMouseDown={imageMouseDownHandler} id={`square-equipped-item-${item.mainCell}`}>
-        <div className={classes.ClosingSquareWrapper} onContextMenu={imageOnContextMenuOpen}>
+      <div id={`square-equipped-item-${item.mainCell}`}
+           style={{width: '100%', height: '100%', ...additionalImageContainerStyles}}
+           onMouseDown={handleMouseDown}
+           onMouseOver={handleMouseOver}>
+        <div className={classes.ClosingSquareWrapper} onContextMenu={handleContextMenuOpen}>
           <img src={item.imageUrl} className={classes.Image} style={imageStyles}
                onDragStart={(e) => {e.stopPropagation();e.preventDefault();return false}}/>
           {item.currentCount > 1 &&
-          (<div className={classes.CurrentCount} style={{top: '1%', right: '1%'}}>
+          (<div className={classes.CurrentCount}>
             <SecondaryText>
               {item.currentCount}
             </SecondaryText>

@@ -1,22 +1,23 @@
 .ImageContainer {
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
   position: absolute;
-  top: 10%;
-  right: 10%;
-  height: 80%;
-  width: 80%;
+  clip-path: polygon(0 21.4%, 21.4% 0, 78.6% 0, 100% 21.4%, 100% 78.6%, 78.6% 100%, 21.4% 100%, 0 78.6%);
 
   .Image {
     position: absolute;
-    top: 0;
-    right: 0;
-    height: 100%;
-    width: 100%;
+    top: 10%;
+    right: 10%;
+    height: 80%;
+    width: 80%;
   }
   .CurrentCount {
     pointer-events: none;
     position: absolute;
-    top: 2%;
-    right: 2%;
+    top: 12%;
+    right: 12%;
   }
 }
 

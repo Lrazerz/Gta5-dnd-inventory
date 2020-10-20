@@ -7,6 +7,7 @@ import {setHoveredSquares} from "../../redux/actions/draggedItem";
 import theme from "../../constants/css/theme";
 import {WeaponItemTypes} from "../../constants/dnd/types";
 import {EquippedCategoriesToCells} from "../../constants/dnd/equippedCategoriesToCells";
+import {removeHoveredItem} from "../../redux/actions/hoveredItem";
 
 interface Props {
   children: any;
@@ -17,7 +18,10 @@ interface Props {
 const ClosingWeaponSquare: React.FC<Props> = React.memo(function ClosingWeaponSquare({children, coords}) {
   const dispatch = useDispatch();
 
-  const {item: draggedItem, hoveredSquare, canDrop} = useSelector(({draggedItem}) => draggedItem);
+  const {
+    draggedItem: {item: draggedItem, hoveredSquare, canDrop},
+    hoveredItem: {item: hoveredItem},
+  } = useSelector((state) => state);
   const draggedItemRef = useRef();
   const hoveredSquareRef = useRef();
   draggedItemRef.current = draggedItem;
@@ -27,11 +31,20 @@ const ClosingWeaponSquare: React.FC<Props> = React.memo(function ClosingWeaponSq
 
   const squareMouseOverHandler = (e) => {
     e.persist();
+    //region ------------------------------ Set squares if drag item ------------------------------
     if (draggedItemRef.current) {
       if (!hoveredSquareRef.current || typeof hoveredSquareRef.current !== 'number' || hoveredSquareRef.current !== coords) {
         dispatch(setHoveredSquares(coords, true));
       }
     }
+    //endregion
+    //region ------------------------------ Release hovered item if don't drag item ------------------------------
+    else {
+      if(hoveredItem) {
+        dispatch(removeHoveredItem());
+      }
+    }
+    //endregion
   }
 
   let closingWeaponSquareStyles: CSSProperties = {

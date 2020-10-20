@@ -5,9 +5,17 @@ import {closeContextMenu, mpTriggerDropItem} from "../../redux/actions/contextMe
 import {addDraggedItem, draggedItemRelease, stackItem} from "../../redux/actions/draggedItem";
 import {equippedChangeCurrentCount, removeEquippedItem, setEquippedItem} from "../../redux/actions/equippedItems";
 import {addItem, boardChangeCurrentCountByItemId} from "../../redux/actions/board";
+import Item from "../../models/Item";
+
+interface Props {
+  leftOffset: number;
+  topOffset: number;
+  contextItem: Item;
+  splitMenuOpen: boolean;
+}
 
 // todo change count remove splitMenuOpen
-const RangeComponent = ({leftOffset, topOffset, contextItem, splitMenuOpen}) => {
+const RangeComponent: React.FC<Props> = React.memo(({leftOffset, topOffset, contextItem, splitMenuOpen}) => {
   // lift up item to be at the top of the image
   const containerRef = useRef();
 
@@ -61,6 +69,7 @@ const RangeComponent = ({leftOffset, topOffset, contextItem, splitMenuOpen}) => 
     if (event.button !== 0) return;
     event.stopPropagation();
     const contextItemWithChangedCount = {...contextItem, currentCount: Number(splittedCount)};
+    // @ts-ignore todo supressed
     dispatch(addDraggedItem(contextItemWithChangedCount, contextItemWithChangedCount.mainCell));
 
     // last-remove
@@ -97,6 +106,8 @@ const RangeComponent = ({leftOffset, topOffset, contextItem, splitMenuOpen}) => 
     // savedTarget.style.pointerEvents = 'none';
 
     newClone.style.zIndex = String(150);
+    newClone.style.outline = 'none';
+    newClone.style.backgroundColor = 'transparent';
     newClone.id = 'curr-dragged-item';
 
     if(typeof contextItem.mainCell === 'number') {
@@ -151,6 +162,7 @@ const RangeComponent = ({leftOffset, topOffset, contextItem, splitMenuOpen}) => 
             };
             dispatch(stackItem(true));
             dispatch(draggedItemRelease());
+            //@ts-ignore todo supressed
             dispatch(addDraggedItem(contextItemWithChangedCount, contextItemWithChangedCount.mainCell));
             if(contextItem.isEquipped) {
               //@ts-ignore
@@ -301,6 +313,6 @@ const RangeComponent = ({leftOffset, topOffset, contextItem, splitMenuOpen}) => 
       </div>
     </div>
   );
-};
+});
 
 export default RangeComponent;
