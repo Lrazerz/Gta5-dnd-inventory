@@ -26,7 +26,7 @@ const ContextMenu: React.FC<Props> = React.memo(function ContextMenu({leftOffset
             return (
               <div key={i} className={classes.Button} onClick={(e) => action.handler()}
               style={{ backgroundColor: action.label.toLowerCase() === 'выкинуть' ? '#FF5306' : '#3A72F7' }}>
-                <SecondaryText styles={{fontWeight: 800, textAlign: 'center', letterSpacing: '.01rem'}}>{action.label}</SecondaryText>
+                <SecondaryText styles={{fontWeight: 800, textAlign: 'center', letterSpacing: '0.008rem'}}>{action.label}</SecondaryText>
               </div>
               )
           })

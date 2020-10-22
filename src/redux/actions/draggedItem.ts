@@ -380,7 +380,6 @@ const rotateItem = () => {
     // if goingToDrop ?) (if goingToDrop hoveredSquare sets to null
 
     //region ------------------------------ Save goingToDrop ------------------------------
-    console.log('goingToDorp', oldDraggedItemInfo.goingToDrop);
     if(oldDraggedItemInfo.goingToDrop) {
       dispatch(addDraggedItem({...oldDraggedItem}, [-100,-100], true, null, oldDraggedItemInfo.goingToDrop.areaId));
     }

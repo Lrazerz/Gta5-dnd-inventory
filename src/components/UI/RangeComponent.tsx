@@ -69,8 +69,7 @@ const RangeComponent: React.FC<Props> = React.memo(({leftOffset, topOffset, cont
     if (event.button !== 0) return;
     event.stopPropagation();
     const contextItemWithChangedCount = {...contextItem, currentCount: Number(splittedCount)};
-    // @ts-ignore todo supressed
-    dispatch(addDraggedItem(contextItemWithChangedCount, contextItemWithChangedCount.mainCell));
+    dispatch(addDraggedItem(contextItemWithChangedCount, contextItemWithChangedCount.mainCell as [number, number]));
 
     // last-remove
     // save target
@@ -115,7 +114,6 @@ const RangeComponent: React.FC<Props> = React.memo(({leftOffset, topOffset, cont
       const squareWidth = document.body.clientWidth * 0.0323;
       newClone.style.width = squareWidth * contextItem.width + 'px';
       newClone.style.height = squareWidth * contextItem.height + 'px';
-      console.log('new width', newClone.style.width);
     }
 
     document.body.append(newClone);
