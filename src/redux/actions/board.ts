@@ -1,4 +1,5 @@
 import {
+  BOARD_ALL_ITEMS_RELEASE,
   BOARD_CURRENT_COUNT_CHANGE,
   EQUIPPED_STATE_CHANGE,
   SINGLE_ITEM_SQUARES_FILL,
@@ -15,6 +16,7 @@ import {translateToServerItem} from "../../utils/translateToServerItem";
 import {ItemTypes} from "../../constants/dnd/types";
 import {AnyAction} from 'redux';
 import get = Reflect.get;
+import {checkDecoratorArguments} from "react-dnd/lib/decorators/utils";
 //'https://i.ibb.co/HCn40jg/weapon-2.png'
 
 const openOrRefreshInventory = async (info) => {
@@ -91,16 +93,99 @@ const openOrRefreshInventory = async (info) => {
     }
   }
 
+  // @ts-ignore
   store.dispatch(_addItems(boardItems));
+  // @ts-ignore
   store.dispatch(setEquippedItems(enabledItems));
 }
 
-const addItemBySquares = (squares, item: Item) => {
-  return {type: SINGLE_ITEM_SQUARES_FILL, squares, item};
-}
+// _addItems: 1. check every item from derived, find on board and check all props on equality; 2. check all board items
+// and if there is additional items - isAnyChanges = true and set all arrived items except checked items
 
+// todo maybe this checks won't speed up project
 const _addItems = (items: Item[]) => {
-  return {type: SQUARES_FILL, items};
+  return (dispatch, getState) => {
+    if(items.length === 0) dispatch(_releaseAllItems());
+
+    const board = getState().board.board;
+    let isAnyChanges = false;
+    // checked items from items param (equal (with props) to items on board)
+    const checkedItems = [];
+
+    //region ------------------------------ Check every item, find relative item on board ------------------------------
+    for(let i = 0; i < items.length; i++) {
+      const item = items[i];
+      const [mainCellX, mainCellY] = item.mainCell;
+      const boardSquare = board[mainCellY][mainCellX];
+
+      if(boardSquare) {
+        // board has item from arrived items
+
+        for(const key in item) {
+          // check all props, if smth changed - set up isAnyChanges to true
+          if(!boardSquare[key] || boardSquare[key] !== item[key]) {
+            isAnyChanges = true;
+            break;
+          }
+        }
+      } else {
+        isAnyChanges = true;
+      }
+
+      if(isAnyChanges) {
+        break;
+      }
+      else {
+        checkedItems.push(item);
+      }
+    }
+    //endregion
+
+    if(!isAnyChanges) {
+      //region ------------------------------ Check every board square and find relative checked item ------------------------------
+      for(let y = yMin; y <= yMax; y++) {
+        for(let x = xMin; x <= xMax; x++) {
+          const boardSquare = board[y][x];
+
+          //region --------------------------- If no item in the checkedItems or props differs - changes ---------------------------
+          if(boardSquare) {
+            // if have item at the selected square
+
+            // find item among the chechedItems
+            const checkedItemIdx = checkedItems.findIndex(item => item.id === boardSquare.id);
+            if(!checkedItemIdx) {
+              // there is no such item in the checkedItems
+              isAnyChanges = true;
+              // to break outer loop too
+              y = yMax + 1;
+              break;
+            }
+            else {
+              // there is such item in the checkedItems
+              for(const key in boardSquare) {
+                if(boardSquare[key] !== checkedItems[checkedItemIdx][key]) {
+                  // if any
+                  isAnyChanges = true;
+                  break;
+                }
+              }
+
+              if(isAnyChanges) {
+                y = yMax + 1;
+                break;
+              }
+            }
+          }
+          //endregion
+        }
+      }
+      //endregion
+    }
+
+    if(isAnyChanges) {
+      dispatch({type: SQUARES_FILL, items});
+    }
+  }
 }
 
 const _removeItem = (coordsArr) => {
@@ -109,6 +194,14 @@ const _removeItem = (coordsArr) => {
 
 const _changeEquippedState = (squares, item) => {
   return {type: EQUIPPED_STATE_CHANGE, squares, item};
+}
+
+const _releaseAllItems = () => {
+  return {type: BOARD_ALL_ITEMS_RELEASE};
+}
+
+const addItemBySquares = (squares, item: Item) => {
+  return {type: SINGLE_ITEM_SQUARES_FILL, squares, item};
 }
 
 // add item fetched from draggedItem

@@ -146,6 +146,7 @@ const SquareCommonItem: React.FC<Props> = React.memo(function SquareCommonItem({
   };
 
   const handleMouseOver = () => {
+    console.log('mous over squareCommonItem');
     if(!draggedItem && (!hoveredItem || hoveredItem.mainCell !== item.mainCell)) {
       dispatch(addHoveredItem(item));
     }

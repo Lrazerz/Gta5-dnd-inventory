@@ -63,15 +63,7 @@ const App = React.memo(function App() {
     }
   }
 
-  // window.ondragstart = e => {
-  //   e.stopPropagation();
-  //   e.preventDefault();
-  //   return false;
-  // }
-
-  // todo onmousedown too and etc
   window.onclick = () => {
-    console.log('appOnclick');
     if (contextMenu) {
       dispatch(closeContextMenu());
     }

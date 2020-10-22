@@ -25,8 +25,8 @@ const BoardSquare: React.FC<Props> = React.memo(function BoardSquare({coords: [x
 
   const dispatch = useDispatch();
   const drop = null;
-  const squareMouseOverHandler = (e) => {
-     e.persist();
+  const squareMouseOverHandler = () => {
+    console.log('mous over boardSquare');
      //region ------------------------------ Set squares if drag item ------------------------------
     if (draggedItemRef.current) {
       if (!hoveredSquare || typeof hoveredSquare !== 'object' || hoveredSquare[0] !== x || hoveredSquare[1] !== y) {

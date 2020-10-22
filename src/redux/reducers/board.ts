@@ -1,5 +1,6 @@
 import {xMin, xMax, yMin, yMax} from "../../constants/boardDimensions";
 import {
+  BOARD_ALL_ITEMS_RELEASE,
   BOARD_CURRENT_COUNT_CHANGE,
   EQUIPPED_STATE_CHANGE,
   SINGLE_ITEM_SQUARES_FILL,
@@ -87,6 +88,12 @@ export default (state = _fillInitialState(), action) => {
       return {
         ...state,
         board: newBoard,
+      }
+    }
+    case BOARD_ALL_ITEMS_RELEASE: {
+      const {board} = _fillInitialState();
+      return {
+        board,
       }
     }
     default: {

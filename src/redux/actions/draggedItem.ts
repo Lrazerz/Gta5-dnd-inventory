@@ -130,7 +130,7 @@ const addDraggedItem = (item, [x, y] = [-100, -100], fromRotate = false,
       dispatch(setHoveredSquares([x, y], false));
     }
     // setHoveredSquare on equipped
-    else if(hoveredSquareIfEquippedHovered) {
+    else if(fromRotate && hoveredSquareIfEquippedHovered) {
       dispatch(setHoveredSquares(hoveredSquareIfEquippedHovered, true));
     }
     //endregion
@@ -180,9 +180,8 @@ const setHoveredSquares = (hoveredSquare, isHoveredEquipped = false) => {
             canDrop = false;
           }
 
-          // mainCells is not equal
+          // last-remove maincells is not equal too
           const isAllowToStack = boardSquare.name === item.name
-            && boardSquare.mainCell !== item.mainCell
             && boardSquare.id !== item.id
             && boardSquare.currentCount && boardSquare.maxCount
             && boardSquare.currentCount < boardSquare.maxCount;
@@ -217,9 +216,10 @@ const setHoveredSquares = (hoveredSquare, isHoveredEquipped = false) => {
         if(equippedSquareItem.id !== item.id) {
           canDrop = false;
         }
+        // last-remove maincells is not equal too
         // check if required cell already has another item
         const isAllowToStack = equippedSquareItem.name === item.name
-          && equippedSquareItem.mainCell !== item.mainCell
+          && equippedSquareItem.id !== item.id
           && equippedSquareItem.currentCount && equippedSquareItem.maxCount
           && equippedSquareItem.currentCount < equippedSquareItem.maxCount;
 

@@ -1,6 +1,6 @@
 import {
   EQUIPPED_ITEM_SET,
-  EQUIPPED_ITEM_REMOVE, EQUIPPED_ITEMS_SET, EQUIPPED_CURRENT_COUNT_CHANGE
+  EQUIPPED_ITEM_REMOVE, EQUIPPED_ITEMS_SET, EQUIPPED_CURRENT_COUNT_CHANGE, EQUIPPED_ALL_ITEMS_RELEASE
 } from "../actions/types";
 import EquippedItemsCell from "../../models/EquippedItemsCell";
 
@@ -107,6 +107,9 @@ export default (state = fillInitialState(), action) => {
         ...state,
         cells
       }
+    }
+    case EQUIPPED_ALL_ITEMS_RELEASE: {
+      return fillInitialState();
     }
     default: {
       return state;

@@ -142,6 +142,12 @@ const SquareEquippedItem: React.FC<Props> = React.memo(function SquareEquippedIt
   }
 
   const handleMouseOver = (e) => {
+    // Stop propagation to prevent instant remove hoveredItem and don't stop to allow
+    // hover when have draggedItem
+    if(hoveredItem) {
+      e.stopPropagation();
+    }
+
     if(!draggedItem && (!hoveredItem || hoveredItem.mainCell !== item.mainCell)) {
       dispatch(addHoveredItem(item));
     }

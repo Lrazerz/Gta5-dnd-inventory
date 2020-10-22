@@ -14,7 +14,7 @@ interface Props {
   coords: number;
 }
 
-//itemId - an item inside if exists
+// using no transparent square (unlike in the boardSquare), coz we have no decorative outlines
 const ClosingWeaponSquare: React.FC<Props> = React.memo(function ClosingWeaponSquare({children, coords}) {
   const dispatch = useDispatch();
 
@@ -29,8 +29,7 @@ const ClosingWeaponSquare: React.FC<Props> = React.memo(function ClosingWeaponSq
 
   const isOver = hoveredSquare === coords;
 
-  const squareMouseOverHandler = (e) => {
-    e.persist();
+  const squareMouseOverHandler = () => {
     //region ------------------------------ Set squares if drag item ------------------------------
     if (draggedItemRef.current) {
       if (!hoveredSquareRef.current || typeof hoveredSquareRef.current !== 'number' || hoveredSquareRef.current !== coords) {
