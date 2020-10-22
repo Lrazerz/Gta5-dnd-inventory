@@ -1,6 +1,7 @@
 @use '../../constants/scss/theme';
 
 .BoardInfo {
+  width: 100%;
   flex: 1 1 auto;
   display: flex;
   justify-content: flex-end;
@@ -8,17 +9,17 @@
   position: relative;
   z-index: 200;
 
-  height: 15%;
-  max-height: 15%;
+  height: 5.5%;
+  max-height: 5.5%;
 
-  @media(min-width: 1200px) {
-    height: 13%;
-    max-height: 13%;
-  }
-  @media(min-width: 1500px) {
-    height: 10%;
-    max-height: 10%;
-  }
+  //@media(min-width: 1200px) {
+  //  height: 13%;
+  //  max-height: 13%;
+  //}
+  //@media(min-width: 1500px) {
+  //  height: 10%;
+  //  max-height: 10%;
+  //}
 }
 
 .CurrentCashText {

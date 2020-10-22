@@ -1,39 +1,30 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {CSSProperties, useEffect, useRef, useState} from 'react';
+import {useSelector} from 'react-redux';
 import classes from '../../styles/board/Board.module.scss';
 
 const Board = React.memo(function Board({children}) {
   // proportional to width (16x6)
   const [boardHeight, setBoardHeight] = useState(null);
+  const [boardWidth, setBoardWidth] = useState(null);
 
-  const boardEl: React.MutableRefObject<null> | null = useRef(null);
+  const boardSquareSize = useSelector(state => state.board.boardSquareSize);
 
-  // Make element proportional no matter where it placed
   useEffect(() => {
-    // Handler to call on window resize
-    const handleResize = () => {
-      const current: HTMLElement | null = boardEl.current;
-
-      // const width = current.clientWidth;
-      const CSSStyleDeclaration = window.getComputedStyle(current);
-      let widthString = CSSStyleDeclaration.getPropertyValue('width');
-      const regex = /^((\d|\.)+)/;
-      const widthNumber: number = parseFloat(widthString.match(regex)[0]);
-
-      setBoardHeight(widthNumber * 0.39837);
-    }
-
-    // Add event listener
-    window.addEventListener("resize", handleResize);
-
-    // Call handler right away so state gets updated with initial size
-    handleResize();
-
-    // Remove event listener on cleanup
-    return () => window.removeEventListener("resize", handleResize);
+    setBoardHeight(boardSquareSize * 6);
+    setBoardWidth(boardSquareSize * 16);
   }, []);
 
+  const additionalStyles: CSSProperties = {
+    minWidth: `${boardWidth}px`,
+    width: `${boardWidth}px`,
+    maxWidth: `${boardWidth}px`,
+    minHeight: `${boardHeight}px`,
+    height: `${boardHeight}px`,
+    maxHeight: `${boardHeight}px`
+  }
+
   return (
-    <div ref={boardEl} style={{height: `${boardHeight + 0}px`}} className={classes.Board}
+    <div style={additionalStyles} className={classes.Board}
     onMouseOver={e => e.stopPropagation()} onMouseUp={e => e.stopPropagation()}>
       {children}
     </div>

@@ -19,6 +19,20 @@ import get = Reflect.get;
 import {checkDecoratorArguments} from "react-dnd/lib/decorators/utils";
 //'https://i.ibb.co/HCn40jg/weapon-2.png'
 
+const importItemImage: (itemName: string) => Promise<any> = async (itemName) => {
+  let imageUrl;
+  try {
+    imageUrl = await import(`../../assets/images/items/${itemName.toLowerCase()}.png`);
+    return imageUrl;
+  } catch (e) {
+    if(e.code === 'MODULE_NOT_FOUND') {
+      // console.log(`image for "${Name}" not found, using default image.`)
+    } else {
+      console.log('error while importing image');
+    }
+  }
+}
+
 const openOrRefreshInventory = async (info) => {
   const values = JSON.parse(info).$values;
 
@@ -32,22 +46,13 @@ const openOrRefreshInventory = async (info) => {
     const item = values[propName];
 
     // Square numbers starts from 1 instead of 0
-    const {
+    let {
       Name, PosNumberLeftAngle, SizeX, SizeY, Enabled, CurrentCount, MaxCount, IsRotated, ...rest
     } = item;
     const ID = item.ID.toString();
 
     //region ------------------------------ Import image ------------------------------
-    let ImageUrl;
-    try {
-      ImageUrl = await import(`../../assets/images/items/${Name.toLowerCase()}.png`);
-    } catch (e) {
-      if(e.code === 'MODULE_NOT_FOUND') {
-        // console.log(`image for "${Name}" not found, using default image.`)
-      } else {
-        console.log('error while importing image');
-      }
-    }
+    let ImageUrl = await importItemImage(Name);
 
     if(ImageUrl) {
       ImageUrl = ImageUrl.default;
@@ -60,16 +65,17 @@ const openOrRefreshInventory = async (info) => {
 
     let FullItem: Item;
 
-    if(!IsRotated) {
-      FullItem = new Item(ID, Name, category, PosNumberLeftAngle,
-        SizeX, SizeY, CurrentCount, MaxCount,
-        ImageUrl, Enabled, IsRotated, rest);
-    } else {
+    if(IsRotated) {
       // swap width and height
-      FullItem = new Item(ID, Name, category, PosNumberLeftAngle,
-        SizeY, SizeX, CurrentCount, MaxCount,
-        ImageUrl, Enabled, IsRotated, rest);
+      const tmp = SizeX;
+      SizeX = SizeY;
+      SizeY = tmp;
     }
+    // swap width and height
+    FullItem = new Item(ID, Name, category, PosNumberLeftAngle,
+      SizeX, SizeY, CurrentCount, MaxCount,
+      ImageUrl, Enabled, IsRotated, rest);
+
 
     if (Enabled === true) {
       enabledItems.push(FullItem);
@@ -200,9 +206,7 @@ const _releaseAllItems = () => {
   return {type: BOARD_ALL_ITEMS_RELEASE};
 }
 
-const setSquareSize = (bodySize) => {
-  const squareSize = bodySize * 0.04125;
-
+const setSquareSize = (squareSize) => {
   return {type: BOARD_SET_SQUARE_SIZE, size: squareSize};
 }
 
@@ -316,5 +320,6 @@ export {
   changeEquippedState,
   removeItemFromBoard,
   boardChangeCurrentCountByItemId,
-  setSquareSize
+  setSquareSize,
+  importItemImage
 }

@@ -1,4 +1,4 @@
-// AppBoard
+// board
 export const SQUARES_FILL = 'SQUARES_FILL';
 export const SINGLE_ITEM_SQUARES_FILL = 'SINGLE_ITEM_SQUARES_FILL';
 export const SQUARES_RELEASE = 'SQUARES_RELEASE';
@@ -7,6 +7,10 @@ export const BOARD_CURRENT_COUNT_CHANGE = 'BOARD_CURRENT_COUNT_CHANGE'; //board 
 export const BOARD_ALL_ITEMS_RELEASE = 'BOARD_ALL_ITEMS_RELEASE';
 
 export const BOARD_SET_SQUARE_SIZE = 'BOARD_SET_SQUARE_SIZE';
+
+// external board
+export const OPEN_EXTERNAL_BOARD = 'OPEN_BOARD';
+export const CLOSE_EXTERNAL_BOARD = 'CLOSE_EXTERNAL_BOARD';
 
 // dragged item
 export const DRAGGED_ITEM_SET = 'DRAGGED_ITEM_SET';

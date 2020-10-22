@@ -12,8 +12,8 @@ import {openOrRefreshInventory, setSquareSize} from "./redux/actions/board";
 import ContextMenu from "./components/UI/ContextMenu";
 import RangeComponent from "./components/UI/RangeComponent";
 import {closeContextMenu} from "./redux/actions/contextMenu";
-import BackDrop from "./components/layout/BackDrop";
 import {rotateItem, rotateItemOnBoard, setGoingToDrop} from "./redux/actions/draggedItem";
+import {openExternalBoard} from "./redux/actions/externalBoard";
 
 const App = React.memo(function App() {
   const [isOpen, setIsOpen] = useState(false);
@@ -46,13 +46,21 @@ const App = React.memo(function App() {
     window.refreshInventory = openOrRefreshInventory;
   }
 
-  if(!boardSquareSize) {
-    const bodyWidth = document.body.getBoundingClientRect().width;
-    dispatch(setSquareSize(bodyWidth));
+  // @ts-ignore
+  if(!window.openExternalInventory) {
+    // @ts-ignore
+    window.openExternalInventory = async info => {
+      await openExternalBoard(info);
+    }
   }
 
   if (!isOpen) {
     return null;
+  }
+
+  if(!boardSquareSize) {
+    const bodyWidth = document.body.getBoundingClientRect().width;
+    dispatch(setSquareSize(bodyWidth * 0.04125));
   }
 
   document.oncontextmenu = e => {
@@ -101,15 +109,7 @@ const App = React.memo(function App() {
         </div>
         <div className={classes.App}>
           <EquippedClosingInventoryContainer/>
-          <div className={classes.BoardContainer}>
-            <div style={{height: '20%'}}>
-              <BackDrop/>
-            </div>
-            <AppBoard/>
-            <div style={{flexGrow: 1}}>
-              <BackDrop/>
-            </div>
-          </div>
+          <AppBoard/>
           <EquippedWeaponsInventoryContainer/>
         </div>
         <object type="image/svg+xml" data={leftSparksSvg} className={classes.LeftSparksSvgContainer}/>
