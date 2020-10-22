@@ -1,10 +1,10 @@
 import React from 'react';
 import classes from '../../styles/items/EquippedItem.module.scss';
 
-const EquippedItem = ({children, imageContainerForwardedRef}) => {
+const EquippedItem = ({children}) => {
   return (
   <>
-    <div ref={imageContainerForwardedRef} className={classes.EquippedItem}>
+    <div className={classes.EquippedItem}>
         {children}
     </div>
   </>

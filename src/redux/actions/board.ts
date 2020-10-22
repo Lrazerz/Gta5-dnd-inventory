@@ -1,6 +1,6 @@
 import {
   BOARD_ALL_ITEMS_RELEASE,
-  BOARD_CURRENT_COUNT_CHANGE,
+  BOARD_CURRENT_COUNT_CHANGE, BOARD_SET_SQUARE_SIZE,
   EQUIPPED_STATE_CHANGE,
   SINGLE_ITEM_SQUARES_FILL,
   SQUARES_FILL,
@@ -200,6 +200,12 @@ const _releaseAllItems = () => {
   return {type: BOARD_ALL_ITEMS_RELEASE};
 }
 
+const setSquareSize = (bodySize) => {
+  const squareSize = bodySize * 0.04125;
+
+  return {type: BOARD_SET_SQUARE_SIZE, size: squareSize};
+}
+
 const addItemBySquares = (squares, item: Item) => {
   return {type: SINGLE_ITEM_SQUARES_FILL, squares, item};
 }
@@ -309,5 +315,6 @@ export {
   openOrRefreshInventory,
   changeEquippedState,
   removeItemFromBoard,
-  boardChangeCurrentCountByItemId
+  boardChangeCurrentCountByItemId,
+  setSquareSize
 }

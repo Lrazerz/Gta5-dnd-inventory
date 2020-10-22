@@ -8,10 +8,10 @@ import EquippedWeaponsInventoryContainer from "./containers/equippedWeaponsInven
 import SecondaryText from "./components/layout/SecondaryText";
 import leftSparksSvg from "./assets/images/UI/left-sparks.svg";
 import rightSparksSvg from "./assets/images/UI/right-sparks.svg";
-import {openOrRefreshInventory} from "./redux/actions/board";
+import {openOrRefreshInventory, setSquareSize} from "./redux/actions/board";
 import ContextMenu from "./components/UI/ContextMenu";
 import RangeComponent from "./components/UI/RangeComponent";
-import {closeContextMenu, getContextActionsForCell} from "./redux/actions/contextMenu";
+import {closeContextMenu} from "./redux/actions/contextMenu";
 import BackDrop from "./components/layout/BackDrop";
 import {rotateItem, rotateItemOnBoard, setGoingToDrop} from "./redux/actions/draggedItem";
 
@@ -21,6 +21,7 @@ const App = React.memo(function App() {
 
   // todo check App rerender
   const {
+    board: {boardSquareSize},
     contextMenu,
     draggedItem: {goingToDrop, item: draggedItem},
     hoveredItem: {item: hoveredItem}
@@ -43,6 +44,11 @@ const App = React.memo(function App() {
     };
     // @ts-ignore
     window.refreshInventory = openOrRefreshInventory;
+  }
+
+  if(!boardSquareSize) {
+    const bodyWidth = document.body.getBoundingClientRect().width;
+    dispatch(setSquareSize(bodyWidth));
   }
 
   if (!isOpen) {

@@ -10,6 +10,7 @@ import {ItemTypes} from "../../constants/dnd/types";
 import {mpTriggerDropItem, openContextMenu} from "../../redux/actions/contextMenu";
 import Item from "../../models/Item";
 import {addHoveredItem} from "../../redux/actions/hoveredItem";
+import board from "../../redux/reducers/board";
 
 interface Props {
   item: Item;
@@ -18,6 +19,7 @@ interface Props {
 const SquareEquippedItem: React.FC<Props> = React.memo(function SquareEquippedItem ({item}) {
 
   const {
+    board: {boardSquareSize},
     draggedItem: {canDrop, hoveredSquare, item: draggedItem, goingToDrop, goingToStack},
     hoveredItem: {item: hoveredItem}
   } = useSelector(state => state);
@@ -38,44 +40,15 @@ const SquareEquippedItem: React.FC<Props> = React.memo(function SquareEquippedIt
   goingToStackRef.current = goingToStack;
 
   // set image dimensions to resize
-  const imageContainerRef = useRef();
   useEffect(() => {
-    // Handler to call on window resize
-    // function to set preview image dimensions
-    function handleResize() {
-      const current: HTMLElement | null = imageContainerRef.current;
-      const CSSStyleDeclaration = window.getComputedStyle(current);
-
-      let imageContainerWidth: string | number = CSSStyleDeclaration.getPropertyValue('width');
-      let imageContainerHeight: string | number = CSSStyleDeclaration.getPropertyValue('height');
-
-      // get number from string (string example: 123.45px)
-      const regex = /^((\d|\.)+)/;
-      imageContainerWidth = parseFloat(imageContainerWidth.match(regex)[0]);
-      imageContainerHeight = parseFloat(imageContainerHeight.match(regex)[0]);
-
-      if(item.mainCell === 1 || item.mainCell === 2 || item.mainCell === 3) {
-        // @ts-ignore
-        setImageWidth(imageContainerWidth * item.width * 0.44);
-        // @ts-ignore
-        setImageHeight(imageContainerHeight * item.height);
-      } else {
-        // @ts-ignore
-        setImageWidth(imageContainerWidth * item.width * 1.4);
-        // @ts-ignore
-        setImageHeight(imageContainerHeight * item.height * 1.4);
-      }
+    // ***1.25 coz image's width === 80% of the container
+    if(boardSquareSize) {
+      // @ts-ignore
+      setImageWidth(item.width * boardSquareSize * 1.25);
+      // @ts-ignore
+      setImageHeight(item.height * boardSquareSize * 1.25);
     }
-
-    // Add event listener
-    window.addEventListener("resize", handleResize);
-
-    // Call handler right away so state gets updated with initial size
-    handleResize();
-
-    // Remove event listener on cleanup
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  }, [boardSquareSize])
 
   const dispatch = useDispatch();
 
@@ -85,9 +58,9 @@ const SquareEquippedItem: React.FC<Props> = React.memo(function SquareEquippedIt
   };
 
   const handleMouseDown = (event) => {
+    event.persist();
     if(event.button !== 0) return;
     dispatch(addDraggedItem({...item}));
-    event.persist();
 
     // last-remove
     // const savedTarget = event.currentTarget;
@@ -97,7 +70,14 @@ const SquareEquippedItem: React.FC<Props> = React.memo(function SquareEquippedIt
     // event.target.style.width = '100%';
     if(item.mainCell === 1 || item.mainCell === 2 || item.mainCell === 3) {
       // careful
+      console.log('newClone', newClone.childNodes[0].style.width);
+      newClone.childNodes[0].style.width = '80%';
+      newClone.children[0].style.height = '80%';
+      newClone.children[0].style.left = '10%';
+      newClone.children[0].style.top = '10%';
+      newClone.children[0].style.justifyContent = 'center';
       newClone.children[0].children[0].style.width = '100%'
+      newClone.children[0].children[0].style.height = '100%'
     }
 
     newClone.style.width = imageWidth + 'px';
@@ -214,7 +194,7 @@ const SquareEquippedItem: React.FC<Props> = React.memo(function SquareEquippedIt
 
   // result data uri - image after resizing in canvas
   return (
-    <EquippedItem imageContainerForwardedRef={imageContainerRef}>
+    <EquippedItem>
       {item.imageUrl && imageElement}
     </EquippedItem>
   );

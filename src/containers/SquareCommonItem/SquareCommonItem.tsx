@@ -19,6 +19,7 @@ const SquareCommonItem: React.FC<Props> = React.memo(function SquareCommonItem({
   const [imageHeight, setImageHeight] = useState();
 
   const {
+    board: {boardSquareSize},
     draggedItem: {canDrop, hoveredSquare, item: draggedItem, xDown, yDown, goingToDrop, goingToStack},
     hoveredItem: {item: hoveredItem}
   } = useSelector(state => state);
@@ -41,43 +42,15 @@ const SquareCommonItem: React.FC<Props> = React.memo(function SquareCommonItem({
 
   const dispatch = useDispatch();
 
-  const imageContainerRef = useRef();
   useEffect(() => {
-    // Handler to call on window resize
-    function handleResize() {
-      const current: HTMLElement | null = imageContainerRef.current;
-      const CSSStyleDeclaration = window.getComputedStyle(current);
-
-      let imageContainerWidth: string | number = CSSStyleDeclaration.getPropertyValue('width');
-      let imageContainerHeight: string | number = CSSStyleDeclaration.getPropertyValue('height');
-
-      // get number from string (string example: 123.45px)
-      const regex = /^((\d|\.)+)/;
-      imageContainerWidth = parseFloat(imageContainerWidth.match(regex)[0]);
-      imageContainerHeight = parseFloat(imageContainerHeight.match(regex)[0]);
-
-      // // old image sizes
-      // // @ts-ignore
-      // setImageWidth(imageContainerWidth * item.width - 2);
-      // // @ts-ignore
-      // setImageHeight(imageContainerHeight * item.height - 2);
-
-      // new sizes
+    // ***1.25 coz image's width === 80% of the container
+    if(boardSquareSize) {
       // @ts-ignore
-      setImageWidth(imageContainerWidth * item.width);
+      setImageWidth(item.width * boardSquareSize);
       // @ts-ignore
-      setImageHeight(imageContainerHeight * item.height);
+      setImageHeight(item.height * boardSquareSize);
     }
-
-    // Add event listener
-    window.addEventListener("resize", handleResize);
-
-    // Call handler right away so state gets updated with initial size
-    handleResize();
-
-    // Remove event listener on cleanup
-    return () => window.removeEventListener("resize", handleResize);
-  }, [item]);
+  }, [boardSquareSize]);
 
   let imageElement = null;
 
@@ -101,6 +74,7 @@ const SquareCommonItem: React.FC<Props> = React.memo(function SquareCommonItem({
     // savedTarget.style.zIndex = 0;
 
     const newClone = event.currentTarget.cloneNode(true);
+
     newClone.addEventListener('dragstart', (e) => {
       e.stopPropagation();
       e.preventDefault();
@@ -146,7 +120,6 @@ const SquareCommonItem: React.FC<Props> = React.memo(function SquareCommonItem({
   };
 
   const handleMouseOver = () => {
-    console.log('mous over squareCommonItem');
     if(!draggedItem && (!hoveredItem || hoveredItem.mainCell !== item.mainCell)) {
       dispatch(addHoveredItem(item));
     }
@@ -194,7 +167,7 @@ const SquareCommonItem: React.FC<Props> = React.memo(function SquareCommonItem({
   }
 
   return (
-    <CommonItem imageContainerForwardedRef={imageContainerRef}>
+    <CommonItem>
       {imageElement}
     </CommonItem>
   )

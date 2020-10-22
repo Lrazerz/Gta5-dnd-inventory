@@ -3,12 +3,11 @@ import classes from '../../../styles/CommonItem.module.scss';
 
 interface Props {
   children: any;
-  imageContainerForwardedRef: React.Ref<any>;
 }
 
-const CommonItem: React.FC<Props> = ({ children, imageContainerForwardedRef }) => {
+const CommonItem: React.FC<Props> = ({ children }) => {
   return (
-    <div ref={imageContainerForwardedRef} className={classes.CommonItem}>
+    <div className={classes.CommonItem}>
         {children}
     </div>
   );

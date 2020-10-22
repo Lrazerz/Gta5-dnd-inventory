@@ -1,7 +1,7 @@
 import {xMin, xMax, yMin, yMax} from "../../constants/boardDimensions";
 import {
   BOARD_ALL_ITEMS_RELEASE,
-  BOARD_CURRENT_COUNT_CHANGE,
+  BOARD_CURRENT_COUNT_CHANGE, BOARD_SET_SQUARE_SIZE,
   EQUIPPED_STATE_CHANGE,
   SINGLE_ITEM_SQUARES_FILL,
   SQUARES_FILL,
@@ -13,6 +13,7 @@ import {
 // if {mainCell:[x,y],width,height,} - filled
 // const initialState = {
 //   board: [],
+//   boardSquareSize: null (number, in px)
 // }
 
 // Fill the matrix
@@ -24,7 +25,7 @@ const _fillInitialState = () => {
       board[y][x] = null;
     }
   }
-  return {board};
+  return {board, boardSquareSize: null};
 }
 
 export default (state = _fillInitialState(), action) => {
@@ -93,7 +94,14 @@ export default (state = _fillInitialState(), action) => {
     case BOARD_ALL_ITEMS_RELEASE: {
       const {board} = _fillInitialState();
       return {
+        ...state,
         board,
+      }
+    }
+    case BOARD_SET_SQUARE_SIZE: {
+      return {
+        ...state,
+        boardSquareSize: action.size,
       }
     }
     default: {

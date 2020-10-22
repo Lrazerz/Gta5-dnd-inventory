@@ -26,7 +26,7 @@ const RangeComponent: React.FC<Props> = React.memo(({leftOffset, topOffset, cont
 
   const {
     draggedItem: {canDrop, hoveredSquare, allHoveredSquares, item: draggedItem, xDown, yDown, goingToDrop, goingToStack},
-    board: {board: boardCells},
+    board: {board: boardCells, boardSquareSize},
   } = useSelector(state => state);
 
   // refs to pass to event handler
@@ -111,9 +111,8 @@ const RangeComponent: React.FC<Props> = React.memo(({leftOffset, topOffset, cont
 
     if(typeof contextItem.mainCell === 'number') {
       // board square width
-      const squareWidth = document.body.clientWidth * 0.0323;
-      newClone.style.width = squareWidth * contextItem.width + 'px';
-      newClone.style.height = squareWidth * contextItem.height + 'px';
+      newClone.style.width = boardSquareSize * contextItem.width * 1.25 + 'px';
+      newClone.style.height = boardSquareSize * contextItem.height * 1.25 + 'px';
     }
 
     document.body.append(newClone);
