@@ -52,41 +52,52 @@ const AppBoard: React.FC<Props> = React.memo(function AppBoard({onMouseOver: mou
   //endregion
 
   //region ------------------------------ Render squares from external inventory ------------------------------
-  const renderExternalInventorySquare = (y: number, x: number) => {
-    if (!externalBoardItems) {
-      return null;
-    }
-    let squareContent = null;
-    // Check if filled
-    const item = externalBoardItems[y][x];
-    if (item && item.mainCell[0] === x && item.mainCell[1] === y) {
-      // @ts-ignore
-      squareContent = <ExternalSquareCommonItem coords={[x, y]} item={item}/>;
-    }
-    const isHovered = hoveredArea === 2 && allHoveredSquares.findIndex(sq => sq[0] === x && sq[1] === y) !== -1;
+  const isShowExternalBoard = externalBoardItems.length > 0;
 
-    return (
-      <ExternalBoardSquare key={x * 30 + y} coords={[x, y]} isHovered={isHovered} isPartOfItem={Boolean(item)}>
-        {squareContent}
-      </ExternalBoardSquare>
-    );
-  };
+  if(isShowExternalBoard) {
+    const renderExternalInventorySquare = (y: number, x: number) => {
+      if (!externalBoardItems) {
+        return null;
+      }
+      let squareContent = null;
+      // Check if filled
+      const item = externalBoardItems[y][x];
+      if (item && item.mainCell[0] === x && item.mainCell[1] === y) {
+        // @ts-ignore
+        squareContent = <ExternalSquareCommonItem coords={[x, y]} item={item}/>;
+      }
+      const isHovered = hoveredArea === 2 && allHoveredSquares.findIndex(sq => sq[0] === x && sq[1] === y) !== -1;
 
-  for (let y = 0; y <= 8; y++) {
-    for (let x = 0; x <= xMax; x++) {
-      externalInventorySquares.push(renderExternalInventorySquare(y, x));
+      return (
+        <ExternalBoardSquare key={x * 30 + y} coords={[x, y]} isHovered={isHovered} isPartOfItem={Boolean(item)}>
+          {squareContent}
+        </ExternalBoardSquare>
+      );
+    };
+
+    for (let y = 0; y < externalBoardItems.length; y++) {
+      for (let x = 0; x <= xMax; x++) {
+        externalInventorySquares.push(renderExternalInventorySquare(y, x));
+      }
     }
   }
   //endregion
 
+  const topBackdropStyles = {
+    flexGrow: isShowExternalBoard ? 1 : 0,
+    height: isShowExternalBoard ? 'auto' : '15%',
+  }
+
   return (
     <div className={classes.AppBoard} onMouseOver={mouseOverHandler}>
-      <div style={{flexGrow: 1}}>
+      <div style={topBackdropStyles}>
         <BackDrop/>
       </div>
-      <ExternalBoard rowsCount={9}>
-        {externalInventorySquares}
-      </ExternalBoard>
+      {isShowExternalBoard && (
+        <ExternalBoard rowsCount={externalBoardItems.length}>
+          {externalInventorySquares}
+        </ExternalBoard>
+      )}
       <Board>
         {squares}
       </Board>

@@ -13,6 +13,7 @@ import {xMax, xMin, yMax, yMin} from "../../constants/boardDimensions";
 import Item from "../../models/Item";
 import DummyImage from '../../assets/dummy/weapon.png';
 import {translateToServerItem} from "../../utils/translateToServerItem";
+import {openExternalBoard} from "./externalBoard";
 //'https://i.ibb.co/HCn40jg/weapon-2.png'
 
 const importItemImage: (itemName: string) => Promise<any> = async (itemName) => {
@@ -29,17 +30,15 @@ const importItemImage: (itemName: string) => Promise<any> = async (itemName) => 
   }
 }
 
-const openOrRefreshInventory = async (info) => {
-  const values = JSON.parse(info).$values;
-
-  // equipped
+let _getEnabledAndBoardItems: (items: any[]) => Promise<{boardItems: Item[], enabledItems: Item[]}>;
+_getEnabledAndBoardItems = async (items) => {
   const enabledItems = [];
   const boardItems = [];
 
-  for(const propName in values) {
+  for(const propName in items) {
     // map through every item and add to corresponding array
     // item - single item with its own sizes
-    const item = values[propName];
+    const item = items[propName];
 
     // Square numbers starts from 1 instead of 0
     let {
@@ -95,10 +94,94 @@ const openOrRefreshInventory = async (info) => {
     }
   }
 
+  return {boardItems, enabledItems};
+};
+
+let _getExternalBoardItems: (items: any[]) => Promise<{externalBoardItems: Item[]}>;
+_getExternalBoardItems = async (items) => {
+  const externalBoardItems = [];
+
+  for(const propName in items) {
+    // map through every item and add to corresponding array
+    // item - single item with its own sizes
+    const item = items[propName];
+
+    // Square numbers starts from 1 instead of 0
+    let {
+      Name, PosNumberLeftAngle, SizeX, SizeY, Enabled, CurrentCount, MaxCount, IsRotated, ...rest
+    } = item;
+    const ID = item.ID.toString();
+
+    //region ------------------------------ Import image ------------------------------
+    let ImageUrl = await importItemImage(Name);
+
+    if(ImageUrl) {
+      ImageUrl = ImageUrl.default;
+    } else {
+      ImageUrl = DummyImage;
+    }
+    //endregion
+
+    const category: ItemCategories | string = item.Category.toLowerCase();
+
+    let FullItem: Item;
+
+    if(IsRotated) {
+      // swap width and height
+      const tmp = SizeX;
+      SizeX = SizeY;
+      SizeY = tmp;
+    }
+
+    FullItem = new Item(ID, Name, category, PosNumberLeftAngle,
+      SizeX, SizeY, CurrentCount, MaxCount,
+      ImageUrl, Enabled, IsRotated, rest);
+
+    const mainCellY = Math.floor(PosNumberLeftAngle / (xMax + 1));
+    const mainCellX = PosNumberLeftAngle % (xMax + 1) - 1;
+
+    const filledSquares: [[number, number]] | [] = [];
+
+    for (let i = mainCellX; i < mainCellX + SizeX; i++) {
+      for (let j = mainCellY; j < mainCellY + SizeY; j++) {
+        // @ts-ignore
+        filledSquares.push([i, j]);
+      }
+    }
+    FullItem.mainCell = [mainCellX, mainCellY];
+
+    externalBoardItems.push({...FullItem, squares: filledSquares});
+  }
+
+  return {externalBoardItems};
+}
+
+const openOrRefreshInventory = async (info) => {
+  const values = JSON.parse(info).$values;
+
+  const {boardItems, enabledItems} = await _getEnabledAndBoardItems(values);
+
   // @ts-ignore
   store.dispatch(_addItems(boardItems));
   // @ts-ignore
   store.dispatch(setEquippedItems(enabledItems));
+}
+
+const openDoubleInventory = async (info) => {
+  console.log('open double inv')
+  const {$values: values, $externalValues: externalValues,
+  $externalBoardHeight: externalBoardHeight} = JSON.parse(info);
+
+  const {boardItems, enabledItems} = await _getEnabledAndBoardItems(values);
+
+  const {externalBoardItems} = await _getExternalBoardItems(externalValues);
+  // @ts-ignore
+  store.dispatch(_addItems(boardItems));
+  // @ts-ignore
+  store.dispatch(setEquippedItems(enabledItems));
+  console.log('open ext board')
+  // @ts-ignore
+  store.dispatch(openExternalBoard(externalBoardItems, externalBoardHeight));
 }
 
 // _addItems: 1. check every item from derived, find on board and check all props on equality; 2. check all board items
@@ -106,88 +189,91 @@ const openOrRefreshInventory = async (info) => {
 
 // todo maybe this checks won't speed up project
 const _addItems = (items: Item[]) => {
-  return (dispatch, getState) => {
-    if(items.length === 0) dispatch(_releaseAllItems());
-
-    const board = getState().board.board;
-    let isAnyChanges = false;
-    // checked items from items param (equal (with props) to items on board)
-    const checkedItems = [];
-
-    //region ------------------------------ Check every item, find relative item on board ------------------------------
-    for(let i = 0; i < items.length; i++) {
-      const item = items[i];
-      const [mainCellX, mainCellY] = item.mainCell;
-      const boardSquare = board[mainCellY][mainCellX];
-
-      if(boardSquare) {
-        // board has item from arrived items
-
-        for(const key in item) {
-          // check all props, if smth changed - set up isAnyChanges to true
-          if(!boardSquare[key] || boardSquare[key] !== item[key]) {
-            isAnyChanges = true;
-            break;
-          }
-        }
-      } else {
-        isAnyChanges = true;
-      }
-
-      if(isAnyChanges) {
-        break;
-      }
-      else {
-        checkedItems.push(item);
-      }
-    }
-    //endregion
-
-    if(!isAnyChanges) {
-      //region ------------------------------ Check every board square and find relative checked item ------------------------------
-      for(let y = yMin; y <= yMax; y++) {
-        for(let x = xMin; x <= xMax; x++) {
-          const boardSquare = board[y][x];
-
-          //region --------------------------- If no item in the checkedItems or props differs - changes ---------------------------
-          if(boardSquare) {
-            // if have item at the selected square
-
-            // find item among the chechedItems
-            const checkedItemIdx = checkedItems.findIndex(item => item.id === boardSquare.id);
-            if(!checkedItemIdx) {
-              // there is no such item in the checkedItems
-              isAnyChanges = true;
-              // to break outer loop too
-              y = yMax + 1;
-              break;
-            }
-            else {
-              // there is such item in the checkedItems
-              for(const key in boardSquare) {
-                if(boardSquare[key] !== checkedItems[checkedItemIdx][key]) {
-                  // if any
-                  isAnyChanges = true;
-                  break;
-                }
-              }
-
-              if(isAnyChanges) {
-                y = yMax + 1;
-                break;
-              }
-            }
-          }
-          //endregion
-        }
-      }
-      //endregion
-    }
-
-    if(isAnyChanges) {
-      dispatch({type: SQUARES_FILL, items});
-    }
-  }
+  // last-remove
+  // return (dispatch, getState) => {
+  //   if(items.length === 0) dispatch(_releaseAllItems());
+  //
+  //   const board = getState().board.board;
+  //   let isAnyChanges = false;
+  //   // checked items from items param (equal (with props) to items on board)
+  //   const checkedItems = [];
+  //
+  //   //region ------------------------------ Check every item, find relative item on board ------------------------------
+  //   for(let i = 0; i < items.length; i++) {
+  //     const item = items[i];
+  //     const [mainCellX, mainCellY] = item.mainCell;
+  //     const boardSquare = board[mainCellY][mainCellX];
+  //
+  //     if(boardSquare) {
+  //       // board has item from arrived items
+  //
+  //       for(const key in item) {
+  //         // check all props, if smth changed - set up isAnyChanges to true
+  //         if(!boardSquare[key] || boardSquare[key] !== item[key]) {
+  //           isAnyChanges = true;
+  //           break;
+  //         }
+  //       }
+  //     } else {
+  //       isAnyChanges = true;
+  //     }
+  //
+  //     if(isAnyChanges) {
+  //       break;
+  //     }
+  //     else {
+  //       checkedItems.push(item);
+  //     }
+  //   }
+  //   //endregion
+  //
+  //   if(!isAnyChanges) {
+  //     //region ------------------------------ Check every board square and find relative checked item ------------------------------
+  //     for(let y = yMin; y <= yMax; y++) {
+  //       for(let x = xMin; x <= xMax; x++) {
+  //         const boardSquare = board[y][x];
+  //
+  //         //region --------------------------- If no item in the checkedItems or props differs - changes ---------------------------
+  //         if(boardSquare) {
+  //           // if have item at the selected square
+  //
+  //           // find item among the chechedItems
+  //           const checkedItemIdx = checkedItems.findIndex(item => item.id === boardSquare.id);
+  //           if(!checkedItemIdx) {
+  //             // there is no such item in the checkedItems
+  //             isAnyChanges = true;
+  //             // to break outer loop too
+  //             y = yMax + 1;
+  //             break;
+  //           }
+  //           else {
+  //             // there is such item in the checkedItems
+  //             for(const key in boardSquare) {
+  //               if(boardSquare[key] !== checkedItems[checkedItemIdx][key]) {
+  //                 // if any
+  //                 isAnyChanges = true;
+  //                 break;
+  //               }
+  //             }
+  //
+  //             if(isAnyChanges) {
+  //               y = yMax + 1;
+  //               break;
+  //             }
+  //           }
+  //         }
+  //         //endregion
+  //       }
+  //     }
+  //     //endregion
+  //   }
+  //
+  //   if(isAnyChanges) {
+  //     dispatch({type: SQUARES_FILL, items});
+  //   }
+  //
+  // }
+    return {type: SQUARES_FILL, items};
 }
 
 const _removeItem = (coordsArr) => {
@@ -313,6 +399,7 @@ export {
   addItemBySquares,
   removeItem,
   openOrRefreshInventory,
+  openDoubleInventory,
   changeEquippedState,
   removeItemFromBoard,
   boardChangeCurrentCountByItemId,

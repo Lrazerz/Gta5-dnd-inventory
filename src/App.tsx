@@ -8,7 +8,7 @@ import EquippedWeaponsInventoryContainer from "./containers/equippedWeaponsInven
 import SecondaryText from "./components/layout/SecondaryText";
 import leftSparksSvg from "./assets/images/UI/left-sparks.svg";
 import rightSparksSvg from "./assets/images/UI/right-sparks.svg";
-import {openOrRefreshInventory, setSquareSize} from "./redux/actions/board";
+import {openDoubleInventory, openOrRefreshInventory, setSquareSize} from "./redux/actions/board";
 const ContextMenu = React.lazy(() => import("./components/UI/ContextMenu"));
 const RangeComponent = React.lazy(() => import("./components/UI/RangeComponent"));
 import {closeContextMenu} from "./redux/actions/contextMenu";
@@ -50,10 +50,10 @@ const App = React.memo(function App() {
   }
 
   // @ts-ignore
-  if(!window.openExternalInventory) {
+  if(!window.openDoubleInventory) {
     // @ts-ignore
-    window.openExternalInventory = async info => {
-      await openExternalBoard(info);
+    window.openDoubleInventory = async info => {
+      await openDoubleInventory(info);
     }
   }
 

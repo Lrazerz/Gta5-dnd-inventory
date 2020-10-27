@@ -6,7 +6,19 @@ import {
   EXTERNAL_BOARD_CURRENT_COUNT_CHANGE
 } from "../actions/types";
 import Item from "../../models/Item";
-import {dummyExternalItems} from "../../constants/dummy/dummyExternalItems";
+import {xMax, xMin, yMin} from "../../constants/boardDimensions";
+
+let _fillExternalBoard: (height: number) => Array<Array<number>>;
+_fillExternalBoard = (height) => {
+  const boardItems = [];
+  for(let y = yMin; y < height; y++) {
+    boardItems[y] = [];
+    for(let x = xMin; x <= xMax; x++) {
+      boardItems[y][x] = null;
+    }
+  }
+  return boardItems;
+}
 
 interface State {
   externalBoard: Item[] | any[];
@@ -14,7 +26,7 @@ interface State {
 
 // isActive when has items
 const initialState: State = {
-  externalBoard: dummyExternalItems.items,
+  externalBoard: [],
 }
 
 export default (state = initialState, action) => {
@@ -32,9 +44,22 @@ export default (state = initialState, action) => {
       }
     }
     case OPEN_EXTERNAL_BOARD: {
+      console.log('open ext board reducer')
+      const newBoard = _fillExternalBoard(action.height);
+      action.items.forEach(itemAndSquares => {
+        console.log('action.items.forEach')
+        const {squares, ...itemProps} = itemAndSquares;
+        squares.forEach(square => {
+          console.log('squares.forEach')
+          newBoard[square[1]][square[0]] = {
+            ...itemProps
+          };
+        });
+      });
+      console.log('return state')
       return {
         ...state,
-        externalBoard: action.newBoard,
+        externalBoard: newBoard,
       }
     }
     case EXTERNAL_ITEM_SQUARES_RELEASE: {
