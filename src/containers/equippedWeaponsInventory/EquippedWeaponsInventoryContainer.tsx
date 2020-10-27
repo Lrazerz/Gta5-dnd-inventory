@@ -18,7 +18,12 @@ export interface WeaponTypeContainerCells {
   toolsCells: SingleCell[],
 }
 
-const EquippedWeaponsInventoryContainer = React.memo(function EquippedWeaponsInventoryContainer() {
+interface Props {
+  onMouseOver: () => void;
+}
+
+const EquippedWeaponsInventoryContainer: React.FC<Props> =
+  React.memo(function EquippedWeaponsInventoryContainer({onMouseOver: mouseOverHandler}) {
   const dispatch = useDispatch();
   const {equippedItems: {cells: equippedCells},
     draggedItem: {goingToDrop, hoveredSquare, item: draggedItem}} = useSelector((state) => state);
@@ -73,6 +78,7 @@ const EquippedWeaponsInventoryContainer = React.memo(function EquippedWeaponsInv
 
   const equippedContainerMouseOverHandler = e => {
     if(draggedItem) dispatch(setGoingToDrop(true, 0));
+    mouseOverHandler();
   }
 
   const equippedContainerStyles: CSSProperties = {

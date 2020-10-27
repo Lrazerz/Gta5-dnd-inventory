@@ -17,38 +17,31 @@ interface Props {
 const BoardSquare: React.FC<Props> = React.memo(function BoardSquare({coords: [x, y], children, isHovered, isPartOfItem}) {
 
   const {
-    draggedItem: {hoveredSquare, canDrop: canDropRedux, item: draggedItem},
-    hoveredItem: {item: hoveredItem},
+    draggedItem: {hoveredSquare, canDrop: canDropRedux, item: draggedItem, hoveredArea}
   } = useSelector((state) => state);
   const draggedItemRef = useRef();
   draggedItemRef.current = draggedItem;
 
   const dispatch = useDispatch();
   const drop = null;
+  //region ------------------------------ Set hovered squares if drag item ------------------------------
   const squareMouseOverHandler = () => {
-    console.log('mous over boardSquare');
-     //region ------------------------------ Set squares if drag item ------------------------------
     if (draggedItemRef.current) {
-      if (!hoveredSquare || typeof hoveredSquare !== 'object' || hoveredSquare[0] !== x || hoveredSquare[1] !== y) {
-        dispatch(setHoveredSquares([x, y]));
+      if (hoveredArea !== 1 || !hoveredSquare || typeof hoveredSquare !== 'object' || hoveredSquare[0] !== x || hoveredSquare[1] !== y) {
+        dispatch(setHoveredSquares([x, y], 1));
       }
     }
-    //endregion
-    //region ------------------------------ Release hovered item if don't drag item ------------------------------
-    else {
-      if(hoveredItem) {
-        dispatch(removeHoveredItem());
-      }
-    }
-    //endregion
   }
+  //endregion
 
   let boardSquareStyles: CSSProperties = {
     outline: `0.25px solid rgba(109, 114, 125, 0.8)`
   }
 
   let mouseOverElStyles: CSSProperties = {
-    pointerEvents: (hoveredSquare && typeof hoveredSquare === 'object' && (hoveredSquare[0] === x && hoveredSquare[1] === y) ) ? 'none' : 'auto',
+    pointerEvents: (hoveredArea === 1 && hoveredSquare && typeof hoveredSquare === 'object'
+      && (hoveredSquare[0] === x && hoveredSquare[1] === y) ) ? 'none' : 'auto',
+    zIndex: 'auto',
   }
 
   if (isPartOfItem) {
@@ -65,7 +58,7 @@ const BoardSquare: React.FC<Props> = React.memo(function BoardSquare({coords: [x
   return (
     // @ts-ignore
     <div ref={drop} className={classes.BoardSquare} style={boardSquareStyles}
-         onMouseUp={() => {if(draggedItem) invokeOnMouseUp()}}>
+         onMouseUp={() => {if(draggedItem) invokeOnMouseUp()}} onClick={e => e.stopPropagation()}>
         {children}
       {isHovered && !canDropRedux && <Overlay color={theme.colors.danger}/>}
       {isHovered && canDropRedux && <Overlay color={theme.colors.success}/>}

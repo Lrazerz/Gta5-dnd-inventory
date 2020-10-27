@@ -3,7 +3,7 @@ import {
   DRAGGED_ITEM_RELEASE,
   HOVERED_SQUARES_SET,
   HOVERED_SQUARES_REMOVE,
-  GOING_TO_DROP_SET,
+  GOING_TO_DROP_SET, EXTERNAL_BOARD_CURRENT_COUNT_CHANGE,
 } from "../actions/types";
 import Item from "../../models/Item";
 
@@ -13,15 +13,24 @@ export interface GoingToStack {
   draggedItemNewCurrentCount: number,
 }
 
+// from 1 coz 0 casting to false
+enum HoveredAreas {
+  Board = 1, ExternalBoard, Equipped
+}
+
 interface State {
   item: any;
+  draggedItemArea: HoveredAreas | null;
 
   xUp: number | null;
   xDown: number | null;
   yUp: number | null;
   yDown: number | null;
 
-  isHoveredEquipped: boolean;
+  //last-remove
+  // isHoveredEquipped: boolean;
+  hoveredArea: HoveredAreas | null;
+
   hoveredSquare: [number,number] | number | null;
   allHoveredSquares: Array<Array<number>> | number | null;
 
@@ -33,13 +42,18 @@ interface State {
 
 const initialState: State = {
   item: null,
+  draggedItemArea:  null,
 
   xUp: null,
   xDown: null,
   yUp: null,
   yDown: null,
 
-  isHoveredEquipped: false,
+  //last-remove
+  // isHoveredEquipped: false,
+  hoveredArea: null,
+
+
   // Square, hovered with mouse
   hoveredSquare: null,
   // All hovered squares depending on the size of the item
@@ -54,10 +68,11 @@ const initialState: State = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case DRAGGED_ITEM_SET: {
-      const {item,xUp,xDown,yUp,yDown} = action;
+      const {item,xUp,xDown,yUp,yDown, draggedItemArea} = action;
       return {
         ...state,
         item: {...item},
+        draggedItemArea,
         xUp,
         xDown,
         yUp,
@@ -74,12 +89,13 @@ export default (state = initialState, action) => {
         ...state,
         hoveredSquare: null,
         allHoveredSquares: [],
+        hoveredArea: null,
       }
     }
     case HOVERED_SQUARES_SET: {
       return {
         ...state,
-        isHoveredEquipped: action.isHoveredEquipped,
+        hoveredArea: action.hoveredArea,
         hoveredSquare: action.square,
         allHoveredSquares: action.squares,
         canDrop: action.canDrop,
@@ -96,6 +112,7 @@ export default (state = initialState, action) => {
         goingToDrop: newGoingToDrop,
         canDrop: action.canDrop,
         goingToStack: false,
+        hoveredArea: null,
       }
     }
     default: {

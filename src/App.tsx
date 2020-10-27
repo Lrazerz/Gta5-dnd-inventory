@@ -14,6 +14,7 @@ import RangeComponent from "./components/UI/RangeComponent";
 import {closeContextMenu} from "./redux/actions/contextMenu";
 import {rotateItem, rotateItemOnBoard, setGoingToDrop} from "./redux/actions/draggedItem";
 import {openExternalBoard} from "./redux/actions/externalBoard";
+import {removeHoveredItem} from "./redux/actions/hoveredItem";
 
 const App = React.memo(function App() {
   const [isOpen, setIsOpen] = useState(false);
@@ -24,7 +25,7 @@ const App = React.memo(function App() {
     board: {boardSquareSize},
     contextMenu,
     draggedItem: {goingToDrop, item: draggedItem},
-    hoveredItem: {item: hoveredItem}
+    hoveredItem: {item: hoveredItem, hoveredArea: hoveredItemArea}
   } = useSelector(state => state);
 
   const goingToDropRef = useRef();
@@ -63,23 +64,38 @@ const App = React.memo(function App() {
     dispatch(setSquareSize(bodyWidth * 0.04125));
   }
 
-  document.oncontextmenu = e => {
-    e.preventDefault();
+  if(!document.oncontextmenu) {
+    document.oncontextmenu = e => {
+      e.preventDefault();
+    }
   }
 
-  document.onkeydown = e => {
+  const spaceDownHandler = (e) => {
     if (e.code.toLowerCase() === 'space') {
+      e.preventDefault();
       if (draggedItem && draggedItem.width > 1 && draggedItem.height > 1) {
         dispatch(rotateItem());
-      } else if (hoveredItem && typeof hoveredItem.mainCell === 'object' && hoveredItem.width > 1 && hoveredItem.height > 1) {
-        dispatch(rotateItemOnBoard(hoveredItem));
+      } else if (hoveredItem && hoveredItemArea !== 3 &&
+        hoveredItem.width > 1 && hoveredItem.height > 1) {
+        dispatch(rotateItemOnBoard(hoveredItem, hoveredItemArea));
       }
     }
   }
 
-  window.onclick = () => {
-    if (contextMenu) {
-      dispatch(closeContextMenu());
+  document.onkeydown = spaceDownHandler;
+
+  if(!window.onclick) {
+    window.onclick = () => {
+      console.log('document onclick');
+      if (contextMenu.contextItem) {
+        dispatch(closeContextMenu());
+      }
+    }
+  }
+
+  const removeCurrentHoveredItem = () => {
+    if (hoveredItem) {
+      dispatch(removeHoveredItem());
     }
   }
 
@@ -108,18 +124,21 @@ const App = React.memo(function App() {
           </SecondaryText>
         </div>
         <div className={classes.App}>
-          <EquippedClosingInventoryContainer/>
-          <AppBoard/>
-          <EquippedWeaponsInventoryContainer/>
+          <EquippedClosingInventoryContainer onMouseOver={removeCurrentHoveredItem}/>
+          <AppBoard onMouseOver={removeCurrentHoveredItem}/>
+          <EquippedWeaponsInventoryContainer onMouseOver={removeCurrentHoveredItem}/>
         </div>
         <object type="image/svg+xml" data={leftSparksSvg} className={classes.LeftSparksSvgContainer}/>
         <object type="image/svg+xml" data={rightSparksSvg} className={classes.RightSparksSvgContainer}/>
         {contextMenu.contextItem && !contextMenu.splitMenuOpen && (<ContextMenu contextItem={contextMenu.contextItem}
                                                                                 leftOffset={contextMenu.leftOffset}
-                                                                                topOffset={contextMenu.topOffset}/>)}
+                                                                                topOffset={contextMenu.topOffset}
+                                                                                hoveredArea={contextMenu.hoveredArea}
+                                                                                />)}
         <RangeComponent leftOffset={contextMenu.leftOffset}
                         topOffset={contextMenu.topOffsetTopContext}
                         contextItem={contextMenu.contextItem}
+                        hoveredArea={contextMenu.hoveredArea}
                         splitMenuOpen={contextMenu.splitMenuOpen}/>
       </div>
     </>

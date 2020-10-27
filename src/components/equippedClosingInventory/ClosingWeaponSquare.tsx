@@ -33,15 +33,13 @@ const ClosingWeaponSquare: React.FC<Props> = React.memo(function ClosingWeaponSq
     //region ------------------------------ Set squares if drag item ------------------------------
     if (draggedItemRef.current) {
       if (!hoveredSquareRef.current || typeof hoveredSquareRef.current !== 'number' || hoveredSquareRef.current !== coords) {
-        dispatch(setHoveredSquares(coords, true));
+        dispatch(setHoveredSquares(coords, 3));
       }
     }
     //endregion
     //region ------------------------------ Release hovered item if don't drag item ------------------------------
-    else {
-      if(hoveredItem) {
-        dispatch(removeHoveredItem());
-      }
+    else if(hoveredItem) {
+      dispatch(removeHoveredItem());
     }
     //endregion
   }

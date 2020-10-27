@@ -1,9 +1,9 @@
 import Item from "../../models/Item";
-import {ContextAction} from "../../models/Context/ContextAction";
 import {CONTEXT_MENU_OPEN, CONTEXT_MENU_CLOSE, DRAGGED_ITEM_SET, CONTEXT_MENU_SPLIT_OPEN} from "../actions/types";
 
 interface State {
   contextItem: null | Item;
+  hoveredArea: null | number;
 
   leftOffset: null | number;
   topOffset: null | number;
@@ -14,6 +14,7 @@ interface State {
 
 const initialState: State = {
   contextItem: null,
+  hoveredArea: null,
   // offsets from document edge
   leftOffset: null,
   topOffset: null,
@@ -27,6 +28,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         contextItem: action.item,
+        hoveredArea: action.hoveredArea,
         leftOffset: action.leftOffset,
         topOffset: action.topOffset,
         topOffsetTopContext: action.topOffsetTopContext,
@@ -34,7 +36,6 @@ export default (state = initialState, action) => {
       }
     }
     case CONTEXT_MENU_SPLIT_OPEN: {
-      console.log('split menu open');
       return {
         ...state,
         splitMenuOpen: true,
@@ -42,6 +43,7 @@ export default (state = initialState, action) => {
     }
     case CONTEXT_MENU_CLOSE:
     case DRAGGED_ITEM_SET: {
+      console.log('context menu close')
       return initialState;
     }
     default: {

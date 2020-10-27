@@ -6,16 +6,19 @@ import {addDraggedItem, draggedItemRelease, stackItem} from "../../redux/actions
 import {equippedChangeCurrentCount, removeEquippedItem, setEquippedItem} from "../../redux/actions/equippedItems";
 import {addItem, boardChangeCurrentCountByItemId} from "../../redux/actions/board";
 import Item from "../../models/Item";
+import {addExternalBoardItem, externalBoardChangeCurrentCountByItemId} from "../../redux/actions/externalBoard";
 
 interface Props {
   leftOffset: number;
   topOffset: number;
   contextItem: Item;
+  hoveredArea: number;
   splitMenuOpen: boolean;
 }
 
+// hoveredArea - context item area
 // todo change count remove splitMenuOpen
-const RangeComponent: React.FC<Props> = React.memo(({leftOffset, topOffset, contextItem, splitMenuOpen}) => {
+const RangeComponent: React.FC<Props> = React.memo(({leftOffset, topOffset, contextItem, hoveredArea, splitMenuOpen}) => {
   // lift up item to be at the top of the image
   const containerRef = useRef();
 
@@ -25,8 +28,10 @@ const RangeComponent: React.FC<Props> = React.memo(({leftOffset, topOffset, cont
   const dispatch = useDispatch();
 
   const {
-    draggedItem: {canDrop, hoveredSquare, allHoveredSquares, item: draggedItem, xDown, yDown, goingToDrop, goingToStack},
+    draggedItem: {canDrop, hoveredSquare, allHoveredSquares, item: draggedItem, xDown, yDown, goingToDrop, goingToStack,
+      hoveredArea: hoveredAreaOfScreen},
     board: {board: boardCells, boardSquareSize},
+    externalBoard: {externalBoard: externalBoardCells},
   } = useSelector(state => state);
 
   // refs to pass to event handler
@@ -38,6 +43,8 @@ const RangeComponent: React.FC<Props> = React.memo(({leftOffset, topOffset, cont
   const yDownRef = useRef();
   const goingToDropRef = useRef();
   const goingToStackRef = useRef();
+  const externalBoardCellsRef = useRef();
+  const hoveredAreaOfScreenRef = useRef();
   const boardCellsRef = useRef();
   canDropRef.current = canDrop;
   hoveredSquareRef.current = hoveredSquare;
@@ -48,6 +55,9 @@ const RangeComponent: React.FC<Props> = React.memo(({leftOffset, topOffset, cont
   goingToDropRef.current = goingToDrop;
   goingToStackRef.current = goingToStack;
   boardCellsRef.current = boardCells;
+  // @ts-ignore
+  externalBoardCellsRef.current = externalBoardCells;
+  hoveredAreaOfScreenRef.current = hoveredAreaOfScreen;
 
 
   useEffect(() => {
@@ -65,28 +75,25 @@ const RangeComponent: React.FC<Props> = React.memo(({leftOffset, topOffset, cont
 
   // similar logic to squareCommonItem
   const successButtonMouseDownHandler = event => {
-    event.persist();
     if (event.button !== 0) return;
+    event.persist();
     event.stopPropagation();
     const contextItemWithChangedCount = {...contextItem, currentCount: Number(splittedCount)};
     dispatch(addDraggedItem(contextItemWithChangedCount, contextItemWithChangedCount.mainCell as [number, number]));
 
-    // last-remove
-    // save target
-    // const savedTarget = event.currentTarget;
-    // savedTarget.style.zIndex = 0;
-
-    // ---------------------Logic to add dragged item to the body------------------------
+    //region --------------------- Logic to add dragged item to the body ------------------------
 
     let requiredItem: HTMLElement;
 
-    if(typeof contextItem.mainCell === 'number') {
-      requiredItem = document.getElementById(`square-equipped-item-${contextItem.mainCell}`);
-    } else {
+    if(hoveredArea === 1) {
       requiredItem =
-      document.getElementById(`square-common-item-${contextItem.mainCell[0]}-${contextItem.mainCell[1]}`);
+        document.getElementById(`square-common-item-${contextItem.mainCell[0]}-${contextItem.mainCell[1]}`);
+    } else if (hoveredArea === 2) {
+      requiredItem = document.getElementById(`external-square-common-item-${contextItem.mainCell[0]}-${contextItem.mainCell[1]}`);
+    } else if (hoveredArea === 3) {
+      requiredItem = document.getElementById(`square-equipped-item-${contextItem.mainCell}`);
     }
-
+    console.log('required dom item', requiredItem);
     // @ts-ignore
     const newClone: HTMLElement = requiredItem.cloneNode(true);
 
@@ -94,15 +101,11 @@ const RangeComponent: React.FC<Props> = React.memo(({leftOffset, topOffset, cont
     const currentCountEl = currentCountWrapper.childNodes[0];
     currentCountEl.textContent = String(splittedCount);
 
-    // const newClone = event.currentTarget.cloneNode(true);
     newClone.addEventListener('dragstart', (e) => {
       e.stopPropagation();
       e.preventDefault();
       return false;
     });
-
-    // last-remove
-    // savedTarget.style.pointerEvents = 'none';
 
     newClone.style.zIndex = String(150);
     newClone.style.outline = 'none';
@@ -134,6 +137,7 @@ const RangeComponent: React.FC<Props> = React.memo(({leftOffset, topOffset, cont
     newClone.onmouseover = e => {
       e.stopPropagation();
     }
+    //endregion
 
     newClone.onmouseup = () => {
       const goingToStackSaved = goingToStackRef.current;
@@ -144,29 +148,38 @@ const RangeComponent: React.FC<Props> = React.memo(({leftOffset, topOffset, cont
         if (goingToStackRef.current) {
           // @ts-ignore
           if (goingToStackRef.current.draggedItemNewCurrentCount > 0) {
-            console.log('goingToStackref current', goingToStackSaved);
 
+            //region ----------------------------- Visually change current count in the HTML -----------------------------
             const requiredItem: HTMLElement = document.getElementById(`curr-dragged-item`);
             const currentCountWrapper = requiredItem.childNodes[1];
             const currentCountEl = currentCountWrapper.childNodes[0];
             // @ts-ignore
             currentCountEl.textContent = String(goingToStackSaved.draggedItemNewCurrentCount);
             // @ts-ignore
+            //endregion
+
             const contextItemWithChangedCount = {
               ...contextItem,
               //@ts-ignore
-              currentCount: goingToStackSaved.draggedItemNewCurrentCount
+              currentCount: goingToStackSaved.draggedItemNewCurrentCount,
             };
             dispatch(stackItem(true));
+
+            // todo invoke trigger
+
             dispatch(draggedItemRelease());
             //@ts-ignore todo supressed
             dispatch(addDraggedItem(contextItemWithChangedCount, contextItemWithChangedCount.mainCell));
-            if(contextItem.isEquipped) {
+            if(hoveredArea === 1) {
+              // @ts-ignore
+              dispatch(boardChangeCurrentCountByItemId(contextItem.id, contextItem.currentCount - (splittedCount - goingToStackSaved.draggedItemNewCurrentCount)));
+            } else if (hoveredArea === 2) {
+              // @ts-ignore
+              dispatch(externalBoardChangeCurrentCountByItemId(contextItem.id, contextItem.currentCount - (splittedCount - goingToStackSaved.draggedItemNewCurrentCount)));
+            }
+            else if(hoveredArea === 3) {
               //@ts-ignore
               dispatch(equippedChangeCurrentCount(contextItem.mainCell, contextItem.currentCount - (splittedCount - goingToStackSaved.draggedItemNewCurrentCount)));
-            } else {
-              //@ts-ignore
-              dispatch(boardChangeCurrentCountByItemId(contextItem.id, contextItem.currentCount - (splittedCount - goingToStackSaved.draggedItemNewCurrentCount)));
             }
             return;
           }
@@ -174,56 +187,70 @@ const RangeComponent: React.FC<Props> = React.memo(({leftOffset, topOffset, cont
       }
       // -----------------------------------------------------------------------------------------------
 
-      event.stopPropagation();
       document.body.removeChild(newClone);
       document.removeEventListener('mousemove', onMouseMove);
       newClone.onmouseup = null;
+      console.log('canDropRef canDrop', canDropRef.current, canDrop);
 
       if (canDropRef.current) {
-        //--------------------------------- Going To Stack (full part of the item ------------------------------------
+        //region --------------------------------- Going To Stack (full part of the item) ------------------------------------
         if (goingToStackRef.current) {
+          // todo maybe remove that check
           //@ts-ignore
           if (goingToStackRef.current.stackableItem.mainCell !== contextItem.mainCell) {
+            // stackItem with 'true' param won't change source item (as draggedItem when on dragged item)
             dispatch(stackItem(true));
-            if(contextItem.isEquipped) {
-              //@ts-ignore
-              dispatch(equippedChangeCurrentCount(contextItem.mainCell, contextItem.currentCount - splittedCount));
-            } else {
+            if(hoveredArea === 1) {
               //@ts-ignore
               dispatch(boardChangeCurrentCountByItemId(contextItem.id, contextItem.currentCount - splittedCount));
+            } else if (hoveredArea === 2) {
+              //@ts-ignore
+              dispatch(externalBoardChangeCurrentCountByItemId(contextItem.id, contextItem.currentCount - splittedCount));
+            } else if (hoveredArea === 3) {
+              //@ts-ignore
+              dispatch(equippedChangeCurrentCount(contextItem.mainCell, contextItem.currentCount - splittedCount));
             }
           }
         }
-        // ------------------------------ Drop item ------------------------------
+        //endregion
+
+        //region ------------------------------ Drop item ------------------------------
         else if (goingToDropRef.current) {
+          console.log('drop hoveredArea', hoveredArea);
           // @ts-ignore
-          if (typeof draggedItemRef.current.mainCell === 'object') {
+          if (hoveredArea === 1) {
             // if drop item from board
             //@ts-ignore
             dispatch(boardChangeCurrentCountByItemId(contextItem.id, contextItem.currentCount - draggedItemRef.current.currentCount));
-          } else {
+          } else if (hoveredArea === 2) {
+            console.log('drop from external board')
             // drop item from equipped
             // @ts-ignore
-            dispatch(equippedChangeCurrentCount(contextItem.mainCell, contextItem.currentCount - draggedItemRef.current.currentCount));
+            dispatch(externalBoardChangeCurrentCountByItemId(contextItem.id, contextItem.currentCount - draggedItemRef.current.currentCount));
+          } else if (hoveredArea === 3) {
+            // @ts-ignore
+            dispatch(equippedChangeCurrentCount(contextItem.id, contextItem.currentCount - draggedItemRef.current.currentCount));
           }
           mpTriggerDropItem(draggedItemRef.current);
         }
-        // -----------------------------------------------------------------------
+        //endregion
 
-        // ------------------------------------- Add to equipped -------------------------------------
-        else if (typeof hoveredSquareRef.current === 'number') {
+        //region ------------------------------------- Add to equipped -------------------------------------
+        else if (hoveredAreaOfScreenRef.current === 3) {
           if(contextItem.mainCell !== hoveredSquareRef.current) {
             // if add to equipped
             // ------------------------------------- Add from board (to eq) -----------------------------
-            if(typeof contextItem.mainCell === 'object') {
-
+            if(hoveredArea === 1) {
               //@ts-ignore
               dispatch(boardChangeCurrentCountByItemId(contextItem.id, contextItem.currentCount - draggedItemRef.current.currentCount));
             }
-            // ---------------------------------------------------------------------------------------------
-            // ------------------------------------- Add from equipped (to eq) -----------------------------
-            else {
+            // ------------------------------------- Add from external board (to eq) -----------------------------
+            else if (hoveredArea === 2) {
               //@ts-ignore
+              externalBoardChangeCurrentCountByItemId(contextItem.mainCell, contextItem.currentCount - draggedItemRef.current.currentCount);
+              // ------------------------------------- Add from equipped (to eq) -----------------------------
+            } else if (hoveredArea === 3) {
+              // @ts-ignore
               equippedChangeCurrentCount(contextItem.mainCell, contextItem.currentCount - draggedItemRef.current.currentCount);
             }
             try {
@@ -231,13 +258,13 @@ const RangeComponent: React.FC<Props> = React.memo(({leftOffset, topOffset, cont
             } catch (e) {}
           }
         }
-        // -----------------------------------------------------------------------
-        // --------------------------------------------------------------------------------------
+        //endregion
+
         // ------------------------------------- Add to board -------------------------------------
-        // todo check from
-        else if (typeof hoveredSquareRef.current === 'object') {
+        else if (hoveredAreaOfScreenRef.current === 1) {
+          console.log('at least add to board', hoveredArea)
           // ------------------------------------------- Add from equipped (to board) ------------------------------
-          if(typeof contextItem.mainCell === 'number') {
+          if (hoveredArea === 3) {
             //@ts-ignore
             dispatch(equippedChangeCurrentCount(contextItem.mainCell, contextItem.currentCount - draggedItemRef.current.currentCount));
             try {
@@ -246,7 +273,7 @@ const RangeComponent: React.FC<Props> = React.memo(({leftOffset, topOffset, cont
           }
           // --------------------------------------------------------------------------------------
           // ------------------------------------------- Add from board (to board) ------------------------------
-          else {
+          else if (hoveredArea === 1) {
             // @ts-ignore
             // check all squares, not only mainCell
 
@@ -255,7 +282,10 @@ const RangeComponent: React.FC<Props> = React.memo(({leftOffset, topOffset, cont
 
             // @ts-ignore
             allHoveredSquaresRef.current.forEach(hovSquare => {
-              if(boardCells[hovSquare[1]][hovSquare[0]] && boardCells[hovSquare[1]][hovSquare[0]].id === contextItem.id) isPartOfItemHovered = true;
+              // @ts-ignore
+              if(boardCellsRef.current[hovSquare[1]][hovSquare[0]] && boardCellsRef.current[hovSquare[1]][hovSquare[0]].id === contextItem.id) {
+                isPartOfItemHovered = true;
+              }
             });
 
             if (!isPartOfItemHovered) {
@@ -267,7 +297,42 @@ const RangeComponent: React.FC<Props> = React.memo(({leftOffset, topOffset, cont
               } catch (e) {}
             }
           }
+          // ------------------------------------------- Add from external board (to board) ------------------------------
+          else if (hoveredArea === 2) {
+            // @ts-ignore
+            dispatch(externalBoardChangeCurrentCountByItemId(contextItem.id, contextItem.currentCount - draggedItemRef.current.currentCount));
+            try {
+              dispatch(addItem());
+            } catch (e) {}
+          }
           // --------------------------------------------------------------------------------------
+        }
+        // ------------------------------------- Add to external board -------------------------------------
+        else if (hoveredAreaOfScreenRef.current === 2) {
+          // Add from board to external board
+          if (hoveredArea === 1) {
+            // @ts-ignore
+            dispatch(boardChangeCurrentCountByItemId(contextItem.id, contextItem.currentCount - draggedItemRef.current.currentCount));
+            try {
+              dispatch(addExternalBoardItem());
+            } catch (e) {}
+          }
+          // Add from external board to external board
+          else if (hoveredArea === 2) {
+            // @ts-ignore
+            dispatch(equippedChangeCurrentCount(contextItem.id, contextItem.currentCount - draggedItemRef.current.currentCount));
+            try {
+              dispatch(addExternalBoardItem());
+            } catch (e) {}
+          }
+          // Add from equipped to external board
+          else if (hoveredArea === 3) {
+            // @ts-ignore
+            dispatch(equippedChangeCurrentCount(contextItem.id, contextItem.currentCount - draggedItemRef.current.currentCount));
+            try {
+              dispatch(addExternalBoardItem());
+            } catch (e) {}
+          }
         }
       }
       // ----------------------------------------------------------------------------------------
@@ -287,14 +352,15 @@ const RangeComponent: React.FC<Props> = React.memo(({leftOffset, topOffset, cont
   const styles = {
     left: leftOffset,
     // @ts-ignore
-    top: reducedTopOffset ? topOffset - reducedTopOffset : topOffset - 100,
-    display: splitMenuOpen ? 'block' : 'none',
+    top: reducedTopOffset ? topOffset - reducedTopOffset : topOffset - 100
   }
 
+  if(!splitMenuOpen) {
+    return null;
+  }
 
-  // todo change count remove contextItem &&
   return (
-    <div className={classes.RangeComponentWrapper} style={styles} ref={containerRef} onClick={e => e.stopPropagation()}>
+    <div className={classes.RangeComponentWrapper} style={styles} ref={containerRef} onClick={e => e.stopPropagation}>
       <div className={classes.RangeComponentBG}>
         <div className={classes.InputRangeWrapper}>
           <input type='range' className={classes.Input} value={splittedCount} onChange={splittedCountChangeHandler}

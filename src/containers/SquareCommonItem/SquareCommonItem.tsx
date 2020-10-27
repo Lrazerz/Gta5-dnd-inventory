@@ -21,7 +21,7 @@ const SquareCommonItem: React.FC<Props> = React.memo(function SquareCommonItem({
   const {
     board: {boardSquareSize},
     draggedItem: {canDrop, hoveredSquare, item: draggedItem, xDown, yDown, goingToDrop, goingToStack},
-    hoveredItem: {item: hoveredItem}
+    hoveredItem: {item: hoveredItem, hoveredArea: hoveredItemArea}
   } = useSelector(state => state);
 
   // refs to pass to event handler
@@ -55,23 +55,14 @@ const SquareCommonItem: React.FC<Props> = React.memo(function SquareCommonItem({
   let imageElement = null;
 
   const handleContextMenuOpen = (e) => {
-    // last-remove
-    // e.stopPropagation();
-    e.persist();
     const rect = e.target.getBoundingClientRect();
-    dispatch(openContextMenu(item, rect));
+    dispatch(openContextMenu(item, rect, 1));
   };
 
   const handleMouseDown = (event) => {
     if (event.button !== 0) return;
     event.stopPropagation();
     dispatch(addDraggedItem({...item}, [x,y]));
-    event.persist();
-
-    // last-remove
-    // save target
-    // const savedTarget = event.currentTarget;
-    // savedTarget.style.zIndex = 0;
 
     const newClone = event.currentTarget.cloneNode(true);
 
@@ -80,9 +71,6 @@ const SquareCommonItem: React.FC<Props> = React.memo(function SquareCommonItem({
       e.preventDefault();
       return false;
     });
-
-    // last-remove
-    // savedTarget.style.pointerEvents = 'none';
 
     newClone.style.outline = 'none';
     newClone.style.backgroundColor = 'transparent';
@@ -119,9 +107,10 @@ const SquareCommonItem: React.FC<Props> = React.memo(function SquareCommonItem({
     };
   };
 
-  const handleMouseOver = () => {
-    if(!draggedItem && (!hoveredItem || hoveredItem.mainCell !== item.mainCell)) {
-      dispatch(addHoveredItem(item));
+  const handleMouseOver = (e) => {
+    e.stopPropagation();
+    if(!draggedItem && (!hoveredItem || hoveredItemArea === 1 || hoveredItem.mainCell !== item.mainCell)) {
+      dispatch(addHoveredItem(item, 1));
     }
   }
 
@@ -139,7 +128,7 @@ const SquareCommonItem: React.FC<Props> = React.memo(function SquareCommonItem({
     }
 
     // if item is hovered when we have no dragged item
-    const isItemHovered = hoveredItem && hoveredItem.mainCell === item.mainCell;
+    const isItemHovered = hoveredItem && hoveredItemArea === 1 && hoveredItem.mainCell === item.mainCell;
 
     const imageContainerStyles: CSSProperties = {
       width: imageWidth,
@@ -149,7 +138,7 @@ const SquareCommonItem: React.FC<Props> = React.memo(function SquareCommonItem({
       //@ts-ignore
       left: imageHeight && imageWidth && item.isRotated ? -(imageWidth/2 - imageHeight/2) : 0,
       pointerEvents: draggedItem ? 'none' : 'inherit',
-      zIndex: draggedItem ? 0 : 100,
+      zIndex: draggedItem ? 'auto' : 100,
       transform: item.isRotated ? 'rotate3d(0,0,1,90deg)' : 'none',
       backgroundColor: isItemHovered ? 'rgba(151, 159, 161, 0.5)' : 'transparent',
     }

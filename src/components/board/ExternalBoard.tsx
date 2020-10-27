@@ -16,12 +16,9 @@ const ExternalBoard: React.FC<Props> = React.memo(function ExternalBoard({childr
   const boardSquareSize = useSelector(state => state.board.boardSquareSize);
 
   useEffect(() => {
-    setBoardHeight(boardSquareSize * rowsCount);
-    if(rowsCount > 6) {
-      setBoardWidth(boardSquareSize * 16);
-    } else {
-      setBoardWidth(boardSquareSize * 16);
-    }
+
+    setBoardHeight(boardSquareSize * Number(rowsCount));
+    setBoardWidth(boardSquareSize * 16);
   }, []);
 
   const additionalStyles: CSSProperties = {
@@ -35,13 +32,14 @@ const ExternalBoard: React.FC<Props> = React.memo(function ExternalBoard({childr
   const wrapperStyles: CSSProperties = {
     maxHeight: `${boardHeight / rowsCount * 5}px`,
     width: rowsCount < 7 ? `${boardWidth}px` : `${boardWidth + 4}px`,
+    marginLeft: rowsCount < 7 ? 0 : '2px',
     background: 'rgba(96, 99, 110, 0.6)',
   }
 
   return (
     <div style={wrapperStyles} className={classes.ExternalBoardWrapper}>
       <div style={additionalStyles} className={classes.ExternalBoard}
-           onMouseOver={e => e.stopPropagation()} onMouseUp={e => e.stopPropagation()}>
+           onMouseUp={e => {e.persist();e.stopPropagation();}}>
         {children}
       </div>
     </div>

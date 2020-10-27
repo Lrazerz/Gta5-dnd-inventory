@@ -13,10 +13,6 @@ import {xMax, xMin, yMax, yMin} from "../../constants/boardDimensions";
 import Item from "../../models/Item";
 import DummyImage from '../../assets/dummy/weapon.png';
 import {translateToServerItem} from "../../utils/translateToServerItem";
-import {ItemTypes} from "../../constants/dnd/types";
-import {AnyAction} from 'redux';
-import get = Reflect.get;
-import {checkDecoratorArguments} from "react-dnd/lib/decorators/utils";
 //'https://i.ibb.co/HCn40jg/weapon-2.png'
 
 const importItemImage: (itemName: string) => Promise<any> = async (itemName) => {
@@ -71,7 +67,7 @@ const openOrRefreshInventory = async (info) => {
       SizeX = SizeY;
       SizeY = tmp;
     }
-    // swap width and height
+
     FullItem = new Item(ID, Name, category, PosNumberLeftAngle,
       SizeX, SizeY, CurrentCount, MaxCount,
       ImageUrl, Enabled, IsRotated, rest);

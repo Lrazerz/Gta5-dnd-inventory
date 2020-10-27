@@ -5,10 +5,11 @@ import {removeItemFromBoard, removeItem} from "./board";
 import {removeEquippedItem, removeEquippedWeaponFromEquipped} from "./equippedItems";
 import {ContextAction} from "../../models/Context/ContextAction";
 import store from "../store";
+import {removeExternalBoardItem} from "./externalBoard";
 const {dispatch} = store;
 
-const _openContextMenu = (item, leftOffset, topOffset, topOffsetTopContext) => {
-  return {type: CONTEXT_MENU_OPEN, item, leftOffset, topOffset, topOffsetTopContext}
+const _openContextMenu = (item, hoveredArea, leftOffset, topOffset, topOffsetTopContext) => {
+  return {type: CONTEXT_MENU_OPEN, item, hoveredArea, leftOffset, topOffset, topOffsetTopContext}
 };
 
 const _openRangeComponent = () => {
@@ -20,7 +21,7 @@ const _closeContextMenu = () => {
 };
 
 // rect - getBoundingClientRect() - computed styles
-const openContextMenu = (item, rect) => {
+const openContextMenu = (item, rect, hoveredArea) => {
   return dispatch => {
     // offsets from left screen angle to positioning items
     let averX, bottomContext, topContext;
@@ -40,7 +41,7 @@ const openContextMenu = (item, rect) => {
       topContext = Math.floor(rect.top + rect.height * 0.065)
     }
 
-    dispatch(_openContextMenu(item, averX, bottomContext, topContext));
+    dispatch(_openContextMenu(item, hoveredArea, averX, bottomContext, topContext));
   }
 }
 
@@ -64,7 +65,7 @@ const _eatFoodHandler = (item) => {
 
 const _removeBoardItemHandler = (item) => {
   const {category, id, mainCell} = item;
-  // тут еще чекать если оружие, то удалить с доски его тоже
+
   if(category === ItemTypes.WEAPON_RIFLE || category === ItemTypes.WEAPON_PISTOL
     || category === ItemTypes.WEAPON_LAUNCHER) {
     // if item is weapon remove transparent weapon from equipped too
@@ -73,6 +74,13 @@ const _removeBoardItemHandler = (item) => {
   }
   // @ts-ignore
   dispatch(removeItem(mainCell, item.width, item.height));
+}
+
+const _removeExternalBoardItemHandler = (item) => {
+  const {category, id, mainCell} = item;
+  // @ts-ignore
+  dispatch(removeExternalBoardItem(mainCell, item.width, item.height));
+
 }
 
 const _removeEquippedItemHandler = (item) => {
@@ -92,7 +100,7 @@ const _removeEquippedItemHandler = (item) => {
 const _dropItemHandler = (removeItemFunc, item) => () => {
   dispatch(_closeContextMenu());
   removeItemFunc(item);
-  mpTriggerDropItem(item);
+  // mpTriggerDropItem(item);
 }
 
 // add action _openRangeComponent to split item (dispatch...)
@@ -101,22 +109,26 @@ const _openRangeComponentHandler = () => {
 }
 
 // build list of actions and bind handlers
-const getContextActionsForCell = (item) => {
+const getContextActionsForCell = (item, hoveredArea) => {
   const contextActions: ContextAction[] = [];
 
   if(item.currentCount && item.maxCount && item.currentCount > 1) {
     contextActions.push(new ContextAction('Разделить', _openRangeComponentHandler))
   }
 
-  if(typeof item.mainCell === 'object') {
+  if(hoveredArea === 1 || hoveredArea === 2) {
     // if item from board
     switch(item.category) {
       case ItemTypes.EAT: {
         contextActions.push(new ContextAction('Съесть', _dropItemHandler(_eatFoodHandler, item)))
       }
     }
-    contextActions.push(new ContextAction('Выкинуть', _dropItemHandler(_removeBoardItemHandler, item)));
-  } else {
+    if(hoveredArea === 1) {
+      contextActions.push(new ContextAction('Выкинуть', _dropItemHandler(_removeBoardItemHandler, item)));
+    } else if (hoveredArea === 2) {
+      contextActions.push(new ContextAction('Выкинуть', _dropItemHandler(_removeExternalBoardItemHandler, item)));
+    }
+  } else if (hoveredArea === 3) {
     // item from equipped items
     contextActions.push(new ContextAction('Выкинуть', _dropItemHandler(_removeEquippedItemHandler, item)));
   }

@@ -13,7 +13,12 @@ import {ItemTypes} from "../../constants/dnd/types";
 import {SingleCell} from "../equippedWeaponsInventory/EquippedWeaponsInventoryContainer";
 import {setGoingToDrop} from "../../redux/actions/draggedItem";
 
-const EquippedClosingInventoryContainer = React.memo(function EquippedClosingInventoryContainer() {
+interface Props {
+  onMouseOver: () => void;
+}
+
+const EquippedClosingInventoryContainer: React.FC<Props> =
+  React.memo(function EquippedClosingInventoryContainer({onMouseOver: mouseOverHandler}) {
 
   const dispatch = useDispatch();
   const {equippedItems: {cells: equippedCells},
@@ -49,6 +54,7 @@ const EquippedClosingInventoryContainer = React.memo(function EquippedClosingInv
   const equippedContainerMouseOverHandler = e => {
     e.persist();
     if (draggedItem) dispatch(setGoingToDrop(true, 0));
+    mouseOverHandler();
   }
 
   const goingToDropOnThisSquare: boolean = goingToDrop && goingToDrop.areaId === 0;

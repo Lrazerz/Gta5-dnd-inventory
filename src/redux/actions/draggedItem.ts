@@ -25,24 +25,27 @@ import {translateToServerItem} from "../../utils/translateToServerItem";
 import {EquippedCategoriesToCells} from "../../constants/dnd/equippedCategoriesToCells";
 import {ItemTypes} from "../../constants/dnd/types";
 import {mpTriggerDropItem} from "./contextMenu";
+import {
+  addExternalBoardItem, addExternalItemsBySquares,
+  externalBoardChangeCurrentCountByItemId,
+  removeExternalBoardItem,
+  removeExternalBoardItemById
+} from "./externalBoard";
+import {addHoveredItem} from "./hoveredItem";
 
-const _addDraggedItem = (item, xUp, xDown, yUp, yDown) => {
-  return {type: DRAGGED_ITEM_SET, item, xUp, xDown, yUp, yDown};
+const _addDraggedItem = (item, xUp, xDown, yUp, yDown, draggedItemArea = 1) => {
+  return {type: DRAGGED_ITEM_SET, item, xUp, xDown, yUp, yDown, draggedItemArea};
 };
 
-const _setHoveredSquares = (squareCoords, allHoveredSquares, canDrop, isHoveredEquipped, goingToStack = null) => {
+const _setHoveredSquares = (squareCoords, allHoveredSquares, canDrop, hoveredArea, goingToStack = null) => {
   return {
     type: HOVERED_SQUARES_SET, square: squareCoords, squares: allHoveredSquares, canDrop,
-    isHoveredEquipped: isHoveredEquipped, goingToStack
+    hoveredArea: hoveredArea, goingToStack
   };
 };
 
 const _setGoingToDrop = (newState, canDrop, areaId) => {
   return {type: GOING_TO_DROP_SET, goingToDrop: newState, canDrop, areaId};
-}
-
-const hoveredSquaresRemove = () => {
-  return {type: HOVERED_SQUARES_REMOVE};
 }
 
 const draggedItemRelease = () => {
@@ -79,11 +82,12 @@ _getItemOffsets = (itemWidth, itemHeight) => {
 }
 //endregion
 
-// need to know item, x,y - hoveredSquare, if came from board, fromRotate to
+// need to know item, x,y - hoveredSquare, if came from board
 // hoveredSquareIfEquippedHovered means that equippedInv was hovered
 // we can't use this data from redux, coz when rotate we release draggedItem first
 const addDraggedItem = (item, [x, y] = [-100, -100], fromRotate = false,
-                        hoveredSquareIfEquippedHovered = null, goingToDropAreaId = null) => {
+                        hoveredSquareIfEquippedHovered = null, goingToDropAreaId = null,
+                        fromExternalBoard = false) => {
   return dispatch => {
     //region ------------------------------ To check if item is rotating ------------------------------
     let itemWidth = item.width;
@@ -99,40 +103,43 @@ const addDraggedItem = (item, [x, y] = [-100, -100], fromRotate = false,
     const {xUp, xDown, yUp, yDown} = _getItemOffsets(itemWidth, itemHeight);
     //endregion
 
-    //region ------------------------------ If item from the board ------------------------------
+    //region ------------------------------ If item from the boards ------------------------------
     if (!item.isEquipped) {
       // just add draggedItem (from board)
-      dispatch(_addDraggedItem({...item}, xUp, xDown, yUp, yDown));
-      // last-remove
-      // if (x !== -100 && !fromRotate) {
-      //   dispatch(_setHoveredSquares([x, y], hoveredSquares, true, false));
-      // }
+      if(!fromExternalBoard) {
+        dispatch(_addDraggedItem({...item}, xUp, xDown, yUp, yDown, 1));
+      } else {
+        dispatch(_addDraggedItem({...item}, xUp, xDown, yUp, yDown, 2));
+      }
     }
     //endregion
 
     //region ------------------------------ If item from the equipped ------------------------------
     else {
-      dispatch(_addDraggedItem({...item}, xUp, xDown, yUp, yDown));
+      dispatch(_addDraggedItem({...item}, xUp, xDown, yUp, yDown, 3));
       if (!fromRotate) {
-        dispatch(setHoveredSquares(item.mainCell, true));
+        dispatch(setHoveredSquares(item.mainCell, 3));
       }
     }
     //endregion
 
     //region ------------------------------ If from rotate set hoveredSq and canDrop etc ------------------------------
-
     // if was goingToDrop - save it
-    if(fromRotate && goingToDropAreaId) {
-      dispatch(_setGoingToDrop(true, true, goingToDropAreaId));
-    }
-    // setHoveredSquare on board
-    else if (fromRotate && !hoveredSquareIfEquippedHovered) {
-      dispatch(setHoveredSquares([x, y], false));
+    if (fromRotate) {
+      if (goingToDropAreaId) {
+        dispatch(_setGoingToDrop(true, true, goingToDropAreaId));
+      }
+      else if (fromExternalBoard) {
+        dispatch(setHoveredSquares([x, y], 2));
+      }
+      else if (!hoveredSquareIfEquippedHovered) {
+        dispatch(setHoveredSquares([x, y], 1));
+      }
+      else if (hoveredSquareIfEquippedHovered) {
+        dispatch(setHoveredSquares(hoveredSquareIfEquippedHovered, 3));
+      }
     }
     // setHoveredSquare on equipped
-    else if(fromRotate && hoveredSquareIfEquippedHovered) {
-      dispatch(setHoveredSquares(hoveredSquareIfEquippedHovered, true));
-    }
     //endregion
   };
 };
@@ -150,9 +157,14 @@ const _getHoveredSquares = (hoveredSquare: [number, number], xUp: number, xDown:
   return allHoveredSquares;
 }
 
-const setHoveredSquares = (hoveredSquare, isHoveredEquipped = false) => {
+const setHoveredSquares = (hoveredSquare, hoveredArea = 1) => {
   return (dispatch, getState) => {
-    const {draggedItem: {xDown, xUp, yDown, yUp, item}, board: {board}, equippedItems: {cells: equippedCells}} = getState();
+    const {
+      draggedItem: {xDown, xUp, yDown, yUp, item},
+      board: {board},
+      externalBoard: {externalBoard},
+      equippedItems: {cells: equippedCells}
+    } = getState();
 
     let canDrop: boolean = true;
     // stack logic
@@ -164,7 +176,7 @@ const setHoveredSquares = (hoveredSquare, isHoveredEquipped = false) => {
     let allHoveredSquares = [];
 
     //region ------------------------------ If board hovered ------------------------------
-    if (!isHoveredEquipped) {
+    if (hoveredArea === 1) {
       allHoveredSquares = _getHoveredSquares(hoveredSquare, xUp, xDown, yUp, yDown);
       // check canDrop
       allHoveredSquares.forEach(hoveredSquare => {
@@ -205,7 +217,7 @@ const setHoveredSquares = (hoveredSquare, isHoveredEquipped = false) => {
     }
     //endregion
     //region ------------------------------ If equipped hovered ----------------------------------------
-    else {
+    else if (hoveredArea === 3) {
       // if equipped inventory hovered
       const equippedSquareItem = equippedCells[hoveredSquare].item; // stackable square
       const allowedCategory = EquippedCategoriesToCells[hoveredSquare];
@@ -239,6 +251,51 @@ const setHoveredSquares = (hoveredSquare, isHoveredEquipped = false) => {
       }
     }
     //endregion
+    //region ------------------------------ If external board hovered ----------------------------------------
+    else if (hoveredArea === 2) {
+      allHoveredSquares = _getHoveredSquares(hoveredSquare, xUp, xDown, yUp, yDown);
+      // check canDrop
+      allHoveredSquares.forEach(hoveredSquare => {
+        const [hoveredX, hoveredY] = hoveredSquare;
+
+        const xMin = 0;
+        const yMin = 0;
+        const xMax = externalBoard[0].length - 1;
+        const yMax = externalBoard.length - 1;
+        // if outside the border
+        if (hoveredX < xMin || hoveredX > xMax || hoveredY < yMin || hoveredY > yMax) {
+          canDrop = false;
+          // if has item on board and item is not the dragged item
+        } else if (externalBoard[hoveredY][hoveredX] !== null) { // id check just to set up canDrop = false
+          const boardSquare = externalBoard[hoveredY][hoveredX];
+
+          if(boardSquare.id !== item.id) {
+            canDrop = false;
+          }
+
+          // last-remove maincells is not equal too
+          const isAllowToStack = boardSquare.name === item.name
+            && boardSquare.id !== item.id
+            && boardSquare.currentCount && boardSquare.maxCount
+            && boardSquare.currentCount < boardSquare.maxCount;
+          if (isAllowToStack) {
+            stackableItem = boardSquare;
+
+            // drag item from board (to board) and allowToStack === true
+            if (stackableItem.maxCount >= stackableItem.currentCount + item.currentCount) {
+              // if can stack full draggedItem
+              stackableItemNewCurrentCount = stackableItem.currentCount + item.currentCount;
+              draggedItemNewCurrentCount = 0;
+            } else if (stackableItem.maxCount < stackableItem.currentCount + item.currentCount) {
+              // can stack only part of draggedItem
+              stackableItemNewCurrentCount = stackableItem.maxCount;
+              draggedItemNewCurrentCount = item.currentCount - (stackableItem.maxCount - stackableItem.currentCount);
+            }
+          }
+        }
+      });
+    }
+    //endregion
 
     if (stackableItem) {
       // similar dispatch, but with canDrop === true
@@ -247,10 +304,10 @@ const setHoveredSquares = (hoveredSquare, isHoveredEquipped = false) => {
         stackableItemNewCurrentCount,
         draggedItemNewCurrentCount
       }
-      dispatch(_setHoveredSquares(hoveredSquare, allHoveredSquares, canDrop = true, isHoveredEquipped,
+      dispatch(_setHoveredSquares(hoveredSquare, allHoveredSquares, canDrop = true, hoveredArea,
         goingToStack));
     } else {
-      dispatch(_setHoveredSquares(hoveredSquare, allHoveredSquares, canDrop, isHoveredEquipped));
+      dispatch(_setHoveredSquares(hoveredSquare, allHoveredSquares, canDrop, hoveredArea));
     }
   }
 };
@@ -258,7 +315,6 @@ const setHoveredSquares = (hoveredSquare, isHoveredEquipped = false) => {
 // non-relative to redux, fix bug with invoking onmouseup on BoardSquare, when pointer-events did not have
 // time to become true
 const invokeOnMouseUp = () => {
-  console.log('custom on mouseup');
   const draggedItem = document.getElementById('curr-dragged-item');
   const event = new Event('mouseup');
   draggedItem.dispatchEvent(event);
@@ -271,82 +327,72 @@ const stackItem = (fromSplit = false) => {
       {
         draggedItem: {
           item: draggedItem,
+          draggedItemArea,
+          hoveredArea,
           goingToStack: {stackableItem, stackableItemNewCurrentCount, draggedItemNewCurrentCount}
         }
       } = getState();
 
-    //region ------------------------------------- If stack from board -------------------------------------
-    // fill droppable, then work with dragged
-    if (typeof draggedItem.mainCell === 'object') {
-
-      //region ------------------------------------- If stack to board (from board) ------------------------
-      if (typeof stackableItem.mainCell === 'object') {
-        dispatch(boardChangeCurrentCountByItemId(stackableItem.id, stackableItemNewCurrentCount));
-      }
-      //endregion
-      //region ------------------------------------- If stack to equipped (from board) -------------------------
-      else {
-        dispatch(equippedChangeCurrentCount(stackableItem.mainCell, stackableItemNewCurrentCount));
-      }
-      //endregion
-
-      //region ------------------------------ DraggedItem change currCount ------------------------------
-      if (draggedItemNewCurrentCount === 0) {
-        // remove item
-        if(!fromSplit) {
+    //region ------------------------------ Reduce count / remove draggedItem ------------------------------
+    if (!fromSplit) {
+      if (draggedItemArea === 1) {
+        if (draggedItemNewCurrentCount === 0) {
           dispatch(removeItemFromBoard(draggedItem.id));
-          //change draggedItem position to droppable to send to server?
+          // to server
           draggedItem.mainCell = stackableItem.mainCell;
-        }
-      } else if (draggedItemNewCurrentCount > 0) {
-        if(!fromSplit) {
-          // change here too
-          // need to know all squaresOnBoard
+        } else if (draggedItemNewCurrentCount > 0) {
           dispatch(boardChangeCurrentCountByItemId(draggedItem.id, draggedItemNewCurrentCount));
           // to server
           draggedItem.currentCount = draggedItemNewCurrentCount;
         }
-      }
-      //endregion
-    }
-    //endregion
-    //region -------------------------------------If stack from equipped items------------------------------
-    else {
-      if (typeof stackableItem.mainCell === 'object') {
-        // stack to board (from equipped inv)
-        dispatch(boardChangeCurrentCountByItemId(stackableItem.id, stackableItemNewCurrentCount));
-
-      } else {
-        // stack to equipped (from equipped inv)
-        dispatch(equippedChangeCurrentCount(stackableItem.mainCell, stackableItemNewCurrentCount));
-      }
-
-      // or remove item or just change currentCount
-      if (draggedItemNewCurrentCount === 0) {
-        // remove item
-        if(!fromSplit) {
-          dispatch(removeEquippedItem(draggedItem.mainCell));
+      } else if (draggedItemArea === 2) {
+        if (draggedItemNewCurrentCount === 0) {
+          dispatch(removeExternalBoardItemById(draggedItem.id));
+          // to server
+          draggedItem.mainCell = stackableItem.mainCell;
+        } else if (draggedItemNewCurrentCount > 0) {
+          dispatch(externalBoardChangeCurrentCountByItemId(draggedItem.id, draggedItemNewCurrentCount));
+          // to server
+          draggedItem.currentCount = draggedItemNewCurrentCount;
         }
-        // to server
-        draggedItem.mainCell = stackableItem.mainCell;
-      } else if (draggedItemNewCurrentCount > 0) {
-        dispatch(equippedChangeCurrentCount(draggedItem.mainCell, draggedItemNewCurrentCount));
+      } else if (draggedItemArea === 3) {
+        if (draggedItemNewCurrentCount === 0) {
+          dispatch(removeEquippedItem(draggedItem.id));
+          // to server
+          draggedItem.mainCell = stackableItem.mainCell;
+        } else if (draggedItemNewCurrentCount > 0) {
+          dispatch(equippedChangeCurrentCount(draggedItem.mainCell, draggedItemNewCurrentCount));
+          // to server
+          draggedItem.currentCount = draggedItemNewCurrentCount;
+        }
       }
     }
     //endregion
+
+    // change stackable item
+    if(hoveredArea === 1) {
+      // stack to board
+      dispatch(boardChangeCurrentCountByItemId(stackableItem.id, stackableItemNewCurrentCount));
+    } else if (hoveredArea === 2) {
+      dispatch(externalBoardChangeCurrentCountByItemId(stackableItem.id, stackableItemNewCurrentCount));
+    } else if (hoveredArea === 3) {
+      dispatch(equippedChangeCurrentCount(stackableItem.mainCell, stackableItemNewCurrentCount));
+    }
 
     // todo send to server when fromSplit
     if(!fromSplit) {
       draggedItem.currentCount = draggedItemNewCurrentCount;
       stackableItem.currentCount = stackableItemNewCurrentCount;
-    }
 
-    const translatedToServerDraggedItem = translateToServerItem(draggedItem);
-    const translatedToServerStackableItem = translateToServerItem(stackableItem);
-    try {
-      //@ts-ignore
-      mp.trigger('cel_cf_stackItem', translatedToServerDraggedItem, translatedToServerStackableItem);
-    } catch (e) {}
+      const translatedToServerDraggedItem = translateToServerItem(draggedItem);
+      const translatedToServerStackableItem = translateToServerItem(stackableItem);
+      try {
+        // todo if split
+
+        //@ts-ignore
+        mp.trigger('cel_cf_stackItem', translatedToServerDraggedItem, translatedToServerStackableItem);
+      } catch (e) {}
+    }
   }
 }
 
@@ -376,26 +422,29 @@ const rotateItem = () => {
     //endregion
     dispatch(draggedItemRelease());
 
-
-    // if goingToDrop ?) (if goingToDrop hoveredSquare sets to null
-
     //region ------------------------------ Save goingToDrop ------------------------------
     if(oldDraggedItemInfo.goingToDrop) {
-      dispatch(addDraggedItem({...oldDraggedItem}, [-100,-100], true, null, oldDraggedItemInfo.goingToDrop.areaId));
+      dispatch(addDraggedItem({...oldDraggedItem}, [-100,-100], true,
+        null, oldDraggedItemInfo.goingToDrop.areaId));
     }
     //endregion
-    else if (oldDraggedItemInfo.hoveredSquare && typeof oldDraggedItemInfo.hoveredSquare === 'object') {
-      // oldDraggedItem.mainCell = [oldDraggedItemInfo.hoveredSquare[0] - oldDraggedItemInfo.yDown,
-      //                           oldDraggedItemInfo.hoveredSquare[1] - oldDraggedItemInfo.xDown]
+    else if (oldDraggedItemInfo.hoveredArea === 1) {
+      // if hovered square was on board
       dispatch(addDraggedItem({...oldDraggedItem}, oldDraggedItemInfo.hoveredSquare, true));
-    } else {
-      dispatch(addDraggedItem({...oldDraggedItem}, [-100, -100], true, oldDraggedItemInfo.hoveredSquare));
+    } else if (oldDraggedItemInfo.hoveredArea === 2) {
+      // external board was hovered
+      dispatch(addDraggedItem({...oldDraggedItem}, oldDraggedItemInfo.hoveredSquare, true, null,
+        null, true));
+    } else if (oldDraggedItemInfo.hoveredArea === 3) {
+    // if hovered square was on equipped
+    dispatch(addDraggedItem({...oldDraggedItem}, [-100, -100], true,
+      oldDraggedItemInfo.hoveredSquare));
     }
   }
 }
 
 // rotate non-dragged item
-const rotateItemOnBoard = (item) => {
+const rotateItemOnBoard = (item, hoveredItemArea) => {
   const newItem = {...item};
 
   newItem.isRotated = !newItem.isRotated;
@@ -416,28 +465,62 @@ const rotateItemOnBoard = (item) => {
 
   return (dispatch, getState) => {
 
-    const {board} = getState().board;
-    let canDrop = true;
+    if(hoveredItemArea === 1) {
+      const {board} = getState().board;
+      let canDrop = true;
 
-    allHoveredSquares.forEach(hoveredSquare => {
-      const [hoveredX, hoveredY] = hoveredSquare;
+      allHoveredSquares.forEach(hoveredSquare => {
+        const [hoveredX, hoveredY] = hoveredSquare;
 
-      if (hoveredX < xMin || hoveredX > xMax || hoveredY < yMin || hoveredY > yMax) {
-        canDrop = false;
-        // if has item on board and item is not the dragged item
-      } else if(board[hoveredY][hoveredX] !== null) {
-        if(board[hoveredY][hoveredX].id !== newItem.id) {
+        if (hoveredX < xMin || hoveredX > xMax || hoveredY < yMin || hoveredY > yMax) {
           canDrop = false;
+          // if has item on board and item is not the dragged item
+        } else if(board[hoveredY][hoveredX] !== null) {
+          if(board[hoveredY][hoveredX].id !== newItem.id) {
+            canDrop = false;
+          }
         }
+      });
+
+      if(canDrop) {
+        newItem.mainCell = [averageCell[0] - xDown, averageCell[1] - yDown]
+        dispatch(removeItemFromBoard(item.id));
+        dispatch(addItemBySquares(allHoveredSquares, newItem));
+        dispatch(addHoveredItem(newItem, 1));
+        // const draggedItem =
+        //   document.getElementById(`square-common-item-${newItem.mainCell[0]}-${newItem.mainCell[1]}`);
+        // console.log('draggedItem', draggedItem);
+        // const event = new Event('mouseover');
+        // draggedItem.dispatchEvent(event);
       }
-    });
+    }
+    else if (hoveredItemArea === 2) {
+      const {externalBoard} = getState().externalBoard;
+      let canDrop = true;
 
-    if(canDrop) {
-      newItem.mainCell = [averageCell[0] - xDown, averageCell[1] - yDown]
+      allHoveredSquares.forEach(hoveredSquare => {
+        const [hoveredX, hoveredY] = hoveredSquare;
+        if (hoveredX < xMin || hoveredX > xMax || hoveredY < yMin || hoveredY > externalBoard.length - 1) {
+          canDrop = false;
+          // if has item on board and item is not the dragged item
+        } else if(externalBoard[hoveredY][hoveredX] !== null) {
+          if(externalBoard[hoveredY][hoveredX].id !== newItem.id) {
+            canDrop = false;
+          }
+        }
+      });
 
-      dispatch(removeItemFromBoard(item.id));
-      dispatch(addItemBySquares(allHoveredSquares, newItem));
-      // add item to board
+      if(canDrop) {
+        newItem.mainCell = [averageCell[0] - xDown, averageCell[1] - yDown];
+        dispatch(removeExternalBoardItemById(item.id));
+        dispatch(addExternalItemsBySquares(allHoveredSquares, newItem));
+        dispatch(addHoveredItem(newItem, 2));
+        // const draggedItem =
+        //   document.getElementById(`external-square-common-item-${newItem.mainCell[0]}-${newItem.mainCell[1]}`);
+        // console.log('draggedItem', draggedItem);
+        // const event = new Event('mouseover');
+        // draggedItem.dispatchEvent(event);
+      }
     }
   }
   // if canDrop remove item from board
@@ -446,7 +529,7 @@ const rotateItemOnBoard = (item) => {
 
 const dragEndHandler = (fromEquipped = false) => {
   return (dispatch, getState) => {
-    const {canDrop, goingToStack, goingToDrop, item: draggedItem, hoveredSquare, xDown, yDown} = getState().draggedItem;
+    const {canDrop, goingToStack, goingToDrop, item: draggedItem, hoveredSquare, hoveredArea, draggedItemArea} = getState().draggedItem;
 
     if (canDrop) {
       if (goingToStack) {
@@ -456,13 +539,17 @@ const dragEndHandler = (fromEquipped = false) => {
       else if (goingToDrop) {
         // already have no hovered squares
         if (typeof draggedItem.mainCell === 'object') {
-          // if drop item from board
-          if (draggedItem.category === ItemTypes.WEAPON_RIFLE || draggedItem.category === ItemTypes.WEAPON_PISTOL
-            || draggedItem.category === ItemTypes.WEAPON_LAUNCHER) {
-            dispatch(removeEquippedWeaponFromEquipped(draggedItem.id));
+          // if drop item from boards
+          if(draggedItemArea === 1) {
+            if (draggedItem.category === ItemTypes.WEAPON_RIFLE || draggedItem.category === ItemTypes.WEAPON_PISTOL
+              || draggedItem.category === ItemTypes.WEAPON_LAUNCHER) {
+              dispatch(removeEquippedWeaponFromEquipped(draggedItem.id));
+            }
+            dispatch(removeItem(draggedItem.mainCell, draggedItem.width, draggedItem.height));
+          } else if (draggedItemArea === 2) {
+            dispatch(removeExternalBoardItem(draggedItem.mainCell, draggedItem.width, draggedItem.height));
           }
-          dispatch(removeItem(draggedItem.mainCell, draggedItem.width, draggedItem.height));
-        } else {
+        } else if(draggedItemArea === 3) {
           // drop item from equipped
           if (draggedItem.category === ItemTypes.WEAPON_RIFLE || draggedItem.category === ItemTypes.WEAPON_PISTOL
             || draggedItem.category === ItemTypes.WEAPON_LAUNCHER) {
@@ -475,9 +562,8 @@ const dragEndHandler = (fromEquipped = false) => {
       }
         //endregion
 
-      //region ------------------------------ Drop to equipped items ------------------------------
-      else if (typeof hoveredSquare === 'number') {
-
+      //region ------------------------------ Move to equipped items ------------------------------
+      else if (hoveredArea === 3) {
         if (fromEquipped) {
           // invoke from equipped
           if (draggedItem.mainCell !== hoveredSquare) {
@@ -486,47 +572,79 @@ const dragEndHandler = (fromEquipped = false) => {
             try {
               // try coz mp.trigger
               dispatch(setEquippedItem(hoveredSquare));
-            } catch (e) {
-            }
+            } catch (e) {}
           }
         } else {
           // invoke from board
-          if (draggedItem.category === ItemTypes.WEAPON_RIFLE || draggedItem.category === ItemTypes.WEAPON_PISTOL
-            || draggedItem.category === ItemTypes.WEAPON_LAUNCHER) {
-            // if weapon make transparent color
-            dispatch(changeEquippedState(draggedItem, true));
-          } else {
-            dispatch(removeItemFromBoard(draggedItem.id));
+          if(draggedItemArea === 1) {
+            if (draggedItem.category === ItemTypes.WEAPON_RIFLE || draggedItem.category === ItemTypes.WEAPON_PISTOL
+              || draggedItem.category === ItemTypes.WEAPON_LAUNCHER) {
+              // if weapon make transparent color
+              dispatch(changeEquippedState(draggedItem, true));
+            } else {
+              dispatch(removeItemFromBoard(draggedItem.id));
+            }
+          }
+          else if (draggedItemArea === 2) {
+            dispatch(removeExternalBoardItemById(draggedItem.id));
           }
           try {
             dispatch(setEquippedItem(hoveredSquare));
-          } catch (e) {
-          }
+          } catch (e) {}
         }
       }
         //endregion
 
-      //region ------------------------------ Drop to board ------------------------------
-      else {
-        // add to board (from board too)
-        // if (draggedItem.mainCell[0] !== hoveredSquare[0] - xDown || draggedItem.mainCell[1] !== hoveredSquare[1] - yDown) {
+      //region ------------------------------ Move to board ------------------------------
+      else if(hoveredArea === 1) {
+        // add to board
         if (fromEquipped) {
           dispatch(removeEquippedItem(draggedItem.mainCell));
-          // if add to board
+
           if (draggedItem.category === ItemTypes.WEAPON_RIFLE || draggedItem.category === ItemTypes.WEAPON_PISTOL
             || draggedItem.category === ItemTypes.WEAPON_LAUNCHER) {
             // if item is weapon - remove prev item from board and set isWeaponEquipped to false
             dispatch(removeItemFromBoard(draggedItem.id));
           }
-        } else {
-          dispatch(removeItemFromBoard(draggedItem.id));
+        }
+        else {
+          if(draggedItemArea === 1) {
+            dispatch(removeItemFromBoard(draggedItem.id));
+          } else if (draggedItemArea === 2) {
+            dispatch(removeExternalBoardItemById(draggedItem.id));
+          }
         }
         try {
           dispatch(addItem());
-        } catch (e) {
-        }
-        //endregion
+        } catch (e) {}
       }
+      //endregion
+
+      // ------------------------------ Move to external board ------------------------------
+      else if(hoveredArea === 2) {
+        // add to external board
+        if (fromEquipped) {
+          dispatch(removeEquippedItem(draggedItem.mainCell));
+
+          if (draggedItem.category === ItemTypes.WEAPON_RIFLE || draggedItem.category === ItemTypes.WEAPON_PISTOL
+            || draggedItem.category === ItemTypes.WEAPON_LAUNCHER) {
+            // if item is weapon - remove prev item from board and set isWeaponEquipped to false
+            dispatch(removeItemFromBoard(draggedItem.id));
+          }
+        }
+        else {
+          if(draggedItemArea === 1) {
+            dispatch(removeItemFromBoard(draggedItem.id));
+          }
+          else if(draggedItemArea === 2) {
+            dispatch(removeExternalBoardItemById(draggedItem.id));
+          }
+        }
+        try {
+          dispatch(addExternalBoardItem());
+        } catch (e) {}
+      }
+      //endregion
     }
     dispatch(draggedItemRelease());
   }
@@ -539,7 +657,6 @@ export {
   invokeOnMouseUp,
   stackItem,
   setGoingToDrop,
-  hoveredSquaresRemove,
   rotateItem,
   dragEndHandler,
   // rotate non-dragged item

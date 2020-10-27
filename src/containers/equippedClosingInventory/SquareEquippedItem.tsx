@@ -21,7 +21,7 @@ const SquareEquippedItem: React.FC<Props> = React.memo(function SquareEquippedIt
   const {
     board: {boardSquareSize},
     draggedItem: {canDrop, hoveredSquare, item: draggedItem, goingToDrop, goingToStack},
-    hoveredItem: {item: hoveredItem}
+    hoveredItem: {item: hoveredItem, hoveredArea: hoveredItemArea}
   } = useSelector(state => state);
 
   const goingToDropRef = useRef();
@@ -54,7 +54,7 @@ const SquareEquippedItem: React.FC<Props> = React.memo(function SquareEquippedIt
 
   const handleContextMenuOpen = (e) => {
     const rect = e.target.getBoundingClientRect();
-    dispatch(openContextMenu(item, rect));
+    dispatch(openContextMenu(item, rect, 3));
   };
 
   const handleMouseDown = (event) => {
@@ -70,7 +70,6 @@ const SquareEquippedItem: React.FC<Props> = React.memo(function SquareEquippedIt
     // event.target.style.width = '100%';
     if(item.mainCell === 1 || item.mainCell === 2 || item.mainCell === 3) {
       // careful
-      console.log('newClone', newClone.childNodes[0].style.width);
       newClone.childNodes[0].style.width = '80%';
       newClone.children[0].style.height = '80%';
       newClone.children[0].style.left = '10%';
@@ -128,12 +127,12 @@ const SquareEquippedItem: React.FC<Props> = React.memo(function SquareEquippedIt
       e.stopPropagation();
     }
 
-    if(!draggedItem && (!hoveredItem || hoveredItem.mainCell !== item.mainCell)) {
-      dispatch(addHoveredItem(item));
+    if(!draggedItem && (!hoveredItem ||hoveredItemArea !== 3 || hoveredItem.mainCell !== item.mainCell)) {
+      dispatch(addHoveredItem(item, 3));
     }
   }
 
-  const isItemHovered = hoveredItem && hoveredItem.mainCell === item.mainCell;
+  const isItemHovered = hoveredItem && hoveredItemArea === 3 && hoveredItem.mainCell === item.mainCell;
 
   let additionalImageContainerStyles: CSSProperties = {
     backgroundColor: isItemHovered ? 'rgba(151, 159, 161, 0.5)' : 'transparent',
@@ -147,8 +146,7 @@ const SquareEquippedItem: React.FC<Props> = React.memo(function SquareEquippedIt
          onContextMenu={handleContextMenuOpen}
          onMouseOver={handleMouseOver}>
       <img src={item.imageUrl} className={classes.Image}
-           onDragStart={(e) => {e.stopPropagation();e.preventDefault();return false}}
-           onMouseUp={e => console.log('mouse up image')}/>
+           onDragStart={(e) => {e.stopPropagation();e.preventDefault();return false}}/>
       {item.currentCount > 1 &&
       (<div className={classes.CurrentCount}>
         <SecondaryText>

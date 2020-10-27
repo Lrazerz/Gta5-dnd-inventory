@@ -33,7 +33,6 @@ const setEquippedItems = (items: Item[] | []) => {
     if(items.length === 0) dispatch(_releaseAllEquippedItems());
 
     const equippedCells = getState().equippedItems.cells;
-    console.log('cells', equippedCells);
     let isAnyChanges = false;
     // checked items from items param (equal (with props) to equipped items)
     const checkedItems = [];
