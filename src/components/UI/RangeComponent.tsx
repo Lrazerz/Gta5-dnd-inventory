@@ -76,7 +76,6 @@ const RangeComponent: React.FC<Props> = React.memo(({leftOffset, topOffset, cont
   // similar logic to squareCommonItem
   const successButtonMouseDownHandler = event => {
     if (event.button !== 0) return;
-    event.persist();
     event.stopPropagation();
     const contextItemWithChangedCount = {...contextItem, currentCount: Number(splittedCount)};
     dispatch(addDraggedItem(contextItemWithChangedCount, contextItemWithChangedCount.mainCell as [number, number]));

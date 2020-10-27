@@ -26,7 +26,7 @@ const openContextMenu = (item, rect, hoveredArea) => {
     // offsets from left screen angle to positioning items
     let averX, bottomContext, topContext;
 
-    if(item.isEquipped) {
+    if(hoveredArea === 3) {
       averX = item.mainCell === 1 || item.mainCell === 2 || item.mainCell === 3 ? rect.left + rect.width / 3
         // @ts-ignore
         : rect.left - rect.width/ 1.18;
@@ -36,7 +36,13 @@ const openContextMenu = (item, rect, hoveredArea) => {
       topContext = Math.floor(rect.top + rect.height * 0.065)
     }
     else {
-      averX = Math.floor(rect.left + (item.width - 2) * rect.width / item.width / 2);
+      //board...
+      // rect.left + rect.width * item.width / 2
+      console.log('rect', rect);
+      const singleSquareWidth = rect.width / item.width;
+
+      averX = Math.floor(rect.left + item.width * singleSquareWidth / 2) - 0.783 * singleSquareWidth;
+      console.log('averX', averX);
       bottomContext = Math.floor(rect.top + rect.height * 0.935);
       topContext = Math.floor(rect.top + rect.height * 0.065)
     }

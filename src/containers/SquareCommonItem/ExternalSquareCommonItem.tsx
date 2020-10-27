@@ -57,14 +57,12 @@ const ExternalSquareCommonItem: React.FC<Props> = React.memo(function SquareComm
   const handleContextMenuOpen = (e) => {
     // last-remove
     // e.stopPropagation();
-    e.persist();
     const rect = e.target.getBoundingClientRect();
     dispatch(openContextMenu(item, rect, 2));
   };
 
   const handleMouseDown = (event) => {
     if (event.button !== 0) return;
-    event.persist();
     event.stopPropagation();
     dispatch(addDraggedItem({...item}, [x,y], null, null,  null, true));
 

@@ -25,7 +25,7 @@ const Board = React.memo(function Board({children}) {
 
   return (
     <div style={additionalStyles} className={classes.Board}
-    onMouseUp={e => {e.persist();e.stopPropagation();}}>
+    onMouseUp={e => e.stopPropagation()}>
       {children}
     </div>
   )

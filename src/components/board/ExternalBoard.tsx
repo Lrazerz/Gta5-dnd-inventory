@@ -39,7 +39,7 @@ const ExternalBoard: React.FC<Props> = React.memo(function ExternalBoard({childr
   return (
     <div style={wrapperStyles} className={classes.ExternalBoardWrapper}>
       <div style={additionalStyles} className={classes.ExternalBoard}
-           onMouseUp={e => {e.persist();e.stopPropagation();}}>
+           onMouseUp={e => e.stopPropagation()}>
         {children}
       </div>
     </div>

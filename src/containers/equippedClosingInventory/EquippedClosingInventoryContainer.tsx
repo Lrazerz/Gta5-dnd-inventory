@@ -52,7 +52,6 @@ const EquippedClosingInventoryContainer: React.FC<Props> =
   ];
 
   const equippedContainerMouseOverHandler = e => {
-    e.persist();
     if (draggedItem) dispatch(setGoingToDrop(true, 0));
     mouseOverHandler();
   }

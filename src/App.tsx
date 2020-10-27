@@ -9,8 +9,8 @@ import SecondaryText from "./components/layout/SecondaryText";
 import leftSparksSvg from "./assets/images/UI/left-sparks.svg";
 import rightSparksSvg from "./assets/images/UI/right-sparks.svg";
 import {openOrRefreshInventory, setSquareSize} from "./redux/actions/board";
-import ContextMenu from "./components/UI/ContextMenu";
-import RangeComponent from "./components/UI/RangeComponent";
+const ContextMenu = React.lazy(() => import("./components/UI/ContextMenu"));
+const RangeComponent = React.lazy(() => import("./components/UI/RangeComponent"));
 import {closeContextMenu} from "./redux/actions/contextMenu";
 import {rotateItem, rotateItemOnBoard, setGoingToDrop} from "./redux/actions/draggedItem";
 import {openExternalBoard} from "./redux/actions/externalBoard";
@@ -30,8 +30,10 @@ const App = React.memo(function App() {
 
   const goingToDropRef = useRef();
   const draggedItemRef = useRef();
+  const contextMenuRef = useRef();
   goingToDropRef.current = goingToDrop;
   draggedItemRef.current = draggedItem;
+  contextMenuRef.current = contextMenu;
 
   // @ts-ignore
   if (!window.openInventory || !window.refreshInventory) {
@@ -86,8 +88,8 @@ const App = React.memo(function App() {
 
   if(!window.onclick) {
     window.onclick = () => {
-      console.log('document onclick');
-      if (contextMenu.contextItem) {
+      // @ts-ignore
+      if (contextMenuRef.current.contextItem) {
         dispatch(closeContextMenu());
       }
     }
@@ -130,16 +132,19 @@ const App = React.memo(function App() {
         </div>
         <object type="image/svg+xml" data={leftSparksSvg} className={classes.LeftSparksSvgContainer}/>
         <object type="image/svg+xml" data={rightSparksSvg} className={classes.RightSparksSvgContainer}/>
+        <React.Suspense fallback={<div>Loading...</div>}>
+
         {contextMenu.contextItem && !contextMenu.splitMenuOpen && (<ContextMenu contextItem={contextMenu.contextItem}
                                                                                 leftOffset={contextMenu.leftOffset}
                                                                                 topOffset={contextMenu.topOffset}
                                                                                 hoveredArea={contextMenu.hoveredArea}
                                                                                 />)}
-        <RangeComponent leftOffset={contextMenu.leftOffset}
+        {contextMenu.splitMenuOpen && (<RangeComponent leftOffset={contextMenu.leftOffset}
                         topOffset={contextMenu.topOffsetTopContext}
                         contextItem={contextMenu.contextItem}
                         hoveredArea={contextMenu.hoveredArea}
-                        splitMenuOpen={contextMenu.splitMenuOpen}/>
+                        splitMenuOpen={contextMenu.splitMenuOpen}/>)}
+        </React.Suspense>
       </div>
     </>
   );

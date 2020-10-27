@@ -58,7 +58,6 @@ const SquareEquippedItem: React.FC<Props> = React.memo(function SquareEquippedIt
   };
 
   const handleMouseDown = (event) => {
-    event.persist();
     if(event.button !== 0) return;
     dispatch(addDraggedItem({...item}));
 
