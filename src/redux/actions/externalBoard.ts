@@ -1,17 +1,9 @@
 import {
-  BOARD_CURRENT_COUNT_CHANGE,
   CLOSE_EXTERNAL_BOARD, EXTERNAL_BOARD_CURRENT_COUNT_CHANGE,
   EXTERNAL_ITEM_SQUARES_RELEASE,
-  OPEN_EXTERNAL_BOARD, SINGLE_EXTERNAL_ITEM_SQUARES_FILL,
-  SINGLE_ITEM_SQUARES_FILL
+  OPEN_EXTERNAL_BOARD, SINGLE_EXTERNAL_ITEM_SQUARES_FILL
 } from "./types";
-import {importItemImage} from "./board";
-// @ts-ignore
-import DummyImage from "../../assets/dummy/weapon.png";
-import {ItemCategories} from "../../constants/dnd/categories";
-import Item from "../../models/Item";
-import {xMax, xMin, yMax, yMin} from "../../constants/boardDimensions";
-import {translateToServerItem} from "../../utils/translateToServerItem";
+import {xMax, xMin, yMin} from "../../constants/boardDimensions";
 
 const openExternalBoard = (items, height) => {
   return {type: OPEN_EXTERNAL_BOARD, items, height};
@@ -72,8 +64,8 @@ const removeExternalBoardItemById = (itemId) => {
 
     const squaresToRemove = [];
 
-    for(let y = 0; y <= externalBoard.length - 1; y++) {
-      for(let x = 0; x <= xMax; x++) {
+    for(let y = yMin; y < externalBoard.length; y++) {
+      for(let x = xMin; x <= xMax; x++) {
         if(externalBoard[y][x] && externalBoard[y][x].id === itemId) {
           squaresToRemove.push([x,y]);
         }

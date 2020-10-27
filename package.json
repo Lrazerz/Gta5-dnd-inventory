@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.tsx",
   "scripts": {
-    "start": "webpack serve",
-    "build": "webpack"
+    "start": "webpack serve --env=dev",
+    "build": "webpack --env=prod"
   },
   "keywords": [],
   "author": "",
@@ -39,6 +39,7 @@
   "dependencies": {
     "react-dom": "^17.0.1",
     "redux": "^4.0.5",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "webpack-merge": "^5.2.0"
   }
 }

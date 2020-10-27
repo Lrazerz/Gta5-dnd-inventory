@@ -14,7 +14,6 @@ import Item from "../../models/Item";
 import DummyImage from '../../assets/dummy/weapon.png';
 import {translateToServerItem} from "../../utils/translateToServerItem";
 import {openExternalBoard} from "./externalBoard";
-//'https://i.ibb.co/HCn40jg/weapon-2.png'
 
 const importItemImage: (itemName: string) => Promise<any> = async (itemName) => {
   let imageUrl;
@@ -168,7 +167,6 @@ const openOrRefreshInventory = async (info) => {
 }
 
 const openDoubleInventory = async (info) => {
-  console.log('open double inv')
   const {$values: values, $externalValues: externalValues,
   $externalBoardHeight: externalBoardHeight} = JSON.parse(info);
 
@@ -179,7 +177,6 @@ const openDoubleInventory = async (info) => {
   store.dispatch(_addItems(boardItems));
   // @ts-ignore
   store.dispatch(setEquippedItems(enabledItems));
-  console.log('open ext board')
   // @ts-ignore
   store.dispatch(openExternalBoard(externalBoardItems, externalBoardHeight));
 }

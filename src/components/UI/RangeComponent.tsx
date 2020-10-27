@@ -46,6 +46,7 @@ const RangeComponent: React.FC<Props> = React.memo(({leftOffset, topOffset, cont
   const externalBoardCellsRef = useRef();
   const hoveredAreaOfScreenRef = useRef();
   const boardCellsRef = useRef();
+  console.log('canDrop start of the component', canDrop);
   canDropRef.current = canDrop;
   hoveredSquareRef.current = hoveredSquare;
   allHoveredSquaresRef.current = allHoveredSquares;
@@ -76,12 +77,10 @@ const RangeComponent: React.FC<Props> = React.memo(({leftOffset, topOffset, cont
   // similar logic to squareCommonItem
   const successButtonMouseDownHandler = event => {
     if (event.button !== 0) return;
-    event.stopPropagation();
     const contextItemWithChangedCount = {...contextItem, currentCount: Number(splittedCount)};
     dispatch(addDraggedItem(contextItemWithChangedCount, contextItemWithChangedCount.mainCell as [number, number]));
 
     //region --------------------- Logic to add dragged item to the body ------------------------
-
     let requiredItem: HTMLElement;
 
     if(hoveredArea === 1) {
@@ -92,7 +91,6 @@ const RangeComponent: React.FC<Props> = React.memo(({leftOffset, topOffset, cont
     } else if (hoveredArea === 3) {
       requiredItem = document.getElementById(`square-equipped-item-${contextItem.mainCell}`);
     }
-    console.log('required dom item', requiredItem);
     // @ts-ignore
     const newClone: HTMLElement = requiredItem.cloneNode(true);
 
@@ -139,12 +137,14 @@ const RangeComponent: React.FC<Props> = React.memo(({leftOffset, topOffset, cont
     //endregion
 
     newClone.onmouseup = () => {
+      console.log('canDropRef canDrop', canDropRef.current, canDrop);
       const goingToStackSaved = goingToStackRef.current;
       // if can't move all part (stack) - save draggedItem witl less count
 
       // ----------------------------- If can't stack all part of the item ---------------------------------
       if (canDropRef.current) {
         if (goingToStackRef.current) {
+          console.log('goingToStackRef');
           // @ts-ignore
           if (goingToStackRef.current.draggedItemNewCurrentCount > 0) {
 
@@ -169,14 +169,15 @@ const RangeComponent: React.FC<Props> = React.memo(({leftOffset, topOffset, cont
             dispatch(draggedItemRelease());
             //@ts-ignore todo supressed
             dispatch(addDraggedItem(contextItemWithChangedCount, contextItemWithChangedCount.mainCell));
-            if(hoveredArea === 1) {
+            console.log('hov area of screen', hoveredAreaOfScreenRef.current);
+            if(hoveredAreaOfScreenRef.current === 1) {
               // @ts-ignore
               dispatch(boardChangeCurrentCountByItemId(contextItem.id, contextItem.currentCount - (splittedCount - goingToStackSaved.draggedItemNewCurrentCount)));
-            } else if (hoveredArea === 2) {
+            } else if (hoveredAreaOfScreenRef.current === 2) {
               // @ts-ignore
               dispatch(externalBoardChangeCurrentCountByItemId(contextItem.id, contextItem.currentCount - (splittedCount - goingToStackSaved.draggedItemNewCurrentCount)));
             }
-            else if(hoveredArea === 3) {
+            else if(hoveredAreaOfScreenRef.current === 3) {
               //@ts-ignore
               dispatch(equippedChangeCurrentCount(contextItem.mainCell, contextItem.currentCount - (splittedCount - goingToStackSaved.draggedItemNewCurrentCount)));
             }
@@ -189,7 +190,6 @@ const RangeComponent: React.FC<Props> = React.memo(({leftOffset, topOffset, cont
       document.body.removeChild(newClone);
       document.removeEventListener('mousemove', onMouseMove);
       newClone.onmouseup = null;
-      console.log('canDropRef canDrop', canDropRef.current, canDrop);
 
       if (canDropRef.current) {
         //region --------------------------------- Going To Stack (full part of the item) ------------------------------------
@@ -215,14 +215,12 @@ const RangeComponent: React.FC<Props> = React.memo(({leftOffset, topOffset, cont
 
         //region ------------------------------ Drop item ------------------------------
         else if (goingToDropRef.current) {
-          console.log('drop hoveredArea', hoveredArea);
           // @ts-ignore
           if (hoveredArea === 1) {
             // if drop item from board
             //@ts-ignore
             dispatch(boardChangeCurrentCountByItemId(contextItem.id, contextItem.currentCount - draggedItemRef.current.currentCount));
           } else if (hoveredArea === 2) {
-            console.log('drop from external board')
             // drop item from equipped
             // @ts-ignore
             dispatch(externalBoardChangeCurrentCountByItemId(contextItem.id, contextItem.currentCount - draggedItemRef.current.currentCount));
@@ -261,7 +259,6 @@ const RangeComponent: React.FC<Props> = React.memo(({leftOffset, topOffset, cont
 
         // ------------------------------------- Add to board -------------------------------------
         else if (hoveredAreaOfScreenRef.current === 1) {
-          console.log('at least add to board', hoveredArea)
           // ------------------------------------------- Add from equipped (to board) ------------------------------
           if (hoveredArea === 3) {
             //@ts-ignore
@@ -318,11 +315,25 @@ const RangeComponent: React.FC<Props> = React.memo(({leftOffset, topOffset, cont
           }
           // Add from external board to external board
           else if (hoveredArea === 2) {
+            // if any square of the source splitted item hovered
+            let isPartOfItemHovered = false;
+
             // @ts-ignore
-            dispatch(equippedChangeCurrentCount(contextItem.id, contextItem.currentCount - draggedItemRef.current.currentCount));
-            try {
-              dispatch(addExternalBoardItem());
-            } catch (e) {}
+            allHoveredSquaresRef.current.forEach(hovSquare => {
+              // @ts-ignore
+              if(externalBoardCellsRef.current[hovSquare[1]][hovSquare[0]] && externalBoardCellsRef.current[hovSquare[1]][hovSquare[0]].id === contextItem.id) {
+                isPartOfItemHovered = true;
+              }
+            });
+
+            if (!isPartOfItemHovered) {
+              // check if this is not the current item square
+              //@ts-ignore
+              dispatch(equippedChangeCurrentCount(contextItem.id, contextItem.currentCount - draggedItemRef.current.currentCount));
+              try {
+                dispatch(addExternalBoardItem());
+              } catch (e) {}
+            }
           }
           // Add from equipped to external board
           else if (hoveredArea === 3) {
@@ -359,7 +370,7 @@ const RangeComponent: React.FC<Props> = React.memo(({leftOffset, topOffset, cont
   }
 
   return (
-    <div className={classes.RangeComponentWrapper} style={styles} ref={containerRef} onClick={e => e.stopPropagation}>
+    <div className={classes.RangeComponentWrapper} style={styles} ref={containerRef} onClick={e => e.stopPropagation()}>
       <div className={classes.RangeComponentBG}>
         <div className={classes.InputRangeWrapper}>
           <input type='range' className={classes.Input} value={splittedCount} onChange={splittedCountChangeHandler}

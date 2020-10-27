@@ -44,19 +44,15 @@ export default (state = initialState, action) => {
       }
     }
     case OPEN_EXTERNAL_BOARD: {
-      console.log('open ext board reducer')
       const newBoard = _fillExternalBoard(action.height);
       action.items.forEach(itemAndSquares => {
-        console.log('action.items.forEach')
         const {squares, ...itemProps} = itemAndSquares;
         squares.forEach(square => {
-          console.log('squares.forEach')
           newBoard[square[1]][square[0]] = {
             ...itemProps
           };
         });
       });
-      console.log('return state')
       return {
         ...state,
         externalBoard: newBoard,

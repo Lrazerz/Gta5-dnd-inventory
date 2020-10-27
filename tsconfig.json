@@ -1,8 +1,9 @@
 {
   "compilerOptions": {
-    "sourceMap": false,
+    "sourceMap": true,
     "noImplicitAny": false,
     "module": "commonjs",
+    "preserveConstEnums": true,
     "target": "es5",
     "lib": [
       "esnext",
