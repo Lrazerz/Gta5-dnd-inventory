@@ -43,7 +43,6 @@ export default (state = initialState, action) => {
     }
     case CONTEXT_MENU_CLOSE:
     case DRAGGED_ITEM_SET: {
-      console.log('context menu close')
       return initialState;
     }
     default: {

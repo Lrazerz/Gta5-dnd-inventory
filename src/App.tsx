@@ -14,12 +14,14 @@ const ContextMenu = React.lazy(() => import("./components/UI/ContextMenu"));
 import {closeContextMenu} from "./redux/actions/contextMenu";
 import {rotateItem, rotateItemOnBoard, setGoingToDrop} from "./redux/actions/draggedItem";
 import {removeHoveredItem} from "./redux/actions/hoveredItem";
+import {closeExternalBoard} from "./redux/actions/externalBoard";
 
 const App = React.memo(function App() {
+
+  //region ------------------------------ Get state from redux, set references ------------------------------
   const [isOpen, setIsOpen] = useState(false);
   const dispatch = useDispatch();
 
-  // todo check App rerender
   const {
     board: {boardSquareSize},
     contextMenu,
@@ -33,6 +35,7 @@ const App = React.memo(function App() {
   goingToDropRef.current = goingToDrop;
   draggedItemRef.current = draggedItem;
   contextMenuRef.current = contextMenu;
+  //endregion
 
   // @ts-ignore
   if (!window.openInventory || !window.refreshInventory) {
@@ -42,6 +45,7 @@ const App = React.memo(function App() {
         setIsOpen(true);
       }
       await openOrRefreshInventory(info);
+      dispatch(closeExternalBoard());
       return;
     };
     // @ts-ignore
@@ -71,17 +75,17 @@ const App = React.memo(function App() {
     }
   }
 
-  const spaceDownHandler = (e) => {
+  const spaceDownHandler = React.useCallback((e) => {
     if (e.code.toLowerCase() === 'space') {
       e.preventDefault();
       if (draggedItem && draggedItem.width > 1 && draggedItem.height > 1) {
         dispatch(rotateItem());
       } else if (hoveredItem && hoveredItemArea !== 3 &&
         hoveredItem.width > 1 && hoveredItem.height > 1) {
-        dispatch(rotateItemOnBoard(hoveredItem, hoveredItemArea));
+        dispatch(rotateItemOnBoard(hoveredItem, hoveredItemArea))
       }
     }
-  }
+  }, [draggedItem, hoveredItem,hoveredItemArea]);
 
   document.onkeydown = spaceDownHandler;
 
@@ -95,19 +99,19 @@ const App = React.memo(function App() {
     }
   }
 
-  const removeCurrentHoveredItem = () => {
+  const removeCurrentHoveredItem = React.useCallback(() => {
     if (hoveredItem) {
       dispatch(removeHoveredItem());
     }
-  }
+  }, [hoveredItem])
 
   // act as backdrop
-  const tooltipMouseOverHandler = e => {
+  const tooltipMouseOverHandler = React.useCallback(e => {
     if (draggedItemRef.current && !goingToDropRef.current) {
       dispatch(setGoingToDrop(true));
       e.stopPropagation();
     }
-  }
+  },[draggedItemRef.current, goingToDropRef.current])
 
   //Allow ToolTip to be BackDrop
   const tooltipStyles: CSSProperties = {

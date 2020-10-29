@@ -1,4 +1,4 @@
-import React, {useCallback, CSSProperties, useRef} from 'react'
+import React, {useCallback, CSSProperties, useRef, useEffect} from 'react'
 import {useDispatch, useSelector} from "react-redux";
 import Overlay from "../../components/UI/Overlay";
 import {invokeOnMouseUp, setHoveredSquares} from "../../redux/actions/draggedItem";
@@ -15,6 +15,10 @@ interface Props {
 }
 
 const BoardSquare: React.FC<Props> = React.memo(function BoardSquare({coords: [x, y], children, isHovered, isPartOfItem}) {
+
+  useEffect(() => {
+    if (x === 1 && y === 1) console.log(`[1,1] boardSquare rerenders`);
+  },[])
 
   const {
     draggedItem: {hoveredSquare, canDrop: canDropRedux, item: draggedItem, hoveredArea}
@@ -58,7 +62,7 @@ const BoardSquare: React.FC<Props> = React.memo(function BoardSquare({coords: [x
   return (
     // @ts-ignore
     <div ref={drop} className={classes.BoardSquare} style={boardSquareStyles}
-         onMouseUp={() => {if(draggedItem) invokeOnMouseUp()}} onClick={e => e.stopPropagation()}>
+         onMouseUp={() => {if(draggedItem) invokeOnMouseUp()}}>
         {children}
       {isHovered && !canDropRedux && <Overlay color={theme.colors.danger}/>}
       {isHovered && canDropRedux && <Overlay color={theme.colors.success}/>}
