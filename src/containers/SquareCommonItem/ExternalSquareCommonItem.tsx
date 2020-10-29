@@ -151,8 +151,7 @@ const ExternalSquareCommonItem: React.FC<Props> = React.memo(function SquareComm
            onMouseDown={handleMouseDown}
            onContextMenu={handleContextMenuOpen}
            onMouseOver={handleMouseOver}>
-        <img src={item.imageUrl} style={item.isWeaponEquipped ? {opacity: '0.5'} : null}
-             className={classes.Image}/>
+        <img src={item.imageUrl} className={classes.Image}/>
         {currentCountText}
       </div>
     );

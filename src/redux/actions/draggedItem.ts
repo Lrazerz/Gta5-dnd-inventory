@@ -24,7 +24,6 @@ import {
 import {translateToServerItem} from "../../utils/translateToServerItem";
 import {EquippedCategoriesToCells} from "../../constants/dnd/equippedCategoriesToCells";
 import {ItemTypes} from "../../constants/dnd/types";
-import {mpTriggerDropItem} from "./contextMenu";
 import {
   addExternalBoardItem, addExternalItemsBySquares,
   externalBoardChangeCurrentCountByItemId,
@@ -32,6 +31,12 @@ import {
   removeExternalBoardItemById
 } from "./externalBoard";
 import {addHoveredItem} from "./hoveredItem";
+import {
+  mpTriggerDropExternalItem,
+  mpTriggerDropItem, mpTriggerRotateBoardItem, mpTriggerRotateExternalItem, mpTriggerStackFromExternalItem,
+  mpTriggerStackFromExternalToExternalItem,
+  mpTriggerStackItem, mpTriggerStackToExternalItem
+} from "../../utils/mpTriggers";
 
 const _addDraggedItem = (item, xUp, xDown, yUp, yDown, draggedItemArea = 1) => {
   return {type: DRAGGED_ITEM_SET, item, xUp, xDown, yUp, yDown, draggedItemArea};
@@ -104,7 +109,7 @@ const addDraggedItem = (item, [x, y] = [-100, -100], fromRotate = false,
     //endregion
 
     //region ------------------------------ If item from the boards ------------------------------
-    if (!item.isEquipped) {
+    if (typeof item.mainCell === 'object') {
       // just add draggedItem (from board)
       if(!fromExternalBoard) {
         dispatch(_addDraggedItem({...item}, xUp, xDown, yUp, yDown, 1));
@@ -329,48 +334,36 @@ const stackItem = (fromSplit = false) => {
           item: draggedItem,
           draggedItemArea,
           hoveredArea,
-          goingToStack: {stackableItem, stackableItemNewCurrentCount, draggedItemNewCurrentCount}
+          goingToStack: {
+            stackableItem, stackableItemNewCurrentCount: srcStackableItemNewCurrC,
+            draggedItemNewCurrentCount: srcDraggedItemNewCurrC
+          }
         }
       } = getState();
+
+    let stackableItemNewCurrentCount: number = srcStackableItemNewCurrC;
+    let draggedItemNewCurrentCount: number = srcDraggedItemNewCurrC;
+
+    //region ------------------------------ Utils to mp.trigger ------------------------------
+    const mpTriggerToExtBoard = () => {
+
+    }
+    //endregion
 
     //region ------------------------------ Reduce count / remove draggedItem ------------------------------
     if (!fromSplit) {
       if (draggedItemArea === 1) {
-        if (draggedItemNewCurrentCount === 0) {
-          dispatch(removeItemFromBoard(draggedItem.id));
-          // to server
-          draggedItem.mainCell = stackableItem.mainCell;
-        } else if (draggedItemNewCurrentCount > 0) {
-          dispatch(boardChangeCurrentCountByItemId(draggedItem.id, draggedItemNewCurrentCount));
-          // to server
-          draggedItem.currentCount = draggedItemNewCurrentCount;
-        }
+        dispatch(boardChangeCurrentCountByItemId(draggedItem.id, draggedItemNewCurrentCount));
       } else if (draggedItemArea === 2) {
-        if (draggedItemNewCurrentCount === 0) {
-          dispatch(removeExternalBoardItemById(draggedItem.id));
-          // to server
-          draggedItem.mainCell = stackableItem.mainCell;
-        } else if (draggedItemNewCurrentCount > 0) {
-          dispatch(externalBoardChangeCurrentCountByItemId(draggedItem.id, draggedItemNewCurrentCount));
-          // to server
-          draggedItem.currentCount = draggedItemNewCurrentCount;
-        }
+        dispatch(externalBoardChangeCurrentCountByItemId(draggedItem.id, draggedItemNewCurrentCount));
       } else if (draggedItemArea === 3) {
-        if (draggedItemNewCurrentCount === 0) {
-          dispatch(removeEquippedItem(draggedItem.id));
-          // to server
-          draggedItem.mainCell = stackableItem.mainCell;
-        } else if (draggedItemNewCurrentCount > 0) {
-          dispatch(equippedChangeCurrentCount(draggedItem.mainCell, draggedItemNewCurrentCount));
-          // to server
-          draggedItem.currentCount = draggedItemNewCurrentCount;
-        }
+        dispatch(equippedChangeCurrentCount(draggedItem.mainCell, draggedItemNewCurrentCount));
       }
     }
     //endregion
 
-    // change stackable item
-    if(hoveredArea === 1) {
+    //region ------------------------------ Change stackable item (non-depend on came fromSplit or not) ------------------------------
+    if (hoveredArea === 1) {
       // stack to board
       dispatch(boardChangeCurrentCountByItemId(stackableItem.id, stackableItemNewCurrentCount));
     } else if (hoveredArea === 2) {
@@ -378,21 +371,72 @@ const stackItem = (fromSplit = false) => {
     } else if (hoveredArea === 3) {
       dispatch(equippedChangeCurrentCount(stackableItem.mainCell, stackableItemNewCurrentCount));
     }
+    //endregion
 
-    // todo send to server when fromSplit
-    if(!fromSplit) {
-      draggedItem.currentCount = draggedItemNewCurrentCount;
+
+    // if fromSplit change draggedItemNewCurrentCount
+    if (fromSplit) {
       stackableItem.currentCount = stackableItemNewCurrentCount;
 
-      const translatedToServerDraggedItem = translateToServerItem(draggedItem);
-      const translatedToServerStackableItem = translateToServerItem(stackableItem);
-      try {
-        // todo if split
-
-        //@ts-ignore
-        mp.trigger('cel_cf_stackItem', translatedToServerDraggedItem, translatedToServerStackableItem);
-      } catch (e) {}
+      // find out source draggedItem count
+      if (draggedItemArea === 1) {
+        const {currentCount: srcItemcCount} = getState().board.board[draggedItem.mainCell[1]][draggedItem.mainCell[0]];
+        // how many units was added to stackable and removed from dragged
+        const stackedCount = draggedItem.currentCount - draggedItemNewCurrentCount;
+        draggedItemNewCurrentCount = srcItemcCount - stackedCount;
+        console.log('srcItemCount', srcItemcCount, ' stackedCount', stackedCount, 'draggedItemNewCCount', draggedItemNewCurrentCount);
+        dispatch(boardChangeCurrentCountByItemId(draggedItem.id, draggedItemNewCurrentCount));
+      }
+      else if (draggedItemArea === 2) {
+        const {currentCount: srcItemcCount} =
+          getState().externalBoard.externalBoard[draggedItem.mainCell[1]][draggedItem.mainCell[0]];
+        const stackedCount = draggedItem.currentCount - draggedItemNewCurrentCount;
+        draggedItemNewCurrentCount = srcItemcCount - stackedCount;
+        dispatch(externalBoardChangeCurrentCountByItemId(draggedItem.id, draggedItemNewCurrentCount));
+      }
+      else if (draggedItemArea === 3) {
+        const {currentCount: srcItemcCount} =
+          getState().equippedItems.cells[draggedItem.mainCell].item;
+        const stackedCount = draggedItem.currentCount - draggedItemNewCurrentCount;
+        draggedItemNewCurrentCount = srcItemcCount - stackedCount;
+        dispatch(equippedChangeCurrentCount(draggedItem.mainCell, draggedItemNewCurrentCount));
+      }
     }
+    // -----------
+
+    draggedItem.currentCount = draggedItemNewCurrentCount;
+    stackableItem.currentCount = stackableItemNewCurrentCount;
+    if(draggedItemNewCurrentCount === 0) {
+      draggedItem.mainCell = stackableItem.mainCell;
+    }
+
+    //region ------------------------------ Invoke triggers ------------------------------
+
+    // if stack related to external board use different triggers
+    if(draggedItemArea === 2 || hoveredArea === 2) {
+
+      // if stack from external board
+      if(draggedItemArea === 2) {
+        // stack from external board to external
+        if(hoveredArea === 2) {
+          mpTriggerStackFromExternalToExternalItem(draggedItem, stackableItem);
+        }
+        else if (hoveredArea === 1 || hoveredArea === 3) {
+          mpTriggerStackFromExternalItem(draggedItem, stackableItem);
+        }
+      }
+      else {
+        // stack to externalBoard ( hoveredArea === 2 )
+        // need no check draggedItemArea === 2, coz already
+        mpTriggerStackToExternalItem(draggedItem, stackableItem);
+      }
+    } else {
+      // stack between board and equipped
+      mpTriggerStackItem(draggedItem, stackableItem);
+    }
+    //endregion
+
+    //endregion
   }
 }
 
@@ -428,14 +472,14 @@ const rotateItem = () => {
         null, oldDraggedItemInfo.goingToDrop.areaId));
     }
     //endregion
-    else if (oldDraggedItemInfo.hoveredArea === 1) {
+    else if (oldDraggedItemInfo.draggedItemArea === 1) {
       // if hovered square was on board
       dispatch(addDraggedItem({...oldDraggedItem}, oldDraggedItemInfo.hoveredSquare, true));
-    } else if (oldDraggedItemInfo.hoveredArea === 2) {
+    } else if (oldDraggedItemInfo.draggedItemArea === 2) {
       // external board was hovered
       dispatch(addDraggedItem({...oldDraggedItem}, oldDraggedItemInfo.hoveredSquare, true, null,
         null, true));
-    } else if (oldDraggedItemInfo.hoveredArea === 3) {
+    } else if (oldDraggedItemInfo.draggedItemArea === 3) {
     // if hovered square was on equipped
     dispatch(addDraggedItem({...oldDraggedItem}, [-100, -100], true,
       oldDraggedItemInfo.hoveredSquare));
@@ -443,7 +487,7 @@ const rotateItem = () => {
   }
 }
 
-// rotate non-dragged item
+// rotate non-dragged item on board and external board
 const rotateItemOnBoard = (item, hoveredItemArea) => {
   const newItem = {...item};
 
@@ -465,10 +509,12 @@ const rotateItemOnBoard = (item, hoveredItemArea) => {
 
   return (dispatch, getState) => {
 
+    //region ------------------------------ Rotate board item ------------------------------
     if(hoveredItemArea === 1) {
       const {board} = getState().board;
       let canDrop = true;
 
+      // allHoveredSquares already calculated based on isRotated prop
       allHoveredSquares.forEach(hoveredSquare => {
         const [hoveredX, hoveredY] = hoveredSquare;
 
@@ -487,13 +533,12 @@ const rotateItemOnBoard = (item, hoveredItemArea) => {
         dispatch(removeItemFromBoard(item.id));
         dispatch(addItemBySquares(allHoveredSquares, newItem));
         dispatch(addHoveredItem(newItem, 1));
-        // const draggedItem =
-        //   document.getElementById(`square-common-item-${newItem.mainCell[0]}-${newItem.mainCell[1]}`);
-        // console.log('draggedItem', draggedItem);
-        // const event = new Event('mouseover');
-        // draggedItem.dispatchEvent(event);
+        mpTriggerRotateBoardItem(newItem);
       }
     }
+    //endregion
+
+    //region ------------------------------ Rotate external board item ------------------------------
     else if (hoveredItemArea === 2) {
       const {externalBoard} = getState().externalBoard;
       let canDrop = true;
@@ -509,22 +554,16 @@ const rotateItemOnBoard = (item, hoveredItemArea) => {
           }
         }
       });
-
       if(canDrop) {
         newItem.mainCell = [averageCell[0] - xDown, averageCell[1] - yDown];
         dispatch(removeExternalBoardItemById(item.id));
         dispatch(addExternalItemsBySquares(allHoveredSquares, newItem));
         dispatch(addHoveredItem(newItem, 2));
-        // const draggedItem =
-        //   document.getElementById(`external-square-common-item-${newItem.mainCell[0]}-${newItem.mainCell[1]}`);
-        // console.log('draggedItem', draggedItem);
-        // const event = new Event('mouseover');
-        // draggedItem.dispatchEvent(event);
+        mpTriggerRotateExternalItem(newItem);
       }
     }
+    //endregion
   }
-  // if canDrop remove item from board
-  // and add new Item
 }
 
 const dragEndHandler = (fromEquipped = false) => {
@@ -546,8 +585,10 @@ const dragEndHandler = (fromEquipped = false) => {
               dispatch(removeEquippedWeaponFromEquipped(draggedItem.id));
             }
             dispatch(removeItem(draggedItem.mainCell, draggedItem.width, draggedItem.height));
+            mpTriggerDropItem(draggedItem);
           } else if (draggedItemArea === 2) {
             dispatch(removeExternalBoardItem(draggedItem.mainCell, draggedItem.width, draggedItem.height));
+            mpTriggerDropExternalItem(draggedItem);
           }
         } else if(draggedItemArea === 3) {
           // drop item from equipped
@@ -557,8 +598,8 @@ const dragEndHandler = (fromEquipped = false) => {
           }
           // @ts-ignore
           dispatch(removeEquippedItem(draggedItem.mainCell));
+          mpTriggerDropItem(draggedItem);
         }
-        mpTriggerDropItem(draggedItem);
       }
         //endregion
 

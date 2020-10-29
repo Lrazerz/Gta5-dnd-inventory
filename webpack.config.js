@@ -1,5 +1,3 @@
-const devConfig = require('./webpackConf.base.js');
-
 // console.log('hi', devConfig)
 // module.exports = (env) => {
 //   return require(`./webpack.config.${env}`)
@@ -8,7 +6,6 @@ const devConfig = require('./webpackConf.base.js');
 module.exports = (env) => {
   // console.log('Object.keys(env)[0]',Object.keys(env)[0])
   const cfg = require(`./webpackConf.${Object.keys(env)[0]}.js`)
-  console.log('cfg', cfg);
   return cfg;
   // return devConfig
 }

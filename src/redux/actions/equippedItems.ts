@@ -6,7 +6,7 @@ import {
   EQUIPPED_ALL_ITEMS_RELEASE,
 } from "./types";
 import Item from "../../models/Item";
-import {translateToServerItem} from "../../utils/translateToServerItem";
+import {mpTriggerMoveItem} from "../../utils/mpTriggers";
 
 const _removeEquippedItem = (cellId) => {
   return {type: EQUIPPED_ITEM_REMOVE, id: cellId};
@@ -20,12 +20,9 @@ const setEquippedItem = (cellId) => (dispatch, getState) => {
   // create new copy of item
   const item: Item = {...getState().draggedItem.item};
   item.mainCell = cellId;
-  item.isEquipped = true;
   item.isRotated = false;
   dispatch({type: EQUIPPED_ITEM_SET, id: cellId, item});
-  const itemToServer = translateToServerItem(item);
-  //@ts-ignore
-  mp.trigger('cef_cl_moveItem', itemToServer);
+  mpTriggerMoveItem(item);
 }
 
 const setEquippedItems = (items: Item[] | []) => {
@@ -127,7 +124,13 @@ const removeEquippedWeaponFromEquipped = (id) => {
 }
 
 const equippedChangeCurrentCount = (squareId, newCurrentCount) => {
-  return {type: EQUIPPED_CURRENT_COUNT_CHANGE, squareId, newCurrentCount}
+  return dispatch => {
+    if (newCurrentCount === 0) {
+      dispatch(removeEquippedItem(squareId));
+    } else {
+      dispatch({type: EQUIPPED_CURRENT_COUNT_CHANGE, squareId, newCurrentCount});
+    }
+  }
 }
 
 export {

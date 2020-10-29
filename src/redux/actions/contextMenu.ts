@@ -6,6 +6,7 @@ import {removeEquippedItem, removeEquippedWeaponFromEquipped} from "./equippedIt
 import {ContextAction} from "../../models/Context/ContextAction";
 import store from "../store";
 import {removeExternalBoardItem} from "./externalBoard";
+import {mpTriggerDropExternalItem, mpTriggerDropItem} from "../../utils/mpTriggers";
 const {dispatch} = store;
 
 const _openContextMenu = (item, hoveredArea, leftOffset, topOffset, topOffsetTopContext) => {
@@ -53,20 +54,12 @@ const closeContextMenu = () => {
   }
 }
 
-const mpTriggerDropItem = (item) => {
-  const translatedItem = translateToServerItem(item);
-  try {
-    //@ts-ignore
-    mp.trigger('cef_cl_dropItem', translatedItem);
-  } catch(e) {}
-}
-
 const _eatFoodHandler = (item) => {
   console.log('food ', item, ' was eaten');
 }
 
 const _removeBoardItemHandler = (item) => {
-  const {category, id, mainCell} = item;
+  const {category, id, mainCell, width, height} = item;
 
   if(category === ItemTypes.WEAPON_RIFLE || category === ItemTypes.WEAPON_PISTOL
     || category === ItemTypes.WEAPON_LAUNCHER) {
@@ -75,14 +68,15 @@ const _removeBoardItemHandler = (item) => {
     dispatch(removeEquippedWeaponFromEquipped(id));
   }
   // @ts-ignore
-  dispatch(removeItem(mainCell, item.width, item.height));
+  dispatch(removeItem(mainCell, width, height));
+  mpTriggerDropItem(item);
 }
 
 const _removeExternalBoardItemHandler = (item) => {
-  const {category, id, mainCell} = item;
+  const {width, height, mainCell} = item;
   // @ts-ignore
-  dispatch(removeExternalBoardItem(mainCell, item.width, item.height));
-
+  dispatch(removeExternalBoardItem(mainCell, width, height));
+  mpTriggerDropExternalItem(item);
 }
 
 const _removeEquippedItemHandler = (item) => {
@@ -96,13 +90,14 @@ const _removeEquippedItemHandler = (item) => {
   }
   // @ts-ignore
   dispatch(removeEquippedItem(mainCell));
+  mpTriggerDropItem(item);
 }
 
 // returns function to invoke when drop action selected
 const _dropItemHandler = (removeItemFunc, item) => () => {
   dispatch(_closeContextMenu());
   removeItemFunc(item);
-  // mpTriggerDropItem(item);
+  mpTriggerDropItem(item);
 }
 
 // add action _openRangeComponent to split item (dispatch...)
@@ -138,7 +133,6 @@ const getContextActionsForCell = (item, hoveredArea) => {
 }
 
 export {
-  mpTriggerDropItem,
   openContextMenu,
   closeContextMenu,
   getContextActionsForCell

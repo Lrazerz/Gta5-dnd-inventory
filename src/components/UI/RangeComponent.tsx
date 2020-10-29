@@ -1,12 +1,13 @@
 import React, {useRef, useState, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import classes from '../../styles/UI/RangeComponent.module.scss';
-import {closeContextMenu, mpTriggerDropItem} from "../../redux/actions/contextMenu";
+import {closeContextMenu} from "../../redux/actions/contextMenu";
 import {addDraggedItem, draggedItemRelease, stackItem} from "../../redux/actions/draggedItem";
 import {equippedChangeCurrentCount, removeEquippedItem, setEquippedItem} from "../../redux/actions/equippedItems";
 import {addItem, boardChangeCurrentCountByItemId} from "../../redux/actions/board";
 import Item from "../../models/Item";
 import {addExternalBoardItem, externalBoardChangeCurrentCountByItemId} from "../../redux/actions/externalBoard";
+import {mpTriggerDropExternalItem, mpTriggerDropItem} from "../../utils/mpTriggers";
 
 interface Props {
   leftOffset: number;
@@ -46,7 +47,6 @@ const RangeComponent: React.FC<Props> = React.memo(({leftOffset, topOffset, cont
   const externalBoardCellsRef = useRef();
   const hoveredAreaOfScreenRef = useRef();
   const boardCellsRef = useRef();
-  console.log('canDrop start of the component', canDrop);
   canDropRef.current = canDrop;
   hoveredSquareRef.current = hoveredSquare;
   allHoveredSquaresRef.current = allHoveredSquares;
@@ -78,7 +78,12 @@ const RangeComponent: React.FC<Props> = React.memo(({leftOffset, topOffset, cont
   const successButtonMouseDownHandler = event => {
     if (event.button !== 0) return;
     const contextItemWithChangedCount = {...contextItem, currentCount: Number(splittedCount)};
-    dispatch(addDraggedItem(contextItemWithChangedCount, contextItemWithChangedCount.mainCell as [number, number]));
+    if(hoveredArea === 2) {
+      dispatch(addDraggedItem(contextItemWithChangedCount, contextItemWithChangedCount.mainCell as [number, number],
+        null, null, null, true));
+    } else {
+      dispatch(addDraggedItem(contextItemWithChangedCount, contextItemWithChangedCount.mainCell as [number, number]));
+    }
 
     //region --------------------- Logic to add dragged item to the body ------------------------
     let requiredItem: HTMLElement;
@@ -167,19 +172,12 @@ const RangeComponent: React.FC<Props> = React.memo(({leftOffset, topOffset, cont
             // todo invoke trigger
 
             dispatch(draggedItemRelease());
-            //@ts-ignore todo supressed
-            dispatch(addDraggedItem(contextItemWithChangedCount, contextItemWithChangedCount.mainCell));
-            console.log('hov area of screen', hoveredAreaOfScreenRef.current);
-            if(hoveredAreaOfScreenRef.current === 1) {
-              // @ts-ignore
-              dispatch(boardChangeCurrentCountByItemId(contextItem.id, contextItem.currentCount - (splittedCount - goingToStackSaved.draggedItemNewCurrentCount)));
-            } else if (hoveredAreaOfScreenRef.current === 2) {
-              // @ts-ignore
-              dispatch(externalBoardChangeCurrentCountByItemId(contextItem.id, contextItem.currentCount - (splittedCount - goingToStackSaved.draggedItemNewCurrentCount)));
-            }
-            else if(hoveredAreaOfScreenRef.current === 3) {
-              //@ts-ignore
-              dispatch(equippedChangeCurrentCount(contextItem.mainCell, contextItem.currentCount - (splittedCount - goingToStackSaved.draggedItemNewCurrentCount)));
+
+            if(hoveredArea === 2) {
+              dispatch(addDraggedItem(contextItemWithChangedCount, contextItemWithChangedCount.mainCell as [number, number],
+                null, null, null, true));
+            } else {
+              dispatch(addDraggedItem(contextItemWithChangedCount, contextItemWithChangedCount.mainCell as [number, number]));
             }
             return;
           }
@@ -197,18 +195,7 @@ const RangeComponent: React.FC<Props> = React.memo(({leftOffset, topOffset, cont
           // todo maybe remove that check
           //@ts-ignore
           if (goingToStackRef.current.stackableItem.mainCell !== contextItem.mainCell) {
-            // stackItem with 'true' param won't change source item (as draggedItem when on dragged item)
             dispatch(stackItem(true));
-            if(hoveredArea === 1) {
-              //@ts-ignore
-              dispatch(boardChangeCurrentCountByItemId(contextItem.id, contextItem.currentCount - splittedCount));
-            } else if (hoveredArea === 2) {
-              //@ts-ignore
-              dispatch(externalBoardChangeCurrentCountByItemId(contextItem.id, contextItem.currentCount - splittedCount));
-            } else if (hoveredArea === 3) {
-              //@ts-ignore
-              dispatch(equippedChangeCurrentCount(contextItem.mainCell, contextItem.currentCount - splittedCount));
-            }
           }
         }
         //endregion
@@ -220,15 +207,17 @@ const RangeComponent: React.FC<Props> = React.memo(({leftOffset, topOffset, cont
             // if drop item from board
             //@ts-ignore
             dispatch(boardChangeCurrentCountByItemId(contextItem.id, contextItem.currentCount - draggedItemRef.current.currentCount));
+            mpTriggerDropItem(draggedItemRef.current);
           } else if (hoveredArea === 2) {
             // drop item from equipped
             // @ts-ignore
             dispatch(externalBoardChangeCurrentCountByItemId(contextItem.id, contextItem.currentCount - draggedItemRef.current.currentCount));
+            mpTriggerDropExternalItem(draggedItemRef.current);
           } else if (hoveredArea === 3) {
             // @ts-ignore
             dispatch(equippedChangeCurrentCount(contextItem.id, contextItem.currentCount - draggedItemRef.current.currentCount));
+            mpTriggerDropItem(draggedItemRef.current);
           }
-          mpTriggerDropItem(draggedItemRef.current);
         }
         //endregion
 

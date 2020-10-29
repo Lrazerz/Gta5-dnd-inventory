@@ -4,6 +4,10 @@ import {
   OPEN_EXTERNAL_BOARD, SINGLE_EXTERNAL_ITEM_SQUARES_FILL
 } from "./types";
 import {xMax, xMin, yMin} from "../../constants/boardDimensions";
+import {
+  mpTriggerMoveFromExternalToExternalItem,
+  mpTriggerMoveToExternalItem
+} from "../../utils/mpTriggers";
 
 const openExternalBoard = (items, height) => {
   return {type: OPEN_EXTERNAL_BOARD, items, height};
@@ -23,24 +27,18 @@ const addExternalItemsBySquares = (squares, item) => {
 
 const addExternalBoardItem = () => {
   return (dispatch, getState) => {
-    const {hoveredSquare, allHoveredSquares, xDown, yDown, item: draggedItem} = getState().draggedItem;
+    const {hoveredSquare, allHoveredSquares, xDown, yDown, item: draggedItem, draggedItemArea} = getState().draggedItem;
 
     const newDraggedItem = {...draggedItem};
 
     newDraggedItem.mainCell = [hoveredSquare[0] - xDown, hoveredSquare[1] - yDown];
 
-    newDraggedItem.isEquipped = false;
-
-    // if(typeof hoveredSquare === 'number' && newDraggedItem.isWeaponEquipped) {
-    //   // if item derived from eq items and it is weapon (isWeaponEquipped can be true only on weapons)
-    //   newDraggedItem.isWeaponEquipped = false;
-    // }
-
     dispatch(addExternalItemsBySquares(allHoveredSquares, newDraggedItem));
-    // translate to Server Item
-    // const itemToServer = translateToServerItem(newDraggedItem);
-    //@ts-ignore
-    // mp.trigger('cef_cl_moveItem', itemToServer);
+    if(draggedItemArea === 2) {
+      mpTriggerMoveFromExternalToExternalItem(newDraggedItem);
+    } else {
+      mpTriggerMoveToExternalItem(newDraggedItem);
+    }
   }
 }
 
@@ -91,9 +89,10 @@ const externalBoardChangeCurrentCountByItemId = (id, newCurrentCount) => {
     });
 
     if(newCurrentCount === 0) {
-      return _removeExternalItem(requiredCells);
+      dispatch(_removeExternalItem(requiredCells));
+    } else {
+      dispatch({type: EXTERNAL_BOARD_CURRENT_COUNT_CHANGE, squares: requiredCells, newCurrentCount});
     }
-    dispatch({type: EXTERNAL_BOARD_CURRENT_COUNT_CHANGE, squares: requiredCells, newCurrentCount});
   }
 }
 

@@ -12,8 +12,8 @@ import {ItemCategories} from "../../constants/dnd/categories";
 import {xMax, xMin, yMax, yMin} from "../../constants/boardDimensions";
 import Item from "../../models/Item";
 import DummyImage from '../../assets/dummy/weapon.png';
-import {translateToServerItem} from "../../utils/translateToServerItem";
 import {openExternalBoard} from "./externalBoard";
+import {mpTriggerMoveFromExternalItem, mpTriggerMoveItem} from "../../utils/mpTriggers";
 
 const importItemImage: (itemName: string) => Promise<any> = async (itemName) => {
   let imageUrl;
@@ -68,7 +68,7 @@ _getEnabledAndBoardItems = async (items) => {
 
     FullItem = new Item(ID, Name, category, PosNumberLeftAngle,
       SizeX, SizeY, CurrentCount, MaxCount,
-      ImageUrl, Enabled, IsRotated, rest);
+      ImageUrl, IsRotated, rest);
 
 
     if (Enabled === true) {
@@ -107,7 +107,7 @@ _getExternalBoardItems = async (items) => {
 
     // Square numbers starts from 1 instead of 0
     let {
-      Name, PosNumberLeftAngle, SizeX, SizeY, Enabled, CurrentCount, MaxCount, IsRotated, ...rest
+      Name, PosNumberLeftAngle, SizeX, SizeY, Enabled = false, CurrentCount, MaxCount, IsRotated, ...rest
     } = item;
     const ID = item.ID.toString();
 
@@ -134,7 +134,7 @@ _getExternalBoardItems = async (items) => {
 
     FullItem = new Item(ID, Name, category, PosNumberLeftAngle,
       SizeX, SizeY, CurrentCount, MaxCount,
-      ImageUrl, Enabled, IsRotated, rest);
+      ImageUrl, IsRotated, rest);
 
     const mainCellY = Math.floor(PosNumberLeftAngle / (xMax + 1));
     const mainCellX = PosNumberLeftAngle % (xMax + 1) - 1;
@@ -296,13 +296,11 @@ const addItemBySquares = (squares, item: Item) => {
 // add item fetched from draggedItem
 const addItem = () => {
   return (dispatch, getState) => {
-    const {hoveredSquare, allHoveredSquares, xDown, yDown, item: draggedItem} = getState().draggedItem;
+    const {hoveredSquare, allHoveredSquares, xDown, yDown, item: draggedItem, draggedItemArea} = getState().draggedItem;
 
     const newDraggedItem = {...draggedItem};
 
     newDraggedItem.mainCell = [hoveredSquare[0] - xDown, hoveredSquare[1] - yDown];
-
-    newDraggedItem.isEquipped = false;
 
     if(typeof hoveredSquare === 'number' && newDraggedItem.isWeaponEquipped) {
       // if item derived from eq items and it is weapon (isWeaponEquipped can be true only on weapons)
@@ -310,10 +308,12 @@ const addItem = () => {
      }
 
     dispatch(addItemBySquares(allHoveredSquares, newDraggedItem));
-    // translate to Server Item
-    const itemToServer = translateToServerItem(newDraggedItem);
-    //@ts-ignore
-    mp.trigger('cef_cl_moveItem', itemToServer);
+
+    if(draggedItemArea === 2) {
+      mpTriggerMoveFromExternalItem(newDraggedItem);
+    } else if (draggedItemArea === 1 || draggedItemArea === 3) {
+      mpTriggerMoveItem(newDraggedItem);
+    }
   }
 }
 
@@ -353,7 +353,7 @@ const removeItemFromBoard = (id) => {
 const changeEquippedState = (item, newState) => dispatch => {
   // invoke only in SquareCommonItem
   const newItem = {...item};
-  // newState === isEquipped
+  // newState === isWeaponEquipped
   const squares = [];
 
   newItem.isWeaponEquipped = newState;
@@ -382,9 +382,10 @@ const boardChangeCurrentCountByItemId = (id, newCurrentCount) => {
     });
 
     if(newCurrentCount === 0) {
-      return _removeItem(requiredCells);
+      dispatch(_removeItem(requiredCells));
+    } else {
+      dispatch({type: BOARD_CURRENT_COUNT_CHANGE, squares: requiredCells, newCurrentCount});
     }
-    dispatch({type: BOARD_CURRENT_COUNT_CHANGE, squares: requiredCells, newCurrentCount});
   }
 }
 

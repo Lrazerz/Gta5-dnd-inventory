@@ -74,6 +74,6 @@ module.exports = {
     new MiniCssExtractPlugin()
   ],
   optimization: {
-    minimize: false,
+    minimize: true,
   }
 };

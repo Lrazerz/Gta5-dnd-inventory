@@ -3,14 +3,10 @@ import {useDispatch, useSelector} from "react-redux";
 import EquippedItem from "../../components/items/EquippedItem";
 import classes from '../../styles/equippedClosingInventory/SquareEquippedItem.module.scss';
 import SecondaryText from "../../components/layout/SecondaryText";
-import {addDraggedItem, dragEndHandler, draggedItemRelease, stackItem} from "../../redux/actions/draggedItem";
-import {addItem, removeItemFromBoard, removeItem} from "../../redux/actions/board";
-import {removeEquippedItem, removeEquippedWeaponFromEquipped, setEquippedItem} from "../../redux/actions/equippedItems";
-import {ItemTypes} from "../../constants/dnd/types";
-import {mpTriggerDropItem, openContextMenu} from "../../redux/actions/contextMenu";
+import {addDraggedItem, dragEndHandler, draggedItemRelease} from "../../redux/actions/draggedItem";
+import {openContextMenu} from "../../redux/actions/contextMenu";
 import Item from "../../models/Item";
 import {addHoveredItem} from "../../redux/actions/hoveredItem";
-import board from "../../redux/reducers/board";
 
 interface Props {
   item: Item;
