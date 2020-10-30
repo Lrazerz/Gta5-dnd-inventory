@@ -370,7 +370,6 @@ const stackItem = (fromSplit = false) => {
     }
     //endregion
 
-
     // if fromSplit change draggedItemNewCurrentCount
     if (fromSplit) {
       stackableItem.currentCount = stackableItemNewCurrentCount;
@@ -484,20 +483,6 @@ const rotateItem = () => {
       dispatch(addDraggedItem({...oldDraggedItem}, oldDraggedItemInfo.hoveredSquare,
         true, equippedHoveredSquare, null, isDraggedFromExternal));
     }
-
-
-    // else if (oldDraggedItemInfo.draggedItemArea === 1) {
-    //   // if hovered square was on board
-    //   dispatch(addDraggedItem({...oldDraggedItem}, oldDraggedItemInfo.hoveredSquare, true));
-    // } else if (oldDraggedItemInfo.draggedItemArea === 2) {
-    //   // external board was hovered
-    //   dispatch(addDraggedItem({...oldDraggedItem}, oldDraggedItemInfo.hoveredSquare, true, null,
-    //     null, true));
-    // } else if (oldDraggedItemInfo.draggedItemArea === 3) {
-    // // if hovered square was on equipped
-    // dispatch(addDraggedItem({...oldDraggedItem}, [-100, -100], true,
-    //   oldDraggedItemInfo.hoveredSquare));
-    // }
   }
 }
 
