@@ -290,6 +290,7 @@ const setSquareSize = (squareSize) => {
 }
 
 const addItemBySquares = (squares, item: Item) => {
+  console.log('add item by sq', squares, item);
   return {type: SINGLE_ITEM_SQUARES_FILL, squares, item};
 }
 
@@ -302,8 +303,7 @@ const addItem = () => {
 
     newDraggedItem.mainCell = [hoveredSquare[0] - xDown, hoveredSquare[1] - yDown];
 
-    if(typeof hoveredSquare === 'number' && newDraggedItem.isWeaponEquipped) {
-      // if item derived from eq items and it is weapon (isWeaponEquipped can be true only on weapons)
+    if(draggedItemArea !== 1) {
       newDraggedItem.isWeaponEquipped = false;
      }
 
@@ -358,12 +358,19 @@ const changeEquippedState = (item, newState) => dispatch => {
 
   newItem.isWeaponEquipped = newState;
 
-  // todo if rotated maybe change logic?
+  if(newItem.isRotated) {
+    console.log('newItem');
+    const tmp = newItem.width;
+    newItem.width = newItem.height;
+    newItem.height = tmp;
+  }
+
   for(let y = newItem.mainCell[1]; y < newItem.mainCell[1] + newItem.height; y++) {
     for(let x = newItem.mainCell[0]; x < newItem.mainCell[0] + newItem.width; x++) {
       squares.push([x,y]);
     }
   }
+  console.log('squares', squares);
   dispatch(_changeEquippedState(squares, newItem));
 }
 

@@ -94,9 +94,14 @@ const AppBoard: React.FC<Props> = React.memo(function AppBoard({onMouseOver: mou
         <BackDrop/>
       </div>
       {isShowExternalBoard && (
-        <ExternalBoard rowsCount={externalBoardItems.length}>
-          {externalInventorySquares}
-        </ExternalBoard>
+        <>
+          <ExternalBoard rowsCount={externalBoardItems.length}>
+            {externalInventorySquares}
+          </ExternalBoard>
+          <div className={classes.MiddleBackDropStyles}>
+            <BackDrop/>
+          </div>
+        </>
       )}
       <Board>
         {squares}

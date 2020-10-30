@@ -108,7 +108,7 @@ const SquareEquippedItem: React.FC<Props> = React.memo(function SquareEquippedIt
       newClone.onmouseup = null;
       // last-remove
       // event.target.style.zIndex = 100;
-      dispatch(dragEndHandler(true));
+      dispatch(dragEndHandler());
       // last-remove
       // event.target.style.pointerEvents = 'auto';
       dispatch(draggedItemRelease());

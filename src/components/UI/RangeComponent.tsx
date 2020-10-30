@@ -18,12 +18,10 @@ interface Props {
 }
 
 // hoveredArea - context item area
-// todo change count remove splitMenuOpen
 const RangeComponent: React.FC<Props> = React.memo(({leftOffset, topOffset, contextItem, hoveredArea, splitMenuOpen}) => {
   // lift up item to be at the top of the image
   const containerRef = useRef();
 
-  // todo change count remove contextItem &&
   const [splittedCount, setSplittedCount] = useState(0);
   const [reducedTopOffset, setReducedTopOffset] = useState();
   const dispatch = useDispatch();
@@ -142,14 +140,12 @@ const RangeComponent: React.FC<Props> = React.memo(({leftOffset, topOffset, cont
     //endregion
 
     newClone.onmouseup = () => {
-      console.log('canDropRef canDrop', canDropRef.current, canDrop);
       const goingToStackSaved = goingToStackRef.current;
       // if can't move all part (stack) - save draggedItem witl less count
 
       // ----------------------------- If can't stack all part of the item ---------------------------------
       if (canDropRef.current) {
         if (goingToStackRef.current) {
-          console.log('goingToStackRef');
           // @ts-ignore
           if (goingToStackRef.current.draggedItemNewCurrentCount > 0) {
 
@@ -168,8 +164,6 @@ const RangeComponent: React.FC<Props> = React.memo(({leftOffset, topOffset, cont
               currentCount: goingToStackSaved.draggedItemNewCurrentCount,
             };
             dispatch(stackItem(true));
-
-            // todo invoke trigger
 
             dispatch(draggedItemRelease());
 
@@ -192,7 +186,6 @@ const RangeComponent: React.FC<Props> = React.memo(({leftOffset, topOffset, cont
       if (canDropRef.current) {
         //region --------------------------------- Going To Stack (full part of the item) ------------------------------------
         if (goingToStackRef.current) {
-          // todo maybe remove that check
           //@ts-ignore
           if (goingToStackRef.current.stackableItem.mainCell !== contextItem.mainCell) {
             dispatch(stackItem(true));

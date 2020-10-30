@@ -115,7 +115,6 @@ const SquareCommonItem: React.FC<Props> = React.memo(function SquareCommonItem({
   }
 
   if (x === item.mainCell[0] && y === item.mainCell[1]) {
-
     let currentCountText = null;
 
     if (item.currentCount > 1) {

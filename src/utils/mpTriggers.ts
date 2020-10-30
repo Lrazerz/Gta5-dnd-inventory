@@ -4,7 +4,6 @@ import {translateExternalToServerItem, translateToServerItem} from "./translateT
 // when add item at board or equipped inventory (addItem, setEquippedItem)
 const mpTriggerMoveItem = (item) => {
   const transformedItem = translateToServerItem(item);
-  console.log('mpTriggerMoveItem', transformedItem);
   try {
     // @ts-ignore
     mp.trigger('cef_cl_moveItem', transformedItem);
@@ -14,7 +13,6 @@ const mpTriggerMoveItem = (item) => {
 // when add item at external board from board/eq (addExternalBoardItem)  (*in fact addExtBoardItem)
 const mpTriggerMoveToExternalItem = (item) => {
   const transformedItem = translateToServerItem(item);
-  console.log('mpTriggerMoveToExternalItem', transformedItem);
   try {
     // @ts-ignore
     mp.trigger('cef_cl_moveToExternalItem', transformedItem);
@@ -24,7 +22,6 @@ const mpTriggerMoveToExternalItem = (item) => {
 // move from external to board/eq
 const mpTriggerMoveFromExternalItem = (item) => {
   const transformedItem = translateToServerItem(item);
-  console.log('mpTriggerMoveFromExternalItem', transformedItem);
   try {
     // @ts-ignore
     mp.trigger('cef_cl_moveFromExternalItem', transformedItem);
@@ -34,7 +31,6 @@ const mpTriggerMoveFromExternalItem = (item) => {
 // when add item at external board from external board
 const mpTriggerMoveFromExternalToExternalItem = (item) => {
   const transformedItem = translateToServerItem(item);
-  console.log('mpTriggerMoveFromExternalToExternalItem', transformedItem);
   try {
     // @ts-ignore
     mp.trigger('cef_cl_moveFromExternalToExternalItem', transformedItem);

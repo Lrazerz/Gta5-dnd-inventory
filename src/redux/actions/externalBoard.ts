@@ -33,6 +33,11 @@ const addExternalBoardItem = () => {
 
     newDraggedItem.mainCell = [hoveredSquare[0] - xDown, hoveredSquare[1] - yDown];
 
+    if(draggedItemArea !== 2) {
+      // if item derived from eq items and it is weapon (isWeaponEquipped can be true only on weapons)
+      newDraggedItem.isWeaponEquipped = false;
+    }
+
     dispatch(addExternalItemsBySquares(allHoveredSquares, newDraggedItem));
     if(draggedItemArea === 2) {
       mpTriggerMoveFromExternalToExternalItem(newDraggedItem);

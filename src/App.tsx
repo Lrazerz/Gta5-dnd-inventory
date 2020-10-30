@@ -91,7 +91,6 @@ const App = React.memo(function App() {
 
   if(!window.onclick) {
     window.onclick = () => {
-      console.log('window onclick');
       // @ts-ignore
       if (contextMenuRef.current.contextItem) {
         dispatch(closeContextMenu());
