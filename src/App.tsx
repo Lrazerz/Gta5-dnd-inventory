@@ -45,7 +45,7 @@ const App = React.memo(function App() {
         setIsOpen(true);
       }
       await openOrRefreshInventory(info);
-      dispatch(closeExternalBoard());
+      // dispatch(closeExternalBoard());
       return;
     };
     // @ts-ignore
@@ -56,6 +56,9 @@ const App = React.memo(function App() {
   if(!window.openDoubleInventory) {
     // @ts-ignore
     window.openDoubleInventory = async info => {
+      if (!isOpen) {
+        setIsOpen(true);
+      }
       await openDoubleInventory(info);
     }
   }
@@ -75,7 +78,7 @@ const App = React.memo(function App() {
     }
   }
 
-  const spaceDownHandler = React.useCallback((e) => {
+  const spaceDownHandler = (e) => {
     if (e.code.toLowerCase() === 'space') {
       e.preventDefault();
       if (draggedItem && draggedItem.width > 1 && draggedItem.height > 1) {
@@ -85,7 +88,7 @@ const App = React.memo(function App() {
         dispatch(rotateItemOnBoard(hoveredItem, hoveredItemArea))
       }
     }
-  }, [draggedItem, hoveredItem,hoveredItemArea]);
+  }
 
   document.onkeydown = spaceDownHandler;
 
@@ -98,19 +101,19 @@ const App = React.memo(function App() {
     }
   }
 
-  const removeCurrentHoveredItem = React.useCallback(() => {
+  const removeCurrentHoveredItem = () => {
     if (hoveredItem) {
       dispatch(removeHoveredItem());
     }
-  }, [hoveredItem])
+  }
 
   // act as backdrop
-  const tooltipMouseOverHandler = React.useCallback(e => {
+  const tooltipMouseOverHandler = e => {
     if (draggedItemRef.current && !goingToDropRef.current) {
       dispatch(setGoingToDrop(true));
       e.stopPropagation();
     }
-  },[draggedItemRef.current, goingToDropRef.current])
+  }
 
   //Allow ToolTip to be BackDrop
   const tooltipStyles: CSSProperties = {
