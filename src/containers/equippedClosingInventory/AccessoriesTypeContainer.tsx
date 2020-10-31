@@ -36,8 +36,10 @@ const AccessoriesTypeContainer: React.FC<Props> =
 
   return (
     <div className={standardClasses.ClosingTypeContainer}>
-      <div className={standardClasses.TitleContainer}>
-        <img src={typeImage}/>
+      <div className={standardClasses.TitleAndImageContainer}>
+        <div className={standardClasses.ImageContainer}>
+          <img style={{width: '90%'}} className={standardClasses.Image} src={typeImage} />
+        </div>
         <LeadText>&nbsp;{typeTitle.toUpperCase()}</LeadText>
       </div>
       <div className={standardClasses.Borders}/>

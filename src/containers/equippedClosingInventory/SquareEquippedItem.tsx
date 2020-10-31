@@ -55,7 +55,7 @@ const SquareEquippedItem: React.FC<Props> = React.memo(function SquareEquippedIt
 
   const handleMouseDown = (event) => {
     if(event.button !== 0) return;
-    dispatch(addDraggedItem({...item}));
+    dispatch(addDraggedItem({...item}, 3));
 
     // last-remove
     // const savedTarget = event.currentTarget;
@@ -176,7 +176,7 @@ const SquareEquippedItem: React.FC<Props> = React.memo(function SquareEquippedIt
                onDragStart={(e) => {e.stopPropagation();e.preventDefault();return false}}/>
           {item.currentCount > 1 &&
           (<div className={classes.CurrentCount}>
-            <SecondaryText>
+            <SecondaryText styles={{fontSize: '0.9rem'}}>
               {item.currentCount}
             </SecondaryText>
           </div>)}

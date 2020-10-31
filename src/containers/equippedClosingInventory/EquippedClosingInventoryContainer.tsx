@@ -3,13 +3,12 @@ import {useSelector, useDispatch} from 'react-redux';
 import classes from '../../styles/equippedClosingInventory/EquippedClosingInventoryContainer.module.scss';
 import AccessoriesTypeContainer from "./AccessoriesTypeContainer";
 import ClosingTypeContainer from "./ClosingTypeContainer";
-import capImage from '../../assets/images/equippedClosingInventory/cap.png';
-import hoodieImage from '../../assets/images/equippedClosingInventory/hoodie.png';
-import pantsImage from '../../assets/images/equippedClosingInventory/pants.png';
-import bootsImage from '../../assets/images/equippedClosingInventory/boots.png';
-import glassesImage from '../../assets/images/equippedClosingInventory/glasses.png';
+import capImage from '../../assets/images/equippedClosingInventory/cap.svg';
+import hoodieImage from '../../assets/images/equippedClosingInventory/hoodie.svg';
+import pantsImage from '../../assets/images/equippedClosingInventory/pants.svg';
+import shoeImage from '../../assets/images/equippedClosingInventory/shoe.svg';
+import glassesImage from '../../assets/images/equippedClosingInventory/eye-glasses.svg';
 import UniqueServerDescription from "../../components/UI/UniqueServerDescription";
-import {ItemTypes} from "../../constants/dnd/types";
 import {SingleCell} from "../equippedWeaponsInventory/EquippedWeaponsInventoryContainer";
 import {setGoingToDrop} from "../../redux/actions/draggedItem";
 
@@ -78,8 +77,8 @@ const EquippedClosingInventoryContainer: React.FC<Props> =
                             typeImage={hoodieImage} cells={outerwearCells}/>
       <ClosingTypeContainer typeTitle={'Низ'}
                             typeImage={pantsImage} cells={pantsCells}/>
-      <ClosingTypeContainer typeTitle={'Обувь'}
-                            typeImage={bootsImage} cells={shoesCells}/>
+      <ClosingTypeContainer typeTitle={'Обувь'} typeImageWidth={88}
+                            typeImage={shoeImage} cells={shoesCells}/>
       <AccessoriesTypeContainer typeTitle={'Аксессуары'}
                                 typeImage={glassesImage} cells={accessoriesCells}/>
       <UniqueServerDescription/>
