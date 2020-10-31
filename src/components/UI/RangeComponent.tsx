@@ -76,12 +76,9 @@ const RangeComponent: React.FC<Props> = React.memo(({leftOffset, topOffset, cont
   const successButtonMouseDownHandler = event => {
     if (event.button !== 0) return;
     const contextItemWithChangedCount = {...contextItem, currentCount: Number(splittedCount)};
-    if(hoveredArea === 2) {
-      dispatch(addDraggedItem(contextItemWithChangedCount, contextItemWithChangedCount.mainCell as [number, number],
-        null, null, null, true));
-    } else {
-      dispatch(addDraggedItem(contextItemWithChangedCount, contextItemWithChangedCount.mainCell as [number, number]));
-    }
+    // todo last-todo
+    dispatch(addDraggedItem(contextItemWithChangedCount, hoveredArea));
+
 
     //region --------------------- Logic to add dragged item to the body ------------------------
     let requiredItem: HTMLElement;
@@ -167,12 +164,8 @@ const RangeComponent: React.FC<Props> = React.memo(({leftOffset, topOffset, cont
 
             dispatch(draggedItemRelease());
 
-            if(hoveredArea === 2) {
-              dispatch(addDraggedItem(contextItemWithChangedCount, contextItemWithChangedCount.mainCell as [number, number],
-                null, null, null, true));
-            } else {
-              dispatch(addDraggedItem(contextItemWithChangedCount, contextItemWithChangedCount.mainCell as [number, number]));
-            }
+            dispatch(addDraggedItem(contextItemWithChangedCount,  hoveredArea));
+
             return;
           }
         }

@@ -64,7 +64,7 @@ const ExternalSquareCommonItem: React.FC<Props> = React.memo(function SquareComm
   const handleMouseDown = (event) => {
     if (event.button !== 0) return;
     event.stopPropagation();
-    dispatch(addDraggedItem({...item}, [x,y], null, null,  null, true));
+    dispatch(addDraggedItem({...item}, 2));
 
 
     const newClone = event.currentTarget.cloneNode(true);
@@ -124,7 +124,7 @@ const ExternalSquareCommonItem: React.FC<Props> = React.memo(function SquareComm
     if (item.currentCount > 1) {
       currentCountText =
         (<div className={classes.CurrentCountText}>
-          <SecondaryText>
+          <SecondaryText styles={{fontSize: '0.9rem'}}>
             {item.currentCount}
           </SecondaryText>
         </div>);

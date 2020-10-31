@@ -6,13 +6,28 @@
   //padding-right: 14%;
   //position: relative;
 
-  .TitleContainer {
+  .TitleAndImageContainer {
     width: 100%;
-    padding-left: 22.75%;
+    //padding-left: 22.75%;
+    padding-left: 20.5%;
+    margin-bottom: -0.5%;
     height: 10%;
     box-sizing: border-box;
     display: flex;
     align-items: center;
+
+    .ImageContainer {
+      height: 100%;
+      //background-color: red;
+      width: 14%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      .Image {
+        width: 76%;
+
+      }
+    }
   }
 
   .Borders {

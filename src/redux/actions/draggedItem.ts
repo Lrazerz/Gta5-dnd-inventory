@@ -85,14 +85,15 @@ _getItemOffsets = (itemWidth, itemHeight) => {
 }
 //endregion
 
-// need to know item, x,y - hoveredSquare, if came from board
-// hoveredSquareIfEquippedHovered means that equippedInv was hovered
-// we can't use this data from redux, coz when rotate we release draggedItem first
-const addDraggedItem = (item, [x, y] = [-100, -100], fromRotate = false,
-                        hoveredSquareIfEquippedHovered = null, goingToDropAreaId = null,
-                        fromExternalBoard = false) => {
+// need to know item
+let addDraggedItem: (item: Item, draggedItemArea: number, fromRotate?: boolean,
+                     prevGoingToDropAreaId?: number | null, prevHoveredArea?: number | null,
+                     prevHoveredSquare?: [number, number] | number | null) => void
+addDraggedItem = (item, draggedItemArea,
+                        fromRotate = false, goingToDropAreaId = null,
+                        prevHoveredArea = null, prevHoveredSquare = null) => {
   return dispatch => {
-    //region ------------------------------ To check if item is rotating ------------------------------
+    //region ------------------------------ Swap width and height if item is rotating ------------------------------
     let itemWidth = item.width;
     let itemHeight = item.height;
 
@@ -106,24 +107,13 @@ const addDraggedItem = (item, [x, y] = [-100, -100], fromRotate = false,
     const {xUp, xDown, yUp, yDown} = _getItemOffsets(itemWidth, itemHeight);
     //endregion
 
-    //region ------------------------------ If item from the boards ------------------------------
-    if (typeof item.mainCell === 'object') {
-      // just add draggedItem (from board)
-      if(!fromExternalBoard) {
-        dispatch(_addDraggedItem({...item}, xUp, xDown, yUp, yDown, 1));
-      } else {
-        dispatch(_addDraggedItem({...item}, xUp, xDown, yUp, yDown, 2));
-      }
-    }
-    //endregion
+    //region ------------------------------ Add dragged item and set hovered square(s) ------------------------------
 
-    //region ------------------------------ If item from the equipped ------------------------------
-    else if(typeof item.mainCell === 'number') {
-      dispatch(_addDraggedItem({...item}, xUp, xDown, yUp, yDown, 3));
-      if (!fromRotate) {
-        dispatch(setHoveredSquares(item.mainCell, 3));
-      }
-    }
+    dispatch(_addDraggedItem({...item}, xUp, xDown, yUp, yDown, draggedItemArea));
+
+    // todo last-remove set hovsq if !from rotate and from eq items
+    // dispatch(setHoveredSquares(item.mainCell, 3));
+
     //endregion
 
     //region ------------------------------ If from rotate set hoveredSq and canDrop etc ------------------------------
@@ -131,17 +121,11 @@ const addDraggedItem = (item, [x, y] = [-100, -100], fromRotate = false,
       if (goingToDropAreaId) {
         dispatch(_setGoingToDrop(true, true, goingToDropAreaId));
       }
-      else if (fromExternalBoard) {
-        dispatch(setHoveredSquares([x, y], 2));
-      }
-      else if (!hoveredSquareIfEquippedHovered) {
-        dispatch(setHoveredSquares([x, y], 1));
-      }
-      else if (hoveredSquareIfEquippedHovered) {
-        dispatch(setHoveredSquares(hoveredSquareIfEquippedHovered, 3));
+      else if(prevHoveredArea === 1 || prevHoveredArea === 2 || prevHoveredArea === 3) {
+        dispatch(setHoveredSquares(prevHoveredSquare, prevHoveredArea));
       }
     }
-  };
+  }
 };
 
 // utils to setHoveredSquares
@@ -341,12 +325,6 @@ const stackItem = (fromSplit = false) => {
     let stackableItemNewCurrentCount: number = srcStackableItemNewCurrC;
     let draggedItemNewCurrentCount: number = srcDraggedItemNewCurrC;
 
-    //region ------------------------------ Utils to mp.trigger ------------------------------
-    const mpTriggerToExtBoard = () => {
-
-    }
-    //endregion
-
     //region ------------------------------ Reduce count / remove draggedItem ------------------------------
     if (!fromSplit) {
       if (draggedItemArea === 1) {
@@ -432,7 +410,6 @@ const stackItem = (fromSplit = false) => {
     }
     //endregion
 
-    //endregion
   }
 }
 
@@ -464,40 +441,16 @@ const rotateItem = () => {
 
     //region ------------------------------ Save goingToDrop ------------------------------
     if(oldDraggedItemInfo.goingToDrop) {
-      dispatch(addDraggedItem({...oldDraggedItem}, [-100,-100], true,
-        null, oldDraggedItemInfo.goingToDrop.areaId));
+      dispatch(addDraggedItem({...oldDraggedItem}, 0,
+        oldDraggedItemInfo.goingToDrop.areaId));
     }
     //endregion
+    //save other data
     else {
-      let equippedHoveredSquare;
-      let isDraggedFromExternal;
-
-      if(oldDraggedItemInfo.hoveredArea === 3) {
-        // if eq inv was hovered
-        equippedHoveredSquare = oldDraggedItemInfo.hoveredSquare;
-        oldDraggedItemInfo.hoveredSquare = [-100,-100];
-      }
-      if(oldDraggedItemInfo.draggedItemArea === 2) {
-        isDraggedFromExternal = true;
-      }
-
-      dispatch(addDraggedItem({...oldDraggedItem}, oldDraggedItemInfo.hoveredSquare,
-        true, equippedHoveredSquare, null, isDraggedFromExternal));
+      dispatch(addDraggedItem({...oldDraggedItem}, oldDraggedItemInfo.draggedItemArea,
+        true, null, oldDraggedItemInfo.hoveredArea,
+        oldDraggedItemInfo.hoveredSquare));
     }
-
-
-    // else if (oldDraggedItemInfo.draggedItemArea === 1) {
-    //   // if hovered square was on board
-    //   dispatch(addDraggedItem({...oldDraggedItem}, oldDraggedItemInfo.hoveredSquare, true));
-    // } else if (oldDraggedItemInfo.draggedItemArea === 2) {
-    //   // external board was hovered
-    //   dispatch(addDraggedItem({...oldDraggedItem}, oldDraggedItemInfo.hoveredSquare, true, null,
-    //     null, true));
-    // } else if (oldDraggedItemInfo.draggedItemArea === 3) {
-    // // if hovered square was on equipped
-    // dispatch(addDraggedItem({...oldDraggedItem}, [-100, -100], true,
-    //   oldDraggedItemInfo.hoveredSquare));
-    // }
   }
 }
 
@@ -543,7 +496,7 @@ const rotateItemOnBoard = (item, hoveredItemArea) => {
       });
 
       if(canDrop) {
-        newItem.mainCell = [averageCell[0] - xDown, averageCell[1] - yDown]
+        newItem.mainCell = [averageCell[0] - xDown, averageCell[1] - yDown];
         dispatch(removeItemFromBoard(item.id));
         dispatch(addItemBySquares(allHoveredSquares, newItem));
         dispatch(addHoveredItem(newItem, 1));

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {CSSProperties} from 'react';
 import classes from '../../styles/equippedClosingInventory/ClosingTypeContainer.module.scss';
 import ClosingWeaponSquare from "../../components/equippedClosingInventory/ClosingWeaponSquare";
 import Octagon from "../../components/equippedClosingInventory/Octagon";
@@ -9,10 +9,12 @@ interface Props {
   typeTitle: string;
   typeImage: string;
   cells: any[];
+  // adjust image of the type
+  typeImageWidth? : number;
 }
 
 const ClosingTypeContainer: React.FC<Props> =
-    React.memo(function ClosingTypeContainer({typeTitle, typeImage, cells}) {
+    React.memo(function ClosingTypeContainer({typeTitle, typeImage, cells, typeImageWidth}) {
 
   const squaresContent = cells.map(({id,cell}) => {
     let squareContent = null;
@@ -32,18 +34,17 @@ const ClosingTypeContainer: React.FC<Props> =
     )
   });
 
-  // last-remove
-  // const outerContainerMouseUpHandler = e => {
-  //   e.stopPropagation();
-  // }
+  const imageStyles: CSSProperties = typeImageWidth ? {width: typeImageWidth + '%'} : null;
+
+  const leadTextStyles: CSSProperties = typeTitle.toLowerCase() === 'низ' ? {marginLeft: '-1.5%'} : null;
 
   return (
     <div className={classes.ClosingTypeContainer}>
-      <div className={classes.TitleContainer}>
+      <div className={classes.TitleAndImageContainer}>
         <div className={classes.ImageContainer}>
-          <img src={typeImage}/>
+          <img style={imageStyles} className={classes.Image} src={typeImage}/>
         </div>
-        <LeadText>
+        <LeadText styles={leadTextStyles}>
           &nbsp;{typeTitle.toUpperCase()}
         </LeadText>
       </div>
