@@ -57,7 +57,7 @@ const playerInfoDefaultState: PlayerStateData = {
 }
 
 const carInfoDefaultState = {
-  isCarOpen: false,
+  isCarOpen: true,
   carIndicators: {
     // key image
     isCarRunning: false,

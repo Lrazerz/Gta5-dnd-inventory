@@ -24,6 +24,18 @@
       @media(min-aspect-ratio: theme.$aspect-ratio-4x3) {
         margin-top: 20%;
       }
+      @media(min-aspect-ratio: theme.$aspect-ratio-3x2) and (min-width: 2000px) {
+        margin-top: 31%;
+      }
+      @media(min-aspect-ratio: theme.$aspect-ratio-16x10) {
+        margin-top: 24%;
+      }
+      @media(min-aspect-ratio: theme.$aspect-ratio-16x9) {
+        margin-top: 15%;
+      }
+      @media(min-aspect-ratio: theme.$aspect-ratio-17x9) {
+        margin-top: 22%;
+      }
 
       .SingleIndicatorIconWrapper {
         width: 100%;

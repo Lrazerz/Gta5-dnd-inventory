@@ -17,6 +17,15 @@
     }
     @media(min-aspect-ratio: theme.$aspect-ratio-3x2) and (min-width: 2000px){
       width: 26%;
+      height: 33%;
+    }
+    @media(min-aspect-ratio: theme.$aspect-ratio-16x9){
+      width: 30%;
+      height: 40%;
+    }
+    @media(min-aspect-ratio: theme.$aspect-ratio-17x9){
+      width: 24%;
+      height: 35%;
     }
 
     .TimeContainer {

@@ -31,6 +31,12 @@
       @media(min-aspect-ratio: theme.$aspect-ratio-3x2) and (min-width: 2000px){
         height: 95%;
       }
+      @media(min-aspect-ratio: theme.$aspect-ratio-16x10){
+        height: 98%;
+      }
+      @media(min-aspect-ratio: theme.$aspect-ratio-16x9){
+        height: 100%;
+      }
       @media(min-aspect-ratio: theme.$aspect-ratio-16x9) {
         background-color: green;
         height: 100%;
@@ -51,6 +57,38 @@
       width: 14%;
       //background-color: red;
       box-sizing: border-box;
+
+      @media(min-aspect-ratio: theme.$aspect-ratio-5x4) {
+        height: 15%;
+        width: 17%;
+      }
+
+      @media(min-aspect-ratio: theme.$aspect-ratio-4x3) {
+        height: 15.8%;
+        width: 17%;
+      }
+
+      @media(min-aspect-ratio: theme.$aspect-ratio-3x2) and (min-width: 2000px) {
+        height: 16%;
+        width: 14.5%;
+
+        @media(min-width: 2500px) {
+          height: 15.5%;
+          width: 14.5%;
+        }
+      }
+      @media(min-aspect-ratio: theme.$aspect-ratio-16x10) {
+        height: 16.5%;
+        width: 14.5%;
+      }
+      @media(min-aspect-ratio: theme.$aspect-ratio-16x9) {
+        height: 17.45%;
+        width: 14%;
+      }
+      @media(min-aspect-ratio: theme.$aspect-ratio-17x9) {
+        height: 17.45%;
+        width: 13%;
+      }
     }
   }
 }
