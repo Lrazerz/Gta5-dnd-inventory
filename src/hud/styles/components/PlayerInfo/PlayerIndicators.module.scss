@@ -1,0 +1,60 @@
+@use '../../../../constants/scss/theme';
+
+.PlayerIndicators {
+  width: 100%;
+  height: 100%;
+  display: flex;
+
+  .IndicatorsIconsWrapper {
+    width: 12.9%;
+    height: 100%;
+    display: flex;
+
+    .ShiftedIndicatorsIconsWrapper {
+      width: 52%;
+      height: 79.69%;
+      margin-top: 15%;
+      margin-right: 20%;
+      margin-left: auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: visible;
+
+      @media(min-aspect-ratio: theme.$aspect-ratio-4x3) {
+        margin-top: 20%;
+      }
+
+      .SingleIndicatorIconWrapper {
+        width: 100%;
+        height: 25.49%;
+      }
+    }
+  }
+  .IndicatorsWrapper {
+    flex-grow: 1;
+    height: 100%;
+    display: flex;
+    align-items: center;
+
+    .ShiftedIndicatorsWrapper {
+      height: 68.75%;
+      width: 95%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      .SingleIndicatorWrapper {
+        height: 15.9%;
+        width: 100%;
+        border-radius: 0.5rem;
+        background-color: #8F929D;
+
+        .SingleIndicator {
+          height: 100%;
+          border-radius: 0.5rem;
+        }
+      }
+    }
+  }
+}

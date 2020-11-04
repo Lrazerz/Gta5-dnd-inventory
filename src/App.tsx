@@ -1,51 +1,63 @@
-import React, {CSSProperties, useRef, useState} from 'react';
-import {useSelector, useDispatch} from 'react-redux';
-import AppBoard from "./containers/AppBoard/AppBoard";
-import classes from './styles/App.module.scss';
-import EquippedClosingInventoryContainer
-  from "./containers/equippedClosingInventory/EquippedClosingInventoryContainer";
-import EquippedWeaponsInventoryContainer from "./containers/equippedWeaponsInventory/EquippedWeaponsInventoryContainer";
-import SecondaryText from "./components/layout/SecondaryText";
-import leftSparksSvg from "./assets/images/UI/left-sparks.svg";
-import rightSparksSvg from "./assets/images/UI/right-sparks.svg";
-import {openDoubleInventory, openOrRefreshInventory, setSquareSize} from "./redux/actions/board";
-import RangeComponent from "./components/UI/RangeComponent";
-const ContextMenu = React.lazy(() => import("./components/UI/ContextMenu"));
-import {closeContextMenu} from "./redux/actions/contextMenu";
-import {rotateItem, rotateItemOnBoard, setGoingToDrop} from "./redux/actions/draggedItem";
-import {removeHoveredItem} from "./redux/actions/hoveredItem";
-import {closeExternalBoard} from "./redux/actions/externalBoard";
+import React, {useState} from 'react';
+import InventoryApp from "./inventory/InventoryApp";
+import {openDoubleInventory, openOrRefreshInventory} from "./inventory/redux/actions/board";
+import HudApp from "./hud/HudApp";
+import {openHud} from "./hud/utils/windowInterceptors/PlayerInfo/PlayerInfoInterceptors";
+import {setSpeed} from "./hud/utils/windowInterceptors/CarInfo/CarInfoInterceptors";
+
+enum OpenedPartsEnum {
+  inventory,
+  hud,
+}
+
+const dummyHudData = {
+  playerAvatarName: "avatar",
+  playerRankTitle: "level1",
+  stateIndicators: {
+    firstIndicator: 28,
+    secondIndicator: 10,
+    thirdIndicator: 100
+  },
+  network: 90,
+  time: '13:44',
+  buffs: [
+    {title: 'buff1', timeLeft: 32},
+    {title: 'buff2', timeLeft: 31},
+    {title: 'buff2', timeLeft: 133},
+    {title: 'buff1', timeLeft: 12},
+    {title: 'buff1', timeLeft: 21}
+  ],
+}
+
+const defaultHudData = {
+  playerAvatarName: "",
+  playerRankTitle: "",
+  stateIndicators: {
+    firstIndicator: 0,
+    secondIndicator: 0,
+    thirdIndicator: 0
+  },
+  network: 0,
+  time: '00:00',
+  buffs: [],
+}
 
 const App = React.memo(function App() {
 
-  //region ------------------------------ Get state from redux, set references ------------------------------
-  const [isOpen, setIsOpen] = useState(false);
-  const dispatch = useDispatch();
+  const [openedPart, setOpenedPart]: [number, (newState: number) => void] = useState(1);
+  // todo last-todo
+  // const [hudData, setHudData] = useState(defaultHudData);
+  const [hudData, setHudData] = useState(dummyHudData);
 
-  const {
-    board: {boardSquareSize},
-    contextMenu,
-    draggedItem: {goingToDrop, item: draggedItem},
-    hoveredItem: {item: hoveredItem, hoveredArea: hoveredItemArea}
-  } = useSelector(state => state);
-
-  const goingToDropRef = useRef();
-  const draggedItemRef = useRef();
-  const contextMenuRef = useRef();
-  goingToDropRef.current = goingToDrop;
-  draggedItemRef.current = draggedItem;
-  contextMenuRef.current = contextMenu;
-  //endregion
-
+  //region ------------------------------ Set up inventory functions on window ------------------------------
   // @ts-ignore
   if (!window.openInventory || !window.refreshInventory) {
     // @ts-ignore
     window.openInventory = async (info) => {
-      if (!isOpen) {
-        setIsOpen(true);
+      if ( !(openedPart === OpenedPartsEnum.inventory) ) {
+        setOpenedPart(OpenedPartsEnum.inventory);
       }
       await openOrRefreshInventory(info);
-      // dispatch(closeExternalBoard());
       return;
     };
     // @ts-ignore
@@ -55,105 +67,38 @@ const App = React.memo(function App() {
   // @ts-ignore
   if(!window.openDoubleInventory) {
     // @ts-ignore
-    window.openDoubleInventory = async info => {
-      if (!isOpen) {
-        setIsOpen(true);
+    window.openDoubleInventory = async (info, externalInfo, extBoardHeight) => {
+      if ( !(openedPart === OpenedPartsEnum.inventory) ) {
+        setOpenedPart(OpenedPartsEnum.inventory);
       }
-      await openDoubleInventory(info);
+      await openDoubleInventory(info, externalInfo, extBoardHeight);
     }
   }
+  //endregion
 
-  if (!isOpen) {
-    return null;
-  }
-
-  if(!boardSquareSize) {
-    const bodyWidth = document.body.getBoundingClientRect().width;
-    dispatch(setSquareSize(bodyWidth * 0.04125));
-  }
-
-  if(!document.oncontextmenu) {
-    document.oncontextmenu = e => {
-      e.preventDefault();
-    }
-  }
-
-  const spaceDownHandler = (e) => {
-    if (e.code.toLowerCase() === 'space') {
-      e.preventDefault();
-      if (draggedItem && draggedItem.width > 1 && draggedItem.height > 1) {
-        dispatch(rotateItem());
-      } else if (hoveredItem && hoveredItemArea !== 3 &&
-        hoveredItem.width > 1 && hoveredItem.height > 1) {
-        dispatch(rotateItemOnBoard(hoveredItem, hoveredItemArea))
-      }
-    }
-  }
-
-  document.onkeydown = spaceDownHandler;
-
-  if(!window.onclick) {
-    window.onclick = () => {
+  //region ------------------------------ Set up hud functions on window ------------------------------
+  // @ts-ignore
+  if(!window.openHud || !window.refreshHud) {
+    // @ts-ignore
+    window.openHud = window.refreshHud = async (data) => {
+      const hudData = await openHud(data);
+      setOpenedPart(OpenedPartsEnum.hud);
       // @ts-ignore
-      if (contextMenuRef.current.contextItem) {
-        dispatch(closeContextMenu());
-      }
+      setHudData(hudData);
     }
   }
 
-  const removeCurrentHoveredItem = () => {
-    if (hoveredItem) {
-      dispatch(removeHoveredItem());
+  switch(openedPart) {
+    case OpenedPartsEnum.inventory: {
+      return <InventoryApp/>
+    }
+    case OpenedPartsEnum.hud: {
+      return <HudApp data={hudData}/>
+    }
+    default: {
+      return null;
     }
   }
-
-  // act as backdrop
-  const tooltipMouseOverHandler = e => {
-    if (draggedItemRef.current && !goingToDropRef.current) {
-      dispatch(setGoingToDrop(true));
-      e.stopPropagation();
-    }
-  }
-
-  //Allow ToolTip to be BackDrop
-  const tooltipStyles: CSSProperties = {
-    pointerEvents: goingToDrop ? 'none' : 'inherit',
-    zIndex: goingToDrop ? 'auto' : 200,
-  }
-
-  return (
-    <>
-      {/*<div className={classes.BgWrapper}/>*/}
-      {/*<div className={classes.BlurredWrapper}/>*/}
-      <div className={classes.AppContainer}>
-        <div className={classes.TopTooltip} style={tooltipStyles} onMouseOver={tooltipMouseOverHandler}>
-          <SecondaryText styles={{fontWeight: 600, color: '#fcfdff', width: 'auto'}}>
-            Нажмите I для выхода
-          </SecondaryText>
-        </div>
-        <div className={classes.App}>
-          <EquippedClosingInventoryContainer onMouseOver={removeCurrentHoveredItem}/>
-          <AppBoard onMouseOver={removeCurrentHoveredItem}/>
-          <EquippedWeaponsInventoryContainer onMouseOver={removeCurrentHoveredItem}/>
-        </div>
-        <object type="image/svg+xml" data={leftSparksSvg} className={classes.LeftSparksSvgContainer}/>
-        <object type="image/svg+xml" data={rightSparksSvg} className={classes.RightSparksSvgContainer}/>
-        {contextMenu.contextItem && (<React.Suspense fallback={<div>Loading...</div>}>
-
-        {!contextMenu.splitMenuOpen && (<ContextMenu contextItem={contextMenu.contextItem}
-                                                                                leftOffset={contextMenu.leftOffset}
-                                                                                topOffset={contextMenu.topOffset}
-                                                                                hoveredArea={contextMenu.hoveredArea}
-                                                                                />)}
-        </React.Suspense>)}
-        <RangeComponent leftOffset={contextMenu.leftOffset}
-                        topOffset={contextMenu.topOffsetTopContext}
-                        contextItem={contextMenu.contextItem}
-                        hoveredArea={contextMenu.hoveredArea}
-                        splitMenuOpen={contextMenu.splitMenuOpen}/>)
-      </div>
-    </>
-  );
 });
 
 export default App;

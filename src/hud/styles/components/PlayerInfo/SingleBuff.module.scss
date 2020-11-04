@@ -1,0 +1,72 @@
+@use '../../../../constants/scss/theme';
+
+.SingleBuff {
+  height: 100%;
+  width: 1.53vw;
+  margin-right: 0.1vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  @media(min-aspect-ratio: theme.$aspect-ratio-4x3) {
+    width: 1.6vw;
+    @media(min-width: 1500px) {
+      width: 1.61vw;
+    }
+  }
+  @media(min-aspect-ratio: theme.$aspect-ratio-3x2) and (min-width: 2000px) {
+    width: 1.53vw;
+  }
+
+  .BuffImageWrapper {
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+  }
+
+  .TimeLeftWrapper {
+    height: 25%;
+    width: 100%;
+    max-width: 100%;
+    font-size: 0.45rem;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    color: #fff;
+    text-align: center;
+    letter-spacing: 0.01rem;
+    font-stretch: 20%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+
+    @media(min-aspect-ratio: theme.$aspect-ratio-5x4) {
+      font-size: 0.47rem;
+    }
+
+    @media(min-aspect-ratio: theme.$aspect-ratio-5x4) {
+      font-size: 0.47rem;
+    }
+
+    @media(min-aspect-ratio: theme.$aspect-ratio-4x3) {
+      font-size: 0.43rem;
+
+      @media(min-width: 1500px) {
+        font-size: 0.42rem;
+      }
+    }
+
+    @media(min-aspect-ratio: theme.$aspect-ratio-3x2) and (min-width: 2000px) {
+      font-size: 0.5rem;
+    }
+
+    @media(min-aspect-ratio: theme.$aspect-ratio-16x9) {
+      padding-top: 15%;
+      box-sizing: border-box;
+      font-size: 0.45rem;
+    }
+
+    @media(min-width: 3500px) {
+      font-size: 0.53rem;
+    }
+  }
+}

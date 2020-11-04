@@ -1,0 +1,37 @@
+.PlayerInfo {
+  width: 100%;
+  height: 100%;
+
+  .PlayerStats {
+    width: 100%;
+    height: 57%;
+    display: flex;
+    align-items: stretch;
+
+    .PlayerAvatarAndRankWrapper {
+      width: 41.21%;
+      height: 100%;
+    }
+    .PlayerIndicatorsAndNetwork {
+      flex-grow: 1;
+      height: 100%;
+
+      .NetworkAndTime {
+        height: 47.18%;
+        width: 100%;
+      }
+      .PlayerIndicatorsWrapper {
+        height: 45%;
+        width: 100%;
+        border-radius: 0.5rem;
+        background-color: rgba(65, 63, 63, 0.4)
+      }
+    }
+  }
+
+  .PlayerBuffsWrapper {
+    width: 100%;
+    height: 43%;
+
+  }
+}

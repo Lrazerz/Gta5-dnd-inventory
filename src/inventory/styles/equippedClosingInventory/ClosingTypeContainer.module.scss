@@ -1,0 +1,86 @@
+@use '../../../constants/scss/theme';
+
+.ClosingTypeContainer {
+  height: 15%;
+  width: 100%;
+  //padding-right: 14%;
+  //position: relative;
+
+  .TitleAndImageContainer {
+    width: 100%;
+    //padding-left: 22.75%;
+    padding-left: 20.5%;
+    height: 10%;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    @media (min-aspect-ratio: theme.$aspect-ratio-5x4) {
+        margin-bottom: -2%;
+
+    }
+
+    @media (min-aspect-ratio: theme.$aspect-ratio-4x3) {
+        margin-bottom: -2.3%;
+      @media(min-width: 1500px) {
+          margin-bottom: -1.7%;
+      }
+    }
+
+    @media (min-aspect-ratio: theme.$aspect-ratio-3x2) {
+        margin-bottom: -1.8%;
+    }
+
+    @media (min-aspect-ratio: theme.$aspect-ratio-16x10) {
+        margin-bottom: -1%;
+    }
+
+    @media (min-aspect-ratio: theme.$aspect-ratio-16x9) {
+      margin-bottom: -0.2%;
+      @media (min-width: 1900px) {
+        margin-bottom: -0.7%;
+      }
+    }
+
+    .ImageContainer {
+      margin-top: -1%;
+      height: 100%;
+      //background-color: red;
+      width: 14%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      .Image {
+        width: 76%;
+      }
+    }
+  }
+
+  .Borders {
+    height: 9.15%;
+    width: 83%;
+    background: linear-gradient(90deg, #3f76f3 30%, transparent 70%);
+    clip-path: polygon(0 0, 20.657% 0, 25.5% 84.615%, 100% 84.615%, 100% 100%, 25% 100%, 20.357% 23.077%, 0% 23.077%);
+  }
+
+  .SquaresContainer {
+    width: 66.4%;
+    margin-left: 20.92%;
+    margin-right: 14%;
+    height: 74.4%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    box-sizing: border-box;
+    overflow: visible;
+
+    .Arrow {
+      visibility: hidden;
+      height: 19%;
+      width: 5.7%;
+      background-color: rgba(47, 55, 71, 0.3);
+      clip-path: polygon(0 0, 100% 50%, 0 100%);
+    }
+  }
+}
+

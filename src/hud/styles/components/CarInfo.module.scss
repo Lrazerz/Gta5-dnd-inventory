@@ -1,0 +1,123 @@
+.CarInfo {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  .SpeedAndFuelWrapper {
+    min-width: 100%;
+    width: 100%;
+    max-width: 100%;
+    min-height: 55.5%;
+    height: 55.5%;
+    max-height: 55.5%;
+    display: flex;
+    position: relative;
+
+    .SpeedContainer {
+      width: 44%;
+      margin-top: 11%;
+      height: 46.8%;
+      border-radius: 0.45rem;
+      background-color: rgba(188, 207, 193,0.3);
+      margin-left: 14%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      .SpeedText {
+        font-size: 1.05rem;
+        font-weight: 800;
+        color: #FFDF7E;
+        font-family: 'Oswald', sans-serif;
+      }
+    }
+
+    .FuelContainer {
+      width: 22.48%;
+      margin-top: 5%;
+      margin-left: 7.4%;
+      height: 65.8%;
+      position: relative;
+      overflow: hidden;
+
+      .FuelWrapper {
+        width: 100%;
+        height: 120%;
+
+        .FuelCanisterWrapper {
+          position: absolute;
+          top: 25.55%;
+          left: 21.55%;
+          width: 56.9%;
+          height:56.9%;
+        }
+      }
+    }
+
+    .DecorativeBorder {
+      position: absolute;
+      left: 0;
+      bottom: 6%;
+      width: 100%;
+      height: 31.25%;
+      background: linear-gradient(90deg, transparent 0%, #fff 9.26%, #fff 90.74%, transparent 100%);
+      clip-path: polygon(0% 0%, 1% 0%, 9.45% 95%, 90.45% 95%, 99% 0%, 100% 0%,
+              100% 0.07%, 90.74% 100%, 9.26% 100%, 0% 0.07%);
+    }
+  }
+
+  .CarStateWrapper {
+    flex-grow: 1;
+
+    .BorderedGrayBlock {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 74.24%;
+      height: 74.24%;
+      max-height: 74.24%;
+      min-width: 89.26%;
+      width: 89.26%;
+      max-width: 89.26%;
+      margin: 0 auto auto auto;
+      border-radius: 0.5rem;
+      box-sizing: border-box;
+      background-color: rgba(188, 207, 193,0.3);
+
+      .KeyWrapper {
+        min-height: 100%;
+        max-height: 100%;
+        min-width: 17.84%;
+        max-width: 17.84%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .KeyImage {
+          width: 55%;
+          height: 68%;
+        }
+      }
+      .DoorsStateWrapper {
+        min-width: 20.75%;
+        width: 20.75%;
+        max-width: 20.75%;
+        min-height: 55.1%;
+        height: 55.1%;
+        max-height: 55.1%;
+        background-color: rgba(75, 81, 78, 0.5);
+        border-radius: 0.3rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+
+        .DoorImage {
+          display: block;
+          width: 30%;
+          height: 70%;
+        }
+      }
+    }
+  }
+}
