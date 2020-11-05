@@ -44,10 +44,8 @@ const defaultHudData = {
 
 const App = React.memo(function App() {
 
-  const [openedPart, setOpenedPart]: [number, (newState: number) => void] = useState(1);
-  // todo last-todo
-  // const [hudData, setHudData] = useState(defaultHudData);
-  const [hudData, setHudData] = useState(dummyHudData);
+  const [openedPart, setOpenedPart]: [number, (newState: number) => void] = useState(2);
+  const [hudData, setHudData] = useState(defaultHudData);
 
   //region ------------------------------ Set up inventory functions on window ------------------------------
   // @ts-ignore

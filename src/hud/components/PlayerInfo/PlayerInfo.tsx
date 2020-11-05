@@ -1,10 +1,10 @@
 import React from 'react';
-import classes from '../styles/components/PlayerInfo.module.scss';
-import PlayerIndicators from "./PlayerInfo/PlayerIndicators";
-import PlayerAvatarAndRank from "./PlayerInfo/PlayerAvatarAndRank";
-import NetworkAndTime from "./PlayerInfo/NetworkAndTime";
-import Buffs from "./PlayerInfo/Buffs";
-import {BuffInterface} from "../models/Buff";
+import classes from '../../styles/components/PlayerInfo.module.scss';
+import PlayerIndicators from "./PlayerIndicators";
+import PlayerAvatarAndRank from "./PlayerAvatarAndRank";
+import NetworkAndTime from "./NetworkAndTime";
+import Buffs from "./Buffs";
+import {BuffInterface} from "../../models/Buff";
 
 interface Props {
   data: {

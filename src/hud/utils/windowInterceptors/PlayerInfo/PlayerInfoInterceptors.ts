@@ -68,7 +68,6 @@ const setPlayerBuffs = (data) => {
     newBuff.timeLeft = buff.TimeLeft;
     return newBuff;
   });
-
   return transformedBuffs;
 }
 
@@ -86,6 +85,24 @@ const setPlayerIndicators = (data) => {
   return {firstIndicator, secondIndicator, thirdIndicator};
 }
 
+const setTime = (data) => {
+  console.log('set time data')
+  const parsedData = JSON.parse(data);
+  console.log('pars', parsedData);
+
+  const {Time: time} = parsedData.$values;
+
+  return time;
+}
+
+const setNetwork = (data) => {
+  const parsedData = JSON.parse(data);
+
+  const {Network: network} = parsedData.$values;
+
+  return network;
+}
 
 
-export {openHud, setPlayerRank, setPlayerAvatar, setPlayerBuffs, setPlayerIndicators}
+export {openHud, setPlayerRank, setPlayerAvatar, setPlayerBuffs, setPlayerIndicators,
+setTime, setNetwork}
