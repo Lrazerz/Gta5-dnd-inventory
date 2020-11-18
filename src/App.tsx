@@ -4,6 +4,7 @@ import {openDoubleInventory, openOrRefreshInventory} from "./inventory/redux/act
 import HudApp from "./hud/HudApp";
 import {openHud} from "./hud/utils/windowInterceptors/PlayerInfo/PlayerInfoInterceptors";
 import {setSpeed} from "./hud/utils/windowInterceptors/CarInfo/CarInfoInterceptors";
+import InventoryReduxWrapper from "./inventory/InventoryReduxWrapper";
 
 enum OpenedPartsEnum {
   inventory,
@@ -44,7 +45,7 @@ const defaultHudData = {
 
 const App = React.memo(function App() {
 
-  const [openedPart, setOpenedPart]: [number, (newState: number) => void] = useState(2);
+  const [openedPart, setOpenedPart]: [number, (newState: number) => void] = useState(1);
   const [hudData, setHudData] = useState(defaultHudData);
 
   //region ------------------------------ Set up inventory functions on window ------------------------------
@@ -88,7 +89,11 @@ const App = React.memo(function App() {
 
   switch(openedPart) {
     case OpenedPartsEnum.inventory: {
-      return <InventoryApp/>
+      return (
+        <InventoryReduxWrapper>
+          <InventoryApp/>
+        </InventoryReduxWrapper>
+      )
     }
     case OpenedPartsEnum.hud: {
       return <HudApp data={hudData}/>

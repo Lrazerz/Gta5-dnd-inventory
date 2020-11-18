@@ -1,0 +1,80 @@
+.SingleCall {
+  width: 100%;
+  height: 100%;
+  display: flex;
+
+  .ImageContainer {
+    height: 100%;
+    width: 24.42%;
+
+    .ImageWrapper {
+      width: 77.78%;
+      height: 100%;
+      //overflow: hidden;
+      margin-left: auto;
+      margin-right: auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      .Image {
+        width: 100%;
+        border-radius: 50%;
+      }
+    }
+  }
+
+  .InfoWrapper {
+    height: 100%;
+    flex-grow: 1;
+    max-width: 75.58%;
+    display: flex;
+    flex-direction: column;
+
+    .NameWrapper {
+      width: 100%;
+      height: 45.31%;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: flex-start;
+    }
+
+    .StatusTimeNumberContainer {
+      width: 100%;
+      flex-grow: 1;
+      max-height: 54.69%;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+
+      .StatusWrapper {
+        //width: 38.46%;
+        min-width: 52.46%;
+        max-width: 52.46%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        white-space: nowrap;
+      }
+
+      .TimeWrapper {
+        width: 20%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        white-space: nowrap;
+      }
+
+      .NumberWrapper {
+        flex-grow: 1;
+        margin-left: 5%;
+        max-width: 40%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        white-space: nowrap;
+      }
+    }
+  }
+}

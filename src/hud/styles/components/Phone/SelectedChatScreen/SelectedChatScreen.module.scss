@@ -1,0 +1,69 @@
+.SelectedChatScreen {
+  width: 100%;
+  height: 100%;
+  background-color: yellowgreen;
+
+  .ScreenTitleWrapper {
+    width: 100%;
+    height: 6.33%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    box-sizing: border-box;
+    padding-bottom: 1.5%;
+
+    .BackTitleRemoveContainer {
+      width: 90.74%;
+      height: 56.52%;
+      display: flex;
+      justify-content: space-between;
+
+      .ArrowNameContainer {
+        height: 100%;
+        width: 92.33%;
+        max-width: 92.33%;
+        //background-color: red;
+        display: flex;
+
+        .ArrowButton {
+          //width: 2.33%;
+          width: 2.9%;
+          //background-color: yellow;
+          //background-color: green;
+          display: flex;
+          align-items: center;
+
+          .BackButton {
+            display: block;
+          }
+        }
+
+        .NameWrapper {
+          width: 86%;
+          max-width: 86%;
+          height: 100%;
+          //background-color: purple;
+          display: flex;
+          align-items: center;
+          box-sizing: border-box;
+          margin-left: 7%;
+        }
+      }
+
+      .RemoveButtonWrapper {
+        width: 6.42%;
+        height: 100%;
+
+        .RemoveButton {
+          margin-top: -12%;
+          display: block;
+        }
+      }
+    }
+  }
+
+  .HorizontalLine {
+    width: 100%;
+    height: 0.19%;
+  }
+}

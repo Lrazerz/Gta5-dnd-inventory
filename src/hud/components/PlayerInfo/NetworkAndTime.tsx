@@ -8,7 +8,6 @@ interface Props {
 
 const NetworkAndTime: React.FC<Props> = React.memo(({time, network}) => {
 
-
   return (
     <div className={classes.NetworkAndTime}>
       <div className={classes.ShifterNetworkAndTime}>

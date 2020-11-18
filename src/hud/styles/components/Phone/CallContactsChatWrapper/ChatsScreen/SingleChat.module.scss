@@ -1,0 +1,95 @@
+.SingleChat {
+  width: 100%;
+  height: 100%;
+  display: flex;
+
+  .ImageContainer {
+    height: 100%;
+    width: 24.42%;
+
+    .ImageWrapper {
+      position: relative;
+      width: 77.78%;
+      height: 100%;
+      margin-left: auto;
+      margin-right: auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      //todo unread messages
+
+      .Image {
+        width: 100%;
+        border-radius: 50%;
+      }
+
+      .UnreadMessages {
+        position: absolute;
+        //height: 20%;
+        width: 37%;
+        top: 9%;
+        right: 2%;
+        border-radius: 50%;
+        background-color: #f00;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .UnreadMessagesText {
+          font-family: 'Montserrat', sans-serif;
+          font-weight: 600;
+          font-size: 0.35rem;
+          line-height: 0.35rem;
+          color: #fff;
+          white-space: nowrap;
+
+        }
+      }
+    }
+  }
+
+  .InfoWrapper {
+    height: 100%;
+    flex-grow: 1;
+    max-width: 75.58%;
+    display: flex;
+    flex-direction: column;
+
+    .NameTimeWrapper {
+      width: 100%;
+      height:41.11%;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+
+      .NameWrapper {
+        height: 100%;
+        width: 80%;
+        max-width: 80%;
+        display: flex;
+        justify-content: flex-start;
+      }
+
+      .TimeWrapper {
+        height: 100%;
+        width: 20%;
+        max-width: 20%;
+        display: flex;
+        justify-content: flex-end;
+      }
+    }
+
+    .TextWrapper {
+      width: 100%;
+      flex-grow: 1;
+      max-height: 58.89%;
+
+      .Text {
+        font-family: 'Montserrat', sans-serif;
+        line-height: 0.4rem;
+        height: 1.2rem;
+        overflow: hidden;
+      }
+    }
+  }
+}

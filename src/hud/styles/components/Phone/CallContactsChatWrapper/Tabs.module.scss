@@ -1,0 +1,51 @@
+.Tabs {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+
+  //common styles
+  .Tab {
+    position: relative;
+    z-index: 10;
+    height: 100%;
+    margin-left: 2%;
+    padding-left: 2.5%;
+    padding-top: 5.5%;
+    box-sizing: border-box;
+  }
+
+  // First block
+  .CallTyping {
+    margin-left: 4%;
+    width: 20%;
+  }
+  .Recent {
+    width: 30.25%;
+  }
+  .Contacts {
+    margin-left: 1%;
+    width: 27.25%;
+  }
+
+  // Second block
+  .SecondRecent {
+    margin-left: 4%;
+    width: 30.25%;
+  }
+  .SecondContacts {
+    width: 28%;
+  }
+  .Chats {
+    margin-left: 1%;
+    width: 20%;
+  }
+
+  .TabsBorder {
+    position: absolute;
+    height: 0.06rem;
+    width: 100%;
+    bottom: 0.01rem;
+    background-color: #DAD8E6;
+  }
+}

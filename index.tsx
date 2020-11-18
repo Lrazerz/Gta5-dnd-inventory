@@ -1,10 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
-import store from './src/inventory/redux/store';
 import './src/inventory/styles/normalize.css';
 import './index.scss';
-import InventoryApp from "./src/App";
+import App from "./src/App";
 
 //fonts
 // import './src/assets/fonts/Montserrat-Bold.ttf';
@@ -17,7 +15,5 @@ import './src/inventory/assets/fonts/Montserrat-Light.ttf';
 import './src/inventory/assets/fonts/BebasNeue-Bold.otf';
 
 ReactDOM.render(
-  <Provider store={store}>
-    <InventoryApp/>
-  </Provider>,
+  <App/>,
   document.getElementById('root'));

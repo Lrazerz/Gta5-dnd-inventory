@@ -1,0 +1,34 @@
+.PhoneBorders {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  max-width: 100%;
+  height: 100%;
+  max-height: 100%;
+  box-sizing: border-box;
+  //background: no-repeat url("../../../../assets/images/components/Phone/phone-borders.svg");
+  //background-size: contain;
+
+  .PhoneDisplay {
+    width: 44.2%;
+    height: 94%;
+    max-height: 94%;
+    margin-top: 3.5%;
+    border-radius: 1rem;
+    overflow: hidden;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+  }
+
+  .Border {
+    pointer-events: none;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    background: no-repeat url("../../../../assets/images/components/Phone/phone-borders.svg");
+    background-size: contain;
+  }
+}

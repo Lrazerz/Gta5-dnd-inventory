@@ -31,5 +31,9 @@
     "./index.tsx",
     "./webpack.config.js",
     "./declarations.d.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
   ]
 }

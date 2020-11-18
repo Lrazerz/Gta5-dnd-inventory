@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 // @ts-ignore
 import classes from './styles/HudApp.module.scss';
 import CarInfo from "./components/CarInfo";
@@ -12,7 +12,10 @@ import {
   setPlayerRank, setTime
 } from "./utils/windowInterceptors/PlayerInfo/PlayerInfoInterceptors";
 import Hotkeys from "./components/Hotkeys/Hotkeys";
+import Phone from "./components/Phone/Phone";
+import HudReduxWrapper from "./HudReduxWrapper";
 
+//region ------------------------------ Props, defaults, state ------------------------------
 interface PlayerStateData {
   playerAvatarName: string,
   playerRankTitle: string,
@@ -71,11 +74,13 @@ const carInfoDefaultState = {
     fuel: 0,
   }
 }
+//endregion
 
 const HudApp: React.FC<Props> = React.memo(function HudApp({data}) {
   const [playerInfo, setPlayerInfo]: [PlayerStateData, (any) => void] = useState(playerInfoDefaultState);
   const [carInfo, setCarInfo]: [CarInfoState, (any) => void] = useState(carInfoDefaultState);
 
+  const phoneWrapperRef = useRef();
   // need to save data from props then change own state with local functions and change state from props only
   // if new data is came (React.memo)
 
@@ -83,6 +88,16 @@ const HudApp: React.FC<Props> = React.memo(function HudApp({data}) {
     setPlayerInfo(data);
   }, [data]);
 
+  useEffect(() => {
+    if(phoneWrapperRef.current) {
+      // @ts-ignore
+      const width = window.getComputedStyle(phoneWrapperRef.current).width;
+      // @ts-ignore
+      phoneWrapperRef.current.style.height = width;
+    }
+  }, [phoneWrapperRef.current]);
+
+  //region ------------------------------ PlayerInfo window interceptors ------------------------------
   //@ts-ignore
   if(!window.setPlayerRank) {
     //@ts-ignore
@@ -118,6 +133,7 @@ const HudApp: React.FC<Props> = React.memo(function HudApp({data}) {
       setPlayerInfo(prevState => ({...prevState, stateIndicators: indicators}));
     }
   }
+  //endregion
 
   //region ------------------------------ Time and network interceptors ------------------------------
   //@ts-ignore
@@ -125,7 +141,6 @@ const HudApp: React.FC<Props> = React.memo(function HudApp({data}) {
     //@ts-ignore
     window.setTime = (data) => {
       const time = setTime(data);
-      console.log('time', time);
       setPlayerInfo(prevState => ({...prevState, time}))
     }
   }
@@ -188,17 +203,22 @@ const HudApp: React.FC<Props> = React.memo(function HudApp({data}) {
   )
 
   return (
-    <div className={classes.HudApp}>
-      <div className={classes.TopOfTheScreenWrapper}>
-        <div/>
-        <div className={classes.PlayerInfoWrapper}>
-          <PlayerInfo data={playerInfo}/>
+    <HudReduxWrapper>
+      <div className={classes.HudApp}>
+        <div className={classes.TopOfTheScreenWrapper}>
+          <div/>
+          <div className={classes.PlayerInfoWrapper}>
+            <PlayerInfo data={playerInfo}/>
+          </div>
+        </div>
+        <div className={classes.BottomOfTheScreenWrapper}>
+          {carInfoOrHotkeysBlock}
+        </div>
+        <div ref={phoneWrapperRef} className={classes.PhoneWrapper}>
+          <Phone/>
         </div>
       </div>
-      <div className={classes.BottomOfTheScreenWrapper}>
-        {carInfoOrHotkeysBlock}
-      </div>
-    </div>
+    </HudReduxWrapper>
   );
 })
 

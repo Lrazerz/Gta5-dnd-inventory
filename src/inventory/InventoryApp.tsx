@@ -17,7 +17,6 @@ const ContextMenu = React.lazy(() => import("./components/UI/ContextMenu"));
 import {closeContextMenu} from "./redux/actions/contextMenu";
 import {rotateItem, rotateItemOnBoard, setGoingToDrop} from "./redux/actions/draggedItem";
 import {removeHoveredItem} from "./redux/actions/hoveredItem";
-import {closeExternalBoard} from "./redux/actions/externalBoard";
 
 const InventoryApp =  React.memo(function InventoryApp() {
 
@@ -67,7 +66,8 @@ const InventoryApp =  React.memo(function InventoryApp() {
   document.onkeydown = spaceDownHandler;
 
   if(!window.onclick) {
-    window.onclick = () => {
+    window.onclick = (e) => {
+      e.preventDefault();
       // @ts-ignore
       if (contextMenuRef.current.contextItem) {
         dispatch(closeContextMenu());

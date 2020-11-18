@@ -1,25 +1,20 @@
-const openCar = (data) => {
+let openCar: (data: string) => Object;
+openCar = (data) => {
   const parsedData = JSON.parse(data);
 
   const {IsCarRunning: isCarRunning, IsDoorsOpen: isDoorsOpen,
-  Speed: speed, Fuel: fuel} = parsedData.$values;
+  Speed: speed, Fuel: fuel} = parsedData;
 
   return {isCarRunning, isDoorsOpen, speed, fuel};
 }
 
-const setSpeed = (data) => {
-  const parsedData = JSON.parse(data);
-
-  const {Speed: speed} = parsedData.$values;
-
+let setSpeed: (speed: number) => number;
+setSpeed = (speed) => {
   return speed;
 }
 
-const setFuel = (data) => {
-  const parsedData = JSON.parse(data);
-
-  const {Fuel: fuel} = parsedData.$values;
-
+let setFuel: (fuel: number) => number;
+setFuel = (fuel) => {
   return fuel;
 }
 

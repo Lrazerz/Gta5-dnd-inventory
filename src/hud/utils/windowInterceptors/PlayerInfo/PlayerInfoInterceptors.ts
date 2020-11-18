@@ -1,6 +1,6 @@
-const openHud = async (data) => {
+let openHud: (data: string) => Object;
+openHud = async (data) => {
   const parsedData = JSON.parse(data);
-
   const {
     // must have
     PlayerAvatar: playerAvatarName,
@@ -14,7 +14,7 @@ const openHud = async (data) => {
     Network: network,
     Time: time,
     Buffs: buffs
-  } = parsedData.$values;
+  } = parsedData;
 
   const transformedBuffs = buffs.map(buff => {
     const newBuff = {};
@@ -39,26 +39,21 @@ const openHud = async (data) => {
   }
 }
 
-const setPlayerRank = (data) => {
-  const parsedData = JSON.parse(data);
-
-  const {PlayerRank: rank} = parsedData.$values;
-
-  return rank;
+let setPlayerRank: (data: string) => string;
+setPlayerRank = (data) => {
+  return data;
 }
 
-const setPlayerAvatar = (data) => {
-  const parsedData = JSON.parse(data);
-
-  const {PlayerAvatar: avatar} = parsedData.$values;
-
-  return avatar;
+let setPlayerAvatar: (data: string) => string
+setPlayerAvatar = (data) => {
+  return data;
 }
 
-const setPlayerBuffs = (data) => {
+let setPlayerBuffs: (data: string) => any[];
+setPlayerBuffs = (data) => {
   const parsedData = JSON.parse(data);
 
-  const {Buffs: buffs} = parsedData.$values;
+  const buffs: [] = parsedData.$values;
 
   const transformedBuffs = buffs.map(buff => {
     const newBuff = {};
@@ -71,36 +66,27 @@ const setPlayerBuffs = (data) => {
   return transformedBuffs;
 }
 
-const setPlayerIndicators = (data) => {
+let setPlayerIndicators: (data: string) => {firstIndicator: number, secondIndicator: number, thirdIndicator: number};
+setPlayerIndicators = (data) => {
   const parsedData = JSON.parse(data);
 
   const {
-    PlayerStateIndicators: {
-      First: firstIndicator,
-      Second: secondIndicator,
-      Third: thirdIndicator
-    }
-  } = parsedData.$values;
+    First: firstIndicator,
+    Second: secondIndicator,
+    Third: thirdIndicator
+  } = parsedData;
 
   return {firstIndicator, secondIndicator, thirdIndicator};
 }
 
-const setTime = (data) => {
-  console.log('set time data')
-  const parsedData = JSON.parse(data);
-  console.log('pars', parsedData);
-
-  const {Time: time} = parsedData.$values;
-
-  return time;
+let setTime: (data: string) => string;
+setTime = (data) => {
+  return data;
 }
 
-const setNetwork = (data) => {
-  const parsedData = JSON.parse(data);
-
-  const {Network: network} = parsedData.$values;
-
-  return network;
+let setNetwork: (quality: number) => number;
+setNetwork = (quality) => {
+  return quality;
 }
 
 
