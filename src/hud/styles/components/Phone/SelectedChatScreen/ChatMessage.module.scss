@@ -1,0 +1,33 @@
+.ChatMessage {
+  width: 100%;
+  min-height: 5rem;
+  background-color: yellow;
+
+  .ImageContainer {
+    width: 19.58%;
+    height: 100%;
+
+    .ImageWrapper {
+      width: 55.4%;
+
+      .Image {
+        width: 100%;
+        display: block;
+      }
+    }
+  }
+
+  .DateMessageContainer {
+    width: 74.87%;
+
+    .DateWrapper {
+      width: 100%;
+
+    }
+
+    .MessageWrapper {
+      width: 100%;
+      
+    }
+  }
+}

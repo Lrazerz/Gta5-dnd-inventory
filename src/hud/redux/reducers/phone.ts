@@ -19,6 +19,9 @@ import {
 import {OpenedScreenEnum, ThemesEnum} from "../../components/Phone/models/interfaces/enums";
 
 interface InitialStateInterface {
+  // to display in chats
+  playerAvatar: string,
+
   openedScreen: OpenedScreenEnum;
 
   hudData: PhoneHudDataInterface;
@@ -37,6 +40,7 @@ interface InitialStateInterface {
 
   selectedChat: {
     name: string,
+    avatarName: string,
     messages: ChatMessageInterface[];
   }
 
@@ -44,6 +48,7 @@ interface InitialStateInterface {
 }
 
 const initialState: InitialStateInterface = {
+  playerAvatar: 'avatar1',
   openedScreen: OpenedScreenEnum.selectedChat,
 
   hudData: {
@@ -403,6 +408,7 @@ const initialState: InitialStateInterface = {
   ],
   selectedChat: {
     name: 'Дядя Бобби Д.',
+    avatarName: 'avatar1',
     messages: [
       {
         id: '1',

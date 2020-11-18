@@ -1,7 +1,8 @@
 .SelectedChatScreen {
   width: 100%;
   height: 100%;
-  background-color: yellowgreen;
+  display: flex;
+  flex-direction: column;
 
   .ScreenTitleWrapper {
     width: 100%;
@@ -32,10 +33,6 @@
           //background-color: green;
           display: flex;
           align-items: center;
-
-          .BackButton {
-            display: block;
-          }
         }
 
         .NameWrapper {
@@ -65,5 +62,82 @@
   .HorizontalLine {
     width: 100%;
     height: 0.19%;
+  }
+
+  .MessagesListWrapper {
+    width: 100%;
+    flex-grow: 1;
+    max-height: 84.48%;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    box-sizing: border-box;
+    &::-webkit-scrollbar {
+      width: 0.3rem;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: #706390;
+      border-radius: 0.3rem;
+    }
+  }
+
+  .SendMessageContainer {
+    width: 100%;
+    min-height: 9%;
+    max-height: 27%;
+    display: flex;
+
+    .TypeTextContainer {
+      width: 82%;
+      min-height: 100%;
+      display: flex;
+      justify-content: center;
+
+      .TextArea {
+        //height: 0.35rem;
+        width: 84.19%;
+        max-height: 1.85rem;
+        min-height: 0.35rem;
+        line-height: 0.45rem;
+        font-size: 0.3rem;
+        resize: none;
+        border: none;
+        margin-top: auto;
+        margin-bottom: 10%;
+        font-family: Montserrat, sans-serif;
+        font-weight: 400;
+        -webkit-appearance: none;
+        &:focus {
+          outline: none;
+        }
+
+        &::-webkit-scrollbar {
+          width: 0.3rem;
+        }
+        &::-webkit-scrollbar-thumb {
+          background-color: #706390;
+          border-radius: 0.3rem;
+        }
+      }
+    }
+
+    .SendButtonContainer {
+      flex-grow: 1;
+      max-width: 18%;
+      height: 100%;
+      display: flex;
+
+      .SendButtonWrapper {
+        width: 44.12%;
+        margin: auto 36% 25% auto;
+        //margin-left: auto;
+        //margin-right: 36%;
+        //margin-top: auto;
+        //margin-bottom: 25%;
+      }
+    }
+  }
+  .Button {
+    display: block;
+    width: 100%;
   }
 }

@@ -10,6 +10,8 @@ const phoneTheme = {
 
   lightPurpleText: '#978BAF',
   horizontalLineGray: '#E0DDE6',
+
+  darkGray: '#464242',
 }
 
 

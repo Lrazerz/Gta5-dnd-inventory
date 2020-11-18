@@ -74,7 +74,7 @@ interface ChatsDemoInterface {
   lastMessage: string;
   lastMessageDate: DateObjectInterface;
 }
-
+// imageNames?
 interface ChatMessageInterface {
   id: string;
   direction: 'in' | 'out'; // in or out
