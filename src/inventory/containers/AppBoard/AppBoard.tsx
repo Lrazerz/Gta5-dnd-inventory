@@ -22,7 +22,7 @@ const AppBoard: React.FC<Props> = React.memo(function AppBoard({onMouseOver: mou
     board: {board: boardItems},
     draggedItem: {allHoveredSquares, hoveredArea},
     externalBoard: {externalBoard: externalBoardItems}
-  } = useSelector((state) => state);
+  } = useSelector((state) => state.inventory);
 
   //region ------------------------------ Render squares from player's inventory ------------------------------
   const renderSquare = (y: number, x: number) => {

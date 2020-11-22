@@ -10,12 +10,11 @@ interface Props {
 
 const LeadText: React.FC<Props> = React.memo(({styles, children}) => {
 
-  const theme = useSelector(({phone}) => phone.settings.cosmetics.theme);
+  const theme = useSelector(({hud: {phone}}) => phone.settings.cosmetics.theme);
 
   const innerStyles: CSSProperties = {
     color: theme === ThemesEnum.black ? '#fff' : '#251152',
   }
-
 
   return (
     <div className={classes.LeadText} style={{...innerStyles, ...styles}}>

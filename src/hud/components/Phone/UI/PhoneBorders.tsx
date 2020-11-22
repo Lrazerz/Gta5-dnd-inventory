@@ -12,7 +12,7 @@ const PhoneBorders: React.FC<Props> = React.memo(function PhoneBorders({themeFro
 
   const [importedThemeImg, setImportedThemeImg] = useState();
 
-  const {cosmeticsSettings, openedScreen} = useSelector(({phone}) =>
+  const {cosmeticsSettings, openedScreen} = useSelector(({hud: {phone}}) =>
     ({cosmeticsSettings: phone.settings.cosmetics, openedScreen: phone.openedScreen}));
 
   useEffect(() => {
@@ -20,7 +20,7 @@ const PhoneBorders: React.FC<Props> = React.memo(function PhoneBorders({themeFro
       if (themeFromServer) {
         let importedThemeImage;
         try {
-          importedThemeImage = await import(`../../../assets/images/components/Phone/themes/${themeFromServer}.jpg`);
+          importedThemeImage = await import(`../../../../assets/hud/images/components/Phone/themes/${cosmeticsSettings.themeImage}.jpg`);
           setImportedThemeImg(importedThemeImage.default);
         } catch (e) {
           console.error('Phone theme import error', e);

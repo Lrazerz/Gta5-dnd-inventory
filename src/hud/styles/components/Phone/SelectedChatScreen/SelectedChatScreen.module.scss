@@ -6,7 +6,8 @@
 
   .ScreenTitleWrapper {
     width: 100%;
-    height: 6.33%;
+    max-height: 6.33%;
+    min-height: 6.33%;
     display: flex;
     justify-content: center;
     align-items: flex-end;
@@ -71,6 +72,7 @@
     overflow-x: hidden;
     overflow-y: scroll;
     box-sizing: border-box;
+    //padding-top: 4.5%;
     &::-webkit-scrollbar {
       width: 0.3rem;
     }
@@ -82,27 +84,29 @@
 
   .SendMessageContainer {
     width: 100%;
+    flex-grow: 1;
     min-height: 9%;
-    max-height: 27%;
+    //max-height: 27%;
     display: flex;
 
     .TypeTextContainer {
       width: 82%;
-      min-height: 100%;
-      display: flex;
-      justify-content: center;
+      height: 100%;
+      box-sizing: border-box;
 
       .TextArea {
         //height: 0.35rem;
+        margin-top: 5%;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
         width: 84.19%;
-        max-height: 1.85rem;
-        min-height: 0.35rem;
+        //margin-bottom: 10%;
+        //max-height: 2.45rem;
+        min-height: 0.45rem;
         line-height: 0.45rem;
-        font-size: 0.3rem;
         resize: none;
         border: none;
-        margin-top: auto;
-        margin-bottom: 10%;
         font-family: Montserrat, sans-serif;
         font-weight: 400;
         -webkit-appearance: none;
@@ -121,6 +125,7 @@
     }
 
     .SendButtonContainer {
+      box-sizing: border-box;
       flex-grow: 1;
       max-width: 18%;
       height: 100%;

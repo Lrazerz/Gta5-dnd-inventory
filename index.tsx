@@ -8,11 +8,11 @@ import App from "./src/App";
 // import './src/assets/fonts/Montserrat-Bold.ttf';
 // import './src/assets/fonts/Montserrat-SemiBold.ttf';
 // import './src/assets/fonts/Montserrat-Regular.ttf';
-import './src/inventory/assets/fonts/Montserrat-Light.ttf';
+import './src/assets/inventory/fonts/Montserrat-Light.ttf';
 // import './src/assets/fonts/Montserrat-Thin.ttf';
 
 // import './src/assets/fonts/BebasNeue-Regular.ttf';
-import './src/inventory/assets/fonts/BebasNeue-Bold.otf';
+import './src/assets/inventory/fonts/BebasNeue-Bold.otf';
 
 ReactDOM.render(
   <App/>,

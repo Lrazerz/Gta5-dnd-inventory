@@ -1,8 +1,8 @@
 import React from 'react';
 import classes from '../../../styles/components/Phone/SettingsScreen/Switch.module.scss';
 
-import enabledSwitchImg from '../../../assets/images/components/Phone/components/SettingsList/switch-wrapper.svg';
-import disabledSwitchImg from '../../../assets/images/components/Phone/components/SettingsList/switch-wrapper-inactive.svg';
+import enabledSwitchImg from '../../../../assets/hud/images/components/Phone/components/SettingsList/switch-wrapper.svg';
+import disabledSwitchImg from '../../../../assets/hud/images/components/Phone/components/SettingsList/switch-wrapper-inactive.svg';
 
 interface Props {
   value: boolean;

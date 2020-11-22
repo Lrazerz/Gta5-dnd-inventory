@@ -6,7 +6,7 @@ import {ThemesEnum} from "../../models/interfaces/enums";
 
 const ChatsScreen = React.memo(() => {
 
-  const {chats, theme} = useSelector(({phone}) => ({chats: phone.chatsDemo, theme: phone.settings.cosmetics.theme}));
+  const {chats, theme} = useSelector(({hud: {phone}}) => ({chats: phone.chatsDemo, theme: phone.settings.cosmetics.theme}));
 
   const blurredBottomBlockStyles = {
     background: `linear-gradient(180deg, ${theme === ThemesEnum.white ? '#F5F6FC, #D6D6DC' : '#000, #011'})`,

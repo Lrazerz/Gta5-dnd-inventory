@@ -2,7 +2,7 @@ import React, {CSSProperties, Dispatch, ReactElement} from 'react';
 import classes from '../../../styles/components/Phone/CallContactsChatWrapper/Tabs.module.scss';
 import LeadText from "../Text/LeadText";
 import { useSwipeable } from "react-swipeable";
-import {OpenedScreenEnum} from "../../../redux/reducers/phone";
+import {OpenedScreenEnum} from "../../../../redux/reducers/hud/phone";
 import {translateToRussianOpenedScreen} from "../utils/translateToRussianOpenedScreen";
 
 interface Props {

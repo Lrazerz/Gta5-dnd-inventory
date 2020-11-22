@@ -2,9 +2,9 @@ import React, {CSSProperties, ReactElement} from 'react';
 import {useSelector} from 'react-redux';
 import classes from '../../../styles/components/Phone/UI/PhoneHud.module.scss';
 
-import extWifiImg from '../../../assets/images/components/Phone/components/PhoneHud/wifi.svg';
-import networkImg from '../../../assets/images/components/Phone/components/PhoneHud/network.svg';
-import batteryImg from '../../../assets/images/components/Phone/components/PhoneHud/battery.svg';
+import extWifiImg from '../../../../assets/hud/images/components/Phone/components/PhoneHud/wifi.svg';
+import networkImg from '../../../../assets/hud/images/components/Phone/components/PhoneHud/network.svg';
+import batteryImg from '../../../../assets/hud/images/components/Phone/components/PhoneHud/battery.svg';
 import LeadText from "../Text/LeadText";
 import {OpenedScreenEnum, ThemesEnum} from "../models/interfaces/enums";
 
@@ -23,7 +23,7 @@ const PhoneHud: React.FC<Props> = React.memo(function PhoneHud({children}) {
       battery
     },
     openedScreen
-  } = useSelector(({phone}) => ({theme: phone.settings.cosmetics.theme, hudData: phone.hudData, openedScreen: phone.openedScreen}));
+  } = useSelector(({hud: {phone}}) => ({theme: phone.settings.cosmetics.theme, hudData: phone.hudData, openedScreen: phone.openedScreen}));
 
   //надо брать тему и цвета time network, battery и wifi в зависимости от темы
   // можно батарею клип-пасом, тогда проще задавать цвета и значение

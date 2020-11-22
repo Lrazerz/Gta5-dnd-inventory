@@ -18,13 +18,13 @@ const SingleContact: React.FC<Props> = React.memo(({contact, theme}) => {
       if (contact.imageName) {
         let importedThemeImage;
         try {
-          importedThemeImage = await import(`../../../../assets/images/components/Phone/avatars/${contact.imageName}.svg`);
+          importedThemeImage = await import(`../../../../../assets/hud/images/components/Phone/avatars/${contact.imageName}.svg`);
           setImportedAvatarImg(importedThemeImage.default);
         } catch (e) {
           if(e.message.startsWith('Cannot find')) {
             console.error(`Contact avatar "${contact.imageName}" import error, using default avatar`);
             let defaultAvatarName = theme === ThemesEnum.white ? 'default-avatar' : 'default-avatar-white';
-            importedThemeImage = await import(`../../../../assets/images/components/Phone/avatars/${defaultAvatarName}.svg`);
+            importedThemeImage = await import(`../../../../../assets/hud/images/components/Phone/avatars/${defaultAvatarName}.svg`);
             setImportedAvatarImg(importedThemeImage.default);
           }
         }

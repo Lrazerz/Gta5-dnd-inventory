@@ -13,7 +13,6 @@ import {
 } from "./utils/windowInterceptors/PlayerInfo/PlayerInfoInterceptors";
 import Hotkeys from "./components/Hotkeys/Hotkeys";
 import Phone from "./components/Phone/Phone";
-import HudReduxWrapper from "./HudReduxWrapper";
 
 //region ------------------------------ Props, defaults, state ------------------------------
 interface PlayerStateData {
@@ -203,7 +202,6 @@ const HudApp: React.FC<Props> = React.memo(function HudApp({data}) {
   )
 
   return (
-    <HudReduxWrapper>
       <div className={classes.HudApp}>
         <div className={classes.TopOfTheScreenWrapper}>
           <div/>
@@ -218,8 +216,8 @@ const HudApp: React.FC<Props> = React.memo(function HudApp({data}) {
           <Phone/>
         </div>
       </div>
-    </HudReduxWrapper>
   );
 })
 
 export default HudApp;
+

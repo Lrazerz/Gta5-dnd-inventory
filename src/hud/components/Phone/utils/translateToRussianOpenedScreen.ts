@@ -1,4 +1,4 @@
-import {OpenedScreenEnum} from "../../../redux/reducers/phone";
+import {OpenedScreenEnum} from "../../../../redux/reducers/hud/phone";
 
 let translateToRussianOpenedScreen: (openedScreenEng: OpenedScreenEnum) => string;
 translateToRussianOpenedScreen = (openedScreenEng: OpenedScreenEnum) => {

@@ -3,11 +3,11 @@ import classes from '../../styles/equippedClosingInventory/ClosingWeaponSquare.m
 import {useDispatch} from 'react-redux';
 import Overlay from "../UI/Overlay";
 import {useSelector} from 'react-redux';
-import {setHoveredSquares} from "../../redux/actions/draggedItem";
+import {setHoveredSquares} from "../../../redux/actions/inventory/draggedItem";
 import theme from "../../constants/css/theme";
 import {WeaponItemTypes} from "../../constants/dnd/types";
 import {EquippedCategoriesToCells} from "../../constants/dnd/equippedCategoriesToCells";
-import {removeHoveredItem} from "../../redux/actions/hoveredItem";
+import {removeHoveredItem} from "../../../redux/actions/inventory/hoveredItem";
 
 interface Props {
   children: any;
@@ -21,7 +21,7 @@ const ClosingWeaponSquare: React.FC<Props> = React.memo(function ClosingWeaponSq
   const {
     draggedItem: {item: draggedItem, hoveredSquare, canDrop},
     hoveredItem: {item: hoveredItem},
-  } = useSelector((state) => state);
+  } = useSelector((state) => state.inventory);
   const draggedItemRef = useRef();
   const hoveredSquareRef = useRef();
   draggedItemRef.current = draggedItem;

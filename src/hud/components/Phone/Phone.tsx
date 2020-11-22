@@ -3,7 +3,7 @@ import {useSelector} from 'react-redux';
 import PhoneBorders from "./UI/PhoneBorders";
 import classes from '../../styles/components/Phone/Phone.module.scss';
 import PhoneHud from "./UI/PhoneHud";
-import {OpenedScreenEnum} from "../../redux/reducers/phone";
+import {OpenedScreenEnum} from "../../../redux/reducers/hud/phone";
 import MainScreen from "./MainScreen/MainScreen";
 import SelectedChatScreen from "./SelectedChatScreen/SelectedChatScreen";
 
@@ -18,7 +18,7 @@ const Phone = React.memo(() => {
 
   // <PhoneBorders themeFromServer={"theme1"}>
 
-  const openedScreen: OpenedScreenEnum = useSelector(({phone}) => {
+  const openedScreen: OpenedScreenEnum = useSelector(({hud: {phone}}) => {
     return phone.openedScreen;
   });
 

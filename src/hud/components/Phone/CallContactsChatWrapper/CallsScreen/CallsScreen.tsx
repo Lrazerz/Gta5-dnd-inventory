@@ -6,7 +6,7 @@ import {ThemesEnum} from "../../models/interfaces/enums";
 
 const CallsScreen = React.memo(() => {
 
-  const {calls, theme} = useSelector(({phone}) => ({calls: phone.calls, theme: phone.settings.cosmetics.theme}));
+  const {calls, theme} = useSelector(({hud: {phone}}) => ({calls: phone.calls, theme: phone.settings.cosmetics.theme}));
 
   // можно по клику вешать onMouseMove и пробоват менять scrollTop (имитация тач скролла)
   // const ref = useRef();

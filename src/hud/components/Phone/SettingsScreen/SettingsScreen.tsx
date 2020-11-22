@@ -5,21 +5,19 @@ import classes from '../../../styles/components/Phone/SettingsScreen/SettingsScr
 import LeadText from "../Text/LeadText";
 import SettingsList from "./SettingsList";
 import {OpenedScreenEnum, ThemesEnum} from "../models/interfaces/enums";
-import {openScreen} from "../../../redux/actions/phone";
+import {openScreen} from "../../../../redux/actions/hud/phone";
 
 const SettingsScreen = React.memo(() => {
 
   const dispatch = useDispatch();
 
-  const theme = useSelector(({phone}) => phone.settings.cosmetics.theme);
+  const theme = useSelector(({hud: {phone}}) => phone.settings.cosmetics.theme);
 
   //region ------------------------------ Swipe handlers ------------------------------
   const swipeHandler = (toLeft: boolean) => {
     console.log(toLeft ? 'left' : 'right');
 
-    if(toLeft) {
-
-    }
+    if(toLeft) {}
     else {
       dispatch(openScreen(OpenedScreenEnum.mainScreen));
     }

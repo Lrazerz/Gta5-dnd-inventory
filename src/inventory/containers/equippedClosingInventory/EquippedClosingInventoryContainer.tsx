@@ -1,16 +1,16 @@
-import React, {memo, CSSProperties} from 'react';
+import React, {CSSProperties} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import classes from '../../styles/equippedClosingInventory/EquippedClosingInventoryContainer.module.scss';
 import AccessoriesTypeContainer from "./AccessoriesTypeContainer";
 import ClosingTypeContainer from "./ClosingTypeContainer";
-import capImage from '../../assets/images/equippedClosingInventory/cap.svg';
-import hoodieImage from '../../assets/images/equippedClosingInventory/hoodie.svg';
-import pantsImage from '../../assets/images/equippedClosingInventory/pants.svg';
-import shoeImage from '../../assets/images/equippedClosingInventory/shoe.svg';
-import glassesImage from '../../assets/images/equippedClosingInventory/eye-glasses.svg';
+import capImage from '../../../assets/inventory/images/equippedClosingInventory/cap.svg';
+import hoodieImage from '../../../assets/inventory/images/equippedClosingInventory/hoodie.svg';
+import pantsImage from '../../../assets/inventory/images/equippedClosingInventory/pants.svg';
+import shoeImage from '../../../assets/inventory/images/equippedClosingInventory/shoe.svg';
+import glassesImage from '../../../assets/inventory/images/equippedClosingInventory/eye-glasses.svg';
 import UniqueServerDescription from "../../components/UI/UniqueServerDescription";
 import {SingleCell} from "../equippedWeaponsInventory/EquippedWeaponsInventoryContainer";
-import {setGoingToDrop} from "../../redux/actions/draggedItem";
+import {setGoingToDrop} from "../../../redux/actions/inventory/draggedItem";
 
 interface Props {
   onMouseOver: () => void;
@@ -21,7 +21,7 @@ const EquippedClosingInventoryContainer: React.FC<Props> =
 
   const dispatch = useDispatch();
   const {equippedItems: {cells: equippedCells},
-    draggedItem: {goingToDrop, hoveredSquare, item: draggedItem}} = useSelector(state => state);
+    draggedItem: {goingToDrop, hoveredSquare, item: draggedItem}} = useSelector(state => state.inventory);
 
   const headdressCells: SingleCell[] = [
     {id: 50, cell: equippedCells[50]},

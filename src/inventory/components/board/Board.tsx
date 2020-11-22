@@ -7,7 +7,7 @@ const Board = React.memo(function Board({children}) {
   const [boardHeight, setBoardHeight] = useState(null);
   const [boardWidth, setBoardWidth] = useState(null);
 
-  const boardSquareSize = useSelector(state => state.board.boardSquareSize);
+  const boardSquareSize = useSelector(state => state.inventory.board.boardSquareSize);
 
   useEffect(() => {
     setBoardHeight(boardSquareSize * 6);

@@ -1,24 +1,31 @@
 .ChatMessage {
-  width: 100%;
-  min-height: 5rem;
-  background-color: yellow;
+  width: 95%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 5%;
 
   .ImageContainer {
     width: 19.58%;
-    height: 100%;
 
     .ImageWrapper {
-      width: 55.4%;
+      width: 59.4%;
+      margin-left: auto;
+      margin-right: 13%;
+      //margin-top: 20%;
+      //margin-top: auto;
+      margin-bottom: 20%;
 
       .Image {
         width: 100%;
         display: block;
+        border-radius: 50%;
       }
     }
   }
 
   .DateMessageContainer {
     width: 74.87%;
+    max-width: 74.87%;
 
     .DateWrapper {
       width: 100%;
@@ -26,8 +33,23 @@
     }
 
     .MessageWrapper {
+      box-sizing: border-box;
+      padding-top: 5%;
+      padding-bottom: 5%;
       width: 100%;
-      
+      display: flex;
+      justify-content: center;
+      border-top-left-radius: 0.5rem;
+      border-top-right-radius: 0.5rem;
+
+      .MessageTextWrapper {
+        width: 83.21%;
+
+        .Message {
+          font-family: 'Montserrat', sans-serif;
+          font-weight: 500;
+        }
+      }
     }
   }
 }

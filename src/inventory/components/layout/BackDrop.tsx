@@ -1,11 +1,11 @@
 import React, {CSSProperties, useRef} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import classes from '../../styles/layout/BackDrop.module.scss';
-import {setGoingToDrop} from "../../redux/actions/draggedItem";
+import {setGoingToDrop} from "../../../redux/actions/inventory/draggedItem";
 
 const BackDrop = React.memo(function BackDrop() {
   const dispatch = useDispatch();
-  const {goingToDrop, item: draggedItem} = useSelector(state => state.draggedItem);
+  const {goingToDrop, item: draggedItem} = useSelector(state => state.inventory.draggedItem);
   const goingToDropRef = useRef();
   const draggedItemRef = useRef();
   goingToDropRef.current = goingToDrop;

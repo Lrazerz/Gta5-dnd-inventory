@@ -10,14 +10,13 @@ interface Props {
 
 const CallerInfoContainer: React.FC<Props> = React.memo(({imageName, name, phoneNumber}) => {
 
-  console.log('props', imageName, name, phoneNumber);
   const [image, setImage] = useState();
 
   useEffect(() => {
     const loadImage = async () => {
       let loadedImage;
       try {
-        loadedImage = await import(`../../../assets/images/components/Phone/avatars/${imageName}.svg`);
+        loadedImage = await import(`../../../../assets/hud/images/components/Phone/avatars/${imageName}.svg`);
         setImage(loadedImage.default);
       } catch (e) {
         console.error('Phone caller info container image import error', e);

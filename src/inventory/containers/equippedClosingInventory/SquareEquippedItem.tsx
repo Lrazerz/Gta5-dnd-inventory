@@ -3,10 +3,10 @@ import {useDispatch, useSelector} from "react-redux";
 import EquippedItem from "../../components/items/EquippedItem";
 import classes from '../../styles/equippedClosingInventory/SquareEquippedItem.module.scss';
 import SecondaryText from "../../components/layout/SecondaryText";
-import {addDraggedItem, dragEndHandler, draggedItemRelease} from "../../redux/actions/draggedItem";
-import {openContextMenu} from "../../redux/actions/contextMenu";
+import {addDraggedItem, dragEndHandler, draggedItemRelease} from "../../../redux/actions/inventory/draggedItem";
+import {openContextMenu} from "../../../redux/actions/inventory/contextMenu";
 import Item from "../../models/Item";
-import {addHoveredItem} from "../../redux/actions/hoveredItem";
+import {addHoveredItem} from "../../../redux/actions/inventory/hoveredItem";
 
 interface Props {
   item: Item;
@@ -18,7 +18,7 @@ const SquareEquippedItem: React.FC<Props> = React.memo(function SquareEquippedIt
     board: {boardSquareSize},
     draggedItem: {canDrop, hoveredSquare, item: draggedItem, goingToDrop, goingToStack},
     hoveredItem: {item: hoveredItem, hoveredArea: hoveredItemArea}
-  } = useSelector(state => state);
+  } = useSelector(state => state.inventory);
 
   const goingToDropRef = useRef();
   const draggedItemRef = useRef();

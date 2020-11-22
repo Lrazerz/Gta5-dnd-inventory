@@ -8,15 +8,15 @@ import EquippedClosingInventoryContainer
 import EquippedWeaponsInventoryContainer from "./containers/equippedWeaponsInventory/EquippedWeaponsInventoryContainer";
 import SecondaryText from "./components/layout/SecondaryText";
 // @ts-ignore
-import leftSparksSvg from "./assets/images/UI/left-sparks.svg";
+import leftSparksSvg from "../assets/inventory/images/UI/left-sparks.svg";
 // @ts-ignore
-import rightSparksSvg from "./assets/images/UI/right-sparks.svg";
-import {openDoubleInventory, openOrRefreshInventory, setSquareSize} from "./redux/actions/board";
+import rightSparksSvg from "../assets/inventory/images/UI/right-sparks.svg";
+import {openDoubleInventory, openOrRefreshInventory, setSquareSize} from "../redux/actions/inventory/board";
 import RangeComponent from "./components/UI/RangeComponent";
 const ContextMenu = React.lazy(() => import("./components/UI/ContextMenu"));
-import {closeContextMenu} from "./redux/actions/contextMenu";
-import {rotateItem, rotateItemOnBoard, setGoingToDrop} from "./redux/actions/draggedItem";
-import {removeHoveredItem} from "./redux/actions/hoveredItem";
+import {rotateItem, rotateItemOnBoard, setGoingToDrop} from "../redux/actions/inventory/draggedItem";
+import {removeHoveredItem} from "../redux/actions/inventory/hoveredItem";
+import {closeContextMenu} from "../redux/actions/inventory/contextMenu";
 
 const InventoryApp =  React.memo(function InventoryApp() {
 
@@ -29,7 +29,7 @@ const InventoryApp =  React.memo(function InventoryApp() {
     contextMenu,
     draggedItem: {goingToDrop, item: draggedItem},
     hoveredItem: {item: hoveredItem, hoveredArea: hoveredItemArea}
-  } = useSelector(state => state);
+  } = useSelector(state => state.inventory);
 
   const goingToDropRef = useRef();
   const draggedItemRef = useRef();

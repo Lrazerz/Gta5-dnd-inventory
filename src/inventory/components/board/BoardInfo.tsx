@@ -1,9 +1,9 @@
 import React, {CSSProperties, useRef} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import classes from '../../styles/board/BoardInfo.module.scss';
-import cashImage from '../../assets/images/board/cash.png';
+import cashImage from '../../../assets/inventory/images/board/cash.png';
 import SecondaryText from "../../components/layout/SecondaryText";
-import {setGoingToDrop} from "../../redux/actions/draggedItem";
+import {setGoingToDrop} from "../../../redux/actions/inventory/draggedItem";
 
 interface Props {
   cash: string;
@@ -11,7 +11,7 @@ interface Props {
 
 const BoardInfo: React.FC<Props> = React.memo(function BoardInfo({cash}) {
   const dispatch = useDispatch();
-  const {goingToDrop, item: draggedItem} = useSelector(state => state.draggedItem);
+  const {goingToDrop, item: draggedItem} = useSelector(state => state.inventory.draggedItem);
   const goingToDropRef = useRef();
   const draggedItemRef = useRef();
   goingToDropRef.current = goingToDrop;

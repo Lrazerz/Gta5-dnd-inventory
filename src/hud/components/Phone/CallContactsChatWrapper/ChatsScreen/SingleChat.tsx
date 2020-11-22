@@ -1,6 +1,6 @@
 import React, {CSSProperties, useEffect, useState, useRef} from 'react';
 import classes from '../../../../styles/components/Phone/CallContactsChatWrapper/ChatsScreen/SingleChat.module.scss';
-import {CallsInterface, ChatsDemoInterface, ThemesEnum} from "../../models/interfaces/reducerInterfaces";
+import {ChatsDemoInterface, ThemesEnum} from "../../models/interfaces/reducerInterfaces";
 import phoneTheme from '../../consts/phoneTheme';
 import LeadText from "../../Text/LeadText";
 
@@ -28,13 +28,13 @@ const SingleChat: React.FC<Props> = React.memo(({chat, theme}) => {
       if (chat.imageName) {
         let importedThemeImage;
         try {
-          importedThemeImage = await import(`../../../../assets/images/components/Phone/avatars/${chat.imageName}.svg`);
+          importedThemeImage = await import(`../../../../../assets/hud/images/components/Phone/avatars/${chat.imageName}.svg`);
           setImportedAvatarImg(importedThemeImage.default);
         } catch (e) {
           if(e.message.startsWith('Cannot find')) {
             console.error(`Chat avatar "${chat.imageName}" import error, using default avatar`);
             let defaultAvatarName = theme === ThemesEnum.white ? 'default-avatar' : 'default-avatar-white';
-            importedThemeImage = await import(`../../../../assets/images/components/Phone/avatars/${defaultAvatarName}.svg`);
+            importedThemeImage = await import(`../../../../../assets/hud/images/components/Phone/avatars/${defaultAvatarName}.svg`);
             setImportedAvatarImg(importedThemeImage.default);
           }
         }

@@ -18,7 +18,7 @@ const PlayerAvatarAndRank: React.FC<Props> = React.memo(({avatarName, rankTitle}
       if(rankTitle) {
         let rankImage;
         try {
-          rankImage = await import(`../../assets/images/components/PlayerInfo/levels/${rankTitle}.svg`);
+          rankImage = await import(`../../../assets/hud/images/components/PlayerInfo/levels/${rankTitle}.svg`);
           setImportedRankImage(rankImage.default);
         } catch (e) {
           console.error('Rank import error', e);
@@ -27,7 +27,7 @@ const PlayerAvatarAndRank: React.FC<Props> = React.memo(({avatarName, rankTitle}
       if(avatarName) {
         let avatarImage;
         try {
-          avatarImage = await import(`../../assets/images/components/PlayerInfo/avatars/${avatarName}.svg`);
+          avatarImage = await import(`../../../assets/hud/images/components/PlayerInfo/avatars/${avatarName}.svg`);
           setImportedAvatarImage(avatarImage.default);
         } catch (e) {
           console.error('Avatar import error', e);

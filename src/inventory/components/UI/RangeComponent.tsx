@@ -1,12 +1,12 @@
 import React, {useRef, useState, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import classes from '../../styles/UI/RangeComponent.module.scss';
-import {closeContextMenu} from "../../redux/actions/contextMenu";
-import {addDraggedItem, draggedItemRelease, stackItem} from "../../redux/actions/draggedItem";
-import {equippedChangeCurrentCount, removeEquippedItem, setEquippedItem} from "../../redux/actions/equippedItems";
-import {addItem, boardChangeCurrentCountByItemId} from "../../redux/actions/board";
+import {closeContextMenu} from "../../../redux/actions/inventory/contextMenu";
+import {addDraggedItem, draggedItemRelease, stackItem} from "../../../redux/actions/inventory/draggedItem";
+import {equippedChangeCurrentCount, setEquippedItem} from "../../../redux/actions/inventory/equippedItems";
+import {addItem, boardChangeCurrentCountByItemId} from "../../../redux/actions/inventory/board";
 import Item from "../../models/Item";
-import {addExternalBoardItem, externalBoardChangeCurrentCountByItemId} from "../../redux/actions/externalBoard";
+import {addExternalBoardItem, externalBoardChangeCurrentCountByItemId} from "../../../redux/actions/inventory/externalBoard";
 import {mpTriggerDropExternalItem, mpTriggerDropItem} from "../../utils/mpTriggers";
 
 interface Props {
@@ -31,7 +31,7 @@ const RangeComponent: React.FC<Props> = React.memo(({leftOffset, topOffset, cont
       hoveredArea: hoveredAreaOfScreen},
     board: {board: boardCells, boardSquareSize},
     externalBoard: {externalBoard: externalBoardCells},
-  } = useSelector(state => state);
+  } = useSelector(state => state.inventory);
 
   // refs to pass to event handler
   const canDropRef = useRef();

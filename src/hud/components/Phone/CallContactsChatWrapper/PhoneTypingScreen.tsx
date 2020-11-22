@@ -2,24 +2,39 @@ import React, {CSSProperties, useState} from 'react';
 import {useSelector} from 'react-redux';
 import classes from '../../../styles/components/Phone/CallContactsChatWrapper/PhoneTypingScreen.module.scss';
 import LeadText from "../Text/LeadText";
-import makeCallImg from '../../../assets/images/components/Phone/components/CallContactsChatWrapper/make-call.svg';
-import clearButtonImg from '../../../assets/images/components/Phone/components/CallContactsChatWrapper/clear-button.svg';
+import makeCallImg from '../../../../assets/hud/images/components/Phone/components/CallContactsChatWrapper/make-call.svg';
+import clearButtonImg from '../../../../assets/hud/images/components/Phone/components/CallContactsChatWrapper/clear-button.svg';
 import {ThemesEnum} from "../models/interfaces/enums";
+
+const maxPhoneLength = 11;
 
 const PhoneTypingScreen = React.memo(() => {
 
-  const [phoneNumber, setPhoneNumber] = useState('88005553535');
+  const [phoneNumber, setPhoneNumber]: [string, any] = useState('88005553535');
 
-  const theme = useSelector(({phone}) => phone.settings.cosmetics.theme);
+  const theme = useSelector(({hud: {phone}}) => phone.settings.cosmetics.theme);
+
+  const typingHandler = (value) => {
+    const newNumber = phoneNumber + value;
+    if(newNumber.length <= maxPhoneLength) {
+      setPhoneNumber(newNumber);
+    }
+  }
+
+  const removeLastChar = () => {
+    if(phoneNumber.length > 0) {
+      setPhoneNumber(prevNumber => prevNumber.slice(0, prevNumber.length - 1));
+    }
+  }
 
   const textStyles: CSSProperties = {
     textAlign: 'center',
   }
 
   const phoneNumberStyles: CSSProperties = {
-    color: theme === ThemesEnum.black ? '#fff' : '#000',
+    color: theme === ThemesEnum.black ? '\n' +
+      '    letterSpacing: \'0.025rem\',#fff' : '#000',
     fontSize: '0.9rem',
-    letterSpacing: '0.025rem',
   }
 
   const addNumberStyles: CSSProperties = {
@@ -34,7 +49,7 @@ const PhoneTypingScreen = React.memo(() => {
 
   const keyboardButtonsBlock = ['1','2','3','4','5','6','7','8','9','*','0','#'].map(buttonText => {
     return (
-      <div className={classes.KeyboardButton}>
+      <div className={classes.KeyboardButton} onClick={() => typingHandler(buttonText)} key={buttonText}>
         <LeadText styles={keyboardButtonTextStyles}>{buttonText}</LeadText>
       </div>
     );
@@ -60,7 +75,7 @@ const PhoneTypingScreen = React.memo(() => {
             <img src={makeCallImg} style={{marginTop: '-33%'}}/>
           </div>
           <div className={classes.ClearButtonContainer}>
-            <div className={classes.ClearButtonWrapper}>
+            <div className={classes.ClearButtonWrapper} onClick={removeLastChar}>
               <img src={clearButtonImg}/>
             </div>
           </div>

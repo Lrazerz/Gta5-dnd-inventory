@@ -76,7 +76,7 @@ body * {
 //}
 @font-face {
     font-family: 'Montserrat-Light';
-    src: local('Montserrat-Light'), url(./src/inventory/assets/fonts/Montserrat-Light.ttf) format('truetype');
+    src: local('Montserrat-Light'), url(src/assets/inventory/fonts/Montserrat-Light.ttf) format('truetype');
 }
 //@font-face {
 //    font-family: 'Montserrat-Regular';
@@ -92,5 +92,5 @@ body * {
 //}
 @font-face {
     font-family: 'BebasNeue-Bold';
-    src: local('BebasNeue-Bold'), url(./src/inventory/assets/fonts/BebasNeue-Bold.otf) format('opentype');
+    src: local('BebasNeue-Bold'), url(src/assets/inventory/fonts/BebasNeue-Bold.otf) format('opentype');
 }

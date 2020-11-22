@@ -2,9 +2,9 @@ import React, {CSSProperties, useEffect, useState} from 'react';
 import {useSelector} from 'react-redux';
 import classes from '../../../styles/components/Phone/currentCalls/IncomingCallScreen.module.scss';
 import LeadText from "../Text/LeadText";
-import {IncomingCallInterface} from "../../../redux/reducers/phone";
-import declineCallImg from '../../../assets/images/components/Phone/components/currentCalls/decline-call.svg';
-import acceptCallImg from '../../../assets/images/components/Phone/components/currentCalls/accept-call.svg';
+import {IncomingCallInterface} from "../../../../redux/reducers/hud/phone";
+import declineCallImg from '../../../../assets/hud/images/components/Phone/components/currentCalls/decline-call.svg';
+import acceptCallImg from '../../../../assets/hud/images/components/Phone/components/currentCalls/accept-call.svg';
 import CallerInfoContainer from "./CallerInfoContainer";
 
 const IncomingCallScreen = () => {
@@ -12,14 +12,14 @@ const IncomingCallScreen = () => {
   const [avatarImage, setAvatarImage] = useState();
 
   const incomingCallData: IncomingCallInterface =
-    useSelector(({phone}) => phone.incomingCall);
+    useSelector(({hud: {phone}}) => phone.incomingCall);
 
   useEffect(() => {
     const loadImage = async () => {
       if(incomingCallData.imageName) {
         let image;
         try {
-          image = await import(`../../../assets/images/components/Phone/avatars/${incomingCallData.imageName}.svg`);
+          image = await import(`../../../../assets/hud/images/components/Phone/avatars/${incomingCallData.imageName}.svg`);
           setAvatarImage(image.default);
         } catch (e) {
           console.error('Incoming call - avatar import error', e);

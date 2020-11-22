@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
+import {Provider} from 'react-redux';
 import InventoryApp from "./inventory/InventoryApp";
-import {openDoubleInventory, openOrRefreshInventory} from "./inventory/redux/actions/board";
+import {openDoubleInventory, openOrRefreshInventory} from "./redux/actions/inventory/board";
+import store from './redux/store';
 import HudApp from "./hud/HudApp";
 import {openHud} from "./hud/utils/windowInterceptors/PlayerInfo/PlayerInfoInterceptors";
-import {setSpeed} from "./hud/utils/windowInterceptors/CarInfo/CarInfoInterceptors";
-import InventoryReduxWrapper from "./inventory/InventoryReduxWrapper";
 
 enum OpenedPartsEnum {
   inventory,
@@ -45,7 +45,7 @@ const defaultHudData = {
 
 const App = React.memo(function App() {
 
-  const [openedPart, setOpenedPart]: [number, (newState: number) => void] = useState(1);
+  const [openedPart, setOpenedPart]: [number, (newState: number) => void] = useState(OpenedPartsEnum.hud);
   const [hudData, setHudData] = useState(defaultHudData);
 
   //region ------------------------------ Set up inventory functions on window ------------------------------
@@ -87,21 +87,28 @@ const App = React.memo(function App() {
     }
   }
 
+  let contentBlock;
+
   switch(openedPart) {
     case OpenedPartsEnum.inventory: {
-      return (
-        <InventoryReduxWrapper>
-          <InventoryApp/>
-        </InventoryReduxWrapper>
-      )
+      contentBlock = <InventoryApp/>;
+      break;
     }
     case OpenedPartsEnum.hud: {
-      return <HudApp data={hudData}/>
+      contentBlock = <HudApp data={hudData}/>
+      break;
     }
     default: {
-      return null;
+      contentBlock =  null;
+      break;
     }
   }
+
+  return (
+    <Provider store={store}>
+      {contentBlock}
+    </Provider>
+  );
 });
 
 export default App;

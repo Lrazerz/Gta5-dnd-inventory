@@ -3,11 +3,11 @@ import classes from '../styles/components/CarInfo.module.scss';
 import ProgressBar from 'progressbar.js'
 
 // images
-import DoorsLockedImg from '../assets/images/components/CarInfo/doorsClosedLight.svg';
-import DoorsOpenedImg from '../assets/images/components/CarInfo/doorsOpened.svg';
-import FullFuelCanisterImg from '../assets/images/components/CarInfo/FullFuel.svg';
-import EmptyCanisterImg from '../assets/images/components/CarInfo/OutOfFuel.svg';
-import KeyImg from '../assets/images/components/CarInfo/key.svg';
+import DoorsLockedImg from '../../assets/hud/images/components/CarInfo/doorsClosedLight.svg';
+import DoorsOpenedImg from '../../assets/hud/images/components/CarInfo/doorsOpened.svg';
+import FullFuelCanisterImg from '../../assets/hud/images/components/CarInfo/FullFuel.svg';
+import EmptyCanisterImg from '../../assets/hud/images/components/CarInfo/OutOfFuel.svg';
+import KeyImg from '../../assets/hud/images/components/CarInfo/key.svg';
 
 interface Props {
   // keys light or transparent

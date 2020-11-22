@@ -5,7 +5,7 @@ import PhoneAndSimContainer from "./PhoneAndSimContainer";
 import {useSelector, useDispatch} from 'react-redux';
 import {ItemTypes} from "../../constants/dnd/types";
 import EquippedItemsCell from "../../models/EquippedItemsCell";
-import {setGoingToDrop} from "../../redux/actions/draggedItem";
+import {setGoingToDrop} from "../../../redux/actions/inventory/draggedItem";
 
 export interface SingleCell {
   id: number,
@@ -26,7 +26,7 @@ const EquippedWeaponsInventoryContainer: React.FC<Props> =
   React.memo(function EquippedWeaponsInventoryContainer({onMouseOver: mouseOverHandler}) {
   const dispatch = useDispatch();
   const {equippedItems: {cells: equippedCells},
-    draggedItem: {goingToDrop, hoveredSquare, item: draggedItem}} = useSelector((state) => state);
+    draggedItem: {goingToDrop, hoveredSquare, item: draggedItem}} = useSelector((state) => state.inventory);
 
   // accepted types
   const primaryWeaponAcceptedTypes = {

@@ -13,7 +13,7 @@ const ExternalBoard: React.FC<Props> = React.memo(function ExternalBoard({childr
   const [boardHeight, setBoardHeight] = useState(null);
   const [boardWidth, setBoardWidth] = useState(null);
 
-  const boardSquareSize = useSelector(state => state.board.boardSquareSize);
+  const boardSquareSize = useSelector(state => state.inventory.board.boardSquareSize);
 
   useEffect(() => {
 

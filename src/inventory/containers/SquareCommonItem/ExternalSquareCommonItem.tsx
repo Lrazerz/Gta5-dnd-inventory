@@ -1,12 +1,12 @@
 import React, {CSSProperties, useEffect, useRef, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {addDraggedItem, dragEndHandler} from "../../redux/actions/draggedItem";
+import {addDraggedItem, dragEndHandler} from "../../../redux/actions/inventory/draggedItem";
 import CommonItem from "../../components/items/CommonItem/CommonItem";
 import classes from '../../styles/board/SquareCommonItem.module.scss';
 import SecondaryText from "../../components/layout/SecondaryText";
-import {openContextMenu} from "../../redux/actions/contextMenu";
+import {openContextMenu} from "../../../redux/actions/inventory/contextMenu";
 import Item from "../../models/Item";
-import {addHoveredItem} from "../../redux/actions/hoveredItem";
+import {addHoveredItem} from "../../../redux/actions/inventory/hoveredItem";
 
 interface Props {
   coords: [number, number];
@@ -22,7 +22,7 @@ const ExternalSquareCommonItem: React.FC<Props> = React.memo(function SquareComm
     board: {boardSquareSize},
     draggedItem: {canDrop, hoveredSquare, item: draggedItem, xDown, yDown, goingToDrop, goingToStack},
     hoveredItem: {item: hoveredItem, hoveredArea: hoveredItemArea}
-  } = useSelector(state => state);
+  } = useSelector(state => state.inventory);
 
   // refs to pass to event handler
   const canDropRef = useRef();

@@ -1,9 +1,9 @@
 import React from 'react';
 import classes from '../../styles/components/PlayerInfo/PlayerIndicators.module.scss';
 
-import ArmorImg from '../../assets/images/components/PlayerInfo/indicators/Armor.svg';
-import HealthImage from '../../assets/images/components/PlayerInfo/indicators/Health.svg';
-import FoodImage from '../../assets/images/components/PlayerInfo/indicators/FoodState.svg';
+import ArmorImg from '../../../assets/hud/images/components/PlayerInfo/indicators/Armor.svg';
+import HealthImage from '../../../assets/hud/images/components/PlayerInfo/indicators/Health.svg';
+import FoodImage from '../../../assets/hud/images/components/PlayerInfo/indicators/FoodState.svg';
 
 interface Props {
   firstIndicator: number;

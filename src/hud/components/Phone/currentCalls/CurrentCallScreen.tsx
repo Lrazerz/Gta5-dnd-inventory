@@ -2,27 +2,27 @@ import React, {CSSProperties} from 'react';
 import {useSelector} from 'react-redux';
 import classes from '../../../styles/components/Phone/currentCalls/CurrentCallScreen.module.scss';
 import CallerInfoContainer from "./CallerInfoContainer";
-import {CurrentCallInterface} from "../../../redux/reducers/phone";
+import {CurrentCallInterface} from "../../../../redux/reducers/hud/phone";
 import LeadText from "../Text/LeadText";
-import declineCallImg from '../../../assets/images/components/Phone/components/currentCalls/current-call-decline.svg';
+import declineCallImg from '../../../../assets/hud/images/components/Phone/components/currentCalls/current-call-decline.svg';
 
 // options
-import addCallOnImg from '../../../assets/images/components/Phone/components/currentCalls/options/add-call-on.svg';
-import addCallOffImg from '../../../assets/images/components/Phone/components/currentCalls/options/add-call-off.svg';
-import muteOnImg from '../../../assets/images/components/Phone/components/currentCalls/options/mute-on.svg';
-import muteOffImg from '../../../assets/images/components/Phone/components/currentCalls/options/mute-off.svg';
-import addNoteOnImg from '../../../assets/images/components/Phone/components/currentCalls/options/add-note-on.svg';
-import addNoteOffImg from '../../../assets/images/components/Phone/components/currentCalls/options/add-note-off.svg';
-import speakerOnImg from '../../../assets/images/components/Phone/components/currentCalls/options/speaker-on.svg';
-import speakerOffImg from '../../../assets/images/components/Phone/components/currentCalls/options/speaker-off.svg';
-import keyboardOnImg from '../../../assets/images/components/Phone/components/currentCalls/options/keyboard-on.svg';
-import keyboardOffImg from '../../../assets/images/components/Phone/components/currentCalls/options/keyboard-off.svg';
-import recordOnImg from '../../../assets/images/components/Phone/components/currentCalls/options/record-on.svg';
-import recordOffImg from '../../../assets/images/components/Phone/components/currentCalls/options/record-off.svg';
+import addCallOnImg from '../../../../assets/hud/images/components/Phone/components/currentCalls/options/add-call-on.svg';
+import addCallOffImg from '../../../../assets/hud/images/components/Phone/components/currentCalls/options/add-call-off.svg';
+import muteOnImg from '../../../../assets/hud/images/components/Phone/components/currentCalls/options/mute-on.svg';
+import muteOffImg from '../../../../assets/hud/images/components/Phone/components/currentCalls/options/mute-off.svg';
+import addNoteOnImg from '../../../../assets/hud/images/components/Phone/components/currentCalls/options/add-note-on.svg';
+import addNoteOffImg from '../../../../assets/hud/images/components/Phone/components/currentCalls/options/add-note-off.svg';
+import speakerOnImg from '../../../../assets/hud/images/components/Phone/components/currentCalls/options/speaker-on.svg';
+import speakerOffImg from '../../../../assets/hud/images/components/Phone/components/currentCalls/options/speaker-off.svg';
+import keyboardOnImg from '../../../../assets/hud/images/components/Phone/components/currentCalls/options/keyboard-on.svg';
+import keyboardOffImg from '../../../../assets/hud/images/components/Phone/components/currentCalls/options/keyboard-off.svg';
+import recordOnImg from '../../../../assets/hud/images/components/Phone/components/currentCalls/options/record-on.svg';
+import recordOffImg from '../../../../assets/hud/images/components/Phone/components/currentCalls/options/record-off.svg';
 
 const CurrentCallScreen = () => {
 
-  const currentCallData: CurrentCallInterface = useSelector(({phone}) => phone.currentCall);
+  const currentCallData: CurrentCallInterface = useSelector(({hud: {phone}}) => phone.currentCall);
   const {name, imageName, phoneNumber, isConference, isMuted, isNoted, speaker,
   keyboard, isRecording} = currentCallData;
 
@@ -42,7 +42,6 @@ const CurrentCallScreen = () => {
     fontSize: '0.4rem'
   }
   //endregion
-
 
   return (
     <div className={classes.CurrentCallScreen}>

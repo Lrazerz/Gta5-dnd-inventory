@@ -1,22 +1,19 @@
 import React, {CSSProperties, ReactElement} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-
 import classes from '../../../styles/components/Phone/SettingsScreen/SettingsList.module.scss';
-
-import muteSettingImg from '../../../assets/images/components/Phone/components/SettingsList/settings-mute.svg';
+import muteSettingImg from '../../../../assets/hud/images/components/Phone/components/SettingsList/settings-mute.svg';
 import cosmeticsSettingImg
-  from '../../../assets/images/components/Phone/components/SettingsList/settings-cosmetics.svg';
-import phoneSettingImg from '../../../assets/images/components/Phone/components/SettingsList/settings-phone.svg';
+  from '../../../../assets/hud/images/components/Phone/components/SettingsList/settings-cosmetics.svg';
+import phoneSettingImg from '../../../../assets/hud/images/components/Phone/components/SettingsList/settings-phone.svg';
 import LeadText from "../Text/LeadText";
 import Switch from "./Switch";
-import {setSettingMuted} from "../../../redux/actions/phone";
+import {setSettingMuted} from "../../../../redux/actions/hud/phone";
 import {ThemesEnum} from "../models/interfaces/enums";
-import theme from "../../../../inventory/constants/css/theme";
 
 const SettingsList = React.memo(() => {
 
   const dispatch = useDispatch();
-  const settingsRedux = useSelector(({phone}) => phone.settings);
+  const settingsRedux = useSelector(({hud: {phone}}) => phone.settings);
 
   const settingTitleStyles: CSSProperties = {
     fontSize: '0.43rem',

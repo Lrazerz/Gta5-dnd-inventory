@@ -1,18 +1,14 @@
 import React from 'react';
 import {useDispatch} from 'react-redux';
 import classes from '../../../styles/components/Phone/MainScreen/MainScreen.module.scss';
-import phoneButton from '../../../assets/images/components/Phone/components/MainScreen/phoneButton.svg';
-import browserButton from '../../../assets/images/components/Phone/components/MainScreen/browserButton.svg';
-import chatButton from '../../../assets/images/components/Phone/components/MainScreen/chatButton.svg';
-import settingsButton from '../../../assets/images/components/Phone/components/MainScreen/settingsButton.svg';
-import {openScreen} from "../../../redux/actions/phone";
+import phoneButton from '../../../../assets/hud/images/components/Phone/components/MainScreen/phoneButton.svg';
+import browserButton from '../../../../assets/hud/images/components/Phone/components/MainScreen/browserButton.svg';
+import chatButton from '../../../../assets/hud/images/components/Phone/components/MainScreen/chatButton.svg';
+import settingsButton from '../../../../assets/hud/images/components/Phone/components/MainScreen/settingsButton.svg';
+import {openScreen} from "../../../../redux/actions/hud/phone";
 import {OpenedScreenEnum} from "../models/interfaces/enums";
 
-interface Props {
-  lastNotifications?: any[],
-}
-
-const MainScreen: React.FC<Props> = React.memo(({lastNotifications}) => {
+const MainScreen = React.memo(() => {
 
   const dispatch = useDispatch();
 

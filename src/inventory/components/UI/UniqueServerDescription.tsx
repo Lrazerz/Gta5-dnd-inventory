@@ -1,14 +1,14 @@
 import React, {CSSProperties, useRef} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import classes from "../../styles/UI/UniqueServerDescription.module.scss";
-import serverLogo from '../../assets/images/serverLogo/logo.png';
+import serverLogo from '../../../assets/inventory/images/serverLogo/logo.png';
 import LeadText from "../../components/layout/LeadText";
 import SecondaryText from "../../components/layout/SecondaryText";
-import {setGoingToDrop} from "../../redux/actions/draggedItem";
+import {setGoingToDrop} from "../../../redux/actions/inventory/draggedItem";
 
 const UniqueServerDescription = React.memo(function UniqueServerDescription() {
   const dispatch = useDispatch();
-  const {goingToDrop, item: draggedItem} = useSelector(state => state.draggedItem);
+  const {goingToDrop, item: draggedItem} = useSelector(state => state.inventory.draggedItem);
   const goingToDropRef = useRef();
   const draggedItemRef = useRef();
   goingToDropRef.current = goingToDrop;
@@ -25,7 +25,6 @@ const UniqueServerDescription = React.memo(function UniqueServerDescription() {
   const styles: CSSProperties = {
     pointerEvents: goingToDrop ? 'none' : 'inherit',
     zIndex: goingToDrop ? 'auto' : 200,
-    // backgroundColor: goingToDrop ? 'red' : 'transparent',
   }
 
   return (

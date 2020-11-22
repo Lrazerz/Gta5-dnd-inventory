@@ -17,7 +17,7 @@ const SingleBuff: React.FC<Props> = React.memo(function Buff({buff}) {
       if(buff) {
         let buffImage;
         try {
-          buffImage = await import(`../../assets/images/components/PlayerInfo/buffs/${buff.title}.svg`);
+          buffImage = await import(`../../../assets/hud/images/components/PlayerInfo/buffs/${buff.title}.svg`);
           setImportedImage(buffImage.default);
         } catch (e) {
           console.error('Buff image import error', e);

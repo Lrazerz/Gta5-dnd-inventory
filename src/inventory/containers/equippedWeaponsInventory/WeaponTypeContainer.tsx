@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React from 'react';
 import classes from '../../styles/equippedWeaponsInventory/WeaponTypeContainer.module.scss';
 import Octagon from "../../components/equippedClosingInventory/Octagon";
 import ClosingWeaponSquare from "../../components/equippedClosingInventory/ClosingWeaponSquare";

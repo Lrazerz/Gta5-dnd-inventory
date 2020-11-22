@@ -9,7 +9,7 @@ const ChatMessagesList = React.memo(() => {
   const [importedPlayerAvatarImg, setImportedPlayerAvatarImg] = useState();
   const [importedInterlocutorAvatarImg, setImportedInterlocutorAvatarImg] = useState();
 
-  const {playerAvatar, interlocutorAvatar, messages,theme} = useSelector(({phone}) =>
+  const {playerAvatar, interlocutorAvatar, messages,theme} = useSelector(({hud: {phone}}) =>
     (
       {
         playerAvatar: phone.playerAvatar,
@@ -24,13 +24,13 @@ const ChatMessagesList = React.memo(() => {
       if (playerAvatar) {
         let importedImage;
         try {
-          importedImage = await import(`../../../../assets/images/components/Phone/avatars/${playerAvatar}.svg`);
+          importedImage = await import(`../../../../assets/hud/images/components/Phone/avatars/${playerAvatar}.svg`);
           setImportedPlayerAvatarImg(importedImage.default);
         } catch (e) {
           if(e.message.startsWith('Cannot find')) {
             console.error(`Call avatar "${playerAvatar}" import error, using default avatar`);
             let defaultAvatarName = theme === ThemesEnum.white ? 'default-avatar' : 'default-avatar-white';
-            importedImage = await import(`../../../../assets/images/components/Phone/avatars/${defaultAvatarName}.svg`);
+            importedImage = await import(`../../../../assets/hud/images/components/Phone/avatars/${defaultAvatarName}.svg`);
             setImportedPlayerAvatarImg(importedImage.default);
           }
         }
@@ -40,13 +40,13 @@ const ChatMessagesList = React.memo(() => {
       if (interlocutorAvatar) {
         let importedImage;
         try {
-          importedImage = await import(`../../../../assets/images/components/Phone/avatars/${interlocutorAvatar}.svg`);
+          importedImage = await import(`../../../../assets/hud/images/components/Phone/avatars/${interlocutorAvatar}.svg`);
           setImportedInterlocutorAvatarImg(importedImage.default);
         } catch (e) {
           if(e.message.startsWith('Cannot find')) {
             console.error(`Call avatar "${interlocutorAvatar}" import error, using default avatar`);
             let defaultAvatarName = theme === ThemesEnum.white ? 'default-avatar' : 'default-avatar-white';
-            importedImage = await import(`../../../../assets/images/components/Phone/avatars/${defaultAvatarName}.svg`);
+            importedImage = await import(`../../../../assets/hud/images/components/Phone/avatars/${defaultAvatarName}.svg`);
             setImportedInterlocutorAvatarImg(importedImage.default);
           }
         }
@@ -58,7 +58,7 @@ const ChatMessagesList = React.memo(() => {
 
   const messagesBlock = messages.map(message => {
     return (
-      <ChatMessage direction={message.direction} date={message.date} message={message.message} theme={theme}
+      <ChatMessage key={message.id} direction={message.direction} date={message.date} message={message.message} theme={theme}
                    playerImage={message.direction === 'in' ? importedInterlocutorAvatarImg : importedPlayerAvatarImg}/>
     )
   });
