@@ -1,4 +1,4 @@
-import React, {CSSProperties, useState} from 'react';
+import React, {CSSProperties, useState, useRef, useEffect} from 'react';
 import {useSelector} from 'react-redux';
 import classes from '../../../styles/components/Phone/CallContactsChatWrapper/PhoneTypingScreen.module.scss';
 import LeadText from "../Text/LeadText";
@@ -8,11 +8,29 @@ import {ThemesEnum} from "../models/interfaces/enums";
 
 const maxPhoneLength = 11;
 
+const buttons = ['1','2','3','4','5','6','7','8','9','*','0','#'];
+
 const PhoneTypingScreen = React.memo(() => {
 
   const [phoneNumber, setPhoneNumber]: [string, any] = useState('88005553535');
 
   const theme = useSelector(({hud: {phone}}) => phone.settings.cosmetics.theme);
+
+  const crossSignRef = useRef();
+
+  useEffect(() => {
+    if(crossSignRef.current) {
+      const width = window.getComputedStyle(crossSignRef.current).width;
+      //@ts-ignore
+      crossSignRef.current.style.height = width;
+    }
+  }, [crossSignRef.current])
+
+  const keyDownHandler = (e) => {
+    if(buttons.includes(e.key)) {
+      typingHandler(e.key);
+    }
+  }
 
   const typingHandler = (value) => {
     const newNumber = phoneNumber + value;
@@ -47,7 +65,7 @@ const PhoneTypingScreen = React.memo(() => {
     fontSize: '0.7rem'
   }
 
-  const keyboardButtonsBlock = ['1','2','3','4','5','6','7','8','9','*','0','#'].map(buttonText => {
+  const keyboardButtonsBlock = buttons.map(buttonText => {
     return (
       <div className={classes.KeyboardButton} onClick={() => typingHandler(buttonText)} key={buttonText}>
         <LeadText styles={keyboardButtonTextStyles}>{buttonText}</LeadText>
@@ -56,7 +74,7 @@ const PhoneTypingScreen = React.memo(() => {
   })
 
   return (
-    <div className={classes.PhoneTyping}>
+    <div className={classes.PhoneTyping} onKeyDown={keyDownHandler} tabIndex={0}>
       <div className={classes.ScreenContent}>
         <div className={classes.PhoneNumberWrapper}>
           <LeadText styles={{...textStyles, ...phoneNumberStyles}}>
@@ -76,7 +94,12 @@ const PhoneTypingScreen = React.memo(() => {
           </div>
           <div className={classes.ClearButtonContainer}>
             <div className={classes.ClearButtonWrapper} onClick={removeLastChar}>
-              <img src={clearButtonImg}/>
+              <img src={clearButtonImg} onMouseDown={keyDownHandler}/>
+              <div className={classes.CrossWrapper} ref={crossSignRef}>
+                <div className={classes.FirstLine}>
+
+                </div>
+              </div>
             </div>
           </div>
         </div>

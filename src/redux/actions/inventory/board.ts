@@ -18,11 +18,11 @@ import {mpTriggerMoveFromExternalItem, mpTriggerMoveItem} from "../../../invento
 const importItemImage: (itemName: string) => Promise<any> = async (itemName) => {
   let imageUrl;
   try {
-    imageUrl = await import(`../../../assets/inventory/images/items/${itemName}.png`);
+    imageUrl = await import(`../../../assets/inventory/images/items/${itemName.toLowerCase()}.svg`);
     return imageUrl;
   } catch (e) {
     if(e.code === 'MODULE_NOT_FOUND') {
-      // console.log(`image for "${Name}" not found, using default image.`)
+      console.log(`image for "${itemName}" not found, using default image.`)
     } else {
       console.log('error while importing image');
     }

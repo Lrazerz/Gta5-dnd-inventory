@@ -48,7 +48,7 @@ interface InitialStateInterface {
 
 const initialState: InitialStateInterface = {
   playerAvatar: 'avatar1',
-  openedScreen: OpenedScreenEnum.selectedChat,
+  openedScreen: OpenedScreenEnum.mainScreen,
 
   hudData: {
     time: '12:05',
