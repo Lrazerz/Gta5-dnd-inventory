@@ -1,6 +1,6 @@
 import React, {CSSProperties, useEffect, useRef, useState} from 'react';
 import {useSelector} from 'react-redux';
-import classes from '../../styles/board/Board.module.scss';
+import classes from '../../../styles/inventory/board/Board.module.scss';
 
 const Board = React.memo(function Board({children}) {
   // proportional to width (16x6)

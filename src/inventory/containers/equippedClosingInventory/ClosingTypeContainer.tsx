@@ -1,5 +1,5 @@
 import React, {CSSProperties} from 'react';
-import classes from '../../styles/equippedClosingInventory/ClosingTypeContainer.module.scss';
+import classes from '../../../styles/inventory/equippedClosingInventory/ClosingTypeContainer.module.scss';
 import ClosingWeaponSquare from "../../components/equippedClosingInventory/ClosingWeaponSquare";
 import Octagon from "../../components/equippedClosingInventory/Octagon";
 import LeadText from "../../components/layout/LeadText";

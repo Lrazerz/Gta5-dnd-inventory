@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from 'react';
+import React, {CSSProperties, useEffect, useState} from 'react';
 import {useSelector} from 'react-redux';
-import classes from '../../../styles/components/Phone/UI/PhoneBorders.module.scss';
+import classes from '../../../../styles/hud/components/Phone/UI/PhoneBorders.module.scss';
 import {OpenedScreenEnum, ThemesEnum} from "../models/interfaces/enums";
 
 interface Props {
@@ -36,15 +36,26 @@ const PhoneBorders: React.FC<Props> = React.memo(function PhoneBorders({themeFro
   const displayPhoneBgImg = openedScreen === OpenedScreenEnum.mainScreen || openedScreen === OpenedScreenEnum.incomingCall
   || openedScreen === OpenedScreenEnum.currentCall;
 
-  const contentStyles = {
+  const displayBlur = openedScreen === OpenedScreenEnum.incomingCall
+  || openedScreen === OpenedScreenEnum.currentCall;
+
+  const contentStyles: CSSProperties = {
     backgroundColor: cosmeticsSettings.theme === ThemesEnum.black ? '#000' : '#F8F9FF',
     backgroundImage: displayPhoneBgImg ? `url(${importedThemeImg})` : 'none',
   };
 
+  const blurredElStyles: CSSProperties = {
+    width: '100%',
+    height: '100%',
+    backdropFilter: displayBlur ?  'blur(0.9rem)' : 'none',
+  }
+
   return (
     <div className={classes.PhoneBorders}>
       <div className={classes.PhoneDisplay} style={contentStyles}>
-        {children}
+        <div style={blurredElStyles}>
+          {children}
+        </div>
       </div>
       <div className={classes.Border}/>
     </div>

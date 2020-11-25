@@ -2,7 +2,7 @@ import React, {CSSProperties, useEffect, useRef, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {addDraggedItem, dragEndHandler} from "../../../redux/actions/inventory/draggedItem";
 import CommonItem from "../../components/items/CommonItem/CommonItem";
-import classes from '../../styles/board/SquareCommonItem.module.scss';
+import classes from '../../../styles/inventory/board/SquareCommonItem.module.scss';
 import SecondaryText from "../../components/layout/SecondaryText";
 import {openContextMenu} from "../../../redux/actions/inventory/contextMenu";
 import Item from "../../models/Item";

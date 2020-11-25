@@ -34,7 +34,7 @@ import {
   mpTriggerDropItem, mpTriggerRotateBoardItem, mpTriggerRotateExternalItem, mpTriggerStackFromExternalItem,
   mpTriggerStackFromExternalToExternalItem,
   mpTriggerStackItem, mpTriggerStackToExternalItem
-} from "../../../inventory/utils/mpTriggers";
+} from "../../../utils/mpTriggers/inventory/mpTriggers";
 
 const _addDraggedItem = (item, xUp, xDown, yUp, yDown, draggedItemArea = 1) => {
   return {type: DRAGGED_ITEM_SET, item, xUp, xDown, yUp, yDown, draggedItemArea};
@@ -549,7 +549,6 @@ _moveToEquippedItems = (dispatch, getState, draggedItem, draggedItemArea, hovere
     } catch (e) {}
   }
   else if (draggedItemArea === 2) {
-
     //region ------------------------------ Check if we want to equip ------------------------------
     if(draggedItem.category === ItemTypes.WEAPON_RIFLE || draggedItem.category === ItemTypes.WEAPON_PISTOL
       || draggedItem.category === ItemTypes.WEAPON_LAUNCHER) {
@@ -560,7 +559,6 @@ _moveToEquippedItems = (dispatch, getState, draggedItem, draggedItemArea, hovere
         let breakExternalLoop: boolean = false;
         let newMainCellOnBoard: [number, number] | null = null;
 
-        // todo distinct func
         for(let y = 0; y < yMax - itemHeight; y++) {
           breakExternalBoardLoop = false;
           for(let x = 0; x < xMax - itemWidth; x++) {

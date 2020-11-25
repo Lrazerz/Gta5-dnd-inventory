@@ -1,5 +1,5 @@
 import React, {CSSProperties} from 'react';
-import classes from '../../styles/layout/SecondaryText.module.scss';
+import classes from '../../../styles/inventory/layout/SecondaryText.module.scss';
 
 interface Props {
   styles?: CSSProperties;

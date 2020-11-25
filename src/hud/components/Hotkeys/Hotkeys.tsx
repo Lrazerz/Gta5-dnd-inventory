@@ -1,5 +1,5 @@
 import React from 'react';
-import classes from '../../styles/components/Hotkeys/Hotkeys.module.scss'
+import classes from '../../../styles/hud/components/Hotkeys/Hotkeys.module.scss'
 import HotkeyCell from "./HotkeyCell";
 
 const Hotkeys = React.memo(() => {

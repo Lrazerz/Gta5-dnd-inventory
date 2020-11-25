@@ -1,6 +1,6 @@
 import React, {CSSProperties, useState, useRef, useEffect} from 'react';
 import {useSelector} from 'react-redux';
-import classes from '../../../styles/components/Phone/CallContactsChatWrapper/PhoneTypingScreen.module.scss';
+import classes from '../../../../styles/hud/components/Phone/CallContactsChatWrapper/PhoneTypingScreen.module.scss';
 import LeadText from "../Text/LeadText";
 import makeCallImg from '../../../../assets/hud/images/components/Phone/components/CallContactsChatWrapper/make-call.svg';
 import clearButtonImg from '../../../../assets/hud/images/components/Phone/components/CallContactsChatWrapper/clear-button.svg';
@@ -52,17 +52,17 @@ const PhoneTypingScreen = React.memo(() => {
   const phoneNumberStyles: CSSProperties = {
     color: theme === ThemesEnum.black ? '\n' +
       '    letterSpacing: \'0.025rem\',#fff' : '#000',
-    fontSize: '0.9rem',
+    fontSize: '1.35rem',
   }
 
   const addNumberStyles: CSSProperties = {
     color: '#6328E9',
-    fontSize: '0.5rem',
+    fontSize: '0.75rem',
   }
 
   const keyboardButtonTextStyles: CSSProperties = {
     color: '#000',
-    fontSize: '0.7rem'
+    fontSize: '1.05rem'
   }
 
   const keyboardButtonsBlock = buttons.map(buttonText => {

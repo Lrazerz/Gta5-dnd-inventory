@@ -1,5 +1,5 @@
 import React, {CSSProperties, useRef} from 'react';
-import classes from '../../styles/equippedClosingInventory/ClosingWeaponSquare.module.scss';
+import classes from '../../../styles/inventory/equippedClosingInventory/ClosingWeaponSquare.module.scss';
 import {useDispatch} from 'react-redux';
 import Overlay from "../UI/Overlay";
 import {useSelector} from 'react-redux';

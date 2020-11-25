@@ -1,6 +1,6 @@
 import React from 'react';
 import {useSelector} from 'react-redux';
-import classes from '../../../../styles/components/Phone/CallContactsChatWrapper/ChatsScreen/ChatsScreen.module.scss';
+import classes from '../../../../../styles/hud/components/Phone/CallContactsChatWrapper/ChatsScreen/ChatsScreen.module.scss';
 import SingleChat from "./SingleChat";
 import {ThemesEnum} from "../../models/interfaces/enums";
 

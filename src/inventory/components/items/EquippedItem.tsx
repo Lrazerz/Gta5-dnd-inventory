@@ -1,5 +1,5 @@
 import React from 'react';
-import classes from '../../styles/items/EquippedItem.module.scss';
+import classes from '../../../styles/inventory/items/EquippedItem.module.scss';
 
 const EquippedItem = ({children}) => {
   return (

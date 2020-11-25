@@ -1,6 +1,6 @@
 import React, {CSSProperties} from 'react';
 import {useSelector} from 'react-redux';
-import classes from '../../../styles/components/Phone/currentCalls/CurrentCallScreen.module.scss';
+import classes from '../../../../styles/hud/components/Phone/currentCalls/CurrentCallScreen.module.scss';
 import CallerInfoContainer from "./CallerInfoContainer";
 import {CurrentCallInterface} from "../../../../redux/reducers/hud/phone";
 import LeadText from "../Text/LeadText";
@@ -23,15 +23,14 @@ import recordOffImg from '../../../../assets/hud/images/components/Phone/compone
 const CurrentCallScreen = () => {
 
   const currentCallData: CurrentCallInterface = useSelector(({hud: {phone}}) => phone.currentCall);
-  const {name, imageName, phoneNumber, isConference, isMuted, isNoted, speaker,
-  keyboard, isRecording} = currentCallData;
+  const {name, imageName, phoneNumber, isMuted, speaker, isRecording} = currentCallData;
 
   //region ------------------------------ Options images ------------------------------
-  const addCallImage = isConference ? addCallOffImg : addCallOnImg;
+  // const addCallImage = isConference ? addCallOffImg : addCallOnImg;
   const muteImage = isMuted ? muteOffImg : muteOnImg;
-  const addNoteImage = isNoted ? addNoteOffImg : addNoteOnImg;
+  // const addNoteImage = isNoted ? addNoteOffImg : addNoteOnImg;
   const speakerImage = speaker ? speakerOffImg : speakerOnImg;
-  const keyboardImage = keyboard ? keyboardOffImg : keyboardOnImg;
+  // const keyboardImage = keyboard ? keyboardOffImg : keyboardOnImg;
   const recordImage = isRecording ? recordOffImg : recordOnImg;
   //endregion
 
@@ -39,9 +38,60 @@ const CurrentCallScreen = () => {
   const optionTextStyles: CSSProperties = {
     color: '#fff',
     textAlign: 'center',
-    fontSize: '0.4rem'
+    fontSize: '0.6rem',
   }
   //endregion
+
+  // const options = (
+  //   <div className={classes.Option}>
+  //     <img className={classes.Image} src={addCallImage}/>
+  //     <div className={classes.OptionText}>
+  //       <LeadText styles={optionTextStyles}>
+  //         Добавить вызов
+  //       </LeadText>
+  //     </div>
+  //   </div>
+  //   <div className={classes.Option}>
+  //     <img className={classes.Image} src={muteImage}/>
+  //     <div className={classes.OptionText}>
+  //       <LeadText styles={optionTextStyles}>
+  //         Без звука
+  //       </LeadText>
+  //     </div>
+  //   </div>
+  //   <div className={classes.Option}>
+  //     <img className={classes.Image} src={addNoteImage}/>
+  //     <div className={classes.OptionText}>
+  //       <LeadText styles={optionTextStyles}>
+  //         Добавить в заметки
+  //       </LeadText>
+  //     </div>
+  //   </div>
+  //   <div className={classes.Option}>
+  //     <img className={classes.Image} src={speakerImage}/>
+  //     <div className={classes.OptionText}>
+  //       <LeadText styles={optionTextStyles}>
+  //         Динамик
+  //       </LeadText>
+  //     </div>
+  //   </div>
+  //   <div className={classes.Option}>
+  //     <img className={classes.Image} src={keyboardImage}/>
+  //     <div className={classes.OptionText}>
+  //       <LeadText styles={optionTextStyles}>
+  //         Клавиатура
+  //       </LeadText>
+  //     </div>
+  //   </div>
+  //   <div className={classes.Option}>
+  //   <img className={classes.Image} src={recordImage}/>
+  //   <div className={classes.OptionText}>
+  //     <LeadText styles={optionTextStyles}>
+  //       Запись
+  //     </LeadText>
+  //   </div>
+  // </div>
+  // )
 
   return (
     <div className={classes.CurrentCallScreen}>
@@ -52,30 +102,6 @@ const CurrentCallScreen = () => {
         <div className={classes.CallIndicatorsContainer}>
           <div className={classes.CallIndicatorsWrapper}>
             <div className={classes.Option}>
-              <img className={classes.Image} src={addCallImage}/>
-              <div className={classes.OptionText}>
-                <LeadText styles={optionTextStyles}>
-                  Добавить вызов
-                </LeadText>
-              </div>
-            </div>
-            <div className={classes.Option}>
-              <img className={classes.Image} src={muteImage}/>
-              <div className={classes.OptionText}>
-                <LeadText styles={optionTextStyles}>
-                  Без звука
-                </LeadText>
-              </div>
-            </div>
-            <div className={classes.Option}>
-              <img className={classes.Image} src={addNoteImage}/>
-              <div className={classes.OptionText}>
-                <LeadText styles={optionTextStyles}>
-                  Добавить в заметки
-                </LeadText>
-              </div>
-            </div>
-            <div className={classes.Option}>
               <img className={classes.Image} src={speakerImage}/>
               <div className={classes.OptionText}>
                 <LeadText styles={optionTextStyles}>
@@ -84,10 +110,10 @@ const CurrentCallScreen = () => {
               </div>
             </div>
             <div className={classes.Option}>
-              <img className={classes.Image} src={keyboardImage}/>
+              <img className={classes.Image} src={muteImage}/>
               <div className={classes.OptionText}>
                 <LeadText styles={optionTextStyles}>
-                  Клавиатура
+                  Без звука
                 </LeadText>
               </div>
             </div>

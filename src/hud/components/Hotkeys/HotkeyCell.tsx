@@ -1,5 +1,5 @@
 import React from 'react';
-import classes from '../../styles/components/Hotkeys/HotkeyCell.module.scss';
+import classes from '../../../styles/hud/components/Hotkeys/HotkeyCell.module.scss';
 import hotkeyBorderImg from '../../../assets/hud/images/components/Hotkeys/hotkey-border.svg';
 
 const HotkeyCell = React.memo(() => {

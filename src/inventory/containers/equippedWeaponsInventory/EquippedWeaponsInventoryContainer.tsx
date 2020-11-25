@@ -1,5 +1,5 @@
 import React, {CSSProperties} from 'react';
-import classes from '../../styles/equippedWeaponsInventory/EquippedWeaponsInventoryContainer.module.scss';
+import classes from '../../../styles/inventory/equippedWeaponsInventory/EquippedWeaponsInventoryContainer.module.scss';
 import WeaponTypeContainer from "./WeaponTypeContainer";
 import PhoneAndSimContainer from "./PhoneAndSimContainer";
 import {useSelector, useDispatch} from 'react-redux';

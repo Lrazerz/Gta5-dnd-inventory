@@ -1,6 +1,6 @@
 import React, {CSSProperties} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import classes from '../../styles/equippedClosingInventory/EquippedClosingInventoryContainer.module.scss';
+import classes from '../../../styles/inventory/equippedClosingInventory/EquippedClosingInventoryContainer.module.scss';
 import AccessoriesTypeContainer from "./AccessoriesTypeContainer";
 import ClosingTypeContainer from "./ClosingTypeContainer";
 import capImage from '../../../assets/inventory/images/equippedClosingInventory/cap.svg';

@@ -1,6 +1,6 @@
 import React, {CSSProperties} from 'react';
 // @ts-ignore
-import classes from '../../styles/Overlay.module.scss';
+import classes from '../../../styles/inventory/Overlay.module.scss';
 
 interface Props {
   color: string;

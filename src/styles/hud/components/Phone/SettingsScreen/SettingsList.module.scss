@@ -19,7 +19,9 @@
       align-items: center;
 
       .Image {
+        width: 100%;
         display: block;
+        pointer-events: none;
       }
     }
 

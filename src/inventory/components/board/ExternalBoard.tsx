@@ -1,7 +1,7 @@
 import React, {CSSProperties, useEffect, useRef, useState} from 'react';
 import {useSelector} from 'react-redux';
 // @ts-ignore
-import classes from '../../styles/board/ExternalBoard.module.scss';
+import classes from '../../../styles/inventory/board/ExternalBoard.module.scss';
 
 interface Props {
   children: any;

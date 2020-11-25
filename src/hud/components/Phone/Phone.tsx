@@ -1,17 +1,17 @@
 import React, {ReactElement, Suspense, lazy} from 'react';
 import {useSelector} from 'react-redux';
 import PhoneBorders from "./UI/PhoneBorders";
-import classes from '../../styles/components/Phone/Phone.module.scss';
+import classes from '../../../styles/hud/components/Phone/Phone.module.scss';
 import PhoneHud from "./UI/PhoneHud";
 import {OpenedScreenEnum} from "../../../redux/reducers/hud/phone";
 import MainScreen from "./MainScreen/MainScreen";
 import SelectedChatScreen from "./SelectedChatScreen/SelectedChatScreen";
 
-const SettingsScreen = lazy(() => import("./SettingsScreen/SettingsScreen"));
-const IncomingCallScreen = lazy(() => import("./currentCalls/IncomingCallScreen"));
-const CurrentCallScreen = lazy(() => import("./currentCalls/CurrentCallScreen"));
+import SettingsScreen from "./SettingsScreen/SettingsScreen";
+import IncomingCallScreen from "./currentCalls/IncomingCallScreen";
+import CurrentCallScreen from "./currentCalls/CurrentCallScreen";
 // screen too
-const CallContactsChatWrapper = lazy(() => import("./CallContactsChatWrapper/CallContactsChatWrapper"));
+import CallContactsChatWrapper from "./CallContactsChatWrapper/CallContactsChatWrapper";
 
 
 const Phone = React.memo(() => {

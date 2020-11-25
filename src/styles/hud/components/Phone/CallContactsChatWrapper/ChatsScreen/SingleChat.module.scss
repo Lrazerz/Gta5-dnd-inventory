@@ -38,8 +38,8 @@
         .UnreadMessagesText {
           font-family: 'Montserrat', sans-serif;
           font-weight: 600;
-          font-size: 0.35rem;
-          line-height: 0.35rem;
+          font-size: 0.525rem;
+          line-height: 0.525rem;
           color: #fff;
           white-space: nowrap;
 
@@ -57,7 +57,7 @@
 
     .NameTimeWrapper {
       width: 100%;
-      height:41.11%;
+      height: 41.11%;
       display: flex;
       justify-content: space-between;
       align-items: flex-end;
@@ -86,8 +86,8 @@
 
       .Text {
         font-family: 'Montserrat', sans-serif;
-        line-height: 0.4rem;
-        height: 1.2rem;
+        line-height: 0.6rem;
+        height: 1.8rem;
         overflow: hidden;
       }
     }

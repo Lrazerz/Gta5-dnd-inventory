@@ -1,5 +1,5 @@
-import React, {CSSProperties} from 'react';
-import classes from '../../../styles/components/Phone/SelectedChatScreen/ChatMessage.module.scss';
+import React, {CSSProperties, Ref} from 'react';
+import classes from '../../../../styles/hud/components/Phone/SelectedChatScreen/ChatMessage.module.scss';
 import {ChatMessageInterface, DateObjectInterface, ThemesEnum} from "../models/interfaces/reducerInterfaces";
 import LeadText from "../Text/LeadText";
 import phoneTheme from "../consts/phoneTheme";
@@ -27,8 +27,8 @@ const ChatMessage: React.FC<Props> = React.memo(({direction, date, message, play
   }
 
   const dateTextStyles: CSSProperties = {
-    fontSize: '0.39rem',
-    lineHeight: '0.8rem',
+    fontSize: '0.59rem',
+    lineHeight: '1.2rem',
     color: theme === ThemesEnum.white ? phoneTheme.lightPurpleText : phoneTheme.white,
   }
 
@@ -37,8 +37,8 @@ const ChatMessage: React.FC<Props> = React.memo(({direction, date, message, play
       : theme === ThemesEnum.white ? phoneTheme.white : phoneTheme.white;
 
   const messageTextStyles: CSSProperties = {
-    fontSize: '0.39rem',
-    lineHeight: '0.5rem',
+    fontSize: '0.59rem',
+    lineHeight: '0.75rem',
     color: _messageTextStyles,
   }
 
@@ -49,8 +49,8 @@ const ChatMessage: React.FC<Props> = React.memo(({direction, date, message, play
 
   const additionalMessageBgStyles: CSSProperties = {
     backgroundColor: _messageBgStyles,
-    borderBottomLeftRadius: direction === 'out' ? '0.5rem' : 'none',
-    borderBottomRightRadius: direction === 'in' ? '0.5rem' : 'none',
+    borderBottomLeftRadius: direction === 'out' ? '0.75rem' : 'none',
+    borderBottomRightRadius: direction === 'in' ? '0.75rem' : 'none',
   }
 
   return (
@@ -59,7 +59,6 @@ const ChatMessage: React.FC<Props> = React.memo(({direction, date, message, play
         <div className={classes.ImageWrapper} style={additionalAvatarWrapperStyles}>
           <img src={playerImage} className={classes.Image}/>
         </div>
-
       </div>
       <div className={classes.DateMessageContainer}>
         <div className={classes.DateWrapper}>
@@ -69,9 +68,9 @@ const ChatMessage: React.FC<Props> = React.memo(({direction, date, message, play
         </div>
         <div className={classes.MessageWrapper} style={additionalMessageBgStyles}>
           <div className={classes.MessageTextWrapper}>
-            <pre className={classes.Message} style={messageTextStyles}>
+            <div className={classes.Message} style={messageTextStyles}>
               {message}
-            </pre>
+            </div>
           </div>
         </div>
       </div>

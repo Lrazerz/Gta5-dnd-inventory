@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useRef} from 'react';
 // @ts-ignore
-import classes from './styles/HudApp.module.scss';
+import classes from '../styles/hud/HudApp.module.scss';
 import CarInfo from "./components/CarInfo";
 import PlayerInfo from "./components/PlayerInfo/PlayerInfo";
 import {BuffInterface} from "./models/Buff";

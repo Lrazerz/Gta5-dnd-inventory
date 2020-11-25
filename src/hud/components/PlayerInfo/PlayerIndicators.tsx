@@ -1,5 +1,5 @@
 import React from 'react';
-import classes from '../../styles/components/PlayerInfo/PlayerIndicators.module.scss';
+import classes from '../../../styles/hud/components/PlayerInfo/PlayerIndicators.module.scss';
 
 import ArmorImg from '../../../assets/hud/images/components/PlayerInfo/indicators/Armor.svg';
 import HealthImage from '../../../assets/hud/images/components/PlayerInfo/indicators/Health.svg';

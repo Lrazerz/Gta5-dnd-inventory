@@ -5,7 +5,7 @@ import {removeEquippedItem, removeEquippedWeaponFromEquipped} from "./equippedIt
 import {ContextAction} from "../../../inventory/models/Context/ContextAction";
 import store from "../../store";
 import {removeExternalBoardItem} from "./externalBoard";
-import {mpTriggerDropExternalItem, mpTriggerDropItem} from "../../../inventory/utils/mpTriggers";
+import {mpTriggerDropExternalItem, mpTriggerDropItem} from "../../../utils/mpTriggers/inventory/mpTriggers";
 const {dispatch} = store;
 
 const _openContextMenu = (item, hoveredArea, leftOffset, topOffset, topOffsetTopContext) => {

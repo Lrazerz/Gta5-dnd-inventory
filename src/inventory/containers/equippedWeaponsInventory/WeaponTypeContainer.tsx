@@ -1,5 +1,5 @@
 import React from 'react';
-import classes from '../../styles/equippedWeaponsInventory/WeaponTypeContainer.module.scss';
+import classes from '../../../styles/inventory/equippedWeaponsInventory/WeaponTypeContainer.module.scss';
 import Octagon from "../../components/equippedClosingInventory/Octagon";
 import ClosingWeaponSquare from "../../components/equippedClosingInventory/ClosingWeaponSquare";
 import LeadText from "../../components/layout/LeadText";

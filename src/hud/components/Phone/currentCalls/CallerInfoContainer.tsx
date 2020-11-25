@@ -1,5 +1,5 @@
 import React, {CSSProperties, useEffect, useState} from 'react';
-import classes from '../../../styles/components/Phone/currentCalls/CallerInfoContainer.module.scss';
+import classes from '../../../../styles/hud/components/Phone/currentCalls/CallerInfoContainer.module.scss';
 import LeadText from "../Text/LeadText";
 
 interface Props {
@@ -39,7 +39,7 @@ const CallerInfoContainer: React.FC<Props> = React.memo(({imageName, name, phone
   }
   const phoneNumberTextStyles: CSSProperties = {
     textAlign: 'center',
-    fontSize: '0.41rem',
+    fontSize: '0.62rem',
     color: '#fff',
     fontWeight: 400,
   }

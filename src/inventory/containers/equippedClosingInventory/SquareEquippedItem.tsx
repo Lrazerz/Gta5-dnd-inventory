@@ -1,7 +1,7 @@
 import React, {CSSProperties, useEffect, useRef, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import EquippedItem from "../../components/items/EquippedItem";
-import classes from '../../styles/equippedClosingInventory/SquareEquippedItem.module.scss';
+import classes from '../../../styles/inventory/equippedClosingInventory/SquareEquippedItem.module.scss';
 import SecondaryText from "../../components/layout/SecondaryText";
 import {addDraggedItem, dragEndHandler, draggedItemRelease} from "../../../redux/actions/inventory/draggedItem";
 import {openContextMenu} from "../../../redux/actions/inventory/contextMenu";

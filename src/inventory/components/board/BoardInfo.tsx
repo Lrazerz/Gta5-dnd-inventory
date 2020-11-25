@@ -1,6 +1,6 @@
 import React, {CSSProperties, useRef} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import classes from '../../styles/board/BoardInfo.module.scss';
+import classes from '../../../styles/inventory/board/BoardInfo.module.scss';
 import cashImage from '../../../assets/inventory/images/board/cash.png';
 import SecondaryText from "../../components/layout/SecondaryText";
 import {setGoingToDrop} from "../../../redux/actions/inventory/draggedItem";

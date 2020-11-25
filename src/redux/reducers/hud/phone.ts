@@ -10,10 +10,14 @@ import {
   SET_SETTINGS,
 } from "../../actions/hud/types";
 import {
-  CallsInterface, ChatMessageInterface, ChatsDemoInterface, ContactInterface,
+  CallsInterface,
+  ChatMessageInterface,
+  ChatsDemoInterface,
+  ContactInterface,
   CurrentCallInterface,
-  PhoneHudDataInterface,
   IncomingCallInterface,
+  LastMessageInterface,
+  PhoneHudDataInterface,
   SettingsInterface
 } from "../../../hud/components/Phone/models/interfaces/reducerInterfaces";
 import {OpenedScreenEnum, ThemesEnum} from "../../../hud/components/Phone/models/interfaces/enums";
@@ -21,6 +25,8 @@ import {OpenedScreenEnum, ThemesEnum} from "../../../hud/components/Phone/models
 interface InitialStateInterface {
   // to display in chats
   playerAvatar: string,
+
+  lastMessages: LastMessageInterface[],
 
   openedScreen: OpenedScreenEnum;
 
@@ -48,6 +54,51 @@ interface InitialStateInterface {
 
 const initialState: InitialStateInterface = {
   playerAvatar: 'avatar1',
+  lastMessages: [
+    {
+    id: '1',
+    name: 'Дядя Бобби Д.',
+    imageName: 'avatar2',
+    date: {
+        minutes: '10',
+        hours: '11',
+        day: '23',
+        month: '03',
+        year: '2019',
+      },
+    message: 'В отличии от lorem ipsum, текст рыба на русском языке наполнит любой макет непонятным смыслом и придаст тексту' +
+      'текстк текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст'
+    },
+    {
+    id: '2',
+    name: 'Дядя Бобби Д.',
+    imageName: 'avatar2',
+    date: {
+        minutes: '10',
+        hours: '11',
+        day: '23',
+        month: '03',
+        year: '2019',
+    },
+    message: 'В отличии от lorem ipsum, текст рыба на русском языке наполнит любой макет непонятным смыслом и придаст тексту' +
+      'текстк текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст'
+    },
+    {
+    id: '3',
+    name: 'Дядя Бобби Д.',
+    imageName: 'avatar2',
+    date: {
+        minutes: '10',
+        hours: '11',
+        day: '23',
+        month: '03',
+        year: '2019',
+      },
+    message: 'В отличии от lorem ipsum, текст рыба на русском языке наполнит любой макет непонятным смыслом и придаст тексту' +
+      'текстк текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст'
+    },
+  ],
+
   openedScreen: OpenedScreenEnum.mainScreen,
 
   hudData: {
@@ -81,7 +132,7 @@ const initialState: InitialStateInterface = {
     cosmetics:
       {
         theme: ThemesEnum.white,
-        themeImage: 'theme1',
+        themeImage: 'theme2',
       },
     ringtone: {},
   },
@@ -455,6 +506,7 @@ export default (state = initialState, action) => {
     case OPEN_INCOMING_CALL: {
       return {
         ...state,
+        openedScreen: OpenedScreenEnum.incomingCall,
         incomingCall: {
           name: action.name,
           imageName: action.imageName,
@@ -465,17 +517,8 @@ export default (state = initialState, action) => {
     case OPEN_CALL: {
       return {
         ...state,
-        currentCall: {
-          name: action.name,
-          imageName: action.imageName,
-          phoneNumber: action.phoneNumber,
-          isConference: action.isConference,
-          isMuted: action.isMuted,
-          isNoted: action.isNoted,
-          speaker: action.speaker,
-          keyboard: action.keyboard,
-          isRecording: action.isRecording,
-        }
+        openedScreen: OpenedScreenEnum.currentCall,
+        currentCall: action.callData
       }
     }
     case SET_SETTINGS: {

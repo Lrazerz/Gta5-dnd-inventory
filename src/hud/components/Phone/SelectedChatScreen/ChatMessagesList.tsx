@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import {useSelector} from 'react-redux';
-import classes from '../../../styles/components/Phone/SelectedChatScreen/ChatMessagesList.module.scss';
+import classes from '../../../../styles/hud/components/Phone/SelectedChatScreen/ChatMessagesList.module.scss';
 import ChatMessage from "./ChatMessage";
 import {ThemesEnum} from "../models/interfaces/enums";
 
@@ -17,7 +17,7 @@ const ChatMessagesList = React.memo(() => {
         theme: phone.settings.cosmetics.theme,
         messages: phone.selectedChat.messages,
       }
-      ));
+    ));
 
   useEffect(() => {
     const loadPlayerAvatarImage = async () => {
@@ -56,7 +56,16 @@ const ChatMessagesList = React.memo(() => {
     loadInterlocutorAvatarImage();
   }, [playerAvatar, interlocutorAvatar]);
 
-  const messagesBlock = messages.map(message => {
+  const messagesBlock = messages.map((message,i) => {
+    // if(i === messages.length - 1) {
+    //   console.log('that el');
+    //   return (
+    //     //@ts-ignore
+    //     <ChatMessage forwardedRef={lastMessageRef} key={message.id} direction={message.direction} date={message.date} message={message.message} theme={theme}
+    //                  playerImage={message.direction === 'in' ? importedInterlocutorAvatarImg : importedPlayerAvatarImg}/>
+    //   )
+    // }
+
     return (
       <ChatMessage key={message.id} direction={message.direction} date={message.date} message={message.message} theme={theme}
                    playerImage={message.direction === 'in' ? importedInterlocutorAvatarImg : importedPlayerAvatarImg}/>
@@ -66,6 +75,7 @@ const ChatMessagesList = React.memo(() => {
   return (
     <div className={classes.MessagesList}>
       {messagesBlock}
+      {/*<div ref={lastMessageRef}/>*/}
     </div>
   );
 });

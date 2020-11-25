@@ -1,6 +1,7 @@
 import React, {ReactElement} from 'react';
 import {useDispatch} from 'react-redux';
-import classes from '../../../styles/components/Phone/CallContactsChatWrapper/CallContactsChatWrapper.module.scss';
+import classes
+  from '../../../../styles/hud/components/Phone/CallContactsChatWrapper/CallContactsChatWrapper.module.scss';
 import Tabs from "./Tabs";
 import {useSwipeable} from "react-swipeable";
 import {OpenedScreenEnum} from "../models/interfaces/enums";
@@ -36,10 +37,15 @@ const CallContactsChatWrapper: React.FC<Props> = React.memo(({openedScreen}) => 
       dispatch(openScreen(openedScreen - 1));
     }
   }
+
+  const swipeUpHandler = () => {
+    dispatch(openScreen(OpenedScreenEnum.mainScreen));
+  }
   // to external lib
   const handlers = useSwipeable({
     onSwipedLeft: () => swipeHandler(true),
     onSwipedRight: () => swipeHandler(false),
+    onSwipedUp: () => swipeUpHandler(),
     preventDefaultTouchmoveEvent: true,
     trackMouse: true
   });

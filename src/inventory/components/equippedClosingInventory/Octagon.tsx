@@ -1,6 +1,6 @@
 import React, {CSSProperties} from 'react';
 import {useSelector} from 'react-redux';
-import classes from '../../styles/equippedClosingInventory/Octagon.module.scss';
+import classes from '../../../styles/inventory/equippedClosingInventory/Octagon.module.scss';
 
 interface Props {
   width?: string;

@@ -1,5 +1,5 @@
 import React, {CSSProperties, useEffect, useState, useRef} from 'react';
-import classes from '../../../../styles/components/Phone/CallContactsChatWrapper/ChatsScreen/SingleChat.module.scss';
+import classes from '../../../../../styles/hud/components/Phone/CallContactsChatWrapper/ChatsScreen/SingleChat.module.scss';
 import {ChatsDemoInterface, ThemesEnum} from "../../models/interfaces/reducerInterfaces";
 import phoneTheme from '../../consts/phoneTheme';
 import LeadText from "../../Text/LeadText";
@@ -45,7 +45,7 @@ const SingleChat: React.FC<Props> = React.memo(({chat, theme}) => {
 
   const nameStyles: CSSProperties = {
     color: theme === ThemesEnum.black ? phoneTheme.lightPurpleText : phoneTheme.darkPurple,
-    fontSize: '0.38rem',
+    fontSize: '0.57rem',
     whiteSpace: 'nowrap',
     textOverflow: 'ellipsis',
     overflow: 'hidden',
@@ -56,7 +56,7 @@ const SingleChat: React.FC<Props> = React.memo(({chat, theme}) => {
   // for time and number too
   let TimeStyles: CSSProperties = {
     color: theme === ThemesEnum.black ? phoneTheme.white: phoneTheme.lightPurpleText,
-    fontSize: '0.33rem',
+    fontSize: '0.495rem',
     fontWeight: 400,
     marginBottom: '8%',
     marginTop: 'auto',
@@ -64,13 +64,13 @@ const SingleChat: React.FC<Props> = React.memo(({chat, theme}) => {
 
   let TextStyles: CSSProperties = {
     color: theme === ThemesEnum.black ? phoneTheme.white: phoneTheme.lightPurpleText,
-    fontSize: '0.33rem',
+    fontSize: '0.495rem',
     fontWeight: 400,
     marginTop: 'auto',
   }
 
   let textBlockStyles: CSSProperties = {
-    borderBottom: `0.03rem solid ${theme === ThemesEnum.white ? phoneTheme.lightPurpleText : phoneTheme.darkPurple}`,
+    borderBottom: `0.045rem solid ${theme === ThemesEnum.white ? phoneTheme.lightPurpleText : phoneTheme.darkPurple}`,
   }
 
   let nameTimeTextBlock = (

@@ -1,6 +1,6 @@
 import React, {CSSProperties, useRef} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import classes from '../../styles/layout/BackDrop.module.scss';
+import classes from '../../../styles/inventory/layout/BackDrop.module.scss';
 import {setGoingToDrop} from "../../../redux/actions/inventory/draggedItem";
 
 const BackDrop = React.memo(function BackDrop() {

@@ -1,6 +1,6 @@
 import React, {CSSProperties, ReactElement} from 'react';
 import {useSelector} from 'react-redux';
-import classes from '../../../styles/components/Phone/UI/PhoneHud.module.scss';
+import classes from '../../../../styles/hud/components/Phone/UI/PhoneHud.module.scss';
 
 import extWifiImg from '../../../../assets/hud/images/components/Phone/components/PhoneHud/wifi.svg';
 import networkImg from '../../../../assets/hud/images/components/Phone/components/PhoneHud/network.svg';
@@ -45,8 +45,8 @@ const PhoneHud: React.FC<Props> = React.memo(function PhoneHud({children}) {
     // always white on screens with theme image
     color: color,
     // color: '#fff',
-    fontSize: '0.5rem',
-    fontWeight: 600,
+    fontSize: '0.72rem',
+    fontWeight: 400,
   }
 
   return (

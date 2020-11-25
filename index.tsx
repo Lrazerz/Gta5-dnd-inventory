@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './src/inventory/styles/normalize.css';
+import './src/styles/inventory/normalize.css';
 import './index.scss';
 import App from "./src/App";
 

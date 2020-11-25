@@ -1,6 +1,6 @@
 import React from 'react';
 import {useSelector} from 'react-redux';
-import classes from '../../../../styles/components/Phone/CallContactsChatWrapper/CallsScreen/CallsScreen.module.scss';
+import classes from '../../../../../styles/hud/components/Phone/CallContactsChatWrapper/CallsScreen/CallsScreen.module.scss';
 import SingleCall from "./SingleCall";
 import {ThemesEnum} from "../../models/interfaces/enums";
 
@@ -18,7 +18,7 @@ const CallsScreen = React.memo(() => {
   // },[ref.current]);
 
   const scrollWrapperStyles = {
-    boxShadow: `inset 0 -2rem ${theme === ThemesEnum.white ? 'rgba(245, 246, 252, 0.8)' : 'rgba(0, 0, 0, 0.8)'}`,
+    boxShadow: `inset 0 -3rem ${theme === ThemesEnum.white ? 'rgba(245, 246, 252, 0.8)' : 'rgba(0, 0, 0, 0.8)'}`,
   }
 
   const blurredBottomBlockStyles = {
@@ -27,8 +27,8 @@ const CallsScreen = React.memo(() => {
 
   const callsBlock = calls.map(call => {
     return (
-      <div className={classes.SingleCallWrapper}>
-        <SingleCall key={call.id} call={call} theme={theme}/>
+      <div key={call.id} className={classes.SingleCallWrapper}>
+        <SingleCall call={call} theme={theme}/>
       </div>
     )
   });
@@ -38,9 +38,7 @@ const CallsScreen = React.memo(() => {
       <div className={classes.ScrollWrapper} style={scrollWrapperStyles}>
         {callsBlock}
       </div>
-      <div className={classes.BlurredBottomBlock} style={blurredBottomBlockStyles}>
-
-      </div>
+      <div className={classes.BlurredBottomBlock} style={blurredBottomBlockStyles}/>
     </div>
   );
 });

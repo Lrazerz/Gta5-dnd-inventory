@@ -1,0 +1,73 @@
+.LastMessage {
+  width: 100%;
+  height: 100%;
+  display: flex;
+
+  .ImageContainer {
+    height: 100%;
+    width: 21.59%;
+
+    .ImageWrapper {
+      position: relative;
+      //width: 77.78%;
+      width: 64.7%;
+      height: 100%;
+      margin-left: auto;
+      margin-right: auto;
+      //todo unread messages
+
+      .Image {
+        box-sizing: border-box;
+        display: block;
+        margin-top: 27%;
+        width: 100%;
+        border-radius: 50%;
+      }
+    }
+  }
+
+  .InfoWrapper {
+    height: 100%;
+    flex-grow: 1;
+    max-width: 75.58%;
+    display: flex;
+    flex-direction: column;
+
+    .NameTimeWrapper {
+      width: 100%;
+      height: 41.11%;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+
+      .NameWrapper {
+        height: 100%;
+        width: 80%;
+        max-width: 80%;
+        display: flex;
+        justify-content: flex-start;
+      }
+
+      .TimeWrapper {
+        height: 100%;
+        width: 20%;
+        max-width: 20%;
+        display: flex;
+        justify-content: flex-end;
+      }
+    }
+
+    .TextWrapper {
+      width: 100%;
+      flex-grow: 1;
+      max-height: 58.89%;
+
+      .Text {
+        font-family: 'Montserrat', sans-serif;
+        line-height: 0.6rem;
+        height: 1.8rem;
+        overflow: hidden;
+      }
+    }
+  }
+}

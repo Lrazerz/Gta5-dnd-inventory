@@ -1,6 +1,6 @@
 import React, {CSSProperties, ReactElement} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import classes from '../../../styles/components/Phone/SettingsScreen/SettingsList.module.scss';
+import classes from '../../../../styles/hud/components/Phone/SettingsScreen/SettingsList.module.scss';
 import muteSettingImg from '../../../../assets/hud/images/components/Phone/components/SettingsList/settings-mute.svg';
 import cosmeticsSettingImg
   from '../../../../assets/hud/images/components/Phone/components/SettingsList/settings-cosmetics.svg';
@@ -16,7 +16,7 @@ const SettingsList = React.memo(() => {
   const settingsRedux = useSelector(({hud: {phone}}) => phone.settings);
 
   const settingTitleStyles: CSSProperties = {
-    fontSize: '0.43rem',
+    fontSize: '0.645rem',
     fontWeight: 400,
   }
 

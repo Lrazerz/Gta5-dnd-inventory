@@ -1,7 +1,7 @@
 import React, {CSSProperties, useEffect, useRef, useState} from 'react';
 import {useSelector} from 'react-redux';
-import classes from '../../styles/equippedWeaponsInventory/PhoneAndSimContainer.module.scss';
-import standardClasses from '../../styles/equippedWeaponsInventory/WeaponTypeContainer.module.scss';
+import classes from '../../../styles/inventory/equippedWeaponsInventory/PhoneAndSimContainer.module.scss';
+import standardClasses from '../../../styles/inventory/equippedWeaponsInventory/WeaponTypeContainer.module.scss';
 import LeadText from "../../components/layout/LeadText";
 import ClosingWeaponSquare from "../../components/equippedClosingInventory/ClosingWeaponSquare";
 import SquareEquippedItem from "../equippedClosingInventory/SquareEquippedItem";

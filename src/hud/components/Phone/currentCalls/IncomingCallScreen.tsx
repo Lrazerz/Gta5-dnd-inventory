@@ -1,6 +1,6 @@
 import React, {CSSProperties, useEffect, useState} from 'react';
 import {useSelector} from 'react-redux';
-import classes from '../../../styles/components/Phone/currentCalls/IncomingCallScreen.module.scss';
+import classes from '../../../../styles/hud/components/Phone/currentCalls/IncomingCallScreen.module.scss';
 import LeadText from "../Text/LeadText";
 import {IncomingCallInterface} from "../../../../redux/reducers/hud/phone";
 import declineCallImg from '../../../../assets/hud/images/components/Phone/components/currentCalls/decline-call.svg';
@@ -36,7 +36,7 @@ const IncomingCallScreen = () => {
   }
 
   const textOverflowThreeDotsStyles: CSSProperties = {
-    fontSize: '0.52rem',
+    fontSize: '0.78rem',
     color: '#fff',
     fontWeight: 800,
     textAlign: 'center',

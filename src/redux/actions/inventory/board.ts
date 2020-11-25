@@ -13,7 +13,7 @@ import {xMax, xMin, yMax, yMin} from "../../../inventory/constants/boardDimensio
 import Item from "../../../inventory/models/Item";
 import DummyImage from '../../../assets/inventory/dummy/weapon.png';
 import {closeExternalBoard, openExternalBoard} from "./externalBoard";
-import {mpTriggerMoveFromExternalItem, mpTriggerMoveItem} from "../../../inventory/utils/mpTriggers";
+import {mpTriggerMoveFromExternalItem, mpTriggerMoveItem} from "../../../utils/mpTriggers/inventory/mpTriggers";
 
 const importItemImage: (itemName: string) => Promise<any> = async (itemName) => {
   let imageUrl;

@@ -16,6 +16,9 @@ const phoneTheme = {
   darkGray: '#464242',
 
   chatMessageLightPurpleBg: '#642BE7',
+
+  // rare
+  beige: 'rgba(252, 228, 206, 0.2)'
 }
 
 

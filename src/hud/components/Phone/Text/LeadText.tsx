@@ -1,6 +1,6 @@
 import React, {CSSProperties} from 'react';
 import {useSelector} from 'react-redux';
-import classes from '../../../styles/components/Phone/Text/LeadText.module.scss';
+import classes from '../../../../styles/hud/components/Phone/Text/LeadText.module.scss';
 import {ThemesEnum} from "../models/interfaces/enums";
 
 interface Props {

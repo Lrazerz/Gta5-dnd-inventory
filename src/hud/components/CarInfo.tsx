@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import classes from '../styles/components/CarInfo.module.scss';
+import classes from '../../styles/hud/components/CarInfo.module.scss';
 import ProgressBar from 'progressbar.js'
 
 // images

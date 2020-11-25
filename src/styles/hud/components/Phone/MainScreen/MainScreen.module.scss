@@ -2,8 +2,27 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-between;
   width: 100%;
   height: 100%;
+  //background-color: red;
+
+  // last messages for now
+  .LastMessages {
+    width: 91.47%;
+    height: 39%;
+    max-height: 39%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-top: 3%;
+
+    .LastMessageWrapper {
+      width: 100%;
+      height: 32%;
+      overflow: hidden;
+    }
+  }
 
   .ButtonsWrapper {
     display: flex;

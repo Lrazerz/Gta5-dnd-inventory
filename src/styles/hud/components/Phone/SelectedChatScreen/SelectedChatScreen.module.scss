@@ -78,7 +78,7 @@
     }
     &::-webkit-scrollbar-thumb {
       background-color: #706390;
-      border-radius: 0.3rem;
+      border-radius: 0.45rem;
     }
   }
 
@@ -103,8 +103,8 @@
         width: 84.19%;
         //margin-bottom: 10%;
         //max-height: 2.45rem;
-        min-height: 0.45rem;
-        line-height: 0.45rem;
+        min-height: 0.67rem;
+        line-height: 0.67rem;
         resize: none;
         border: none;
         font-family: Montserrat, sans-serif;
@@ -115,11 +115,11 @@
         }
 
         &::-webkit-scrollbar {
-          width: 0.3rem;
+          width: 0.45rem;
         }
         &::-webkit-scrollbar-thumb {
           background-color: #706390;
-          border-radius: 0.3rem;
+          border-radius: 0.45rem;
         }
       }
     }

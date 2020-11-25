@@ -1,5 +1,5 @@
 import React from 'react';
-import classes from '../../../styles/CommonItem.module.scss';
+import classes from '../../../../styles/inventory/CommonItem.module.scss';
 
 interface Props {
   children: any;

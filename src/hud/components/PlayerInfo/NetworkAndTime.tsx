@@ -1,5 +1,5 @@
 import React from 'react';
-import classes from '../../styles/components/PlayerInfo/NetworkAndTime.module.scss';
+import classes from '../../../styles/hud/components/PlayerInfo/NetworkAndTime.module.scss';
 
 interface Props {
   time: string;

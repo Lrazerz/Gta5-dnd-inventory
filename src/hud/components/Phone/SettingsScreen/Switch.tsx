@@ -1,5 +1,5 @@
 import React from 'react';
-import classes from '../../../styles/components/Phone/SettingsScreen/Switch.module.scss';
+import classes from '../../../../styles/hud/components/Phone/SettingsScreen/Switch.module.scss';
 
 import enabledSwitchImg from '../../../../assets/hud/images/components/Phone/components/SettingsList/switch-wrapper.svg';
 import disabledSwitchImg from '../../../../assets/hud/images/components/Phone/components/SettingsList/switch-wrapper-inactive.svg';

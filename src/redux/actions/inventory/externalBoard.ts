@@ -7,7 +7,7 @@ import {xMax, xMin, yMin} from "../../../inventory/constants/boardDimensions";
 import {
   mpTriggerMoveFromExternalToExternalItem,
   mpTriggerMoveToExternalItem
-} from "../../../inventory/utils/mpTriggers";
+} from "../../../utils/mpTriggers/inventory/mpTriggers";
 
 const openExternalBoard = (items, height) => {
   return {type: OPEN_EXTERNAL_BOARD, items, height};

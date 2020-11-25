@@ -16,30 +16,42 @@
     flex-direction: column;
     align-items: center;
     width: 100%;
-    height: 41.8%;
+    //height: 41.8%;
+    height: 25.8%;
+    //background-color: red;
 
     .CallIndicatorsContainer {
+      //background-color: yellow;
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
-      //width: 87.5%;
       width: 93%;
-      height: 60.82%;
+      //height: 60.82%;
+      height: 40.41%;
 
       .CallIndicatorsWrapper {
         height: 90%;
         width: 100%;
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
-        grid-template-rows: 1fr 1fr;
-        grid-column-gap: 2%;
-        grid-row-gap: 5%;
+        //display: grid;
+        //grid-template-columns: 1fr 1fr 1fr;
+        //grid-template-rows: 1fr 1fr;
+        //grid-column-gap: 2%;
+        //grid-row-gap: 5%;
+
+        display: flex;
 
         .Option {
-          //height: 35.1%;
-          //width: 29.71%;
+          //height: 100%;
+          //width: 80%;
+          //margin-left: auto;
+          //margin-right: auto;
+          //display: flex;
+          //flex-direction: column;
+          //justify-content: space-between;
+          //align-items: center;
+
           height: 100%;
-          width: 80%;
+          width: 30%;
           margin-left: auto;
           margin-right: auto;
           display: flex;

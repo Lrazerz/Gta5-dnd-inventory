@@ -2,7 +2,7 @@ import React, {CSSProperties, useRef} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import AppBoard from "./containers/AppBoard/AppBoard";
 // @ts-ignore
-import classes from './styles/InventoryApp.module.scss';
+import classes from '../styles/inventory/InventoryApp.module.scss';
 import EquippedClosingInventoryContainer
   from "./containers/equippedClosingInventory/EquippedClosingInventoryContainer";
 import EquippedWeaponsInventoryContainer from "./containers/equippedWeaponsInventory/EquippedWeaponsInventoryContainer";

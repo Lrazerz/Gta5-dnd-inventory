@@ -2,7 +2,7 @@ import React, {useCallback, CSSProperties, useRef} from 'react'
 import {useDispatch, useSelector} from "react-redux";
 import Overlay from "../../components/UI/Overlay";
 import {invokeOnMouseUp, setHoveredSquares} from "../../../redux/actions/inventory/draggedItem";
-import classes from '../../styles/board/BoardSquare.module.scss';
+import classes from '../../../styles/inventory/board/BoardSquare.module.scss';
 import theme from "../../constants/css/theme";
 import {removeHoveredItem} from "../../../redux/actions/inventory/hoveredItem";
 

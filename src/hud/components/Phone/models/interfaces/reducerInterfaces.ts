@@ -8,6 +8,15 @@ interface DateObjectInterface {
   year: string;
 }
 
+// last messages (mainScreen)
+interface LastMessageInterface {
+  id: string;
+  name: string;
+  imageName: string;
+  date: DateObjectInterface;
+  message: string;
+}
+
 interface PhoneHudDataInterface {
   time: string;
   network: number;
@@ -25,11 +34,11 @@ interface CurrentCallInterface { // call right now
   name: string; // caller name
   imageName: string;
   phoneNumber: string; // phone number
-  isConference: boolean; // conference call
+  // isConference: boolean; // conference call
   isMuted: boolean;
-  isNoted: boolean;
+  // isNoted: boolean;
   speaker: boolean; // is speaker enabled (players around can hear your interlocutor)
-  keyboard: boolean;
+  // keyboard: boolean;
   isRecording: boolean;
 }
 
@@ -84,6 +93,9 @@ interface ChatMessageInterface {
 
 export {
   DateObjectInterface,
+
+  // mainScreen only
+  LastMessageInterface,
 
   PhoneHudDataInterface,
   // settings interfaces

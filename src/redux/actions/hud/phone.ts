@@ -1,19 +1,40 @@
 import {
-  CurrentCallInterface,
-  CallsInterface, ChatMessageInterface, ChatsDemoInterface,
+  CallsInterface,
+  ChatMessageInterface,
+  ChatsDemoInterface,
   ContactInterface,
+  CurrentCallInterface,
+  IncomingCallInterface,
   OpenedScreenEnum,
-  SettingsInterface, IncomingCallInterface
+  SettingsInterface
 } from "../../reducers/hud/phone";
 import {
-  OPEN_CALL, OPEN_INCOMING_CALL,
+  OPEN_CALL,
+  OPEN_INCOMING_CALL,
   OPEN_SCREEN,
   SET_CALLS,
   SET_CHATS_DEMO,
   SET_CONTACTS,
-  SET_SELECTED_CHAT, SET_SETTING_MUTED,
+  SET_SELECTED_CHAT,
+  SET_SETTING_MUTED,
   SET_SETTINGS
 } from "./types";
+import {
+  phone_openCalls,
+  phone_openChats,
+  phone_openContacts, phone_openCurrentCall,
+  phone_openIncomingCall, phone_openSettings, phone_openSingleChat
+} from "../../../utils/windowFuncs/windowFuncs";
+import {AnyAction} from "redux";
+import {ThunkAction} from "redux-thunk";
+import {
+  mpTrigger_phone_openCalls,
+  mpTrigger_phone_openChats,
+  mpTrigger_phone_openContacts,
+  mpTrigger_phone_openOutComingCall,
+  mpTrigger_phone_openSettings,
+  mpTrigger_phone_openSingleChat
+} from "../../../utils/mpTriggers/hud/hudMpTriggers";
 
 //region ------------------------------ Action cretors ------------------------------
 const _openScreen = (openedScreen: OpenedScreenEnum) => {
@@ -28,15 +49,7 @@ const _openIncomingCall = (incomingCallData: IncomingCallInterface) => {
 const _openCall = (callingRightNowData: CurrentCallInterface) => {
   return {
     type: OPEN_CALL,
-    name: callingRightNowData.name,
-    imageName: callingRightNowData.imageName,
-    phoneNumber: callingRightNowData.phoneNumber,
-    isConference: callingRightNowData.isConference,
-    isMuted: callingRightNowData.isMuted,
-    isNoted: callingRightNowData.isNoted,
-    speaker: callingRightNowData.speaker,
-    keyboard: callingRightNowData.keyboard,
-    isRecording: callingRightNowData.isRecording,
+    callData: callingRightNowData
   };
 }
 
@@ -69,9 +82,53 @@ const _setSettingMuted = (newState) => {
 
 //region ------------------------------ Redux thunk actions ------------------------------
 const openScreen = (screenNumber: OpenedScreenEnum) => {
-  return dispatch => {
-    dispatch(_openScreen(screenNumber));
+  switch (screenNumber) {
+    case OpenedScreenEnum.mainScreen: {
+      // @ts-ignore
+      window.phone_openIncomingCall = phone_openIncomingCall;
+      break;
+    }
+    //region -------------------- Calls, contacts, chats --------------------
+    case OpenedScreenEnum.calls: {
+      mpTrigger_phone_openCalls();
+      // @ts-ignore
+      window.phone_openCalls = phone_openCalls;
+      break;
+    }
+    case OpenedScreenEnum.contacts: {
+      mpTrigger_phone_openContacts();
+      // @ts-ignore
+      window.phone_openContacts = phone_openContacts;
+      break;
+    }
+    case OpenedScreenEnum.chats: {
+      mpTrigger_phone_openChats();
+      // @ts-ignore
+      window.phone_openChats = phone_openChats;
+      break;
+    }
+    //endregion
+    case OpenedScreenEnum.selectedChat: {
+      mpTrigger_phone_openSingleChat();
+      // @ts-ignore
+      window.phone_openChat = phone_openSingleChat;
+      break;
+    }
+    case OpenedScreenEnum.currentCall: {
+      mpTrigger_phone_openOutComingCall();
+      // @ts-ignore
+      window.phone_openCurrentCall = phone_openCurrentCall;
+      break;
+    }
+    case OpenedScreenEnum.settings: {
+      console.log('set func on window')
+      mpTrigger_phone_openSettings();
+      // @ts-ignore
+      window.phone_openSettings = phone_openSettings;
+      break;
+    }
   }
+  return _openScreen(screenNumber);
 }
 
 const openIncomingCall = (incomingCallData: IncomingCallInterface) => {

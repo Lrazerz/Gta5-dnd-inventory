@@ -6,7 +6,7 @@ import {
   EQUIPPED_ALL_ITEMS_RELEASE,
 } from "./types";
 import Item from "../../../inventory/models/Item";
-import {mpTriggerMoveItem} from "../../../inventory/utils/mpTriggers";
+import {mpTriggerMoveItem} from "../../../utils/mpTriggers/inventory/mpTriggers";
 
 const _removeEquippedItem = (cellId) => {
   return {type: EQUIPPED_ITEM_REMOVE, id: cellId};

@@ -1,5 +1,5 @@
 import React, {CSSProperties, Dispatch, ReactElement} from 'react';
-import classes from '../../../styles/components/Phone/CallContactsChatWrapper/Tabs.module.scss';
+import classes from '../../../../styles/hud/components/Phone/CallContactsChatWrapper/Tabs.module.scss';
 import LeadText from "../Text/LeadText";
 import { useSwipeable } from "react-swipeable";
 import {OpenedScreenEnum} from "../../../../redux/reducers/hud/phone";
@@ -15,7 +15,7 @@ const Tabs: React.FC<Props> = React.memo(({openedScreen, onChange}) => {
 
 
   //region ------------------------------ Set active tab border ------------------------------
-  const borderStyle = '0.1rem solid #6328E9';
+  const borderStyle = '0.15rem solid #6328E9';
 
   const callTypingStyles: CSSProperties = {
     borderBottom: openedScreen === OpenedScreenEnum.phoneTyping ? borderStyle : "none",
@@ -36,24 +36,28 @@ const Tabs: React.FC<Props> = React.memo(({openedScreen, onChange}) => {
     onChange(tabIdx);
   }
 
+  const tabTextStyles: CSSProperties = {
+    fontSize: '0.62rem',
+  }
+
   //region ------------------------------ Display different ui depend on value ------------------------------
   const callRecentContacts = (
     <>
       <div className={`${classes.CallTyping} ${classes.Tab}`} style={callTypingStyles}
            onClick={() => tabClickHandler(OpenedScreenEnum.phoneTyping)}>
-        <LeadText styles={{fontSize: '0.41rem'}}>
+        <LeadText styles={tabTextStyles}>
           {translateToRussianOpenedScreen(OpenedScreenEnum.phoneTyping)}
         </LeadText>
       </div>
       <div className={`${classes.Recent} ${classes.Tab}`} style={recentStyles}
            onClick={() => tabClickHandler(OpenedScreenEnum.calls)}>
-        <LeadText styles={{fontSize: '0.41rem'}}>
+        <LeadText styles={tabTextStyles}>
           {translateToRussianOpenedScreen(OpenedScreenEnum.calls)}
         </LeadText>
       </div>
       <div className={`${classes.Contacts} ${classes.Tab}`}
            onClick={() => tabClickHandler(OpenedScreenEnum.contacts)}>
-        <LeadText styles={{fontSize: '0.41rem'}}>
+        <LeadText styles={tabTextStyles}>
           {translateToRussianOpenedScreen(OpenedScreenEnum.contacts)}
         </LeadText>
       </div>
@@ -64,19 +68,19 @@ const Tabs: React.FC<Props> = React.memo(({openedScreen, onChange}) => {
     <>
       <div className={`${classes.SecondRecent} ${classes.Tab}`} style={recentStyles}
            onClick={() => tabClickHandler(OpenedScreenEnum.calls)}>
-        <LeadText styles={{fontSize: '0.41rem'}}>
+        <LeadText styles={tabTextStyles}>
           {translateToRussianOpenedScreen(OpenedScreenEnum.calls)}
         </LeadText>
       </div>
       <div className={`${classes.SecondContacts} ${classes.Tab}`} style={contactsStyles}
            onClick={() => tabClickHandler(OpenedScreenEnum.contacts)}>
-        <LeadText styles={{fontSize: '0.41rem'}}>
+        <LeadText styles={tabTextStyles}>
           {translateToRussianOpenedScreen(OpenedScreenEnum.contacts)}
         </LeadText>
       </div>
       <div className={`${classes.Chats} ${classes.Tab}`} style={chatsStyles}
            onClick={() => tabClickHandler(OpenedScreenEnum.chats)}>
-        <LeadText styles={{fontSize: '0.41rem'}}>
+        <LeadText styles={tabTextStyles}>
           {translateToRussianOpenedScreen(OpenedScreenEnum.chats)}
         </LeadText>
       </div>

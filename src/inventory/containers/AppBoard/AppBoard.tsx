@@ -4,7 +4,7 @@ import {yMax, yMin, xMax, xMin} from "../../constants/boardDimensions";
 import {useSelector} from "react-redux";
 import SquareCommonItem from "../SquareCommonItem/SquareCommonItem";
 import Board from "../../components/board/Board";
-import classes from '../../styles/board/AppBoard.module.scss';
+import classes from '../../../styles/inventory/board/AppBoard.module.scss';
 import BoardInfo from "../../components/board/BoardInfo";
 import ExternalBoard from "../../components/board/ExternalBoard";
 import BackDrop from "../../components/layout/BackDrop";

@@ -1,5 +1,5 @@
 import React from 'react';
-import classes from '../../styles/components/PlayerInfo/Buffs.module.scss';
+import classes from '../../../styles/hud/components/PlayerInfo/Buffs.module.scss';
 import {BuffInterface} from "../../models/Buff";
 import SingleBuff from "./SingleBuff";
 

@@ -1,5 +1,5 @@
 import React, {useState, useRef, useEffect} from 'react';
-import classes from '../../styles/components/PlayerInfo/PlayerAvatarAndRank.module.scss';
+import classes from '../../../styles/hud/components/PlayerInfo/PlayerAvatarAndRank.module.scss';
 
 interface Props {
   avatarName: string;

@@ -1,6 +1,6 @@
 import React, {CSSProperties, useRef} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import classes from "../../styles/UI/UniqueServerDescription.module.scss";
+import classes from "../../../styles/inventory/UI/UniqueServerDescription.module.scss";
 import serverLogo from '../../../assets/inventory/images/serverLogo/logo.png';
 import LeadText from "../../components/layout/LeadText";
 import SecondaryText from "../../components/layout/SecondaryText";

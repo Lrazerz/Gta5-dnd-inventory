@@ -1,5 +1,5 @@
 import React, {CSSProperties, useEffect, useState} from 'react';
-import classes from '../../../../styles/components/Phone/CallContactsChatWrapper/ContactsScreen/SingleContact.module.scss';
+import classes from '../../../../../styles/hud/components/Phone/CallContactsChatWrapper/ContactsScreen/SingleContact.module.scss';
 import {CallsInterface, ThemesEnum} from "../../models/interfaces/reducerInterfaces";
 import phoneTheme from '../../consts/phoneTheme';
 import LeadText from "../../Text/LeadText";
@@ -35,7 +35,7 @@ const SingleContact: React.FC<Props> = React.memo(({contact, theme}) => {
 
   const nameStyles: CSSProperties = {
     color: theme === ThemesEnum.black ? phoneTheme.white : phoneTheme.darkPurple,
-    fontSize: '0.38rem',
+    fontSize: '0.57rem',
     overflow: 'hidden',
     whiteSpace: 'nowrap',
     textOverflow: 'ellipsis',
