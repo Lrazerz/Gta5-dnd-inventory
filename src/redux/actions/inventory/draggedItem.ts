@@ -549,7 +549,7 @@ _moveToEquippedItems = (dispatch, getState, draggedItem, draggedItemArea, hovere
     } catch (e) {}
   }
   else if (draggedItemArea === 2) {
-    //region ------------------------------ Check if we want to equip ------------------------------
+    //region ------------------------------ Check if we want to equip weapon ------------------------------
     if(draggedItem.category === ItemTypes.WEAPON_RIFLE || draggedItem.category === ItemTypes.WEAPON_PISTOL
       || draggedItem.category === ItemTypes.WEAPON_LAUNCHER) {
       //region ------------------------------ Utils to get suitable space ------------------------------

@@ -90,7 +90,6 @@ const SquareCommonItem: React.FC<Props> = React.memo(function SquareCommonItem({
     function moveAt(pageX, pageY) {
       newClone.style.left = pageX - newClone.offsetWidth / 2 + 'px';
       newClone.style.top = pageY - newClone.offsetHeight / 2 + 'px';
-      console.log(`left: ${pageX - newClone.offsetWidth / 2}\n top: ${pageY - newClone.offsetHeight / 2}`)
     }
 
     const onMouseMove = (event) => {

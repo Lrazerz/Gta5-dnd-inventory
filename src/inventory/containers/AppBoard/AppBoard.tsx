@@ -86,6 +86,7 @@ const AppBoard: React.FC<Props> = React.memo(function AppBoard({onMouseOver: mou
   const topBackdropStyles = {
     flexGrow: isShowExternalBoard ? 1 : 0,
     height: isShowExternalBoard ? 'auto' : '15%',
+    width: '100%',
   }
 
   return (
@@ -107,7 +108,7 @@ const AppBoard: React.FC<Props> = React.memo(function AppBoard({onMouseOver: mou
         {squares}
       </Board>
       <BoardInfo cash={'50.000'}/>
-      <div style={{flexGrow: 1}}>
+      <div style={{flexGrow: 1, width: '100%'}}>
         <BackDrop/>
       </div>
     </div>

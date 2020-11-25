@@ -52,6 +52,8 @@ const InventoryApp =  React.memo(function InventoryApp() {
   }
 
   const spaceDownHandler = (e) => {
+    e.preventDefault();
+    console.log('onKeyDown',e);
     if (e.code.toLowerCase() === 'space') {
       e.preventDefault();
       if (draggedItem && draggedItem.width > 1 && draggedItem.height > 1) {

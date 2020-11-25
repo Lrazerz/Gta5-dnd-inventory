@@ -6,7 +6,7 @@ import {
   EQUIPPED_ALL_ITEMS_RELEASE,
 } from "./types";
 import Item from "../../../inventory/models/Item";
-import {mpTriggerMoveItem} from "../../../utils/mpTriggers/inventory/mpTriggers";
+import {mpTriggerMoveFromExternalItem, mpTriggerMoveItem} from "../../../utils/mpTriggers/inventory/mpTriggers";
 
 const _removeEquippedItem = (cellId) => {
   return {type: EQUIPPED_ITEM_REMOVE, id: cellId};
@@ -20,14 +20,18 @@ const setEquippedItem = (cellId) => (dispatch, getState) => {
   // create new copy of item
   const {item: {...newDraggedItem}, draggedItemArea} = getState().inventory.draggedItem;
 
-
   newDraggedItem.mainCell = cellId;
   newDraggedItem.isRotated = false;
   if(draggedItemArea !== 3) {
     newDraggedItem.isWeaponEquipped = false;
   }
   dispatch({type: EQUIPPED_ITEM_SET, id: cellId, item: {...newDraggedItem}});
-  mpTriggerMoveItem(newDraggedItem);
+
+  if(draggedItemArea === 2) {
+    mpTriggerMoveFromExternalItem(newDraggedItem);
+  } else if (draggedItemArea === 1 || draggedItemArea === 3) {
+    mpTriggerMoveItem(newDraggedItem);
+  }
 }
 
 const setEquippedItems = (items: Item[] | []) => {
