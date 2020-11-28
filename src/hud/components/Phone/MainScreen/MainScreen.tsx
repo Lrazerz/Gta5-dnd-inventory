@@ -18,9 +18,13 @@ const MainScreen = React.memo(() => {
     return {lastMessages: state.hud.phone.lastMessages, theme: state.hud.phone.theme}
   });
 
+  const openChatsHandler = () => {
+    dispatch(openScreen(OpenedScreenEnum.chats));
+  }
+
   const lastMessagesBlock = lastMessages.map(message => {
     return (
-      <div className={classes.LastMessageWrapper} key={message.id}>
+      <div className={classes.LastMessageWrapper} onClick={openChatsHandler} key={message.id}>
         <LastMessage messageInfo={message} theme={theme}/>
       </div>
     );

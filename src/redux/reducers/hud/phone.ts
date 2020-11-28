@@ -1,12 +1,16 @@
 import {
+  ABORT_CALL,
+  CURRENT_CALL_CHANGE_OPTION,
   OPEN_CALL,
   OPEN_INCOMING_CALL,
-  OPEN_SCREEN,
+  OPEN_LAST_MESSAGES,
+  OPEN_PREV_SCREEN,
+  OPEN_SCREEN, PHONE_CLOSE, PHONE_OPEN, REMOVE_SELECTED_CHAT,
   SET_CALLS,
   SET_CHATS_DEMO,
   SET_CONTACTS,
   SET_SELECTED_CHAT,
-  SET_SETTING_MUTED,
+  SET_SETTING,
   SET_SETTINGS,
 } from "../../actions/hud/types";
 import {
@@ -17,18 +21,21 @@ import {
   CurrentCallInterface,
   IncomingCallInterface,
   LastMessageInterface,
-  PhoneHudDataInterface,
+  PhoneHudDataInterface, SelectedChatInterface,
   SettingsInterface
 } from "../../../hud/components/Phone/models/interfaces/reducerInterfaces";
 import {OpenedScreenEnum, ThemesEnum} from "../../../hud/components/Phone/models/interfaces/enums";
 
 interface InitialStateInterface {
+  isPhoneOpened: boolean;
   // to display in chats
-  playerAvatar: string,
+  playerAvatar: string;
 
-  lastMessages: LastMessageInterface[],
+  lastMessages: LastMessageInterface[];
 
   openedScreen: OpenedScreenEnum;
+  // to come back from curr call and inc call
+  prevOpenedScreen: OpenedScreenEnum;
 
   hudData: PhoneHudDataInterface;
 
@@ -44,15 +51,12 @@ interface InitialStateInterface {
 
   chatsDemo: ChatsDemoInterface[]; // demo === preview
 
-  selectedChat: {
-    name: string,
-    avatarName: string,
-    messages: ChatMessageInterface[];
-  }
+  selectedChat: {} | SelectedChatInterface;
   //endregion
 }
 
 const initialState: InitialStateInterface = {
+  isPhoneOpened: true,
   playerAvatar: 'avatar1',
   lastMessages: [
     {
@@ -83,23 +87,24 @@ const initialState: InitialStateInterface = {
     message: 'В отличии от lorem ipsum, текст рыба на русском языке наполнит любой макет непонятным смыслом и придаст тексту' +
       'текстк текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст'
     },
-    {
-    id: '3',
-    name: 'Дядя Бобби Д.',
-    imageName: 'avatar2',
-    date: {
-        minutes: '10',
-        hours: '11',
-        day: '23',
-        month: '03',
-        year: '2019',
-      },
-    message: 'В отличии от lorem ipsum, текст рыба на русском языке наполнит любой макет непонятным смыслом и придаст тексту' +
-      'текстк текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст'
-    },
+    // {
+    // id: '3',
+    // name: 'Дядя Бобби Д.',
+    // imageName: 'avatar2',
+    // date: {
+    //     minutes: '10',
+    //     hours: '11',
+    //     day: '23',
+    //     month: '03',
+    //     year: '2019',
+    //   },
+    // message: 'В отличии от lorem ipsum, текст рыба на русском языке наполнит любой макет непонятным смыслом и придаст тексту' +
+    //   'текстк текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст'
+    // },
   ],
 
-  openedScreen: OpenedScreenEnum.mainScreen,
+  openedScreen: OpenedScreenEnum.selectedChat,
+  prevOpenedScreen: OpenedScreenEnum.mainScreen,
 
   hudData: {
     time: '12:05',
@@ -134,7 +139,7 @@ const initialState: InitialStateInterface = {
         theme: ThemesEnum.white,
         themeImage: 'theme2',
       },
-    ringtone: {},
+    ringtone: "ringtone1",
   },
 
   calls: [
@@ -356,7 +361,7 @@ const initialState: InitialStateInterface = {
       lastMessageDate: {minutes: '52', hours: '17', day: '21', month: '01', year: '2020'},
     },
     {
-      id: '1',
+      id: '3',
       name: 'Eddie',
       imageName: 'avatar4',
       unreadMessages: 0,
@@ -366,7 +371,7 @@ const initialState: InitialStateInterface = {
       lastMessageDate: {minutes: '52', hours: '17', day: '21', month: '01', year: '2020'},
     },
     {
-      id: '1',
+      id: '4',
       name: 'Jimmy Jonson',
       imageName: 'avatar1',
       unreadMessages: 999,
@@ -376,7 +381,7 @@ const initialState: InitialStateInterface = {
       lastMessageDate: {minutes: '52', hours: '17', day: '21', month: '01', year: '2020'},
     },
     {
-      id: '1',
+      id: '5',
       name: 'Jimmy Jonson',
       imageName: 'avatar1',
       unreadMessages: 6,
@@ -386,7 +391,7 @@ const initialState: InitialStateInterface = {
       lastMessageDate: {minutes: '52', hours: '17', day: '21', month: '01', year: '2020'},
     },
     {
-      id: '1',
+      id: '6',
       name: 'Jimmy Jonson',
       imageName: 'avatar1',
       unreadMessages: 6,
@@ -396,7 +401,7 @@ const initialState: InitialStateInterface = {
       lastMessageDate: {minutes: '52', hours: '17', day: '21', month: '01', year: '2020'},
     },
     {
-      id: '1',
+      id: '7',
       name: 'Jimmy Jonson',
       imageName: 'avatar1',
       unreadMessages: 6,
@@ -406,7 +411,7 @@ const initialState: InitialStateInterface = {
       lastMessageDate: {minutes: '52', hours: '17', day: '21', month: '01', year: '2020'},
     },
     {
-      id: '1',
+      id: '8',
       name: 'Jimmy Jonson',
       imageName: 'avatar1',
       unreadMessages: 6,
@@ -416,7 +421,7 @@ const initialState: InitialStateInterface = {
       lastMessageDate: {minutes: '52', hours: '17', day: '21', month: '01', year: '2020'},
     },
     {
-      id: '1',
+      id: '9',
       name: 'Jimmy Jonson',
       imageName: 'avatar1',
       unreadMessages: 6,
@@ -426,7 +431,7 @@ const initialState: InitialStateInterface = {
       lastMessageDate: {minutes: '52', hours: '17', day: '21', month: '01', year: '2020'},
     },
     {
-      id: '1',
+      id: '10',
       name: 'Jimmy Jonson',
       imageName: 'avatar1',
       unreadMessages: 6,
@@ -436,7 +441,7 @@ const initialState: InitialStateInterface = {
       lastMessageDate: {minutes: '52', hours: '17', day: '21', month: '01', year: '2020'},
     },
     {
-      id: '1',
+      id: '11',
       name: 'Jimmy Jonson',
       imageName: 'avatar1',
       unreadMessages: 6,
@@ -446,7 +451,7 @@ const initialState: InitialStateInterface = {
       lastMessageDate: {minutes: '52', hours: '17', day: '21', month: '01', year: '2020'},
     },
     {
-      id: '1',
+      id: '12',
       name: 'Jimmy Jonson',
       imageName: 'avatar1',
       unreadMessages: 6,
@@ -457,6 +462,7 @@ const initialState: InitialStateInterface = {
     },
   ],
   selectedChat: {
+    id: '2',
     name: 'Дядя Бобби Д.',
     avatarName: 'avatar1',
     messages: [
@@ -497,16 +503,47 @@ const initialState: InitialStateInterface = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case PHONE_OPEN: {
+      return {
+        ...state,
+        isPhoneOpened: true,
+        lastMessages: action.lastMessages
+      }
+    }
+    case PHONE_CLOSE: {
+      return {
+        ...state,
+        isPhoneOpened: false
+      }
+    }
     case OPEN_SCREEN: {
       return {
         ...state,
         openedScreen: action.openedScreen,
+        prevOpenedScreen: state.openedScreen,
       }
     }
+    case OPEN_PREV_SCREEN: {
+      return {
+        ...state,
+        incomingCall: {},
+        currentCall: {},
+        openedScreen: state.prevOpenedScreen,
+        prevOpenedScreen: OpenedScreenEnum.mainScreen,
+      }
+    }
+    case OPEN_LAST_MESSAGES: {
+      return {
+        ...state,
+        lastMessages: action.lastMessages,
+      }
+    }
+    //region -------------------- Incoming call --------------------
     case OPEN_INCOMING_CALL: {
       return {
         ...state,
         openedScreen: OpenedScreenEnum.incomingCall,
+        prevOpenedScreen: state.openedScreen,
         incomingCall: {
           name: action.name,
           imageName: action.imageName,
@@ -514,10 +551,31 @@ export default (state = initialState, action) => {
         }
       }
     }
+    case ABORT_CALL: {
+      return {
+        ...state,
+        incomingCall: {},
+        currentCall: {},
+      }
+    }
+    //endregion
+    // current call
+    case CURRENT_CALL_CHANGE_OPTION: {
+      return {
+        ...state,
+        currentCall: {
+          ...state.currentCall,
+          [action.optionTitle]: action.optionValue
+        },
+      }
+    }
     case OPEN_CALL: {
       return {
         ...state,
+        incomingCall: {},
         openedScreen: OpenedScreenEnum.currentCall,
+        // coz can be redirected from incoming call
+        prevOpenedScreen: action.saveLastScreen ? state.openedScreen : OpenedScreenEnum.mainScreen,
         currentCall: action.callData
       }
     }
@@ -552,15 +610,21 @@ export default (state = initialState, action) => {
     case SET_SELECTED_CHAT: {
       return {
         ...state,
-        selectedChat: action.selectedChat,
+        selectedChat: action.chatData,
       }
     }
-    case SET_SETTING_MUTED: {
+    case REMOVE_SELECTED_CHAT: {
+      return {
+        ...state,
+        selectedChat: {}
+      }
+    }
+    case SET_SETTING: {
       return {
         ...state,
         settings: {
           ...state.settings,
-          isMuted: action.newState,
+          [action.settingTitle]: action.settingValue,
         }
       }
     }

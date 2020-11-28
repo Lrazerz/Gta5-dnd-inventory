@@ -54,18 +54,22 @@
         max-width: 20%;
         display: flex;
         justify-content: flex-end;
+        box-sizing: border-box;
+        padding-right: 2%;
       }
     }
 
     .TextWrapper {
       width: 100%;
       flex-grow: 1;
-      max-height: 58.89%;
+      //max-height:1.62rem;
+      overflow: hidden;
 
       .Text {
         font-family: 'Montserrat', sans-serif;
         line-height: 0.6rem;
-        height: 1.8rem;
+        height: 1.78rem;
+        max-height: 1.78rem;
         overflow: hidden;
       }
     }

@@ -58,9 +58,16 @@
       align-items: flex-end;
 
       .CallButton {
+        position: relative;
         width: 44.64%;
         height: 60%;
-        //background-color: fuchsia;
+
+        .ClickableMakeCall {
+          width: 100%;
+          height: 130%;
+          position: absolute;
+          top: -10%;
+        }
       }
 
       .ClearButtonContainer {
@@ -68,20 +75,19 @@
         height: 72%;
         //background-color: blue;
         display: flex;
-        align-items: center;
 
         .ClearButtonWrapper {
           position: relative;
           height: 60%;
+          margin-top: 21%;
           margin-left: 20%;
           width: 47.22%;
 
           .CrossWrapper {
-            width: 35%;
-            //background-color: yellow;
+            width: 39%;
             position: absolute;
             right: 17%;
-            bottom: 10.35%;
+            bottom: 27.35%;
             display: flex;
             align-items: center;
 

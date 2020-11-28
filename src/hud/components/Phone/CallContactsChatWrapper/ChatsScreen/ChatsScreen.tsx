@@ -14,8 +14,8 @@ const ChatsScreen = React.memo(() => {
 
   const contactsBlock = chats.map(chat => {
     return (
-      <div className={classes.SingleChatWrapper}>
-        <SingleChat key={chat.id} chat={chat} theme={theme}/>
+      <div className={classes.SingleChatWrapper} key={chat.id}>
+        <SingleChat chat={chat} theme={theme}/>
       </div>
     )
   });

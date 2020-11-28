@@ -5,9 +5,7 @@ import classes from '../../../../styles/hud/components/Phone/SettingsScreen/Sett
 import LeadText from "../Text/LeadText";
 import SettingsList from "./SettingsList";
 import {OpenedScreenEnum, ThemesEnum} from "../models/interfaces/enums";
-import {openScreen, setSettings} from "../../../../redux/actions/hud/phone";
-import {phone_openSettings} from "../../../../utils/windowFuncs/windowFuncs";
-import {mpTrigger_phone_openSettings} from "../../../../utils/mpTriggers/hud/hudMpTriggers";
+import {openScreen} from "../../../../redux/actions/hud/phone";
 
 const SettingsScreen = React.memo(() => {
 

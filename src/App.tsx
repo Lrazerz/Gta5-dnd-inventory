@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Provider} from 'react-redux';
 import InventoryApp from "./inventory/InventoryApp";
 import {openDoubleInventory, openOrRefreshInventory} from "./redux/actions/inventory/board";
@@ -47,6 +47,19 @@ const App = React.memo(function App() {
 
   const [openedPart, setOpenedPart]: [number, (newState: number) => void] = useState(null);
   const [hudData, setHudData] = useState(defaultHudData);
+
+  useEffect(() => {
+    return () => {
+      // @ts-ignore
+      window.openInventory = undefined;
+      // @ts-ignore
+      window.openDoubleInventory = undefined;
+      // @ts-ignore
+      window.openHud = undefined;
+      // @ts-ignore
+      window.refreshHud = undefined;
+    }
+  }, [])
 
   //region ------------------------------ Set up inventory functions on window ------------------------------
   // @ts-ignore

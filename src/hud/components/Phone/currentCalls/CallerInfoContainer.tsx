@@ -1,6 +1,7 @@
 import React, {CSSProperties, useEffect, useState} from 'react';
 import classes from '../../../../styles/hud/components/Phone/currentCalls/CallerInfoContainer.module.scss';
 import LeadText from "../Text/LeadText";
+import {preventImageDrag} from "../../../../utils/utils";
 
 interface Props {
   imageName: string;
@@ -25,9 +26,9 @@ const CallerInfoContainer: React.FC<Props> = React.memo(({imageName, name, phone
     if(imageName) {
       loadImage();
     }
-  }, []);
+  }, [imageName]);
 
-  const imageElement = image ? <img className={classes.Image} src={image}/> : null;
+  const imageElement = image ? <img className={classes.Image} src={image} onDragStart={preventImageDrag}/> : null;
 
   const nameTextStyles: CSSProperties = {
     textAlign: 'center',
@@ -61,7 +62,6 @@ const CallerInfoContainer: React.FC<Props> = React.memo(({imageName, name, phone
           {phoneNumber}
         </LeadText>
       </div>
-
     </div>
   );
 });

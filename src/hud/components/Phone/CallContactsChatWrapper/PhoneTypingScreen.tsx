@@ -1,10 +1,12 @@
 import React, {CSSProperties, useState, useRef, useEffect} from 'react';
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import classes from '../../../../styles/hud/components/Phone/CallContactsChatWrapper/PhoneTypingScreen.module.scss';
 import LeadText from "../Text/LeadText";
 import makeCallImg from '../../../../assets/hud/images/components/Phone/components/CallContactsChatWrapper/make-call.svg';
 import clearButtonImg from '../../../../assets/hud/images/components/Phone/components/CallContactsChatWrapper/clear-button.svg';
 import {ThemesEnum} from "../models/interfaces/enums";
+import {preventImageDrag} from "../../../../utils/utils";
+import {openOutComingCall} from "../../../../redux/actions/hud/phone";
 
 const maxPhoneLength = 11;
 
@@ -14,6 +16,7 @@ const PhoneTypingScreen = React.memo(() => {
 
   const [phoneNumber, setPhoneNumber]: [string, any] = useState('88005553535');
 
+  const dispatch = useDispatch();
   const theme = useSelector(({hud: {phone}}) => phone.settings.cosmetics.theme);
 
   const crossSignRef = useRef();
@@ -24,7 +27,7 @@ const PhoneTypingScreen = React.memo(() => {
       //@ts-ignore
       crossSignRef.current.style.height = width;
     }
-  }, [crossSignRef.current])
+  }, [crossSignRef.current]);
 
   const keyDownHandler = (e) => {
     if(buttons.includes(e.key)) {
@@ -37,6 +40,11 @@ const PhoneTypingScreen = React.memo(() => {
     if(newNumber.length <= maxPhoneLength) {
       setPhoneNumber(newNumber);
     }
+  }
+
+  const makeCallHandler = () => {
+    if(phoneNumber.length !== maxPhoneLength) return;
+    dispatch(openOutComingCall(`+${phoneNumber}`));
   }
 
   const removeLastChar = () => {
@@ -90,15 +98,15 @@ const PhoneTypingScreen = React.memo(() => {
         </div>
         <div className={classes.CallCleanButtonsWrapper}>
           <div className={classes.CallButton}>
-            <img src={makeCallImg} style={{marginTop: '-33%'}}/>
+            <img src={makeCallImg} style={{marginTop: '-33%'}}
+                 onDragStart={preventImageDrag}/>
+            <div className={classes.ClickableMakeCall} onClick={makeCallHandler}/>
           </div>
           <div className={classes.ClearButtonContainer}>
             <div className={classes.ClearButtonWrapper} onClick={removeLastChar}>
-              <img src={clearButtonImg} onMouseDown={keyDownHandler}/>
+              <img src={clearButtonImg} onMouseDown={keyDownHandler} onDragStart={preventImageDrag}/>
               <div className={classes.CrossWrapper} ref={crossSignRef}>
-                <div className={classes.FirstLine}>
-
-                </div>
+                <div className={classes.FirstLine}/>
               </div>
             </div>
           </div>

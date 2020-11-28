@@ -7,7 +7,7 @@ import cosmeticsSettingImg
 import phoneSettingImg from '../../../../assets/hud/images/components/Phone/components/SettingsList/settings-phone.svg';
 import LeadText from "../Text/LeadText";
 import Switch from "./Switch";
-import {setSettingMuted} from "../../../../redux/actions/hud/phone";
+import {setSetting} from "../../../../redux/actions/hud/phone";
 import {ThemesEnum} from "../models/interfaces/enums";
 
 const SettingsList = React.memo(() => {
@@ -21,7 +21,7 @@ const SettingsList = React.memo(() => {
   }
 
   const switchChangeHandler = () => {
-    dispatch(setSettingMuted(!settingsRedux.isMuted));
+    dispatch(setSetting('isMuted', !settingsRedux.isMuted));
   }
 
   const rightArrow = getRightArrow(settingsRedux.cosmetics.theme);

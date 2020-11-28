@@ -1,5 +1,5 @@
 import React, {CSSProperties} from 'react';
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import classes from '../../../../styles/hud/components/Phone/currentCalls/CurrentCallScreen.module.scss';
 import CallerInfoContainer from "./CallerInfoContainer";
 import {CurrentCallInterface} from "../../../../redux/reducers/hud/phone";
@@ -19,20 +19,52 @@ import keyboardOnImg from '../../../../assets/hud/images/components/Phone/compon
 import keyboardOffImg from '../../../../assets/hud/images/components/Phone/components/currentCalls/options/keyboard-off.svg';
 import recordOnImg from '../../../../assets/hud/images/components/Phone/components/currentCalls/options/record-on.svg';
 import recordOffImg from '../../../../assets/hud/images/components/Phone/components/currentCalls/options/record-off.svg';
+import {preventImageDrag} from "../../../../utils/utils";
+import {abortCall, currentCallChangeOption} from "../../../../redux/actions/hud/phone";
+import {mpTrigger_phone_abortCall} from "../../../../utils/mpTriggers/hud/hudMpTriggers";
 
 const CurrentCallScreen = () => {
+
+  const dispatch = useDispatch();
 
   const currentCallData: CurrentCallInterface = useSelector(({hud: {phone}}) => phone.currentCall);
   const {name, imageName, phoneNumber, isMuted, speaker, isRecording} = currentCallData;
 
   //region ------------------------------ Options images ------------------------------
   // const addCallImage = isConference ? addCallOffImg : addCallOnImg;
-  const muteImage = isMuted ? muteOffImg : muteOnImg;
+  const muteImage = isMuted ? muteOnImg : muteOffImg;
   // const addNoteImage = isNoted ? addNoteOffImg : addNoteOnImg;
-  const speakerImage = speaker ? speakerOffImg : speakerOnImg;
+  const speakerImage = speaker ? speakerOnImg : speakerOffImg;
   // const keyboardImage = keyboard ? keyboardOffImg : keyboardOnImg;
-  const recordImage = isRecording ? recordOffImg : recordOnImg;
+  const recordImage = isRecording ? recordOnImg : recordOffImg;
   //endregion
+
+  const changeOptionHandler = (optionTitle) => {
+    let optionValue;
+    switch (optionTitle) {
+      case 'isMuted': {
+        optionValue = !isMuted;
+        break;
+      }
+      case 'speaker': {
+        optionValue = !speaker;
+        break;
+      }
+      case 'isRecording': {
+        optionValue = !isRecording;
+        break;
+      }
+      default: {
+        return;
+      }
+    }
+    dispatch(currentCallChangeOption(optionTitle, optionValue));
+  }
+
+  const abortCallHandler = () => {
+    mpTrigger_phone_abortCall();
+    dispatch(abortCall());
+  }
 
   //region ------------------------------
   const optionTextStyles: CSSProperties = {
@@ -101,24 +133,24 @@ const CurrentCallScreen = () => {
       <div className={classes.CallIndicatorsAndDeclineButtonContainer}>
         <div className={classes.CallIndicatorsContainer}>
           <div className={classes.CallIndicatorsWrapper}>
-            <div className={classes.Option}>
-              <img className={classes.Image} src={speakerImage}/>
+            <div className={classes.Option} onClick={() => changeOptionHandler('speaker')}>
+              <img className={classes.Image} src={speakerImage} onDragStart={preventImageDrag}/>
               <div className={classes.OptionText}>
                 <LeadText styles={optionTextStyles}>
                   Динамик
                 </LeadText>
               </div>
             </div>
-            <div className={classes.Option}>
-              <img className={classes.Image} src={muteImage}/>
+            <div className={classes.Option} onClick={() => changeOptionHandler('isMuted')}>
+              <img className={classes.Image} src={muteImage} onDragStart={preventImageDrag}/>
               <div className={classes.OptionText}>
                 <LeadText styles={optionTextStyles}>
                   Без звука
                 </LeadText>
               </div>
             </div>
-            <div className={classes.Option}>
-              <img className={classes.Image} src={recordImage}/>
+            <div className={classes.Option} onClick={() => changeOptionHandler('isRecording')}>
+              <img className={classes.Image} src={recordImage} onDragStart={preventImageDrag}/>
               <div className={classes.OptionText}>
                 <LeadText styles={optionTextStyles}>
                   Запись
@@ -129,7 +161,8 @@ const CurrentCallScreen = () => {
         </div>
         <div className={classes.DeclineButtonWrapper}>
           <div className={classes.DeclineButton}>
-            <img src={declineCallImg}/>
+            <img src={declineCallImg} onClick={abortCallHandler}
+                 onDragStart={preventImageDrag}/>
           </div>
         </div>
       </div>

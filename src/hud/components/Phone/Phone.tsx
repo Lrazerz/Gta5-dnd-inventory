@@ -1,9 +1,9 @@
-import React, {ReactElement, Suspense, lazy} from 'react';
+import React, {ReactElement, Suspense, useEffect} from 'react';
 import {useSelector} from 'react-redux';
 import PhoneBorders from "./UI/PhoneBorders";
 import classes from '../../../styles/hud/components/Phone/Phone.module.scss';
 import PhoneHud from "./UI/PhoneHud";
-import {OpenedScreenEnum} from "../../../redux/reducers/hud/phone";
+import {OpenedScreenEnum} from "./models/interfaces/enums";
 import MainScreen from "./MainScreen/MainScreen";
 import SelectedChatScreen from "./SelectedChatScreen/SelectedChatScreen";
 
@@ -12,15 +12,38 @@ import IncomingCallScreen from "./currentCalls/IncomingCallScreen";
 import CurrentCallScreen from "./currentCalls/CurrentCallScreen";
 // screen too
 import CallContactsChatWrapper from "./CallContactsChatWrapper/CallContactsChatWrapper";
+import {
+  phone_openIncomingCall,
+  phone_openLastMessages
+} from "../../../utils/windowFuncs/windowFuncs";
 
 
 const Phone = React.memo(() => {
 
-  // <PhoneBorders themeFromServer={"theme1"}>
-
-  const openedScreen: OpenedScreenEnum = useSelector(({hud: {phone}}) => {
-    return phone.openedScreen;
+  const {openedScreen, themeImage} = useSelector(({hud: {phone}}) => {
+    return {openedScreen: phone.openedScreen, themeImage: phone.settings.cosmetics.themeImage};
   });
+
+  //region -------------------- Window funcs --------------------
+  // @ts-ignore
+  if(!window.phone_openIncomingCall) {
+    // @ts-ignore
+    window.phone_openIncomingCall = phone_openIncomingCall;
+  }
+  // @ts-ignore
+  if(!window.phone_openLastMessages) {
+    // @ts-ignore
+    window.phone_openLastMessages = phone_openLastMessages;
+  }
+  useEffect(() => {
+    return () => {
+      // @ts-ignore
+      window.phone_openIncomingCall = undefined;
+      // @ts-ignore
+      window.phone_openLastMessages = undefined;
+    }
+  }, []);
+  //endregion
 
   let phoneContent: ReactElement;
 
@@ -46,15 +69,22 @@ const Phone = React.memo(() => {
       phoneContent = <SelectedChatScreen/>
       break;
     }
-    default: {
+    case OpenedScreenEnum.phoneTyping:
+    case OpenedScreenEnum.calls:
+    case OpenedScreenEnum.contacts:
+    case OpenedScreenEnum.chats: {
       phoneContent = <CallContactsChatWrapper openedScreen={openedScreen}/>
+      break;
+    }
+    default: {
+      phoneContent = <MainScreen/>
       break;
     }
   }
 
   return (
       <div className={classes.Phone}>
-        <PhoneBorders themeFromServer={"theme1"}>
+        <PhoneBorders themeFromServer={themeImage}>
           <PhoneHud>
             <Suspense fallback={<div>Загрузка</div>}>
               {phoneContent}

@@ -10,7 +10,7 @@ import ChatMessagesList from "./ChatMessagesList";
 
 import sendMessageImg from '../../../../assets/hud/images/components/Phone/components/SelectedChatScreen/send-message.svg';
 import phoneTheme from "../consts/phoneTheme";
-import {openScreen} from "../../../../redux/actions/hud/phone";
+import {openPrevScreen, openScreen, removeSelectedChat} from "../../../../redux/actions/hud/phone";
 
 const maxMessageLength = 100;
 const maxMessageRows = 10;
@@ -19,7 +19,6 @@ const maxDisplayedRows = 6;
 const maxDisplayedColumns = 25;
 
 const SelectedChatScreen = React.memo(() => {
-
 
   const dispatch = useDispatch();
   const textAreaRef = useRef();
@@ -51,16 +50,20 @@ const SelectedChatScreen = React.memo(() => {
   }, [scrollWrapperRef.current]);
 
   const scrollToTheLastEl = () => {
-    console.log('scrollToTheLast');
     // @ts-ignore
     // lastMessageRef.current.scrollIntoView({behavior: "smooth"});
     scrollWrapperRef.current.scrollTop = 99999;
+  }
+
+  const swipeUpHandler = () => {
+    dispatch(openScreen(OpenedScreenEnum.mainScreen));
   }
 
   // to external lib
   const handlers = useSwipeable({
     // onSwipedLeft: () => swipeHandler(true),
     onSwipedRight: () => openChatsScreen(),
+    onSwipedUp: () => swipeUpHandler(),
     preventDefaultTouchmoveEvent: true,
     trackMouse: true
   });
@@ -80,6 +83,11 @@ const SelectedChatScreen = React.memo(() => {
   const setFocusOnTextArea = () => {
     // @ts-ignore
     textAreaRef.current.focus();
+  }
+
+  const removeChatHandler = () => {
+    console.log('selectedChat', selectedChat);
+    dispatch(removeSelectedChat(selectedChat.id));
   }
 
   const setTextHandler = (e) => {
@@ -157,8 +165,8 @@ const SelectedChatScreen = React.memo(() => {
       {/*Header*/}
       <div className={classes.ScreenTitleWrapper}>
         <div className={classes.BackTitleRemoveContainer}>
-          <div className={classes.ArrowNameContainer}>
-            <div className={classes.ArrowButton} onClick={openChatsScreen}>
+          <div className={classes.ArrowNameContainer} onClick={openChatsScreen}>
+            <div className={classes.ArrowButton}>
               <img src={backButton} className={classes.Button}/>
             </div>
             <div className={classes.NameWrapper}>
@@ -168,7 +176,7 @@ const SelectedChatScreen = React.memo(() => {
             </div>
           </div>
           <div className={classes.RemoveButtonWrapper}>
-            <img src={removeChat} className={classes.RemoveButton}/>
+            <img src={removeChat} className={classes.RemoveButton} onClick={removeChatHandler}/>
           </div>
         </div>
       </div>

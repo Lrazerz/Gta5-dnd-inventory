@@ -47,7 +47,7 @@ const PhoneBorders: React.FC<Props> = React.memo(function PhoneBorders({themeFro
   const blurredElStyles: CSSProperties = {
     width: '100%',
     height: '100%',
-    backdropFilter: displayBlur ?  'blur(0.9rem)' : 'none',
+    backdropFilter: displayBlur ?  'blur(0.4rem)' : 'none',
   }
 
   return (

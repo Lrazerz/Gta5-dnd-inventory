@@ -1,8 +1,11 @@
 import React, {CSSProperties, useEffect, useState} from 'react';
+import {useDispatch} from 'react-redux';
 import classes from '../../../../../styles/hud/components/Phone/CallContactsChatWrapper/CallsScreen/SingleCall.module.scss';
 import {CallsInterface, ThemesEnum} from "../../models/interfaces/reducerInterfaces";
 import phoneTheme from '../../consts/phoneTheme';
 import LeadText from "../../Text/LeadText";
+import {preventImageDrag} from "../../../../../utils/utils";
+import {openOutComingCall} from "../../../../../redux/actions/hud/phone";
 
 interface Props {
   call: CallsInterface;
@@ -13,6 +16,12 @@ const SingleCall: React.FC<Props> = React.memo(({call, theme}) => {
 
   const [importedAvatarImg, setImportedAvatarImg] = useState();
 
+  const dispatch = useDispatch();
+
+  const makeCallHandler = () => {
+    dispatch(openOutComingCall(call.phoneNumber));
+  }
+
   useEffect(() => {
     let isCanceled = false;
 
@@ -22,10 +31,7 @@ const SingleCall: React.FC<Props> = React.memo(({call, theme}) => {
         try {
           importedThemeImage = await import(`../../../../../assets/hud/images/components/Phone/avatars/${call.imageName}.svg`);
           if(!isCanceled) {
-            console.log('!canc')
             setImportedAvatarImg(importedThemeImage.default);
-          } else {
-            console.log('canc')
           }
         } catch (e) {
           if(e.message.startsWith('Cannot find')) {
@@ -88,10 +94,10 @@ const SingleCall: React.FC<Props> = React.memo(({call, theme}) => {
   )
 
   return (
-    <div className={classes.SingleCall}>
+    <div className={classes.SingleCall} onClick={makeCallHandler}>
       <div className={classes.ImageContainer}>
         <div className={classes.ImageWrapper}>
-          <img className={classes.Image} src={importedAvatarImg}/>
+          <img className={classes.Image} src={importedAvatarImg} onDragStart={preventImageDrag}/>
         </div>
       </div>
       <div className={classes.InfoWrapper}>

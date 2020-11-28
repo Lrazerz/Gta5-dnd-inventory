@@ -54,7 +54,7 @@ interface CosmeticsSettingsInterface {
 interface SettingsInterface {
   isMuted: boolean; // don't disturb mode
   cosmetics: CosmeticsSettingsInterface;
-  ringtone: {};
+  ringtone: string;
 }
 
 //endregion
@@ -83,6 +83,13 @@ interface ChatsDemoInterface {
   lastMessage: string;
   lastMessageDate: DateObjectInterface;
 }
+
+interface SelectedChatInterface {
+  id: string,
+  name: string,
+  avatarName: string,
+  messages: ChatMessageInterface[];
+}
 // imageNames?
 interface ChatMessageInterface {
   id: string;
@@ -109,5 +116,7 @@ export {
   CallsInterface,
   ContactInterface,
   ChatsDemoInterface,
+
+  SelectedChatInterface,
   ChatMessageInterface,
 }

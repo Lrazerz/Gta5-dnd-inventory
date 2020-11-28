@@ -1,8 +1,13 @@
-import React, {CSSProperties, useEffect, useState, useRef} from 'react';
-import classes from '../../../../../styles/hud/components/Phone/CallContactsChatWrapper/ChatsScreen/SingleChat.module.scss';
+import React, {CSSProperties, useEffect, useRef, useState} from 'react';
+import {useDispatch} from 'react-redux';
+import classes
+  from '../../../../../styles/hud/components/Phone/CallContactsChatWrapper/ChatsScreen/SingleChat.module.scss';
 import {ChatsDemoInterface, ThemesEnum} from "../../models/interfaces/reducerInterfaces";
 import phoneTheme from '../../consts/phoneTheme';
 import LeadText from "../../Text/LeadText";
+import {preventImageDrag} from "../../../../../utils/utils";
+import {openScreen, setSelectedChat} from "../../../../../redux/actions/hud/phone";
+import {OpenedScreenEnum} from "../../models/interfaces/enums";
 
 interface Props {
   chat: ChatsDemoInterface;
@@ -12,6 +17,8 @@ interface Props {
 const SingleChat: React.FC<Props> = React.memo(({chat, theme}) => {
 
   const [importedAvatarImg, setImportedAvatarImg] = useState();
+
+  const dispatch = useDispatch();
 
   const unreadMessagesRef = useRef();
 
@@ -32,7 +39,7 @@ const SingleChat: React.FC<Props> = React.memo(({chat, theme}) => {
           setImportedAvatarImg(importedThemeImage.default);
         } catch (e) {
           if(e.message.startsWith('Cannot find')) {
-            console.error(`Chat avatar "${chat.imageName}" import error, using default avatar`);
+            console.log(`Chat avatar "${chat.imageName}" import error, using default avatar`);
             let defaultAvatarName = theme === ThemesEnum.white ? 'default-avatar' : 'default-avatar-white';
             importedThemeImage = await import(`../../../../../assets/hud/images/components/Phone/avatars/${defaultAvatarName}.svg`);
             setImportedAvatarImg(importedThemeImage.default);
@@ -42,6 +49,11 @@ const SingleChat: React.FC<Props> = React.memo(({chat, theme}) => {
     }
     loadThemeImage();
   }, [chat.imageName]);
+
+  const selectChatHandler = () => {
+    dispatch(openScreen(OpenedScreenEnum.selectedChat, chat.id));
+    dispatch(setSelectedChat({id: chat.id, name: chat.name,imageName: chat.imageName,messages: []}))
+  }
 
   const nameStyles: CSSProperties = {
     color: theme === ThemesEnum.black ? phoneTheme.lightPurpleText : phoneTheme.darkPurple,
@@ -96,10 +108,10 @@ const SingleChat: React.FC<Props> = React.memo(({chat, theme}) => {
   )
 
   return (
-    <div className={classes.SingleChat}>
+    <div className={classes.SingleChat} onClick={selectChatHandler}>
       <div className={classes.ImageContainer}>
         <div className={classes.ImageWrapper}>
-          <img className={classes.Image} src={importedAvatarImg}/>
+          <img className={classes.Image} src={importedAvatarImg} onDragStart={preventImageDrag}/>
           {chat.unreadMessages > 0 && (<div className={classes.UnreadMessages} ref={unreadMessagesRef}>
             <div className={classes.UnreadMessagesText}>
               {chat.unreadMessages > 9 ? '9+' : chat.unreadMessages}

@@ -84,9 +84,10 @@
 
   .SendMessageContainer {
     width: 100%;
-    flex-grow: 1;
+    //flex-grow: 1;
     min-height: 9%;
-    //max-height: 27%;
+    height: 9%;
+    max-height: 5.02rem;
     display: flex;
 
     .TypeTextContainer {

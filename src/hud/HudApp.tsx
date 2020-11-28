@@ -1,4 +1,5 @@
 import React, {useState, useEffect, useRef} from 'react';
+import {useSelector} from 'react-redux';
 // @ts-ignore
 import classes from '../styles/hud/HudApp.module.scss';
 import CarInfo from "./components/CarInfo";
@@ -13,6 +14,7 @@ import {
 } from "./utils/windowInterceptors/PlayerInfo/PlayerInfoInterceptors";
 import Hotkeys from "./components/Hotkeys/Hotkeys";
 import Phone from "./components/Phone/Phone";
+import {closePhone, openPhone, phone_openIncomingCall} from "../utils/windowFuncs/windowFuncs";
 
 //region ------------------------------ Props, defaults, state ------------------------------
 interface PlayerStateData {
@@ -79,9 +81,47 @@ const HudApp: React.FC<Props> = React.memo(function HudApp({data}) {
   const [playerInfo, setPlayerInfo]: [PlayerStateData, (any) => void] = useState(playerInfoDefaultState);
   const [carInfo, setCarInfo]: [CarInfoState, (any) => void] = useState(carInfoDefaultState);
 
+  const isPhoneOpenedRedux = useSelector(({hud: {phone}}) => phone.isPhoneOpened);
+
   const phoneWrapperRef = useRef();
-  // need to save data from props then change own state with local functions and change state from props only
-  // if new data is came (React.memo)
+
+  // @ts-ignore
+  if(!window.phone_openIncomingCall) {
+    // @ts-ignore
+    window.phone_openIncomingCall = phone_openIncomingCall;
+  }
+
+  useEffect(() => {
+    return () => {
+      // @ts-ignore
+      window.openPhone = undefined;
+      // @ts-ignore
+      window.closePhone = undefined;
+      // @ts-ignore
+      window.phone_openIncomingCall = undefined;
+      // @ts-ignore
+      window.setPlayerRank = undefined;
+      // @ts-ignore
+      window.setPlayerAvatar = undefined;
+      // @ts-ignore
+      window.setPlayerBuffs = undefined;
+      // @ts-ignore
+      window.setPlayerIndicators = undefined;
+      // @ts-ignore
+      window.setTime = undefined;
+      // @ts-ignore
+      window.setNetwork = undefined;
+      // @ts-ignore
+      window.openCar = undefined;
+      // @ts-ignore
+      window.closeCar = undefined;
+      // @ts-ignore
+      window.setSpeed = undefined;
+      // @ts-ignore
+      window.setFuel = undefined;
+      // others
+    }
+  }, []);
 
   useEffect(() => {
     setPlayerInfo(data);
@@ -190,6 +230,12 @@ const HudApp: React.FC<Props> = React.memo(function HudApp({data}) {
   }
   //endregion
 
+  //region
+  // @ts-ignore
+  window.openPhone = openPhone;
+  // @ts-ignore
+  window.closePhone = closePhone;
+  //endregion
   const carInfoOrHotkeysBlock = carInfo.isCarOpen ? (
     <div className={classes.CarInfoWrapper}>
       <CarInfo isCarRunning={carInfo.carIndicators.isCarRunning} isDoorsOpened={carInfo.carIndicators.isDoorsOpen}
@@ -212,9 +258,9 @@ const HudApp: React.FC<Props> = React.memo(function HudApp({data}) {
         <div className={classes.BottomOfTheScreenWrapper}>
           {carInfoOrHotkeysBlock}
         </div>
-        <div ref={phoneWrapperRef} className={classes.PhoneWrapper}>
+        {isPhoneOpenedRedux && (<div ref={phoneWrapperRef} className={classes.PhoneWrapper}>
           <Phone/>
-        </div>
+        </div>)}
       </div>
   );
 })
