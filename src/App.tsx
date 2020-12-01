@@ -4,7 +4,8 @@ import InventoryApp from "./inventory/InventoryApp";
 import {openDoubleInventory, openOrRefreshInventory} from "./redux/actions/inventory/board";
 import store from './redux/store';
 import HudApp from "./hud/HudApp";
-import {openHud} from "./hud/utils/windowInterceptors/PlayerInfo/PlayerInfoInterceptors";
+import {openHud} from "./utils/windowFuncs/hud/PlayerInfo/PlayerInfoInterceptors";
+import {setPhoneTime, setPlayerAvatarAction} from "./redux/actions/hud/phone";
 
 enum OpenedPartsEnum {
   inventory,
@@ -93,8 +94,13 @@ const App = React.memo(function App() {
   if(!window.openHud || !window.refreshHud) {
     // @ts-ignore
     window.openHud = window.refreshHud = async (data) => {
-      const hudData = await openHud(data);
+      const hudData = openHud(data);
       setOpenedPart(OpenedPartsEnum.hud);
+      console.log('hudData', hudData);
+      // @ts-ignore
+      store.dispatch(setPlayerAvatarAction(hudData.playerAvatarName));
+      // @ts-ignore
+      store.dispatch(setPhoneTime(hudData.time));
       // @ts-ignore
       setHudData(hudData);
     }

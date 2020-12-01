@@ -14,8 +14,8 @@ const ContactsScreen = React.memo(() => {
 
   const contactsBlock = contacts.map(contact => {
     return (
-      <div className={classes.SingleContactWrapper}>
-        <SingleContact key={contact.id} contact={contact} theme={theme}/>
+      <div className={classes.SingleContactWrapper} key={contact.id}>
+        <SingleContact contact={contact} theme={theme}/>
       </div>
     )
   });

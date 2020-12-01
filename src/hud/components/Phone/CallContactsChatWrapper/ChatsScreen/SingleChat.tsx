@@ -35,13 +35,13 @@ const SingleChat: React.FC<Props> = React.memo(({chat, theme}) => {
       if (chat.imageName) {
         let importedThemeImage;
         try {
-          importedThemeImage = await import(`../../../../../assets/hud/images/components/Phone/avatars/${chat.imageName}.svg`);
+          importedThemeImage = await import(`../../../../../assets/avatars/${chat.imageName}.svg`);
           setImportedAvatarImg(importedThemeImage.default);
         } catch (e) {
           if(e.message.startsWith('Cannot find')) {
             console.log(`Chat avatar "${chat.imageName}" import error, using default avatar`);
             let defaultAvatarName = theme === ThemesEnum.white ? 'default-avatar' : 'default-avatar-white';
-            importedThemeImage = await import(`../../../../../assets/hud/images/components/Phone/avatars/${defaultAvatarName}.svg`);
+            importedThemeImage = await import(`../../../../../assets/avatars/${defaultAvatarName}.svg`);
             setImportedAvatarImg(importedThemeImage.default);
           }
         }
@@ -82,7 +82,7 @@ const SingleChat: React.FC<Props> = React.memo(({chat, theme}) => {
   }
 
   let textBlockStyles: CSSProperties = {
-    borderBottom: `0.045rem solid ${theme === ThemesEnum.white ? phoneTheme.lightPurpleText : phoneTheme.darkPurple}`,
+    borderBottom: `0.045rem solid ${theme === ThemesEnum.white ? phoneTheme.lightPurpleBorder : phoneTheme.darkPurple}`,
   }
 
   let nameTimeTextBlock = (
@@ -118,7 +118,6 @@ const SingleChat: React.FC<Props> = React.memo(({chat, theme}) => {
             </div>
           </div>)}
         </div>
-
       </div>
       <div className={classes.InfoWrapper}>
         {/*<div className={classes.NameWrapper}>*/}

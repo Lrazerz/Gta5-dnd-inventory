@@ -20,13 +20,13 @@ const LastMessage: React.FC<Props> = React.memo(({messageInfo, theme}) => {
         let importedThemeImage;
         try {
           console.log('import image');
-          importedThemeImage = await import(`../../../../assets/hud/images/components/Phone/avatars/${messageInfo.imageName}.svg`);
+          importedThemeImage = await import(`../../../../assets/avatars/${messageInfo.imageName}.svg`);
           setImportedAvatarImg(importedThemeImage.default);
         } catch (e) {
           if(e.message.startsWith('Cannot find')) {
-            console.error(`Player avatar "${messageInfo.imageName}" import error, using default avatar`);
+            console.log(`Player avatar "${messageInfo.imageName}" import error, using default avatar`);
             let defaultAvatarName = theme === ThemesEnum.white ? 'default-avatar' : 'default-avatar-white';
-            importedThemeImage = await import(`../../../../assets/hud/images/components/Phone/avatars/${defaultAvatarName}.svg`);
+            importedThemeImage = await import(`../../../../assets/avatars/${defaultAvatarName}.svg`);
             setImportedAvatarImg(importedThemeImage.default);
           }
         }
@@ -51,6 +51,7 @@ const LastMessage: React.FC<Props> = React.memo(({messageInfo, theme}) => {
     overflow: 'hidden',
     marginBottom: '2%',
     marginTop: 'auto',
+    width: '100%',
   }
 
   // for time and number too

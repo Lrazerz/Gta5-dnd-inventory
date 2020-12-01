@@ -11,6 +11,8 @@ const phoneTheme = {
   // lightPurpleScrollbar: '#706390',
 
   lightPurpleText: '#978BAF',
+  lightPurpleBorder: '#DAD8E6',
+
   horizontalLineGray: '#E0DDE6',
 
   darkGray: '#464242',

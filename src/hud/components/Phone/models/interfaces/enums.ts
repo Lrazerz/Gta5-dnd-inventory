@@ -10,6 +10,8 @@ enum OpenedScreenEnum {
   calls,
   contacts,
   chats,
+
+  addNewContact
 }
 
 enum ThemesEnum {
@@ -17,7 +19,15 @@ enum ThemesEnum {
   black
 }
 
+
+const PlayerAvatarsArray = [
+  "avatar1",
+  "avatar2",
+  "avatar3"
+]
+
 export {
   OpenedScreenEnum,
-  ThemesEnum
+  ThemesEnum,
+  PlayerAvatarsArray
 }

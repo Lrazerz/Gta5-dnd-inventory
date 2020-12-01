@@ -1,5 +1,5 @@
 let openHud: (data: string) => Object;
-openHud = async (data) => {
+openHud = (data) => {
   const parsedData = JSON.parse(data);
   const {
     // must have

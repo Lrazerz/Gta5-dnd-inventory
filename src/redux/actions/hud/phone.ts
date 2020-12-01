@@ -20,7 +20,7 @@ import {
   SET_CONTACTS,
   SET_SELECTED_CHAT,
   SET_SETTING,
-  SET_SETTINGS
+  SET_SETTINGS, SET_PLAYER_AVATAR, SET_TIME
 } from "./types";
 import {
   phone_abortCall,
@@ -30,7 +30,7 @@ import {
   phone_openCurrentCall,
   phone_openSettings,
   phone_openSingleChat
-} from "../../../utils/windowFuncs/windowFuncs";
+} from "../../../utils/windowFuncs/hud/phone/windowFuncs";
 import {
   mpTrigger_phone_acceptCall,
   mpTrigger_phone_changeCurrentCallOption,
@@ -46,13 +46,22 @@ import {
 } from "../../../utils/mpTriggers/hud/hudMpTriggers";
 import {LastMessageInterface} from "../../../hud/components/Phone/models/interfaces/reducerInterfaces";
 
-const phoneOpen = (lastMessages: LastMessageInterface[]) => {
-  return {type: PHONE_OPEN, lastMessages}
+const phoneOpen = (lastMessages: LastMessageInterface[], settings) => {
+  return {type: PHONE_OPEN, lastMessages, settings}
 }
 
 const phoneClose = () => {
   return {type: PHONE_CLOSE};
 }
+
+//region ------------------------ From hud (avatar, time) ------------------------
+const setPlayerAvatarAction = (avatar: string) => {
+  return {type: SET_PLAYER_AVATAR, avatar}
+}
+const setPhoneTime = (time: string) => {
+  return {type: SET_TIME, time}
+}
+//endregion
 
 //region ------------------------------ Action cretors ------------------------------
 const _openScreen = (openedScreen: OpenedScreenEnum) => {
@@ -231,7 +240,7 @@ const _abortCall = () => {
 const openIncomingCall = (incomingCallData: IncomingCallInterface) => {
   return dispatch => {
     // @ts-ignore
-    window.phone_abortIncomingCall = phone_abortIncomingCall;
+    window.phone_abortCall = phone_abortCall;
     dispatch(_openIncomingCall(incomingCallData));
   }
 }
@@ -358,6 +367,10 @@ const setSetting = (settingTitle: string, settingValue: any) => {
 export {
   phoneOpen,
   phoneClose,
+
+  // from hud
+  setPlayerAvatarAction,
+  setPhoneTime,
 
   openScreen,
   openPrevScreen,

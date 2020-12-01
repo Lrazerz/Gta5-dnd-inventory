@@ -17,10 +17,10 @@ const CallerInfoContainer: React.FC<Props> = React.memo(({imageName, name, phone
     const loadImage = async () => {
       let loadedImage;
       try {
-        loadedImage = await import(`../../../../assets/hud/images/components/Phone/avatars/${imageName}.svg`);
+        loadedImage = await import(`../../../../assets/avatars/${imageName}.svg`);
         setImage(loadedImage.default);
       } catch (e) {
-        console.error('Phone caller info container image import error', e);
+        console.log('Phone caller info container image import error', e);
       }
     }
     if(imageName) {

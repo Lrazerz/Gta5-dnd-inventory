@@ -18,7 +18,7 @@ const mpTrigger_phone_openSettings = () => {
   } catch (e) {}
 }
 
-const mpTrigger_phone_changeSetting = (settingTitle: string, value: boolean) => {
+const mpTrigger_phone_changeSetting = (settingTitle: string, value: boolean | string) => {
   const translateOptionToUpper = (settingTitle) => {
     switch(settingTitle) {
       case 'isMuted': {

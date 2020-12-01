@@ -54,7 +54,7 @@ const PhoneHud: React.FC<Props> = React.memo(function PhoneHud({children}) {
       <div className={classes.IndicatorsAndTimeWrapper}>
         <div className={classes.IndicatorsAndTime}>
           <LeadText styles={timeStyles}>
-            {'12:12'}
+            {time}
           </LeadText>
           <div className={classes.IndicatorsWrapper}>
             {networkImg}

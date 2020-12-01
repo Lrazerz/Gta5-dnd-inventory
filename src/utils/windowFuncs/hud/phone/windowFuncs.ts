@@ -1,4 +1,4 @@
-import store from '../../redux/store';
+import store from '../../../../redux/store';
 const dispatch = store.dispatch;
 import {
   CallsInterface,
@@ -9,7 +9,7 @@ import {
   IncomingCallInterface, LastMessageInterface,
   SettingsInterface,
   ThemesEnum
-} from "../../hud/components/Phone/models/interfaces/reducerInterfaces";
+} from "../../../../hud/components/Phone/models/interfaces/reducerInterfaces";
 import {
   abortCall,
   openCall,
@@ -19,7 +19,7 @@ import {
   setContacts,
   setSelectedChat,
   setSettings
-} from "../../redux/actions/hud/phone";
+} from "../../../../redux/actions/hud/phone";
 
 let _transformDataFromString: (string) => DateObjectInterface;
 _transformDataFromString = (dateString) => {
@@ -36,16 +36,26 @@ _transformDataFromString = (dateString) => {
 // lastmessages as params
 const openPhone = (jsonData) => {
   console.log('window.openPhone');
-  const parsedData = JSON.parse(jsonData).$values;
-  const transformedLastMessages: LastMessageInterface[] = parsedData.map(lastMessage => ({
+  const parsedData = JSON.parse(jsonData);
+  const transformedLastMessages: LastMessageInterface[] = parsedData.LastMessages.map(lastMessage => ({
     id: lastMessage.Id,
     name: lastMessage.Name,
     imageName: lastMessage.ImageName,
     date: _transformDataFromString(lastMessage.Date),
     message: lastMessage.Message,
   }));
+
+  const transformedSettings: SettingsInterface = {
+    isMuted: parsedData.Settings.IsMuted,
+    cosmetics: {
+      theme: parsedData.Settings.Cosmetics.Theme.toLowerCase() === 'light' ? ThemesEnum.white : ThemesEnum.black,
+      themeImage: parsedData.Settings.Cosmetics.ThemeImage,
+    },
+    ringtone: parsedData.Settings.Ringtone,
+  }
+
   // @ts-ignore
-  dispatch(phoneOpen(transformedLastMessages));
+  dispatch(phoneOpen(transformedLastMessages, transformedSettings));
 }
 
 const closePhone = () => {
@@ -184,7 +194,7 @@ const phone_openSingleChat = (jsonData) => {
   console.log('window.phone_openSingleChat');
   const parsedData = JSON.parse(jsonData);
 
-  const {Name: name, ImageName: imageName, Messages: messages} = parsedData;
+  const {Name: name, AvatarName: avatarName, Messages: messages} = parsedData;
 
   const transformedMessages: ChatMessageInterface[] = messages.map(incomingMessage => {
     return {
@@ -196,7 +206,7 @@ const phone_openSingleChat = (jsonData) => {
   });
 
   // @ts-ignore
-  dispatch(setSelectedChat({name, imageName, messages: transformedMessages}));
+  dispatch(setSelectedChat({name, avatarName, messages: transformedMessages}));
 }
 
 export {

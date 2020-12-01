@@ -29,15 +29,15 @@ const SingleCall: React.FC<Props> = React.memo(({call, theme}) => {
       if (call.imageName) {
         let importedThemeImage;
         try {
-          importedThemeImage = await import(`../../../../../assets/hud/images/components/Phone/avatars/${call.imageName}.svg`);
+          importedThemeImage = await import(`../../../../../assets/avatars/${call.imageName}.svg`);
           if(!isCanceled) {
             setImportedAvatarImg(importedThemeImage.default);
           }
         } catch (e) {
           if(e.message.startsWith('Cannot find')) {
-            console.error(`Call avatar "${call.imageName}" import error, using default avatar`);
+            console.log(`Call avatar "${call.imageName}" import error, using default avatar`);
             let defaultAvatarName = theme === ThemesEnum.white ? 'default-avatar' : 'default-avatar-white';
-            importedThemeImage = await import(`../../../../../assets/hud/images/components/Phone/avatars/${defaultAvatarName}.svg`);
+            importedThemeImage = await import(`../../../../../assets/avatars/${defaultAvatarName}.svg`);
             if(!isCanceled) {
               setImportedAvatarImg(importedThemeImage.default);
             }
@@ -55,6 +55,7 @@ const SingleCall: React.FC<Props> = React.memo(({call, theme}) => {
 
   const nameStyles: CSSProperties = {
     color: theme === ThemesEnum.black ? phoneTheme.white : phoneTheme.darkPurple,
+    width: '100%',
     fontSize: '0.57rem',
     whiteSpace: 'nowrap',
     textOverflow: 'ellipsis',

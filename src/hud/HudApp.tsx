@@ -1,20 +1,21 @@
 import React, {useState, useEffect, useRef} from 'react';
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 // @ts-ignore
 import classes from '../styles/hud/HudApp.module.scss';
 import CarInfo from "./components/CarInfo";
 import PlayerInfo from "./components/PlayerInfo/PlayerInfo";
 import {BuffInterface} from "./models/Buff";
-import {openCar, setFuel, setSpeed} from "./utils/windowInterceptors/CarInfo/CarInfoInterceptors";
+import {openCar, setFuel, setSpeed} from "../utils/windowFuncs/hud/CarInfo/CarInfoInterceptors";
 import {
   setNetwork,
   setPlayerAvatar,
   setPlayerBuffs, setPlayerIndicators,
   setPlayerRank, setTime
-} from "./utils/windowInterceptors/PlayerInfo/PlayerInfoInterceptors";
+} from "../utils/windowFuncs/hud/PlayerInfo/PlayerInfoInterceptors";
 import Hotkeys from "./components/Hotkeys/Hotkeys";
 import Phone from "./components/Phone/Phone";
-import {closePhone, openPhone, phone_openIncomingCall} from "../utils/windowFuncs/windowFuncs";
+import {closePhone, openPhone, phone_openIncomingCall} from "../utils/windowFuncs/hud/phone/windowFuncs";
+import {setPhoneTime, setPlayerAvatarAction} from "../redux/actions/hud/phone";
 
 //region ------------------------------ Props, defaults, state ------------------------------
 interface PlayerStateData {
@@ -80,6 +81,8 @@ const carInfoDefaultState = {
 const HudApp: React.FC<Props> = React.memo(function HudApp({data}) {
   const [playerInfo, setPlayerInfo]: [PlayerStateData, (any) => void] = useState(playerInfoDefaultState);
   const [carInfo, setCarInfo]: [CarInfoState, (any) => void] = useState(carInfoDefaultState);
+
+  const dispatch = useDispatch();
 
   const isPhoneOpenedRedux = useSelector(({hud: {phone}}) => phone.isPhoneOpened);
 
@@ -151,6 +154,7 @@ const HudApp: React.FC<Props> = React.memo(function HudApp({data}) {
     //@ts-ignore
     window.setPlayerAvatar = (data) => {
       const playerAvatarName = setPlayerAvatar(data);
+      dispatch(setPlayerAvatarAction(playerAvatarName));
       setPlayerInfo(prevState => ({...prevState, playerAvatarName}));
     }
   }
@@ -180,6 +184,7 @@ const HudApp: React.FC<Props> = React.memo(function HudApp({data}) {
     //@ts-ignore
     window.setTime = (data) => {
       const time = setTime(data);
+      dispatch(setPhoneTime(time));
       setPlayerInfo(prevState => ({...prevState, time}))
     }
   }
@@ -258,9 +263,9 @@ const HudApp: React.FC<Props> = React.memo(function HudApp({data}) {
         <div className={classes.BottomOfTheScreenWrapper}>
           {carInfoOrHotkeysBlock}
         </div>
-        {isPhoneOpenedRedux && (<div ref={phoneWrapperRef} className={classes.PhoneWrapper}>
-          <Phone/>
-        </div>)}
+        <div ref={phoneWrapperRef} className={classes.PhoneWrapper}>
+          {isPhoneOpenedRedux && <Phone/>}
+        </div>)
       </div>
   );
 })

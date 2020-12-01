@@ -21,7 +21,6 @@ const maxDisplayedColumns = 25;
 const SelectedChatScreen = React.memo(() => {
 
   const dispatch = useDispatch();
-  const textAreaRef = useRef();
 
   // initial scroll to bottom
   // const chatListWrapperScroll = useRef();
@@ -40,6 +39,14 @@ const SelectedChatScreen = React.memo(() => {
   const [additionalRowsCount, setAdditionalRowsCount] = useState(0);
 
   const scrollWrapperRef = useRef();
+  const textAreaRef = useRef();
+
+  const {selectedChat, theme} = useSelector(({hud: {phone}}) =>
+    ({selectedChat: phone.selectedChat, theme: phone.settings.cosmetics.theme}));
+
+  useEffect(() => {
+    setFocusOnTextArea();
+  }, [])
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -47,7 +54,7 @@ const SelectedChatScreen = React.memo(() => {
     }, 500);
 
     return () =>  clearTimeout(timer);
-  }, [scrollWrapperRef.current]);
+  }, [scrollWrapperRef.current, selectedChat]);
 
   const scrollToTheLastEl = () => {
     // @ts-ignore
@@ -69,12 +76,7 @@ const SelectedChatScreen = React.memo(() => {
   });
   //endregion
 
-  const {selectedChat, theme} = useSelector(({hud: {phone}}) =>
-    ({selectedChat: phone.selectedChat, theme: phone.settings.cosmetics.theme}));
 
-  useEffect(() => {
-    setFocusOnTextArea();
-  }, [])
 
   const openChatsScreen = () => {
     dispatch(openScreen(OpenedScreenEnum.chats));
@@ -86,7 +88,6 @@ const SelectedChatScreen = React.memo(() => {
   }
 
   const removeChatHandler = () => {
-    console.log('selectedChat', selectedChat);
     dispatch(removeSelectedChat(selectedChat.id));
   }
 

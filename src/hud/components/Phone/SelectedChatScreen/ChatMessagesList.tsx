@@ -24,13 +24,13 @@ const ChatMessagesList = React.memo(() => {
       if (playerAvatar) {
         let importedImage;
         try {
-          importedImage = await import(`../../../../assets/hud/images/components/Phone/avatars/${playerAvatar}.svg`);
+          importedImage = await import(`../../../../assets/avatars/${playerAvatar}.svg`);
           setImportedPlayerAvatarImg(importedImage.default);
         } catch (e) {
           if(e.message.startsWith('Cannot find')) {
-            console.error(`Call avatar "${playerAvatar}" import error, using default avatar`);
+            console.log(`Call avatar "${playerAvatar}" import error, using default avatar`);
             let defaultAvatarName = theme === ThemesEnum.white ? 'default-avatar' : 'default-avatar-white';
-            importedImage = await import(`../../../../assets/hud/images/components/Phone/avatars/${defaultAvatarName}.svg`);
+            importedImage = await import(`../../../../assets/avatars/${defaultAvatarName}.svg`);
             setImportedPlayerAvatarImg(importedImage.default);
           }
         }
@@ -40,18 +40,19 @@ const ChatMessagesList = React.memo(() => {
       if (interlocutorAvatar) {
         let importedImage;
         try {
-          importedImage = await import(`../../../../assets/hud/images/components/Phone/avatars/${interlocutorAvatar}.svg`);
+          importedImage = await import(`../../../../assets/avatars/${interlocutorAvatar}.svg`);
           setImportedInterlocutorAvatarImg(importedImage.default);
         } catch (e) {
           if(e.message.startsWith('Cannot find')) {
-            console.error(`Call avatar "${interlocutorAvatar}" import error, using default avatar`);
+            console.log(`Call avatar "${interlocutorAvatar}" import error, using default avatar`);
             let defaultAvatarName = theme === ThemesEnum.white ? 'default-avatar' : 'default-avatar-white';
-            importedImage = await import(`../../../../assets/hud/images/components/Phone/avatars/${defaultAvatarName}.svg`);
+            importedImage = await import(`../../../../assets/avatars/${defaultAvatarName}.svg`);
             setImportedInterlocutorAvatarImg(importedImage.default);
           }
         }
       }
     }
+    console.log('avatars', playerAvatar, interlocutorAvatar);
     loadPlayerAvatarImage();
     loadInterlocutorAvatarImage();
   }, [playerAvatar, interlocutorAvatar]);

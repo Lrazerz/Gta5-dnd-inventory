@@ -1,12 +1,14 @@
-import React, {CSSProperties, useState, useRef, useEffect} from 'react';
-import {useSelector, useDispatch} from 'react-redux';
+import React, {CSSProperties, useEffect, useRef, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import classes from '../../../../styles/hud/components/Phone/CallContactsChatWrapper/PhoneTypingScreen.module.scss';
 import LeadText from "../Text/LeadText";
-import makeCallImg from '../../../../assets/hud/images/components/Phone/components/CallContactsChatWrapper/make-call.svg';
-import clearButtonImg from '../../../../assets/hud/images/components/Phone/components/CallContactsChatWrapper/clear-button.svg';
-import {ThemesEnum} from "../models/interfaces/enums";
+import makeCallImg
+  from '../../../../assets/hud/images/components/Phone/components/CallContactsChatWrapper/make-call.svg';
+import clearButtonImg
+  from '../../../../assets/hud/images/components/Phone/components/CallContactsChatWrapper/clear-button.svg';
+import {OpenedScreenEnum, ThemesEnum} from "../models/interfaces/enums";
 import {preventImageDrag} from "../../../../utils/utils";
-import {openOutComingCall} from "../../../../redux/actions/hud/phone";
+import {openOutComingCall, openScreen} from "../../../../redux/actions/hud/phone";
 
 const maxPhoneLength = 11;
 
@@ -53,6 +55,10 @@ const PhoneTypingScreen = React.memo(() => {
     }
   }
 
+  const addNumberClickHandler = () => {
+    dispatch(openScreen(OpenedScreenEnum.addNewContact));
+  }
+
   const textStyles: CSSProperties = {
     textAlign: 'center',
   }
@@ -79,7 +85,7 @@ const PhoneTypingScreen = React.memo(() => {
         <LeadText styles={keyboardButtonTextStyles}>{buttonText}</LeadText>
       </div>
     );
-  })
+  });
 
   return (
     <div className={classes.PhoneTyping} onKeyDown={keyDownHandler} tabIndex={0}>
@@ -90,7 +96,9 @@ const PhoneTypingScreen = React.memo(() => {
           </LeadText>
         </div>
         <div className={classes.AddNumberWrapper}>
-          <LeadText styles={{...textStyles, ...addNumberStyles}}>Добавить номер</LeadText>
+          <div className={classes.AddNumber} onClick={addNumberClickHandler}>
+            <LeadText styles={{...textStyles, ...addNumberStyles}}>Добавить номер</LeadText>
+          </div>
         </div>
         {/*Button styles*/}
         <div className={classes.KeyboardWrapper}>

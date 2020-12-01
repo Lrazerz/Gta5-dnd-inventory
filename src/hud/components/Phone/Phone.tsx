@@ -15,7 +15,8 @@ import CallContactsChatWrapper from "./CallContactsChatWrapper/CallContactsChatW
 import {
   phone_openIncomingCall,
   phone_openLastMessages
-} from "../../../utils/windowFuncs/windowFuncs";
+} from "../../../utils/windowFuncs/hud/phone/windowFuncs";
+import AddNewContactScreen from "./AddNewContactScreen/AddNewContactScreen";
 
 
 const Phone = React.memo(() => {
@@ -62,11 +63,15 @@ const Phone = React.memo(() => {
       break;
     }
     case OpenedScreenEnum.currentCall: {
-      phoneContent = <CurrentCallScreen/>
+      phoneContent = <CurrentCallScreen/>;
       break;
     }
     case OpenedScreenEnum.selectedChat: {
-      phoneContent = <SelectedChatScreen/>
+      phoneContent = <SelectedChatScreen/>;
+      break;
+    }
+    case OpenedScreenEnum.addNewContact: {
+      phoneContent = <AddNewContactScreen/>;
       break;
     }
     case OpenedScreenEnum.phoneTyping:

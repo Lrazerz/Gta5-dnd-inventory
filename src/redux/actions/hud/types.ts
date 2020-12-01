@@ -1,6 +1,11 @@
 export const PHONE_OPEN = 'PHONE_OPEN';
 export const PHONE_CLOSE = 'PHONE_CLOSE';
 
+// set up from HudApp
+export const SET_PLAYER_AVATAR = 'SET_PLAYER_AVATAR';
+// from HudApp too
+export const SET_TIME = 'SET_TIME';
+
 export const OPEN_SCREEN = 'OPEN_SCREEN'; // open screen without passing additional data
 export const OPEN_PREV_SCREEN = 'OPEN_PREV_SCREEN'; // open screen without passing additional data
 // mainScreen only
