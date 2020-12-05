@@ -20,7 +20,7 @@ const PhoneBorders: React.FC<Props> = React.memo(function PhoneBorders({themeFro
       if (themeFromServer) {
         let importedThemeImage;
         try {
-          importedThemeImage = await import(`../../../../assets/hud/images/components/Phone/themes/${cosmeticsSettings.themeImage}.jpg`);
+          importedThemeImage = await import(`../../../../assets/hud/images/components/Phone/themes/${cosmeticsSettings.themeImage}.svg`);
           setImportedThemeImg(importedThemeImage.default);
         } catch (e) {
           console.log('Phone theme import error', e);

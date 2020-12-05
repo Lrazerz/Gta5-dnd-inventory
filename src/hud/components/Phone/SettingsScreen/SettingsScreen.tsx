@@ -22,28 +22,20 @@ const SettingsScreen = React.memo(() => {
   }, []);
 
   //region ------------------------------ Swipe handlers ------------------------------
-  const swipeHandler = (toLeft: boolean) => {
-    console.log(toLeft ? 'left' : 'right');
-    if(toLeft) {}
-    else {
-      dispatch(openScreen(OpenedScreenEnum.mainScreen));
-    }
-  }
-
-  const swipeUpHandler = () => {
+  const swipeHandler = () => {
     dispatch(openScreen(OpenedScreenEnum.mainScreen));
   }
   // to external lib
   const handlers = useSwipeable({
-    onSwipedLeft: () => swipeHandler(true),
-    onSwipedRight: () => swipeHandler(false),
-    onSwipedUp: () => swipeUpHandler(),
+    onSwipedRight: () => swipeHandler(),
+    onSwipedUp: () => swipeHandler(),
     preventDefaultTouchmoveEvent: true,
     trackMouse: true,
   });
   //endregion
 
   const screenTitleTextStyles: CSSProperties = {
+    fontSize: '0.62rem',
     color: theme === ThemesEnum.black ? '#fff' : '#251152',
   }
 

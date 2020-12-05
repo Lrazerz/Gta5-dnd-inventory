@@ -1,6 +1,5 @@
 import {
   CallsInterface,
-  ChatMessageInterface,
   ChatsDemoInterface,
   ContactInterface,
   CurrentCallInterface,
@@ -9,18 +8,25 @@ import {
   SettingsInterface
 } from "../../reducers/hud/phone";
 import {
-  ABORT_CALL,
+  ABORT_CALL, ADD_NEW_CONTACT,
   CURRENT_CALL_CHANGE_OPTION,
   OPEN_CALL,
   OPEN_INCOMING_CALL,
-  OPEN_LAST_MESSAGES, OPEN_PREV_SCREEN,
-  OPEN_SCREEN, PHONE_OPEN, PHONE_CLOSE, REMOVE_SELECTED_CHAT,
+  OPEN_LAST_MESSAGES,
+  OPEN_PREV_SCREEN,
+  OPEN_SCREEN,
+  PHONE_CLOSE,
+  PHONE_OPEN,
+  REMOVE_SELECTED_CHAT,
+  SET_ADD_NEW_CONTACT_NUMBER,
   SET_CALLS,
   SET_CHATS_DEMO,
-  SET_CONTACTS,
+  SET_CONTACTS, SET_COSMETIC_SETTING,
+  SET_PLAYER_AVATAR, SET_RINGTONE,
   SET_SELECTED_CHAT,
   SET_SETTING,
-  SET_SETTINGS, SET_PLAYER_AVATAR, SET_TIME
+  SET_SETTINGS,
+  SET_TIME
 } from "./types";
 import {
   phone_abortCall,
@@ -32,7 +38,7 @@ import {
   phone_openSingleChat
 } from "../../../utils/windowFuncs/hud/phone/windowFuncs";
 import {
-  mpTrigger_phone_acceptCall,
+  mpTrigger_phone_acceptCall, mpTrigger_phone_addNewContact,
   mpTrigger_phone_changeCurrentCallOption,
   mpTrigger_phone_changeSetting,
   mpTrigger_phone_declineCall,
@@ -42,7 +48,8 @@ import {
   mpTrigger_phone_openLastMessages,
   mpTrigger_phone_openOutComingCall,
   mpTrigger_phone_openSettings,
-  mpTrigger_phone_openSingleChat, mpTrigger_phone_removeSingleChat
+  mpTrigger_phone_openSingleChat,
+  mpTrigger_phone_removeSingleChat
 } from "../../../utils/mpTriggers/hud/hudMpTriggers";
 import {LastMessageInterface} from "../../../hud/components/Phone/models/interfaces/reducerInterfaces";
 
@@ -80,10 +87,6 @@ const _openCall = (callingRightNowData: CurrentCallInterface, saveLastScreen = f
   };
 }
 
-const _setSettings = (settingsData: SettingsInterface) => {
-  return {type: SET_SETTINGS, isMuted: settingsData.isMuted, cosmetics: settingsData.cosmetics,
-  ringtone: settingsData.ringtone};
-}
 
 const _setCalls = (callsData: CallsInterface[]) => {
   return {type: SET_CALLS, calls: callsData};
@@ -97,9 +100,47 @@ const _setChatsDemo = (chatsDemoData: ChatsDemoInterface[]) => {
   return {type: SET_CHATS_DEMO, chatsDemo: chatsDemoData};
 }
 
-//region ------------------------------ Single setting change ------------------------------
+//region ------------------------------ Settings changes ------------------------------
+const _setSettings = (settingsData: SettingsInterface) => {
+  return {type: SET_SETTINGS, isMuted: settingsData.isMuted, cosmetics: settingsData.cosmetics,
+    ringtone: settingsData.ringtone};
+}
+
 const _setSetting = (settingTitle: string, settingValue: any) => {
   return {type: SET_SETTING, settingTitle, settingValue};
+}
+
+const _setCosmeticSetting = (settingTitle: string, settingValue: any) => {
+  return {type: SET_COSMETIC_SETTING, settingTitle, settingValue};
+}
+
+const _setRingtone = (ringtone: string) => {
+  return {type: SET_RINGTONE, ringtone};
+}
+
+const setSettings = (settingsData: SettingsInterface) => {
+  return _setSettings(settingsData);
+}
+
+const setSetting = (settingTitle: string, settingValue: any) => {
+  return dispatch => {
+    mpTrigger_phone_changeSetting(settingTitle, settingValue);
+    dispatch(_setSetting(settingTitle, settingValue));
+  }
+}
+
+const setCosmeticSetting = (settingTitle: string, settingValue: any) => {
+  return dispatch => {
+    mpTrigger_phone_changeSetting(settingTitle, settingValue);
+    dispatch(_setCosmeticSetting(settingTitle, settingValue));
+  }
+}
+
+const setRingtone = (ringtone) => {
+  return dispatch => {
+    mpTrigger_phone_changeSetting('ringtone', ringtone);
+    dispatch(_setRingtone(ringtone));
+  }
 }
 //endregion
 //endregion
@@ -224,8 +265,25 @@ const openPrevScreen = () => {
     }
     dispatch(_openPrevScreen());
   };
-
 }
+
+//region -------------------- Add new contact screen --------------------
+const setAddNewContactPhoneNumber = (phoneNumber) => {
+  return {type: SET_ADD_NEW_CONTACT_NUMBER, phoneNumber};
+}
+
+const _addNewContact = (newContact: ContactInterface) => {
+  return {type: ADD_NEW_CONTACT, newContact}
+}
+
+const addNewContactAction = (newContact) => {
+  return dispatch => {
+    mpTrigger_phone_addNewContact(newContact);
+
+    dispatch(_addNewContact(newContact));
+  }
+}
+//endregion
 
 //region -------------------- Incoming call --------------------
 const _openIncomingCall = (incomingCallData: IncomingCallInterface) => {
@@ -315,10 +373,6 @@ const openLastMessages = (lastMessages: LastMessageInterface[]) => {
   return _openLastMessages(lastMessages);
 }
 
-const setSettings = (settingsData: SettingsInterface) => {
-  return _setSettings(settingsData)
-}
-
 const setCalls = (callsData: CallsInterface[]) => {
   return _setCalls(callsData)
 }
@@ -353,20 +407,16 @@ const removeSelectedChat  = (id) => {
   }
 }
 //endregion
-
-//region ------------------------------ Single setting change ------------------------------
-const setSetting = (settingTitle: string, settingValue: any) => {
-  return dispatch => {
-    mpTrigger_phone_changeSetting('isMuted', settingValue);
-    dispatch(_setSetting(settingTitle, settingValue));
-  }
-}
-//endregion
 //endregion
 
 export {
   phoneOpen,
   phoneClose,
+
+  // pass data to the add new contact screen
+  setAddNewContactPhoneNumber,
+  // add new contact
+  addNewContactAction,
 
   // from hud
   setPlayerAvatarAction,
@@ -386,15 +436,19 @@ export {
   currentCallChangeOption,
 
   openLastMessages,
+
+  // single setting
   setSettings,
+  setSetting,
+  setCosmeticSetting,
+  setRingtone,
+
   setCalls,
   setContacts,
   setChatsDemo,
 
   // single chat
   setSelectedChat,
-  removeSelectedChat,
+  removeSelectedChat
 
-  // single setting
-  setSetting
 }

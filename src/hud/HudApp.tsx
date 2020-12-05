@@ -193,7 +193,7 @@ const HudApp: React.FC<Props> = React.memo(function HudApp({data}) {
     //@ts-ignore
     window.setNetwork = (data) => {
       const network = setNetwork(data);
-      setPlayerInfo(prevState => ({...prevState, network}))
+      setPlayerInfo(prevState => ({...prevState, network}));
     }
   }
   //endregion

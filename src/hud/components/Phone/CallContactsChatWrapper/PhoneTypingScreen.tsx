@@ -8,7 +8,7 @@ import clearButtonImg
   from '../../../../assets/hud/images/components/Phone/components/CallContactsChatWrapper/clear-button.svg';
 import {OpenedScreenEnum, ThemesEnum} from "../models/interfaces/enums";
 import {preventImageDrag} from "../../../../utils/utils";
-import {openOutComingCall, openScreen} from "../../../../redux/actions/hud/phone";
+import {openOutComingCall, openScreen, setAddNewContactPhoneNumber} from "../../../../redux/actions/hud/phone";
 
 const maxPhoneLength = 11;
 
@@ -56,6 +56,7 @@ const PhoneTypingScreen = React.memo(() => {
   }
 
   const addNumberClickHandler = () => {
+    dispatch(setAddNewContactPhoneNumber(`+${phoneNumber}`));
     dispatch(openScreen(OpenedScreenEnum.addNewContact));
   }
 

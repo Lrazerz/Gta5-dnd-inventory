@@ -1,14 +1,14 @@
 import {
-  ABORT_CALL,
+  ABORT_CALL, ADD_NEW_CONTACT,
   CURRENT_CALL_CHANGE_OPTION,
   OPEN_CALL,
   OPEN_INCOMING_CALL,
   OPEN_LAST_MESSAGES,
   OPEN_PREV_SCREEN,
-  OPEN_SCREEN, PHONE_CLOSE, PHONE_OPEN, REMOVE_SELECTED_CHAT,
+  OPEN_SCREEN, PHONE_CLOSE, PHONE_OPEN, REMOVE_SELECTED_CHAT, SET_ADD_NEW_CONTACT_NUMBER,
   SET_CALLS,
   SET_CHATS_DEMO,
-  SET_CONTACTS, SET_PLAYER_AVATAR,
+  SET_CONTACTS, SET_COSMETIC_SETTING, SET_PLAYER_AVATAR, SET_RINGTONE,
   SET_SELECTED_CHAT,
   SET_SETTING,
   SET_SETTINGS, SET_TIME,
@@ -38,6 +38,8 @@ interface InitialStateInterface {
   prevOpenedScreen: OpenedScreenEnum;
 
   hudData: PhoneHudDataInterface;
+
+  addNewContactPhoneNumber: string;
 
   //region -------------------- Screens data --------------------
   incomingCall: {} | IncomingCallInterface; // incoming call where we can accept/decline
@@ -509,7 +511,7 @@ const initialState = {
 
   lastMessages: [],
 
-  openedScreen: OpenedScreenEnum.mainScreen,
+  openedScreen: OpenedScreenEnum.settings_changeRingtone,
   // to come back from curr call and inc call
   prevOpenedScreen: OpenedScreenEnum.mainScreen,
 
@@ -519,6 +521,8 @@ const initialState = {
     wifi: 100,
     battery: 60,
   },
+
+  addNewContactPhoneNumber: "",
 
   //region -------------------- Screens data --------------------
   incomingCall: {}, // incoming call where we can accept/decline
@@ -591,6 +595,21 @@ export default (state = initialState, action) => {
         prevOpenedScreen: OpenedScreenEnum.mainScreen,
       }
     }
+    // to pass to the add new contact screen
+    case SET_ADD_NEW_CONTACT_NUMBER: {
+      return {
+        ...state,
+        addNewContactPhoneNumber: action.phoneNumber
+      }
+    }
+    case ADD_NEW_CONTACT: {
+      // @ts-ignore
+      const {imageName,...newContact} = {...action.newContact}
+      return {
+        ...state,
+        contacts: [newContact,...state.contacts]
+      }
+    }
     case OPEN_LAST_MESSAGES: {
       return {
         ...state,
@@ -634,10 +653,11 @@ export default (state = initialState, action) => {
         incomingCall: {},
         openedScreen: OpenedScreenEnum.currentCall,
         // coz can be redirected from incoming call
-        prevOpenedScreen: action.saveLastScreen ? state.openedScreen : OpenedScreenEnum.mainScreen,
+        prevOpenedScreen: action.saveLastScreen ? state.openedScreen : state.prevOpenedScreen,
         currentCall: action.callData
       }
     }
+    //region -------------------- Settings --------------------
     case SET_SETTINGS: {
       return {
         ...state,
@@ -648,6 +668,39 @@ export default (state = initialState, action) => {
         }
       }
     }
+    // single setting
+    case SET_SETTING: {
+      return {
+        ...state,
+        settings: {
+          ...state.settings,
+          [action.settingTitle]: action.settingValue,
+        }
+      }
+    }
+    case SET_COSMETIC_SETTING: {
+      return {
+        ...state,
+        settings: {
+          ...state.settings,
+          cosmetics: {
+            ...state.settings.cosmetics,
+            [action.settingTitle]: action.settingValue,
+          }
+        }
+      }
+    }
+    case SET_RINGTONE: {
+      return {
+        ...state,
+        setitngs: {
+          ...state.settings,
+          ringtone: action.ringtone
+        }
+      }
+    }
+
+    //endregion
     case SET_CALLS: {
       return {
         ...state,
@@ -676,15 +729,6 @@ export default (state = initialState, action) => {
       return {
         ...state,
         selectedChat: {}
-      }
-    }
-    case SET_SETTING: {
-      return {
-        ...state,
-        settings: {
-          ...state.settings,
-          [action.settingTitle]: action.settingValue,
-        }
       }
     }
     default: {

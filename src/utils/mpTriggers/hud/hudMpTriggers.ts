@@ -1,6 +1,8 @@
 
 //region -------------------- Phone triggers --------------------
 // mainScreen, 3 messages
+import {ContactInterface} from "../../../hud/components/Phone/models/interfaces/reducerInterfaces";
+
 const mpTrigger_phone_openLastMessages = () => {
   console.log('mp trig phone openLastMessages');
   try {
@@ -24,9 +26,17 @@ const mpTrigger_phone_changeSetting = (settingTitle: string, value: boolean | st
       case 'isMuted': {
         return 'IsMuted';
       }
+      case 'theme': {
+        return 'Theme';
+      }
+      case 'themeImage': {
+        return 'ThemeImage';
+      }
+      case 'ringtone': {
+        return 'Ringtone';
+      }
     }
   }
-
   console.log('mp trig phone changeSetting', translateOptionToUpper(settingTitle), value);
   // todo translate to UpperCase first l
   const obj = {SettingTitle: translateOptionToUpper(settingTitle), SettingValue: value};
@@ -141,6 +151,19 @@ const mpTrigger_phone_changeCurrentCallOption = (optionTitle: string, value: boo
 }
 //endregion
 
+//region -------------------- Add new contact --------------------
+const mpTrigger_phone_addNewContact = (newContact) => {
+  console.log('cef_cl_phone_addNewContact', newContact);
+  const obj = {Name: newContact.name,
+    ImageName: newContact.imageName, PhoneNumber: newContact.phoneNumber};
+
+  try {
+    // @ts-ignore
+    mp.trigger('cef_cl_phone_addNewContact', JSON.stringify(obj));
+  } catch (e) {}
+}
+//endregion
+
 export {
   mpTrigger_phone_openLastMessages,
   mpTrigger_phone_openSettings,
@@ -158,5 +181,7 @@ export {
   mpTrigger_phone_openChats,
 
   mpTrigger_phone_openSingleChat,
-  mpTrigger_phone_removeSingleChat
+  mpTrigger_phone_removeSingleChat,
+
+  mpTrigger_phone_addNewContact,
 }

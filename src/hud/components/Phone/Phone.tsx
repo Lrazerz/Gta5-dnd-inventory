@@ -17,6 +17,8 @@ import {
   phone_openLastMessages
 } from "../../../utils/windowFuncs/hud/phone/windowFuncs";
 import AddNewContactScreen from "./AddNewContactScreen/AddNewContactScreen";
+import SettingsChangeCosmeticsScreen from "./SettingsScreen/SettingsChangeCosmeticsScreen";
+import SettingsChangeRingtoneScreen from "./SettingsScreen/SettingsChangeRingtoneScreen";
 
 
 const Phone = React.memo(() => {
@@ -54,10 +56,20 @@ const Phone = React.memo(() => {
       phoneContent = <MainScreen/>;
       break;
     }
+    //region -------------------- Settings screens --------------------
     case OpenedScreenEnum.settings: {
       phoneContent = <SettingsScreen/>;
       break;
     }
+    case OpenedScreenEnum.settings_changeCosmetics: {
+      phoneContent = <SettingsChangeCosmeticsScreen/>;
+      break;
+    }
+    case OpenedScreenEnum.settings_changeRingtone: {
+      phoneContent = <SettingsChangeRingtoneScreen/>;
+      break;
+    }
+    //endregion
     case OpenedScreenEnum.incomingCall: {
       phoneContent = <IncomingCallScreen/>;
       break;
@@ -78,11 +90,11 @@ const Phone = React.memo(() => {
     case OpenedScreenEnum.calls:
     case OpenedScreenEnum.contacts:
     case OpenedScreenEnum.chats: {
-      phoneContent = <CallContactsChatWrapper openedScreen={openedScreen}/>
+      phoneContent = <CallContactsChatWrapper openedScreen={openedScreen}/>;
       break;
     }
     default: {
-      phoneContent = <MainScreen/>
+      phoneContent = <MainScreen/>;
       break;
     }
   }

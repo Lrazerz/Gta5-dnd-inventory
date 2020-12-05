@@ -7,24 +7,35 @@ import cosmeticsSettingImg
 import phoneSettingImg from '../../../../assets/hud/images/components/Phone/components/SettingsList/settings-phone.svg';
 import LeadText from "../Text/LeadText";
 import Switch from "./Switch";
-import {setSetting} from "../../../../redux/actions/hud/phone";
-import {ThemesEnum} from "../models/interfaces/enums";
+import {openScreen, setSetting} from "../../../../redux/actions/hud/phone";
+import {OpenedScreenEnum, ThemesEnum} from "../models/interfaces/enums";
 
 const SettingsList = React.memo(() => {
 
   const dispatch = useDispatch();
   const settingsRedux = useSelector(({hud: {phone}}) => phone.settings);
 
-  const settingTitleStyles: CSSProperties = {
-    fontSize: '0.645rem',
-    fontWeight: 400,
-  }
 
+  //region -------------------- Click Handlers --------------------
   const switchChangeHandler = () => {
     dispatch(setSetting('isMuted', !settingsRedux.isMuted));
   }
 
+  const openCosmeticsScreenHandler = () => {
+    dispatch(openScreen(OpenedScreenEnum.settings_changeCosmetics));
+  }
+
+  const openRingtoneScreenHandler = () => {
+    dispatch(openScreen(OpenedScreenEnum.settings_changeRingtone));
+  }
+  //endregion
+
   const rightArrow = getRightArrow(settingsRedux.cosmetics.theme);
+
+  const settingTitleStyles: CSSProperties = {
+    fontSize: '0.56rem',
+    fontWeight: 400,
+  }
 
   const singleSettingStyles: CSSProperties = {
     backgroundColor: settingsRedux.cosmetics.theme === ThemesEnum.black ? '#251152' : '#fff',
@@ -50,7 +61,7 @@ const SettingsList = React.memo(() => {
         </div>
       </div>
       <div className={classes.HorizontalLine} style={horizontalLineStyles}/>
-      <div className={classes.SingleSetting} style={singleSettingStyles}>
+      <div className={classes.SingleSetting} style={singleSettingStyles} onClick={openCosmeticsScreenHandler}>
         <div className={classes.SettingImageWrapper}>
           <img className={classes.Image} src={cosmeticsSettingImg}/>
         </div>
@@ -64,7 +75,7 @@ const SettingsList = React.memo(() => {
         </div>
       </div>
       <div className={classes.HorizontalLine} style={horizontalLineStyles}/>
-      <div className={classes.SingleSetting} style={singleSettingStyles}>
+      <div className={classes.SingleSetting} style={singleSettingStyles} onClick={openRingtoneScreenHandler}>
         <div className={classes.SettingImageWrapper}>
           <img className={classes.Image} src={phoneSettingImg}/>
         </div>

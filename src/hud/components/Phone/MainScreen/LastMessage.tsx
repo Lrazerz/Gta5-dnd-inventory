@@ -19,7 +19,6 @@ const LastMessage: React.FC<Props> = React.memo(({messageInfo, theme}) => {
       if (messageInfo.imageName) {
         let importedThemeImage;
         try {
-          console.log('import image');
           importedThemeImage = await import(`../../../../assets/avatars/${messageInfo.imageName}.svg`);
           setImportedAvatarImg(importedThemeImage.default);
         } catch (e) {

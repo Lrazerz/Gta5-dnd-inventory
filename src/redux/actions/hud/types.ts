@@ -19,16 +19,22 @@ export const ABORT_CALL = 'ABORT_CALL';
 export const OPEN_CALL = 'OPEN_CALL'; // call right now
 export const CURRENT_CALL_CHANGE_OPTION = 'CURRENT_CALL_CHANGE_OPTION'; // call right now
 
+// settings
 export const SET_SETTINGS = 'SET_SETTINGS';
+export const SET_SETTING = 'SET_SETTING';
+export const SET_COSMETIC_SETTING = 'SET_COSMETIC_SETTING';
+export const SET_RINGTONE = 'SET_RINGTONE';
+
 export const SET_CALLS = 'SET_CALLS';
 export const SET_CONTACTS = 'SET_CONTACTS';
 export const SET_CHATS_DEMO = 'SET_CHATS_DEMO';
 
+// to pass data to the add new contact screen
+export const SET_ADD_NEW_CONTACT_NUMBER = 'SET_ADD_NEW_CONTACT_NUMBER';
+export const ADD_NEW_CONTACT = 'ADD_NEW_CONTACT';
+
 export const SET_SELECTED_CHAT = 'SET_SELECTED_CHAT';
 export const REMOVE_SELECTED_CHAT = 'REMOVE_SELECTED_CHAT';
 
-//region ------------------------------ Single setting change ------------------------------
-export const SET_SETTING = 'SET_SETTING_MUTED';
-//endregion
 
 
