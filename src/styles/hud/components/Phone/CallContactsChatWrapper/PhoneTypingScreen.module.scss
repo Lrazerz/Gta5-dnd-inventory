@@ -47,7 +47,6 @@
         width: 100%;
         height: 100%;
         border-radius: 50%;
-        background-color: #EBEDF8;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -83,16 +82,22 @@
 
         .ClearButtonWrapper {
           position: relative;
-          height: 60%;
+          height: 55.5%;
           margin-top: 21%;
           margin-left: 20%;
           width: 47.22%;
+
+          .CrossContainer {
+            width: 100%;
+            height: 100%;
+            clip-path: polygon(0% 50%, 35% 0%, 100% 0%, 100% 100%, 35% 100%, 0% 50%);
+          }
 
           .CrossWrapper {
             width: 39%;
             position: absolute;
             right: 17%;
-            bottom: 27.35%;
+            bottom: 22.35%;
             display: flex;
             align-items: center;
 
@@ -103,8 +108,7 @@
               background-color: black;
               transform: rotate(-45deg);
 
-              &:before {
-                content: "";
+              .SecondLine {
                 position: absolute;
                 width: 100%;
                 height:100%;

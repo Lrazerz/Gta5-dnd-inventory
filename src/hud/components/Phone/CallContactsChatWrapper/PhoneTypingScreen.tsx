@@ -9,6 +9,7 @@ import clearButtonImg
 import {OpenedScreenEnum, ThemesEnum} from "../models/interfaces/enums";
 import {preventImageDrag} from "../../../../utils/utils";
 import {openOutComingCall, openScreen, setAddNewContactPhoneNumber} from "../../../../redux/actions/hud/phone";
+import phoneTheme from "../consts/phoneTheme";
 
 const maxPhoneLength = 11;
 
@@ -65,8 +66,8 @@ const PhoneTypingScreen = React.memo(() => {
   }
 
   const phoneNumberStyles: CSSProperties = {
-    color: theme === ThemesEnum.black ? '\n' +
-      '    letterSpacing: \'0.025rem\',#fff' : '#000',
+    color: theme === ThemesEnum.black ? '#fff' : '#000',
+    letterSpacing: '0.025rem',
     fontSize: '1.35rem',
   }
 
@@ -75,14 +76,27 @@ const PhoneTypingScreen = React.memo(() => {
     fontSize: '0.75rem',
   }
 
+  const keyboardButtonStyles: CSSProperties = {
+    backgroundColor: theme === ThemesEnum.white ? '#EBEDF8' : phoneTheme.darkPurple,
+  }
+
   const keyboardButtonTextStyles: CSSProperties = {
-    color: '#000',
+    color: theme === ThemesEnum.white ? phoneTheme.lightBlack : phoneTheme.white,
     fontSize: '1.05rem'
+  }
+
+  const crossContainerStyles: CSSProperties = {
+    backgroundColor: theme === ThemesEnum.white ? '#EBEDF8' : phoneTheme.darkPurple,
+  }
+
+  const firstSecondCrossLinesStyles: CSSProperties = {
+    backgroundColor: theme === ThemesEnum.white ? phoneTheme.lightBlack : phoneTheme.white,
   }
 
   const keyboardButtonsBlock = buttons.map(buttonText => {
     return (
-      <div className={classes.KeyboardButton} onClick={() => typingHandler(buttonText)} key={buttonText}>
+      <div className={classes.KeyboardButton} style={keyboardButtonStyles}
+           onClick={() => typingHandler(buttonText)} key={buttonText}>
         <LeadText styles={keyboardButtonTextStyles}>{buttonText}</LeadText>
       </div>
     );
@@ -113,9 +127,11 @@ const PhoneTypingScreen = React.memo(() => {
           </div>
           <div className={classes.ClearButtonContainer}>
             <div className={classes.ClearButtonWrapper} onClick={removeLastChar}>
-              <img src={clearButtonImg} onMouseDown={keyDownHandler} onDragStart={preventImageDrag}/>
+              <div className={classes.CrossContainer} style={crossContainerStyles}/>
               <div className={classes.CrossWrapper} ref={crossSignRef}>
-                <div className={classes.FirstLine}/>
+                <div className={classes.FirstLine} style={firstSecondCrossLinesStyles}>
+                  <div className={classes.SecondLine} style={firstSecondCrossLinesStyles}/>
+                </div>
               </div>
             </div>
           </div>

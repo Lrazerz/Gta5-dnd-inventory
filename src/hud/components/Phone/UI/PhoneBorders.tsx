@@ -39,27 +39,32 @@ const PhoneBorders: React.FC<Props> = React.memo(function PhoneBorders({themeFro
   const displayBlur = openedScreen === OpenedScreenEnum.incomingCall
   || openedScreen === OpenedScreenEnum.currentCall;
 
+  const substrateStyles: CSSProperties = {
+    width: '100%',
+    height: '100%',
+    backgroundColor: cosmeticsSettings.theme === ThemesEnum.white ? '#000' : '#F8F9FF',
+  }
+
   const contentStyles: CSSProperties = {
     backgroundColor: cosmeticsSettings.theme === ThemesEnum.black ? '#000' : '#F8F9FF',
     backgroundImage: displayPhoneBgImg ? `url(${importedThemeImg})` : 'none',
+    filter: displayBlur ?  'blur(0.3rem)' : 'none',
+    boxShadow: displayBlur ? '' : '',
   };
-
-  const blurredElStyles: CSSProperties = {
-    width: '100%',
-    height: '100%',
-    backdropFilter: displayBlur ?  'blur(0.4rem)' : 'none',
-  }
 
   return (
     <div className={classes.PhoneBorders}>
-      <div className={classes.PhoneDisplay} style={contentStyles}>
-        <div style={blurredElStyles}>
-          {children}
+      <div className={classes.PhoneDisplay}>
+        <div style={substrateStyles}>
+        <div className={classes.PhoneTheme} style={contentStyles}/>
+          <div className={classes.Content}>
+            {children}
+          </div>
         </div>
       </div>
       <div className={classes.Border}/>
     </div>
-  );
+  )
 });
 
 export default PhoneBorders;

@@ -9,7 +9,6 @@ import themeImageImg
   from "../../../../assets/hud/images/components/Phone/components/SettingsList/cosmetics_themeImage.svg";
 import {ThemesArray, ThemesEnum} from "../models/interfaces/enums";
 import {setCosmeticSetting} from "../../../../redux/actions/hud/phone";
-import phoneTheme from "../consts/phoneTheme";
 
 interface ThemeImageInterface {
   title: string;

@@ -39,7 +39,7 @@ const LastMessage: React.FC<Props> = React.memo(({messageInfo, theme}) => {
     width: '100%',
     height: '100%',
     borderRadius: '0.5rem',
-    backgroundColor: 'rgba(247,240,240,0.3)',
+    backgroundColor: 'rgba(247,240,240,0.6)',
   }
 
   const nameStyles: CSSProperties = {
