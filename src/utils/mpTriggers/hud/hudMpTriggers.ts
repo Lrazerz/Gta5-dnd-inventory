@@ -1,7 +1,5 @@
-
 //region -------------------- Phone triggers --------------------
 // mainScreen, 3 messages
-import {ContactInterface} from "../../../hud/components/Phone/models/interfaces/reducerInterfaces";
 
 const mpTrigger_phone_openLastMessages = () => {
   console.log('mp trig phone openLastMessages');
@@ -153,10 +151,10 @@ const mpTrigger_phone_changeCurrentCallOption = (optionTitle: string, value: boo
 
 //region -------------------- Add new contact --------------------
 const mpTrigger_phone_addNewContact = (newContact) => {
-  console.log('cef_cl_phone_addNewContact', newContact);
   const obj = {Name: newContact.name,
     ImageName: newContact.imageName, PhoneNumber: newContact.phoneNumber};
 
+  console.log('cef_cl_phone_addNewContact', obj);
   try {
     // @ts-ignore
     mp.trigger('cef_cl_phone_addNewContact', JSON.stringify(obj));
@@ -164,7 +162,28 @@ const mpTrigger_phone_addNewContact = (newContact) => {
 }
 //endregion
 
+//endregion
+
+//region -------------------- Interaction Triggers --------------------
+// user opened interaction, server should invoke closeInteractions() on window
+const mpTrigger_interactions_openInteraction = (interactionName: string) => {
+  try {
+    // @ts-ignore
+    mp.trigger('cef_cl_openInteraction', interactionName);
+  } catch (e) {}
+}
+
+// cross pressed
+const mpTrigger_interactions_closeInteractions = () => {
+  try {
+    // @ts-ignore
+    mp.trigger('cef_cl_closeInteractions');
+  } catch (e) {}
+}
+//endregion
+
 export {
+  // phone triggers
   mpTrigger_phone_openLastMessages,
   mpTrigger_phone_openSettings,
   mpTrigger_phone_changeSetting,
@@ -184,4 +203,8 @@ export {
   mpTrigger_phone_removeSingleChat,
 
   mpTrigger_phone_addNewContact,
+
+  // interaction triggers
+  mpTrigger_interactions_openInteraction,
+  mpTrigger_interactions_closeInteractions,
 }

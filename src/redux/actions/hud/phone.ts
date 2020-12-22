@@ -27,7 +27,7 @@ import {
   SET_SETTING,
   SET_SETTINGS,
   SET_TIME
-} from "./types";
+} from "./phoneTypes";
 import {
   phone_abortCall,
   phone_openCalls,

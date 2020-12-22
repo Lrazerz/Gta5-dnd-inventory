@@ -12,7 +12,7 @@ import {
   SET_SELECTED_CHAT,
   SET_SETTING,
   SET_SETTINGS, SET_TIME,
-} from "../../actions/hud/types";
+} from "../../actions/hud/phoneTypes";
 import {
   CallsInterface,
   ChatMessageInterface,

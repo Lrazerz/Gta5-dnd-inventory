@@ -16,6 +16,12 @@ import Hotkeys from "./components/Hotkeys/Hotkeys";
 import Phone from "./components/Phone/Phone";
 import {closePhone, openPhone, phone_openIncomingCall} from "../utils/windowFuncs/hud/phone/windowFuncs";
 import {setPhoneTime, setPlayerAvatarAction} from "../redux/actions/hud/phone";
+import {
+  windowCloseInteractions,
+  windowOpenInteractions,
+} from "../utils/windowFuncs/hud/Interactions/interactionWindowFuncs";
+import InteractionsContainer from "./components/Interactions/InteractionsContainer/InteractionsContainer";
+import {SingleInteractionInterface} from "./components/Interactions/models/interfaces/interactionInterfaces";
 
 //region ------------------------------ Props, defaults, state ------------------------------
 interface PlayerStateData {
@@ -84,7 +90,7 @@ const HudApp: React.FC<Props> = React.memo(function HudApp({data}) {
 
   const dispatch = useDispatch();
 
-  const isPhoneOpenedRedux = useSelector(({hud: {phone}}) => phone.isPhoneOpened);
+  const {isPhoneOpenedRedux, isInteractionsOpenedRedux} = useSelector(({hud: {phone, interactions}}) => ({isPhoneOpenedRedux: phone.isPhoneOpened, isInteractionsOpenedRedux: interactions.isOpened}));
 
   const phoneWrapperRef = useRef();
 
@@ -94,12 +100,155 @@ const HudApp: React.FC<Props> = React.memo(function HudApp({data}) {
     window.phone_openIncomingCall = phone_openIncomingCall;
   }
 
+  //region -------------------- Set up and clean up window functions --------------------
   useEffect(() => {
+
+    //region ------------------------------ PlayerInfo window interceptors ------------------------------
+    //@ts-ignore
+    if(!window.setPlayerRank) {
+      //@ts-ignore
+      window.setPlayerRank = (data) => {
+        const playerRankTitle = setPlayerRank(data);
+        setPlayerInfo(prevState => ({...prevState, playerRankTitle}));
+      }
+    }
+
+    //@ts-ignore
+    if(!window.setPlayerAvatar) {
+      //@ts-ignore
+      window.setPlayerAvatar = (data) => {
+        const playerAvatarName = setPlayerAvatar(data);
+        dispatch(setPlayerAvatarAction(playerAvatarName));
+        setPlayerInfo(prevState => ({...prevState, playerAvatarName}));
+      }
+    }
+
+    //@ts-ignore
+    if(!window.setPlayerBuffs) {
+      //@ts-ignore
+      window.setPlayerBuffs = (data) => {
+        const buffs = setPlayerBuffs(data);
+        setPlayerInfo(prevState => ({...prevState, buffs}));
+      }
+    }
+
+    //@ts-ignore
+    if(!window.setPlayerIndicators) {
+      //@ts-ignore
+      window.setPlayerIndicators = (data) => {
+        const indicators = setPlayerIndicators(data);
+        setPlayerInfo(prevState => ({...prevState, stateIndicators: indicators}));
+      }
+    }
+    //endregion
+
+    //region ------------------------------ Time and network interceptors ------------------------------
+    //@ts-ignore
+    if(!window.setTime) {
+      //@ts-ignore
+      window.setTime = (data) => {
+        const time = setTime(data);
+        dispatch(setPhoneTime(time));
+        setPlayerInfo(prevState => ({...prevState, time}))
+      }
+    }
+    //@ts-ignore
+    if(!window.setNetwork) {
+      //@ts-ignore
+      window.setNetwork = (data) => {
+        const network = setNetwork(data);
+        setPlayerInfo(prevState => ({...prevState, network}));
+      }
+    }
+    //endregion
+
+    //region ------------------------------ Car info interceptors ------------------------------
+    //@ts-ignore
+    if(!window.openCar) {
+      //@ts-ignore
+      window.openCar = (data) => {
+        const carIndicators = openCar(data);
+        setCarInfo({isCarOpen: true, carIndicators});
+      }
+    }
+
+    //@ts-ignore
+    if(!window.closeCar) {
+      //@ts-ignore
+      window.closeCar = () => {
+        setCarInfo(carInfoDefaultState);
+      }
+    }
+
+    //@ts-ignore
+    if(!window.setSpeed) {
+      //@ts-ignore
+      window.setSpeed = (data) => {
+        const speed = setSpeed(data);
+        setCarInfo(prevState => ({...prevState, carIndicators: {...prevState.carIndicators, speed}}));
+      }
+    }
+
+    //@ts-ignore
+    if(!window.setFuel) {
+      //@ts-ignore
+      window.setFuel = (data) => {
+        const fuel = setFuel(data);
+        setCarInfo(prevState => ({...prevState, carIndicators: {...prevState.carIndicators, fuel}}));
+      }
+    }
+    //endregion
+
+    //region -------------------- Phone interceptors --------------------
+    // @ts-ignore
+    if(!window.openPhone) {
+      // @ts-ignore
+      window.openPhone = openPhone;
+    }
+    // @ts-ignore
+    if(!window.closePhone) {
+      // @ts-ignore
+      window.closePhone = closePhone;
+    }
+    //endregion
+
+    //region -------------------- Interactions interceptors --------------------
+    // @ts-ignore
+    if(!window.openInteractions) {
+      // @ts-ignore
+      window.openInteractions = (jsonData) => {
+        const parsedData = JSON.parse(jsonData).$values;
+        const lowerCaseValues: SingleInteractionInterface[] = parsedData.map(value => {
+          return {
+            name: value.Name,
+            enabled: value.Enabled,
+          }
+        });
+        windowOpenInteractions(lowerCaseValues);
+      }
+    }
+    // @ts-ignore
+    if(!window.closeInteractions) {
+      // @ts-ignore
+      window.closeInteractions = windowCloseInteractions;
+    }
+    //endregion
+
     return () => {
+      //region -------------------- Phone window functions --------------------
       // @ts-ignore
       window.openPhone = undefined;
       // @ts-ignore
       window.closePhone = undefined;
+      //endregion
+
+      //region -------------------- Interactions window functions --------------------
+      // @ts-ignore
+      window.openInteractions = undefined;
+      // @ts-ignore
+      window.closeInteractions = undefined;
+      //endregion
+
       // @ts-ignore
       window.phone_openIncomingCall = undefined;
       // @ts-ignore
@@ -122,14 +271,16 @@ const HudApp: React.FC<Props> = React.memo(function HudApp({data}) {
       window.setSpeed = undefined;
       // @ts-ignore
       window.setFuel = undefined;
-      // others
+      // @ts-ignore
     }
   }, []);
+  //endregion
 
   useEffect(() => {
     setPlayerInfo(data);
   }, [data]);
 
+  //region -------------------- Set up and clean up dimensions --------------------
   useEffect(() => {
     if(phoneWrapperRef.current) {
       // @ts-ignore
@@ -138,109 +289,8 @@ const HudApp: React.FC<Props> = React.memo(function HudApp({data}) {
       phoneWrapperRef.current.style.height = width;
     }
   }, [phoneWrapperRef.current]);
-
-  //region ------------------------------ PlayerInfo window interceptors ------------------------------
-  //@ts-ignore
-  if(!window.setPlayerRank) {
-    //@ts-ignore
-    window.setPlayerRank = (data) => {
-      const playerRankTitle = setPlayerRank(data);
-      setPlayerInfo(prevState => ({...prevState, playerRankTitle}));
-    }
-  }
-
-  //@ts-ignore
-  if(!window.setPlayerAvatar) {
-    //@ts-ignore
-    window.setPlayerAvatar = (data) => {
-      const playerAvatarName = setPlayerAvatar(data);
-      dispatch(setPlayerAvatarAction(playerAvatarName));
-      setPlayerInfo(prevState => ({...prevState, playerAvatarName}));
-    }
-  }
-
-  //@ts-ignore
-  if(!window.setPlayerBuffs) {
-    //@ts-ignore
-    window.setPlayerBuffs = (data) => {
-      const buffs = setPlayerBuffs(data);
-      setPlayerInfo(prevState => ({...prevState, buffs}));
-    }
-  }
-
-  //@ts-ignore
-  if(!window.setPlayerIndicators) {
-    //@ts-ignore
-    window.setPlayerIndicators = (data) => {
-      const indicators = setPlayerIndicators(data);
-      setPlayerInfo(prevState => ({...prevState, stateIndicators: indicators}));
-    }
-  }
   //endregion
 
-  //region ------------------------------ Time and network interceptors ------------------------------
-  //@ts-ignore
-  if(!window.setTime) {
-    //@ts-ignore
-    window.setTime = (data) => {
-      const time = setTime(data);
-      dispatch(setPhoneTime(time));
-      setPlayerInfo(prevState => ({...prevState, time}))
-    }
-  }
-  //@ts-ignore
-  if(!window.setNetwork) {
-    //@ts-ignore
-    window.setNetwork = (data) => {
-      const network = setNetwork(data);
-      setPlayerInfo(prevState => ({...prevState, network}));
-    }
-  }
-  //endregion
-
-  //region ------------------------------ Car info interceptors ------------------------------
-  //@ts-ignore
-  if(!window.openCar) {
-    //@ts-ignore
-    window.openCar = (data) => {
-      const carIndicators = openCar(data);
-      setCarInfo({isCarOpen: true, carIndicators});
-    }
-  }
-
-  //@ts-ignore
-  if(!window.closeCar) {
-    //@ts-ignore
-    window.closeCar = () => {
-      setCarInfo(carInfoDefaultState);
-    }
-  }
-
-  //@ts-ignore
-  if(!window.setSpeed) {
-    //@ts-ignore
-    window.setSpeed = (data) => {
-      const speed = setSpeed(data);
-      setCarInfo(prevState => ({...prevState, carIndicators: {...prevState.carIndicators, speed}}));
-    }
-  }
-
-  //@ts-ignore
-  if(!window.setFuel) {
-    //@ts-ignore
-    window.setFuel = (data) => {
-      const fuel = setFuel(data);
-      setCarInfo(prevState => ({...prevState, carIndicators: {...prevState.carIndicators, fuel}}));
-    }
-  }
-  //endregion
-
-  //region
-  // @ts-ignore
-  window.openPhone = openPhone;
-  // @ts-ignore
-  window.closePhone = closePhone;
-  //endregion
   const carInfoOrHotkeysBlock = carInfo.isCarOpen ? (
     <div className={classes.CarInfoWrapper}>
       <CarInfo isCarRunning={carInfo.carIndicators.isCarRunning} isDoorsOpened={carInfo.carIndicators.isDoorsOpen}
@@ -250,7 +300,7 @@ const HudApp: React.FC<Props> = React.memo(function HudApp({data}) {
     <div className={classes.HotkeysWrapper}>
       <Hotkeys/>
     </div>
-  )
+  );
 
   return (
       <div className={classes.HudApp}>
@@ -265,7 +315,12 @@ const HudApp: React.FC<Props> = React.memo(function HudApp({data}) {
         </div>
         <div ref={phoneWrapperRef} className={classes.PhoneWrapper}>
           {isPhoneOpenedRedux && <Phone/>}
-        </div>)
+        </div>
+        {isInteractionsOpenedRedux && (
+          <div className={classes.InteractionsWrapper}>
+            <InteractionsContainer/>
+          </div>
+        )}
       </div>
   );
 })

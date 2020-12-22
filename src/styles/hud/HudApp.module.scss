@@ -1,6 +1,7 @@
 @use '../../constants/scss/theme';
 
 .HudApp {
+  position: relative;
   width: 100%;
   height: 100%;
   display: flex;
@@ -9,7 +10,6 @@
   align-items: stretch;
   background: url("../../assets/hud/images/components/bg.png");
   background-size: cover;
-
 
   .TopOfTheScreenWrapper {
     width: 100%;
@@ -102,5 +102,14 @@
     right: 4%;
     bottom: 4%;
     box-sizing: content-box;
+  }
+
+  // full screen to make blur etc.
+  .InteractionsWrapper {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0, 0.5);
+    backdrop-filter: blur(0.5rem);
   }
 }

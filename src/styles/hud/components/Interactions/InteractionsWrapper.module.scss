@@ -1,0 +1,118 @@
+.Interactions {
+  position: absolute;
+  flex-direction: column;
+  //background-color: white;
+  background-color: rgba(0,0,0, 0.5);
+  border-radius: 0.8rem;
+
+  .CrossContainer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .Cross {
+      //width: 2.66%;
+      width: 3.46%;
+      background-color: #fff;
+      border-radius: 50%;
+
+      .FirstLine {
+        //width: 70%;
+        width: 50%;
+        //height: 10%;
+        height: 6%;
+        //margin-left: 15%;
+        margin-left: 25%;
+        //margin-top: 45%;
+        margin-top: 47%;
+        background-color: #000;
+        transform: rotate(-45deg);
+
+        &:before {
+          content: "";
+          display: block;
+          width: 100%;
+          height: 100%;
+          background-color: #000;
+          transform: rotate(-90deg);
+        }
+      }
+    }
+  }
+
+  .ScrollWrapper {
+    box-sizing: border-box;
+    &::-webkit-scrollbar {
+      width: 0.3rem;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: #3F77F5;
+      border-radius: 0.3rem;
+    }
+
+    .InteractionsContainer {
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+      align-items: center;
+
+      .Header {
+        //background-color: red;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+
+        .HeaderContent {
+          min-width: 50%;
+          max-width: 50%;
+          min-height: 100%;
+          max-height: 100%;
+        }
+      }
+
+      .Base {
+        width: 100%;
+        //background-color: yellow;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: flex-start;
+
+        .BaseSingleInteractionWrapper {
+          //background-color: fuchsia;
+        }
+      }
+
+      .Footer {
+        width: 100%;
+        //background-color: red;
+        display: flex;
+        justify-content: center;
+
+        .FooterContent {
+          min-width: 50%;
+          max-width: 50%;
+          min-height: 100%;
+          max-height: 100%;
+        }
+      }
+
+      .SingleInteractionWrapper {
+        width: 50%;
+        box-sizing: border-box;
+        padding: 2%;
+
+        .SingleInteraction {
+          border-radius: 1rem;
+          background-color: white;
+          width: 100%;
+          height: 100%;
+        }
+      }
+    }
+  }
+}
+
