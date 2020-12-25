@@ -52,7 +52,6 @@ const ChatMessagesList = React.memo(() => {
         }
       }
     }
-    console.log('avatars', playerAvatar, interlocutorAvatar);
     loadPlayerAvatarImage();
     loadInterlocutorAvatarImage();
   }, [playerAvatar, interlocutorAvatar]);

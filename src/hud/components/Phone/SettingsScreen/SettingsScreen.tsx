@@ -15,7 +15,6 @@ const SettingsScreen = React.memo(() => {
 
   useEffect(() => {
     return () => {
-      console.log('nullable');
       // @ts-ignore
       window.phone_openSettings = null;
     }

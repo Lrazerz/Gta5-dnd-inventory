@@ -90,7 +90,6 @@ const App = React.memo(function App() {
     window.openHud = window.refreshHud = async (data) => {
       const hudData = openHud(data);
       setOpenedPart(OpenedPartsEnum.hud);
-      console.log('hudData', hudData);
       // @ts-ignore
       store.dispatch(setPlayerAvatarAction(hudData.playerAvatarName));
       // @ts-ignore

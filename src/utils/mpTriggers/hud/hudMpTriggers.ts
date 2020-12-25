@@ -167,7 +167,6 @@ const mpTrigger_phone_addNewContact = (newContact) => {
 //region -------------------- Interaction Triggers --------------------
 // user opened interaction, server should invoke closeInteractions() on window
 const mpTrigger_interactions_openInteraction = (interactionName: string) => {
-  console.log('open interaction trigger', interactionName)
   try {
     // @ts-ignore
     mp.trigger('cef_cl_openInteraction', interactionName);

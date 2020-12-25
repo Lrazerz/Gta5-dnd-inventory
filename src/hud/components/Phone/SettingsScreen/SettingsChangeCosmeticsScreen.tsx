@@ -10,7 +10,6 @@ import {openScreen} from "../../../../redux/actions/hud/phone";
 const SettingsChangeCosmeticsScreen = React.memo(() => {
 
   const {theme,themeImage} = useSelector(({hud: {phone}}) => phone.settings.cosmetics);
-  console.log('SettingsChangeCosmeticsScreen', themeImage);
 
   const dispatch = useDispatch();
 

@@ -32,8 +32,6 @@ interface Props {
 
 const SingleInteraction: React.FC<Props> = React.memo(({name, isReversed, isCentral, Enabled, isAlignedRight = false, onPickInteraction}) => {
 
-  console.log('Single Interaction render');
-
   const fullContainerRef = useRef();
 
   const [dimensions, setDimensions]: [Dimensions, any] = useState();
