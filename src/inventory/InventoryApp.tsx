@@ -11,9 +11,9 @@ import SecondaryText from "./components/layout/SecondaryText";
 import leftSparksSvg from "../assets/inventory/images/UI/left-sparks.svg";
 // @ts-ignore
 import rightSparksSvg from "../assets/inventory/images/UI/right-sparks.svg";
-import {openDoubleInventory, openOrRefreshInventory, setSquareSize} from "../redux/actions/inventory/board";
+import {setSquareSize} from "../redux/actions/inventory/board";
 import RangeComponent from "./components/UI/RangeComponent";
-const ContextMenu = React.lazy(() => import("./components/UI/ContextMenu"));
+import ContextMenu from "./components/UI/ContextMenu";
 import {rotateItem, rotateItemOnBoard, setGoingToDrop} from "../redux/actions/inventory/draggedItem";
 import {removeHoveredItem} from "../redux/actions/inventory/hoveredItem";
 import {closeContextMenu} from "../redux/actions/inventory/contextMenu";
@@ -53,14 +53,13 @@ const InventoryApp =  React.memo(function InventoryApp() {
 
   const spaceDownHandler = (e) => {
     e.preventDefault();
-    console.log('onKeyDown',e);
     if (e.code.toLowerCase() === 'space') {
       e.preventDefault();
       if (draggedItem && draggedItem.width > 1 && draggedItem.height > 1) {
         dispatch(rotateItem());
       } else if (hoveredItem && hoveredItemArea !== 3 &&
         hoveredItem.width > 1 && hoveredItem.height > 1) {
-        dispatch(rotateItemOnBoard(hoveredItem, hoveredItemArea))
+        dispatch(rotateItemOnBoard(hoveredItem, hoveredItemArea));
       }
     }
   }
@@ -115,14 +114,11 @@ const InventoryApp =  React.memo(function InventoryApp() {
         </div>
         <object type="image/svg+xml" data={leftSparksSvg} className={classes.LeftSparksSvgContainer}/>
         <object type="image/svg+xml" data={rightSparksSvg} className={classes.RightSparksSvgContainer}/>
-        {contextMenu.contextItem && (<React.Suspense fallback={<div>Loading...</div>}>
-
-        {!contextMenu.splitMenuOpen && (<ContextMenu contextItem={contextMenu.contextItem}
+        {contextMenu.contextItem && !contextMenu.splitMenuOpen && (<ContextMenu contextItem={contextMenu.contextItem}
                                                                                 leftOffset={contextMenu.leftOffset}
                                                                                 topOffset={contextMenu.topOffset}
                                                                                 hoveredArea={contextMenu.hoveredArea}
                                                                                 />)}
-        </React.Suspense>)}
         <RangeComponent leftOffset={contextMenu.leftOffset}
                         topOffset={contextMenu.topOffsetTopContext}
                         contextItem={contextMenu.contextItem}

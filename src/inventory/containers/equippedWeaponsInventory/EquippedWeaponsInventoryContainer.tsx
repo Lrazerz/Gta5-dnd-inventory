@@ -76,7 +76,7 @@ const EquippedWeaponsInventoryContainer: React.FC<Props> =
     !goingToDropOnThisSquare &&
     !hoveredSquareFromClosingInventory;
 
-  const equippedContainerMouseOverHandler = e => {
+  const equippedContainerMouseOverHandler = () => {
     if(draggedItem) dispatch(setGoingToDrop(true, 0));
     mouseOverHandler();
   }

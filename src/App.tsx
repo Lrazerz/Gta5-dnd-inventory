@@ -1,18 +1,31 @@
 import React, {useEffect, useState} from 'react';
 import {Provider} from 'react-redux';
 import InventoryApp from "./inventory/InventoryApp";
-import {openDoubleInventory, openOrRefreshInventory} from "./redux/actions/inventory/board";
 import store from './redux/store';
 import HudApp from "./hud/HudApp";
 import {openHud} from "./utils/windowFuncs/hud/PlayerInfo/PlayerInfoInterceptors";
 import {setPhoneTime, setPlayerAvatarAction} from "./redux/actions/hud/phone";
+import {openDoubleInventory, openOrRefreshInventory} from "./utils/windowFuncs/inventory/inventoryWindowFuncs";
 
 enum OpenedPartsEnum {
   inventory,
   hud,
 }
 
-const defaultHudData = {
+interface DefaultHudDataInterface {
+  playerAvatarName: string;
+  playerRankTitle: string;
+  stateIndicators: {
+    firstIndicator: number;
+    secondIndicator: number;
+    thirdIndicator: number;
+  },
+  network: number;
+  time: string,
+  buffs: any[],
+}
+
+const defaultHudData: DefaultHudDataInterface = {
   playerAvatarName: "",
   playerRankTitle: "",
   stateIndicators: {
@@ -27,55 +40,10 @@ const defaultHudData = {
 
 const App = React.memo(function App() {
 
-  const [openedPart, setOpenedPart]: [number, (newState: number) => void] = useState();
-  const [hudData, setHudData] = useState(defaultHudData);
+  const [openedPart, setOpenedPart]: [number, (newState: number) => void] = useState(null);
+  const [hudData, setHudData]: [DefaultHudDataInterface, any] = useState(defaultHudData);
 
   useEffect(() => {
-    //region ------------------------------ Set up inventory functions on window ------------------------------
-    // @ts-ignore
-    if (!window.openInventory || !window.refreshInventory) {
-      // @ts-ignore
-      window.openInventory = async (info) => {
-        if ( !(openedPart === OpenedPartsEnum.inventory) ) {
-          setOpenedPart(OpenedPartsEnum.inventory);
-        }
-        await openOrRefreshInventory(info);
-        return;
-      };
-      // @ts-ignore
-      window.refreshInventory = openOrRefreshInventory;
-    }
-
-    // @ts-ignore
-    if(!window.openDoubleInventory) {
-      // @ts-ignore
-      window.openDoubleInventory = async (info, externalInfo, extBoardHeight) => {
-        if ( !(openedPart === OpenedPartsEnum.inventory) ) {
-          setOpenedPart(OpenedPartsEnum.inventory);
-        }
-        await openDoubleInventory(info, externalInfo, extBoardHeight);
-      }
-    }
-    //endregion
-
-    //region ------------------------------ Set up hud functions on window ------------------------------
-    // @ts-ignore
-    if(!window.openHud || !window.refreshHud) {
-      // @ts-ignore
-      window.openHud = window.refreshHud = async (data) => {
-        const hudData = openHud(data);
-        setOpenedPart(OpenedPartsEnum.hud);
-        console.log('hudData', hudData);
-        // @ts-ignore
-        store.dispatch(setPlayerAvatarAction(hudData.playerAvatarName));
-        // @ts-ignore
-        store.dispatch(setPhoneTime(hudData.time));
-        // @ts-ignore
-        setHudData(hudData);
-      }
-    }
-    //endregion
-
     return () => {
       // @ts-ignore
       window.openInventory = undefined;
@@ -86,7 +54,52 @@ const App = React.memo(function App() {
       // @ts-ignore
       window.refreshHud = undefined;
     }
-  }, [])
+  }, []);
+
+  //region ------------------------------ Set up inventory functions on window ------------------------------
+  // @ts-ignore
+  if (!window.openInventory || !window.refreshInventory) {
+    // @ts-ignore
+    window.openInventory = async (info) => {
+      if ( !(openedPart === OpenedPartsEnum.inventory) ) {
+        setOpenedPart(OpenedPartsEnum.inventory);
+      }
+      openOrRefreshInventory(info);
+      return;
+    };
+    // @ts-ignore
+    window.refreshInventory = openOrRefreshInventory;
+  }
+
+  // @ts-ignore
+  if(!window.openDoubleInventory) {
+    // @ts-ignore
+    window.openDoubleInventory = async (info, externalInfo, extBoardHeight) => {
+      if ( !(openedPart === OpenedPartsEnum.inventory) ) {
+        setOpenedPart(OpenedPartsEnum.inventory);
+      }
+      openDoubleInventory(info, externalInfo, extBoardHeight);
+    }
+  }
+  //endregion
+
+  //region ------------------------------ Set up hud functions on window ------------------------------
+  // @ts-ignore
+  if(!window.openHud || !window.refreshHud) {
+    // @ts-ignore
+    window.openHud = window.refreshHud = async (data) => {
+      const hudData = openHud(data);
+      setOpenedPart(OpenedPartsEnum.hud);
+      console.log('hudData', hudData);
+      // @ts-ignore
+      store.dispatch(setPlayerAvatarAction(hudData.playerAvatarName));
+      // @ts-ignore
+      store.dispatch(setPhoneTime(hudData.time));
+      // @ts-ignore
+      setHudData(hudData);
+    }
+  }
+  //endregion
 
   let contentBlock;
 

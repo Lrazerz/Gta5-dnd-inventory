@@ -3,12 +3,9 @@
 .ClosingTypeContainer {
   height: 15%;
   width: 100%;
-  //padding-right: 14%;
-  //position: relative;
 
   .TitleAndImageContainer {
     width: 100%;
-    //padding-left: 22.75%;
     padding-left: 20.5%;
     height: 10%;
     box-sizing: border-box;
@@ -16,7 +13,6 @@
     align-items: center;
     @media (min-aspect-ratio: theme.$aspect-ratio-5x4) {
         margin-bottom: -2%;
-
     }
 
     @media (min-aspect-ratio: theme.$aspect-ratio-4x3) {

@@ -52,7 +52,7 @@ const SquareCommonItem: React.FC<Props> = React.memo(function SquareCommonItem({
     }
   }, [boardSquareSize]);
 
-  let imageElement = null;
+  //region -------------------- Click, hover handlers --------------------
 
   const handleContextMenuOpen = (e) => {
     const rect = e.target.getBoundingClientRect();
@@ -119,6 +119,9 @@ const SquareCommonItem: React.FC<Props> = React.memo(function SquareCommonItem({
       dispatch(addHoveredItem(item, 1));
     }
   }
+  //endregion
+
+  let imageElement = null;
 
   if (x === item.mainCell[0] && y === item.mainCell[1]) {
     let currentCountText = null;
@@ -131,6 +134,7 @@ const SquareCommonItem: React.FC<Props> = React.memo(function SquareCommonItem({
           </SecondaryText>
         </div>);
     }
+
 
     // if item is hovered when we have no dragged item
     const isItemHovered = hoveredItem && hoveredItemArea === 1 && hoveredItem.mainCell === item.mainCell;
@@ -154,7 +158,7 @@ const SquareCommonItem: React.FC<Props> = React.memo(function SquareCommonItem({
            onContextMenu={handleContextMenuOpen}
            onMouseOver={handleMouseOver}>
         <img src={item.imageUrl} style={item.isWeaponEquipped ? {opacity: '0.5'} : null}
-             className={classes.Image}/>
+             className={classes.Image} width='96%' height='96%'/>
         {currentCountText}
       </div>
     );

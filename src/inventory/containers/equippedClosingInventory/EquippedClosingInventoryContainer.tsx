@@ -50,8 +50,9 @@ const EquippedClosingInventoryContainer: React.FC<Props> =
     {id: 93, cell: equippedCells[92]},
   ];
 
-  const equippedContainerMouseOverHandler = e => {
+  const equippedContainerMouseOverHandler = () => {
     if (draggedItem) dispatch(setGoingToDrop(true, 0));
+    // remove current hovered item
     mouseOverHandler();
   }
 

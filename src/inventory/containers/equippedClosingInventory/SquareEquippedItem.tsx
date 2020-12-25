@@ -19,6 +19,7 @@ const SquareEquippedItem: React.FC<Props> = React.memo(function SquareEquippedIt
     draggedItem: {canDrop, hoveredSquare, item: draggedItem, goingToDrop, goingToStack},
     hoveredItem: {item: hoveredItem, hoveredArea: hoveredItemArea}
   } = useSelector(state => state.inventory);
+  const dispatch = useDispatch();
 
   const goingToDropRef = useRef();
   const draggedItemRef = useRef();
@@ -35,7 +36,7 @@ const SquareEquippedItem: React.FC<Props> = React.memo(function SquareEquippedIt
   hoveredSquareRef.current = hoveredSquare;
   goingToStackRef.current = goingToStack;
 
-  // set image dimensions to resize
+  //region -------------------- Set image dimensions to resize --------------------
   useEffect(() => {
     // ***1.25 coz image's width === 80% of the container
     if(boardSquareSize) {
@@ -45,9 +46,9 @@ const SquareEquippedItem: React.FC<Props> = React.memo(function SquareEquippedIt
       setImageHeight(item.height * boardSquareSize * 1.25);
     }
   }, [boardSquareSize])
+  //endregion
 
-  const dispatch = useDispatch();
-
+  //region -------------------- Click and hover handlers --------------------
   const handleContextMenuOpen = (e) => {
     const rect = e.target.getBoundingClientRect();
     dispatch(openContextMenu(item, rect, 3));
@@ -130,6 +131,7 @@ const SquareEquippedItem: React.FC<Props> = React.memo(function SquareEquippedIt
       dispatch(addHoveredItem(item, 3));
     }
   }
+  //endregion
 
   const isItemHovered = hoveredItem && hoveredItemArea === 3 && hoveredItem.mainCell === item.mainCell;
 

@@ -22,15 +22,19 @@ module.exports = {
         }
       },
       {
-        test: /\.(ts|tsx)$/,
-        use: ["awesome-typescript-loader"],
+        test: /\.tsx?$/,
+        use: [
+          {
+            loader: "ts-loader",
+            options: {
+              transpileOnly: true
+            }
+          }
+        ],
+        exclude: /node_modules/,
       },
       {
-        test: /\.css$/i,
-        use: ['style-loader', 'css-loader'],
-      },
-      {
-        test: /\.s[ac]ss$/i,
+        test: /\.(sa|sc|c)ss$/,
         use: [
           // Creates `style` nodes from JS strings
           'style-loader',

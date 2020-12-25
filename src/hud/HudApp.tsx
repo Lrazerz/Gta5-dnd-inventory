@@ -20,7 +20,7 @@ import {
   windowCloseInteractions,
   windowOpenInteractions,
 } from "../utils/windowFuncs/hud/Interactions/interactionWindowFuncs";
-import InteractionsContainer from "./components/Interactions/InteractionsContainer/InteractionsContainer";
+import InteractionsContainer from "./components/Interactions/InteractionsContainer";
 import {SingleInteractionInterface} from "./components/Interactions/models/interfaces/interactionInterfaces";
 
 //region ------------------------------ Props, defaults, state ------------------------------
@@ -94,14 +94,13 @@ const HudApp: React.FC<Props> = React.memo(function HudApp({data}) {
 
   const phoneWrapperRef = useRef();
 
-  // @ts-ignore
-  if(!window.phone_openIncomingCall) {
-    // @ts-ignore
-    window.phone_openIncomingCall = phone_openIncomingCall;
-  }
-
   //region -------------------- Set up and clean up window functions --------------------
   useEffect(() => {
+    // @ts-ignore
+    if(!window.phone_openIncomingCall) {
+      // @ts-ignore
+      window.phone_openIncomingCall = phone_openIncomingCall;
+    }
 
     //region ------------------------------ PlayerInfo window interceptors ------------------------------
     //@ts-ignore
