@@ -22,6 +22,7 @@ import {
 } from "../utils/windowFuncs/hud/Interactions/interactionWindowFuncs";
 import InteractionsContainer from "./components/Interactions/InteractionsContainer";
 import {SingleInteractionInterface} from "./components/Interactions/models/interfaces/interactionInterfaces";
+import {mpTrigger_interactions_closeInteractions} from "../utils/mpTriggers/hud/hudMpTriggers";
 
 //region ------------------------------ Props, defaults, state ------------------------------
 interface PlayerStateData {
@@ -90,9 +91,14 @@ const HudApp: React.FC<Props> = React.memo(function HudApp({data}) {
 
   const dispatch = useDispatch();
 
-  const {isPhoneOpenedRedux, isInteractionsOpenedRedux} = useSelector(({hud: {phone, interactions}}) => ({isPhoneOpenedRedux: phone.isPhoneOpened, isInteractionsOpenedRedux: interactions.isOpened}));
+  const {isPhoneOpenedRedux, isInteractionsOpenedRedux} = useSelector(({hud: {phone, interactions}}) =>
+    ({isPhoneOpenedRedux: phone.isPhoneOpened, isInteractionsOpenedRedux: interactions.isOpened}));
 
   const phoneWrapperRef = useRef();
+
+  useEffect(() => {
+    setPlayerInfo(data);
+  }, [data]);
 
   //region -------------------- Set up and clean up window functions --------------------
   useEffect(() => {
@@ -275,10 +281,6 @@ const HudApp: React.FC<Props> = React.memo(function HudApp({data}) {
   }, []);
   //endregion
 
-  useEffect(() => {
-    setPlayerInfo(data);
-  }, [data]);
-
   //region -------------------- Set up and clean up dimensions --------------------
   useEffect(() => {
     if(phoneWrapperRef.current) {
@@ -289,6 +291,12 @@ const HudApp: React.FC<Props> = React.memo(function HudApp({data}) {
     }
   }, [phoneWrapperRef.current]);
   //endregion
+
+  const interactionsCloseHandler = () => {
+    try {
+      mpTrigger_interactions_closeInteractions();
+    } catch (e) {}
+  }
 
   const carInfoOrHotkeysBlock = carInfo.isCarOpen ? (
     <div className={classes.CarInfoWrapper}>
@@ -316,7 +324,7 @@ const HudApp: React.FC<Props> = React.memo(function HudApp({data}) {
           {isPhoneOpenedRedux && <Phone/>}
         </div>
         {isInteractionsOpenedRedux && (
-          <div className={classes.InteractionsWrapper}>
+          <div className={classes.InteractionsWrapper} onClick={() => {interactionsCloseHandler()}}>
             <InteractionsContainer/>
           </div>
         )}

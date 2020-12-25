@@ -134,7 +134,7 @@ const InteractionsWrapper: React.FC<Props> = React.memo(({crossRef, onClose, onP
   //endregion
 
   return (
-    <div style={fullContainerStyles} className={classes.Interactions}>
+    <div style={fullContainerStyles} className={classes.Interactions} onClick={e => e.stopPropagation()}>
       <div className={classes.CrossContainer} style={crossContainerStyles}>
         <div ref={crossRef} className={classes.Cross} onClick={onClose}>
           <div className={classes.FirstLine}>
