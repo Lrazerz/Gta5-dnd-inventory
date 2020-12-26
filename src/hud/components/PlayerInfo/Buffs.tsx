@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {CSSProperties} from 'react';
 import classes from '../../../styles/hud/components/PlayerInfo/Buffs.module.scss';
 import {BuffInterface} from "../../models/Buff";
 import SingleBuff from "./SingleBuff";
@@ -11,11 +11,17 @@ const Buffs: React.FC<Props> = React.memo(function Buffs({buffs}) {
 
   const buffsBlock = buffs.map((buff,i) => (
     <SingleBuff key={i} buff={buff}/>
-  ))
+  ));
+
+  // убрать паддинг когда 0 бафов
+
+  const buffsWrapperStyles: CSSProperties = {
+    padding: buffs.length === 0 ? 0 : '0.34rem',
+  }
 
   return (
     <div className={classes.Buffs}>
-      <div className={classes.BorderedBuffsWrapper}>
+      <div className={classes.BorderedBuffsWrapper} style={buffsWrapperStyles}>
         {buffsBlock}
       </div>
     </div>

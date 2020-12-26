@@ -312,6 +312,7 @@ const HudApp: React.FC<Props> = React.memo(function HudApp({data}) {
   return (
       <div className={classes.HudApp}>
         <div className={classes.TopOfTheScreenWrapper}>
+          <div/>
           <div className={classes.PlayerInfoWrapper}>
             <PlayerInfo data={playerInfo}/>
           </div>
