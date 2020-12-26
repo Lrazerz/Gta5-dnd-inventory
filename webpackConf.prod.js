@@ -1,38 +1,100 @@
 const {merge} = require('webpack-merge');
 const baseConfig = require('./webpackConf.base.js');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const path = require("path");
 
- const prodConfig = {
+const prodConfig = {
   mode: 'production',
   entry: './index.tsx',
   resolve: {
     extensions: [".js", ".jsx", ".json", ".ts", ".tsx", ".css", ".scss", "png", "jpg", "cur"],
   },
-  // module: {
-  //   rules: [
-  //     {
-  //       test: /\.css$/i,
-  //       use: [MiniCssExtractPlugin.loader, 'css-loader'],
-  //     }
-  //   ]
-  // },
-  devServer: {
-    contentBase: path.join(__dirname,'dist', 'main.html'),
-    compress: true,
-    port: 3000
+  module: {
+    rules: [
+      {
+        test: /\.tsx?$/,
+        use: [
+          {
+            loader: "ts-loader",
+            options: {
+              transpileOnly: true
+            }
+          }
+        ],
+        exclude: /node_modules/,
+      },
+      {
+        test: /\.(sa|sc|c)ss$/,
+        use: [
+          // Creates `style` nodes from JS strings
+          MiniCssExtractPlugin.loader,
+          // Translates CSS into CommonJS
+          {
+            loader: "css-loader",
+            options: {
+              sourceMap: false,
+            },
+          },
+          // Compiles Sass to CSS
+          {
+            loader: "sass-loader",
+            options: {
+              sourceMap: false,
+            },
+          },
+        ],
+      },
+      {
+        test: /\.(jpg|png|svg)$/,
+        use: {
+          loader: 'file-loader',
+          options: {
+            name: '[name].[ext]',
+            outputPath: 'images/'
+          }
+        },
+      },
+      {
+        test: /\.(woff(2)?|ttf|eot|otf)(\?v=\d+\.\d+\.\d+)?$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[name].[ext]',
+              outputPath: 'fonts/'
+            }
+          }
+        ]
+      }
+    ]
   },
   plugins: [
-    new HtmlWebpackPlugin({
-      template: './public/index.html',
-      filename: 'main.html',
+    // removes css comments
+    new CssMinimizerPlugin({
+      minimizerOptions: {
+        preset: [
+          'default',
+          {
+            discardComments: { removeAll: true },
+          },
+        ],
+      },
     }),
-    new MiniCssExtractPlugin()
+    new MiniCssExtractPlugin({
+      filename: "style.css",
+      chunkFilename: "[name].css"
+    }),
   ],
   optimization: {
     minimize: true,
-  }
+  },
 };
 
-module.exports = merge(baseConfig, prodConfig);
+// webpack merge has some troubled with merge arrays
+const resultConfig = merge(baseConfig, prodConfig);
+resultConfig.module.rules = prodConfig.module.rules;
+
+// console.log('merged', resultConfig);
+
+module.exports = resultConfig;

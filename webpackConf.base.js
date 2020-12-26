@@ -9,19 +9,6 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.m?js$/,
-        exclude: /(node_modules|bower_components)/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            presets: [
-              '@babel/preset-env',
-              '@babel/preset-react',
-            ]
-          }
-        }
-      },
-      {
         test: /\.tsx?$/,
         use: [
           {
@@ -37,11 +24,21 @@ module.exports = {
         test: /\.(sa|sc|c)ss$/,
         use: [
           // Creates `style` nodes from JS strings
-          'style-loader',
+          "style-loader",
           // Translates CSS into CommonJS
-          'css-loader',
+          {
+            loader: "css-loader",
+            options: {
+              sourceMap: true,
+            },
+          },
           // Compiles Sass to CSS
-          'sass-loader',
+          {
+            loader: "sass-loader",
+            options: {
+              sourceMap: true,
+            },
+          },
         ],
       },
       {
@@ -68,18 +65,18 @@ module.exports = {
       }
     ]
   },
-  devServer: {
-    contentBase: path.join(__dirname,'dist', 'main.html'),
-    compress: true,
-    port: 3000
-  },
   plugins: [
     new HtmlWebpackPlugin({
       template: './public/index.html',
       filename: 'main.html',
-    })
+    }),
   ],
-  optimization: {
-    minimize: false,
+  // optimization: {
+  //   minimize: false,
+  // },
+  output: {
+    publicPath: '',
+    path: path.resolve(__dirname, 'dist'),
+    filename: 'main.js'
   }
 };
