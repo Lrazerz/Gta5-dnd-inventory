@@ -1,7 +1,7 @@
 import React, {CSSProperties, useEffect, useState} from 'react';
 import {useSelector} from 'react-redux';
 import classes from '../../../../styles/hud/components/Phone/UI/PhoneBorders.module.scss';
-import {OpenedScreenEnum, ThemesEnum} from "../models/interfaces/enums";
+import {OpenedScreenEnum, ThemesEnum} from "../../../models/Phone/enums";
 
 interface Props {
   themeFromServer: string;

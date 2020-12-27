@@ -2,7 +2,7 @@ import React from 'react';
 import {useSelector} from 'react-redux';
 import classes from '../../../../../styles/hud/components/Phone/CallContactsChatWrapper/CallsScreen/CallsScreen.module.scss';
 import SingleCall from "./SingleCall";
-import {ThemesEnum} from "../../models/interfaces/enums";
+import {ThemesEnum} from "../../../../models/Phone/enums";
 
 const CallsScreen = React.memo(() => {
 
@@ -18,11 +18,11 @@ const CallsScreen = React.memo(() => {
   // },[ref.current]);
 
   const scrollWrapperStyles = {
-    boxShadow: `inset 0 -3rem ${theme === ThemesEnum.white ? 'rgba(245, 246, 252, 0.8)' : 'rgba(0, 0, 0, 0.8)'}`,
+    boxShadow: `inset 0 -3rem ${theme === ThemesEnum.black ? 'rgba(0, 0, 0, 0.8)' : 'rgba(245, 246, 252, 0.8)'}`,
   }
 
   const blurredBottomBlockStyles = {
-    background: `linear-gradient(180deg, ${theme === ThemesEnum.white ? '#F5F6FC, #D6D6DC' : '#000, #011'})`,
+    background: `linear-gradient(180deg, ${theme === ThemesEnum.black ? '#000, #011' : '#F5F6FC, #D6D6DC'})`,
   }
 
   const callsBlock = calls.map(call => {

@@ -1,6 +1,6 @@
 import React, {CSSProperties, Ref} from 'react';
 import classes from '../../../../styles/hud/components/Phone/SelectedChatScreen/ChatMessage.module.scss';
-import {ChatMessageInterface, DateObjectInterface, ThemesEnum} from "../models/interfaces/reducerInterfaces";
+import {ChatMessageInterface, DateObjectInterface, ThemesEnum} from "../../../models/Phone/reducerInterfaces";
 import LeadText from "../Text/LeadText";
 import phoneTheme from "../consts/phoneTheme";
 

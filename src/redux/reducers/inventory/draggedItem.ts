@@ -5,10 +5,10 @@ import {
   HOVERED_SQUARES_REMOVE,
   GOING_TO_DROP_SET, EXTERNAL_BOARD_CURRENT_COUNT_CHANGE,
 } from "../../actions/inventory/types";
-import Item from "../../../inventory/models/Item";
+import ItemModel from "../../../inventory/models/ItemModel";
 
 export interface GoingToStack {
-  stackableItem: Item,
+  stackableItem: ItemModel,
   stackableItemNewCurrentCount: number,
   draggedItemNewCurrentCount: number,
 }

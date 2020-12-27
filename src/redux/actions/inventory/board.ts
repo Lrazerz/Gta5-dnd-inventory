@@ -7,13 +7,13 @@ import {
   SQUARES_RELEASE
 } from "./types";
 import {xMax, xMin, yMax, yMin} from "../../../inventory/constants/boardDimensions";
-import Item from "../../../inventory/models/Item";
+import ItemModel from "../../../inventory/models/ItemModel";
 import {mpTriggerMoveFromExternalItem, mpTriggerMoveItem} from "../../../utils/mpTriggers/inventory/mpTriggers";
 
 // _addItems: 1. check every item from derived, find on board and check all props on equality; 2. check all board items
 // and if there is additional items - isAnyChanges = true and set all arrived items except checked items
 
-const addItems = (items: Item[]) => {
+const addItems = (items: ItemModel[]) => {
     return {type: SQUARES_FILL, items};
 }
 
@@ -33,7 +33,7 @@ const setSquareSize = (squareSize) => {
   return {type: BOARD_SET_SQUARE_SIZE, size: squareSize};
 }
 
-const addItemBySquares = (squares, item: Item) => {
+const addItemBySquares = (squares, item: ItemModel) => {
   return {type: SINGLE_ITEM_SQUARES_FILL, squares, item};
 }
 

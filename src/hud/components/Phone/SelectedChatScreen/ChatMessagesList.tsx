@@ -2,7 +2,7 @@ import React, {useEffect, useState, useRef} from 'react';
 import {useSelector} from 'react-redux';
 import classes from '../../../../styles/hud/components/Phone/SelectedChatScreen/ChatMessagesList.module.scss';
 import ChatMessage from "./ChatMessage";
-import {ThemesEnum} from "../models/interfaces/enums";
+import {ThemesEnum} from "../../../models/Phone/enums";
 
 const ChatMessagesList = React.memo(() => {
 

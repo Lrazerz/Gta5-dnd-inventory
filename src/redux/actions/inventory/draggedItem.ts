@@ -5,7 +5,7 @@ import {
   GOING_TO_DROP_SET
 } from "./types";
 import {xMin, xMax, yMin, yMax} from "../../../inventory/constants/boardDimensions";
-import Item from "../../../inventory/models/Item";
+import ItemModel from "../../../inventory/models/ItemModel";
 import {GoingToStack} from "../../reducers/inventory/draggedItem";
 import {
   addItem, addItemBySquares,
@@ -86,7 +86,7 @@ _getItemOffsets = (itemWidth, itemHeight) => {
 //endregion
 
 // need to know item
-let addDraggedItem: (item: Item, draggedItemArea: number, fromRotate?: boolean,
+let addDraggedItem: (item: ItemModel, draggedItemArea: number, fromRotate?: boolean,
                      prevGoingToDropAreaId?: number | null, prevHoveredArea?: number | null,
                      prevHoveredSquare?: [number, number] | number | null) => void
 addDraggedItem = (item, draggedItemArea,
@@ -153,7 +153,7 @@ const setHoveredSquares = (hoveredSquare, hoveredArea = 1) => {
     let canDrop: boolean = true;
     // stack logic
     // indicate goingToStack if not null
-    let stackableItem: Item | null = null;
+    let stackableItem: ItemModel | null = null;
     let stackableItemNewCurrentCount: number = 0;
     // indicates should remove draggedItem
     let draggedItemNewCurrentCount: number = 0;
@@ -534,7 +534,7 @@ const rotateItemOnBoard = (item, hoveredItemArea) => {
 
 //region ------------------------------ Utils to dragEndHandler ------------------------------
 let _moveToEquippedItems: (dispatch: (any) => void, getState: () => any,
-                            draggedItem: Item, draggedItemArea: number, hoveredSquare: number) => void;
+                           draggedItem: ItemModel, draggedItemArea: number, hoveredSquare: number) => void;
 _moveToEquippedItems = (dispatch, getState, draggedItem, draggedItemArea, hoveredSquare) => {
   if(draggedItemArea === 1) {
     if (draggedItem.category === ItemTypes.WEAPON_RIFLE || draggedItem.category === ItemTypes.WEAPON_PISTOL
@@ -647,7 +647,7 @@ _moveToEquippedItems = (dispatch, getState, draggedItem, draggedItemArea, hovere
   }
 }
 
-let _moveToBoard: (dispatch: (any) => void, draggedItem: Item, draggedItemArea: number) => void;
+let _moveToBoard: (dispatch: (any) => void, draggedItem: ItemModel, draggedItemArea: number) => void;
 _moveToBoard = (dispatch, draggedItem, draggedItemArea) => {
     if(draggedItemArea === 1) {
       dispatch(removeItemFromBoard(draggedItem.id));
@@ -666,7 +666,7 @@ _moveToBoard = (dispatch, draggedItem, draggedItemArea) => {
     } catch (e) {}
 }
 
-let _moveToExternalBoard: (dispatch: (any) => void, draggedItem: Item, draggedItemArea: number) => void;
+let _moveToExternalBoard: (dispatch: (any) => void, draggedItem: ItemModel, draggedItemArea: number) => void;
 _moveToExternalBoard = (dispatch, draggedItem, draggedItemArea) => {
   if(draggedItemArea === 1) {
     dispatch(removeItemFromBoard(draggedItem.id));

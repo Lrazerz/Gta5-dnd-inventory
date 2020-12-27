@@ -4,9 +4,7 @@ import classes from '../../../../styles/hud/components/Phone/CallContactsChatWra
 import LeadText from "../Text/LeadText";
 import makeCallImg
   from '../../../../assets/hud/images/components/Phone/components/CallContactsChatWrapper/make-call.svg';
-import clearButtonImg
-  from '../../../../assets/hud/images/components/Phone/components/CallContactsChatWrapper/clear-button.svg';
-import {OpenedScreenEnum, ThemesEnum} from "../models/interfaces/enums";
+import {OpenedScreenEnum, ThemesEnum} from "../../../models/Phone/enums";
 import {preventImageDrag} from "../../../../utils/utils";
 import {openOutComingCall, openScreen, setAddNewContactPhoneNumber} from "../../../../redux/actions/hud/phone";
 import phoneTheme from "../consts/phoneTheme";
@@ -77,20 +75,20 @@ const PhoneTypingScreen = React.memo(() => {
   }
 
   const keyboardButtonStyles: CSSProperties = {
-    backgroundColor: theme === ThemesEnum.white ? '#EBEDF8' : phoneTheme.darkPurple,
+    backgroundColor: theme === ThemesEnum.black ? phoneTheme.darkPurple : '#EBEDF8',
   }
 
   const keyboardButtonTextStyles: CSSProperties = {
-    color: theme === ThemesEnum.white ? phoneTheme.lightBlack : phoneTheme.white,
+    color: theme === ThemesEnum.black ? phoneTheme.white : phoneTheme.lightBlack,
     fontSize: '1.05rem'
   }
 
   const crossContainerStyles: CSSProperties = {
-    backgroundColor: theme === ThemesEnum.white ? '#EBEDF8' : phoneTheme.darkPurple,
+    backgroundColor: theme === ThemesEnum.black ? phoneTheme.darkPurple : '#EBEDF8',
   }
 
   const firstSecondCrossLinesStyles: CSSProperties = {
-    backgroundColor: theme === ThemesEnum.white ? phoneTheme.lightBlack : phoneTheme.white,
+    backgroundColor: theme === ThemesEnum.black ? phoneTheme.white : phoneTheme.lightBlack,
   }
 
   const keyboardButtonsBlock = buttons.map(buttonText => {

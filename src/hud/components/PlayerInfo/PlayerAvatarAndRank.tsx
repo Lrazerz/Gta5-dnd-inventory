@@ -1,6 +1,6 @@
 import React, {useState, useRef, useEffect} from 'react';
 import classes from '../../../styles/hud/components/PlayerInfo/PlayerAvatarAndRank.module.scss';
-import {ThemesEnum} from "../Phone/models/interfaces/enums";
+import {ThemesEnum} from "../../models/Phone/enums";
 
 interface Props {
   avatarName: string;
@@ -61,7 +61,6 @@ const PlayerAvatarAndRank: React.FC<Props> = React.memo(({avatarName, rankTitle}
       <div className={classes.PlayerAvatarWrapper} ref={imageContainerRef}>
         <div className={classes.PlayerAvatarRoundedBorder}>
           {playerAvatarBlock}
-
         </div>
       </div>
       <div className={classes.PlayerRankWrapper}>

@@ -4,8 +4,9 @@ import {useDispatch, useSelector} from 'react-redux';
 import classes from '../../../../styles/hud/components/Phone/SettingsScreen/SettingsScreen.module.scss';
 import LeadText from "../Text/LeadText";
 import SettingsList from "./SettingsList";
-import {OpenedScreenEnum, ThemesEnum} from "../models/interfaces/enums";
+import {OpenedScreenEnum, ThemesEnum} from "../../../models/Phone/enums";
 import {openScreen} from "../../../../redux/actions/hud/phone";
+import ScreenTitleWrapper from "../ScreenTitleWrapper";
 
 const SettingsScreen = React.memo(() => {
 
@@ -20,7 +21,6 @@ const SettingsScreen = React.memo(() => {
     }
   }, []);
 
-  //region ------------------------------ Swipe handlers ------------------------------
   const swipeHandler = () => {
     dispatch(openScreen(OpenedScreenEnum.mainScreen));
   }
@@ -31,12 +31,6 @@ const SettingsScreen = React.memo(() => {
     preventDefaultTouchmoveEvent: true,
     trackMouse: true,
   });
-  //endregion
-
-  const screenTitleTextStyles: CSSProperties = {
-    fontSize: '0.62rem',
-    color: theme === ThemesEnum.black ? '#fff' : '#251152',
-  }
 
   const horizontalLineStyles: CSSProperties = {
     backgroundColor: theme === ThemesEnum.black ? '#5422b0' : '#DAD8E6',
@@ -44,11 +38,8 @@ const SettingsScreen = React.memo(() => {
 
   return (
     <div className={classes.SettingsScreen} {...handlers}>
-      <div className={classes.ScreenTitleWrapper}>
-        <LeadText styles={screenTitleTextStyles}>
-          Настройки
-        </LeadText>
-      </div>
+      <ScreenTitleWrapper theme={theme} titleText={'Настройки'}
+                          onBackButtonPress={swipeHandler} />
       <div className={classes.HorizontalLine} style={horizontalLineStyles}/>
       <div className={classes.SettingsListWrapper}>
         <SettingsList/>

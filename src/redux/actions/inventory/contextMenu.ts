@@ -2,7 +2,7 @@ import {CONTEXT_MENU_OPEN, CONTEXT_MENU_CLOSE, CONTEXT_MENU_SPLIT_OPEN} from "./
 import {ItemTypes} from "../../../inventory/constants/dnd/types";
 import {removeItemFromBoard, removeItem} from "./board";
 import {removeEquippedItem, removeEquippedWeaponFromEquipped} from "./equippedItems";
-import {ContextAction} from "../../../inventory/models/Context/ContextAction";
+import {ContextActionModel} from "../../../inventory/models/Context/ContextActionModel";
 import store from "../../store";
 import {removeExternalBoardItem} from "./externalBoard";
 import {mpTriggerDropExternalItem, mpTriggerDropItem} from "../../../utils/mpTriggers/inventory/mpTriggers";
@@ -106,27 +106,27 @@ const _openRangeComponentHandler = () => {
 
 // build list of actions and bind handlers
 const getContextActionsForCell = (item, hoveredArea) => {
-  const contextActions: ContextAction[] = [];
+  const contextActions: ContextActionModel[] = [];
 
   if(item.currentCount && item.maxCount && item.currentCount > 1) {
-    contextActions.push(new ContextAction('Разделить', _openRangeComponentHandler))
+    contextActions.push(new ContextActionModel('Разделить', _openRangeComponentHandler))
   }
 
   if(hoveredArea === 1 || hoveredArea === 2) {
     // if item from board
     switch(item.category) {
       case ItemTypes.EAT: {
-        contextActions.push(new ContextAction('Съесть', _dropItemHandler(_eatFoodHandler, item)))
+        contextActions.push(new ContextActionModel('Съесть', _dropItemHandler(_eatFoodHandler, item)))
       }
     }
     if(hoveredArea === 1) {
-      contextActions.push(new ContextAction('Выкинуть', _dropItemHandler(_removeBoardItemHandler, item)));
+      contextActions.push(new ContextActionModel('Выкинуть', _dropItemHandler(_removeBoardItemHandler, item)));
     } else if (hoveredArea === 2) {
-      contextActions.push(new ContextAction('Выкинуть', _dropItemHandler(_removeExternalBoardItemHandler, item)));
+      contextActions.push(new ContextActionModel('Выкинуть', _dropItemHandler(_removeExternalBoardItemHandler, item)));
     }
   } else if (hoveredArea === 3) {
     // item from equipped items
-    contextActions.push(new ContextAction('Выкинуть', _dropItemHandler(_removeEquippedItemHandler, item)));
+    contextActions.push(new ContextActionModel('Выкинуть', _dropItemHandler(_removeEquippedItemHandler, item)));
   }
   return contextActions;
 }

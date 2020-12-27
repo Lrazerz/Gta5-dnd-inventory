@@ -3,14 +3,12 @@ import {useSelector} from 'react-redux';
 import PhoneBorders from "./UI/PhoneBorders";
 import classes from '../../../styles/hud/components/Phone/Phone.module.scss';
 import PhoneHud from "./UI/PhoneHud";
-import {OpenedScreenEnum} from "./models/interfaces/enums";
+import {OpenedScreenEnum} from "../../models/Phone/enums";
 import MainScreen from "./MainScreen/MainScreen";
 import SelectedChatScreen from "./SelectedChatScreen/SelectedChatScreen";
-
 import SettingsScreen from "./SettingsScreen/SettingsScreen";
 import IncomingCallScreen from "./currentCalls/IncomingCallScreen";
 import CurrentCallScreen from "./currentCalls/CurrentCallScreen";
-// screen too
 import CallContactsChatWrapper from "./CallContactsChatWrapper/CallContactsChatWrapper";
 import {
   phone_openIncomingCall,

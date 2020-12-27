@@ -5,7 +5,7 @@ import {
   EQUIPPED_CURRENT_COUNT_CHANGE,
   EQUIPPED_ALL_ITEMS_RELEASE,
 } from "./types";
-import Item from "../../../inventory/models/Item";
+import ItemModel from "../../../inventory/models/ItemModel";
 import {mpTriggerMoveFromExternalItem, mpTriggerMoveItem} from "../../../utils/mpTriggers/inventory/mpTriggers";
 
 const _removeEquippedItem = (cellId) => {
@@ -34,7 +34,7 @@ const setEquippedItem = (cellId) => (dispatch, getState) => {
   }
 }
 
-const setEquippedItems = (items: Item[] | []) => {
+const setEquippedItems = (items: ItemModel[] | []) => {
   return {type: EQUIPPED_ITEMS_SET, items};
 }
 

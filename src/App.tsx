@@ -12,7 +12,7 @@ enum OpenedPartsEnum {
   hud,
 }
 
-interface DefaultHudDataInterface {
+export interface DefaultHudDataInterface {
   playerAvatarName: string;
   playerRankTitle: string;
   stateIndicators: {
@@ -22,7 +22,7 @@ interface DefaultHudDataInterface {
   },
   network: number;
   time: string,
-  buffs: any[],
+  buffs: [],
 }
 
 const defaultHudData: DefaultHudDataInterface = {

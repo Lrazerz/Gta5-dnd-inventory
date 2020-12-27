@@ -1,7 +1,7 @@
 import React, {CSSProperties} from 'react';
 import {useSelector} from 'react-redux';
 import classes from '../../../../styles/hud/components/Phone/Text/LeadText.module.scss';
-import {ThemesEnum} from "../models/interfaces/enums";
+import {ThemesEnum} from "../../../models/Phone/enums";
 
 interface Props {
   children: any;

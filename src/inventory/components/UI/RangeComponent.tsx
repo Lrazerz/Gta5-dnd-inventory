@@ -5,14 +5,14 @@ import {closeContextMenu} from "../../../redux/actions/inventory/contextMenu";
 import {addDraggedItem, draggedItemRelease, stackItem} from "../../../redux/actions/inventory/draggedItem";
 import {equippedChangeCurrentCount, setEquippedItem} from "../../../redux/actions/inventory/equippedItems";
 import {addItem, boardChangeCurrentCountByItemId} from "../../../redux/actions/inventory/board";
-import Item from "../../models/Item";
+import ItemModel from "../../models/Item";
 import {addExternalBoardItem, externalBoardChangeCurrentCountByItemId} from "../../../redux/actions/inventory/externalBoard";
 import {mpTriggerDropExternalItem, mpTriggerDropItem} from "../../../utils/mpTriggers/inventory/mpTriggers";
 
 interface Props {
   leftOffset: number;
   topOffset: number;
-  contextItem: Item;
+  contextItem: ItemModel;
   hoveredArea: number;
   splitMenuOpen: boolean;
 }

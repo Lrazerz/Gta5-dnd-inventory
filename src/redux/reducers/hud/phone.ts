@@ -23,8 +23,8 @@ import {
   LastMessageInterface,
   PhoneHudDataInterface, SelectedChatInterface,
   SettingsInterface
-} from "../../../hud/components/Phone/models/interfaces/reducerInterfaces";
-import {OpenedScreenEnum, ThemesEnum} from "../../../hud/components/Phone/models/interfaces/enums";
+} from "../../../hud/models/Phone/reducerInterfaces";
+import {OpenedScreenEnum, ThemesEnum} from "../../../hud/models/Phone/enums";
 
 interface InitialStateInterface {
   isPhoneOpened: boolean;

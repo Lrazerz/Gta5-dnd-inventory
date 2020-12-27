@@ -1,19 +1,7 @@
-import React, {useEffect, CSSProperties, useRef, useState} from 'react';
-// @ts-ignore
-import classes from '../../../styles/hud/components/Interactions/SingleInteraction.module.scss';
-import {ThemesEnum} from "../Phone/models/interfaces/enums";
+import React, {useEffect, useRef, useState} from 'react';
+import SingleInteractionStateless from "./SingleInteractionStateless";
 
-// should receive name (photos pull up by name), enabled to display grayed
-
-// also should receive isReversed (for 2-column grid). 3-column grid has no reverse
-
-// footer and header should be centered.
-
-// when central column of the 3-column grid, should be stretched horizontally
-
-// paddings should be relative to the full container, not in %
-
-interface Dimensions {
+export interface DimensionsInterface {
   textBlockPadding: string;
   imageContainerWidth: string;
 }
@@ -34,7 +22,7 @@ const SingleInteraction: React.FC<Props> = React.memo(({name, isReversed, isCent
 
   const fullContainerRef = useRef();
 
-  const [dimensions, setDimensions]: [Dimensions, any] = useState();
+  const [dimensions, setDimensions]: [DimensionsInterface, any] = useState();
   const [importedInteractionImage, setImportedInteractionImage] = useState();
 
   useEffect(() => {
@@ -84,10 +72,6 @@ const SingleInteraction: React.FC<Props> = React.memo(({name, isReversed, isCent
     }
   }, [fullContainerRef.current]);
 
-  const InteractionNameImageContainerStyles: CSSProperties = {
-    flexDirection: isReversed ? 'row-reverse' : 'row',
-  }
-
   //region -------------------- Click handlers --------------------
   const pickInteractionHandler = () => {
     onPickInteraction(name);
@@ -96,11 +80,6 @@ const SingleInteraction: React.FC<Props> = React.memo(({name, isReversed, isCent
   // make different bg
   const hoverInterationHandler = (e) => {
     e.currentTarget.style.backgroundColor = '#ECB958';
-    // console.log('e.target style', e.target);
-    // e.target.style.backgroundColor = '#ECB958';
-    // for(const a in e.target) {
-    //   console.log(`${a} : ${e.target[a]}`)
-    // }
   }
 
   const mouseLeaveInteractionHandler = (e) => {
@@ -108,45 +87,11 @@ const SingleInteraction: React.FC<Props> = React.memo(({name, isReversed, isCent
   }
   //endregion
 
-  //region -------------------- Styles --------------------
-  const fullContainerStyles: CSSProperties = dimensions && {
-    justifyContent: isAlignedRight ? 'flex-end' : 'flex-start',
-  }
-
-  const interactionContentStyles: CSSProperties = dimensions && {
-    width: isCentral ? '100%' : 'auto',
-    justifyContent: 'center',
-    backgroundColor: Enabled ? '#fff' : '#aba8a8',
-  }
-
-  const imageContainerStyles: CSSProperties = dimensions && {
-    width: dimensions.imageContainerWidth,
-    minWidth: dimensions.imageContainerWidth,
-    maxWidth: dimensions.imageContainerWidth,
-  }
-
-  const textWrapperStyles: CSSProperties = dimensions && {
-    padding: dimensions.textBlockPadding,
-  }
-  //endregion
-
-  return (
-    <div style={fullContainerStyles} className={classes.SingleInteraction} ref={fullContainerRef}>
-      <div style={interactionContentStyles} className={classes.InteractionContent} onClick={pickInteractionHandler}
-      onMouseOver={hoverInterationHandler} onMouseLeave={mouseLeaveInteractionHandler}>
-        <div style={InteractionNameImageContainerStyles} className={classes.InteractionNameImageContainer}>
-          <div style={textWrapperStyles} className={classes.TextContainer}>
-            <div className={classes.TextWrapper}>
-              {name}
-            </div>
-          </div>
-          <div style={imageContainerStyles} className={classes.ImageContainer}>
-            <img width='100%' height='100%' src={importedInteractionImage}/>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+  return <SingleInteractionStateless isCentral={isCentral} Enabled={Enabled} onPickInteraction={pickInteractionHandler}
+                                     dimensions={dimensions} isReversed={isReversed} interactionName={name}
+                                     interactionImage={importedInteractionImage} onClick={pickInteractionHandler}
+                                     onMouseOver={hoverInterationHandler} onMouseLeave={mouseLeaveInteractionHandler}
+                                     fullContainerRef={fullContainerRef} />
 });
 
 export default SingleInteraction;

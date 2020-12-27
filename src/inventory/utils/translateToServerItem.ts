@@ -1,8 +1,8 @@
-import Item from "../models/Item";
+import ItemModel from "../models/Item";
 import {xMax} from '../constants/boardDimensions';
 
 // change PosNumberLeftAngle, Enableds
-const translateToServerItem = (item: Item) => {
+const translateToServerItem = (item: ItemModel) => {
   let {id, name, category, mainCell, width,
     height, currentCount, isRotated, rest} = item;
 
@@ -35,7 +35,7 @@ const translateToServerItem = (item: Item) => {
 }
 
 // has no enabled field
-const translateExternalToServerItem = (item: Item) => {
+const translateExternalToServerItem = (item: ItemModel) => {
   const {Enabled, ...rest} = JSON.parse(translateToServerItem(item));
   return JSON.stringify(rest);
 }

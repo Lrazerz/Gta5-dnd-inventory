@@ -1,7 +1,7 @@
 import store from '../../../redux/store';
 import {closeExternalBoard, openExternalBoard} from "../../../redux/actions/inventory/externalBoard";
 import {setEquippedItems} from "../../../redux/actions/inventory/equippedItems";
-import Item from "../../../inventory/models/Item";
+import ItemModel from "../../../inventory/models/ItemModel";
 import {ItemCategories} from "../../../inventory/constants/dnd/categories";
 import {xMax} from "../../../inventory/constants/boardDimensions";
 import {addItems} from "../../../redux/actions/inventory/board";
@@ -22,7 +22,7 @@ const _importItemImage: (itemName: string) => Promise<any> = async (itemName) =>
   }
 }
 
-let _getEnabledAndBoardItems: (items: any[]) => Promise<{boardItems: Item[], enabledItems: Item[]}>;
+let _getEnabledAndBoardItems: (items: any[]) => Promise<{boardItems: ItemModel[], enabledItems: ItemModel[]}>;
 _getEnabledAndBoardItems = async (items) => {
   const enabledItems = [];
   const boardItems = [];
@@ -50,7 +50,7 @@ _getEnabledAndBoardItems = async (items) => {
 
     const category: ItemCategories | string = item.Category.toLowerCase();
 
-    let FullItem: Item;
+    let FullItem: ItemModel;
 
     if(IsRotated) {
       // swap width and height
@@ -59,7 +59,7 @@ _getEnabledAndBoardItems = async (items) => {
       SizeY = tmp;
     }
 
-    FullItem = new Item(ID, Name, category, PosNumberLeftAngle,
+    FullItem = new ItemModel(ID, Name, category, PosNumberLeftAngle,
       SizeX, SizeY, CurrentCount, MaxCount,
       ImageUrl, IsRotated, rest);
 
@@ -89,7 +89,7 @@ _getEnabledAndBoardItems = async (items) => {
   return {boardItems, enabledItems};
 };
 
-let _getExternalBoardItems: (items: any[]) => Promise<{externalBoardItems: Item[]}>;
+let _getExternalBoardItems: (items: any[]) => Promise<{externalBoardItems: ItemModel[]}>;
 _getExternalBoardItems = async (items) => {
   const externalBoardItems = [];
 
@@ -116,7 +116,7 @@ _getExternalBoardItems = async (items) => {
 
     const category: ItemCategories | string = item.Category.toLowerCase();
 
-    let FullItem: Item;
+    let FullItem: ItemModel;
 
     if(IsRotated) {
       // swap width and height
@@ -125,7 +125,7 @@ _getExternalBoardItems = async (items) => {
       SizeY = tmp;
     }
 
-    FullItem = new Item(ID, Name, category, PosNumberLeftAngle,
+    FullItem = new ItemModel(ID, Name, category, PosNumberLeftAngle,
       SizeX, SizeY, CurrentCount, MaxCount,
       ImageUrl, IsRotated, rest);
 

@@ -5,7 +5,7 @@ import {
   EXTERNAL_ITEM_SQUARES_RELEASE,
   EXTERNAL_BOARD_CURRENT_COUNT_CHANGE
 } from "../../actions/inventory/types";
-import Item from "../../../inventory/models/Item";
+import ItemModel from "../../../inventory/models/ItemModel";
 import {xMax, xMin, yMin} from "../../../inventory/constants/boardDimensions";
 
 let _fillExternalBoard: (height: number) => Array<Array<number>>;
@@ -21,7 +21,7 @@ _fillExternalBoard = (height) => {
 }
 
 interface State {
-  externalBoard: Item[] | any[];
+  externalBoard: ItemModel[] | any[];
 }
 
 // isActive when has items

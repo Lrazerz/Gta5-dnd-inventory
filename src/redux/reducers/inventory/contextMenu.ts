@@ -1,8 +1,8 @@
-import Item from "../../../inventory/models/Item";
+import ItemModel from "../../../inventory/models/ItemModel";
 import {CONTEXT_MENU_OPEN, CONTEXT_MENU_CLOSE, DRAGGED_ITEM_SET, CONTEXT_MENU_SPLIT_OPEN} from "../../actions/inventory/types";
 
 interface State {
-  contextItem: null | Item;
+  contextItem: null | ItemModel;
   hoveredArea: null | number;
 
   leftOffset: null | number;

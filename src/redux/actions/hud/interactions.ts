@@ -1,5 +1,5 @@
 import {SET_ALL_INTERACTIONS, SET_IS_OPENED_INTERACTIONS} from "./interactionTypes";
-import {SingleInteractionInterface} from "../../../hud/components/Interactions/models/interfaces/interactionInterfaces";
+import {SingleInteractionInterface} from "../../../hud/models/InteractionInterfaces";
 
 // for now only for close
 const setIsOpenedInteractionsAction = (isOpened) => {

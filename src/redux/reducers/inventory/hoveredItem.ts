@@ -2,11 +2,11 @@ import {
   DRAGGED_ITEM_SET,
   HOVERED_ITEM_ADD, HOVERED_ITEM_REMOVE
 } from "../../actions/inventory/types";
-import Item from "../../../inventory/models/Item";
+import ItemModel from "../../../inventory/models/ItemModel";
 
 // areas 1 - board, 2 - external board, 3 - equipped
 interface State {
-  item: Item | null;
+  item: ItemModel | null;
   hoveredArea: number | null;
 }
 

@@ -7,10 +7,11 @@ import LeadText from "../Text/LeadText";
 import Switch from "./Switch";
 import themeImageImg
   from "../../../../assets/hud/images/components/Phone/components/SettingsList/cosmetics_themeImage.svg";
-import {ThemesArray, ThemesEnum} from "../models/interfaces/enums";
+import {ThemesArray, ThemesEnum} from "../../../models/Phone/enums";
 import {setCosmeticSetting} from "../../../../redux/actions/hud/phone";
+import SettingsChangeCosmeticsScreenListStateless from "./SettingsChangeCosmeticsScreenListStateless";
 
-interface ThemeImageInterface {
+export interface ThemeImageInterface {
   title: string;
   image: string;
 }
@@ -58,10 +59,6 @@ const SettingsChangeCosmeticsScreenList: React.FC<Props> = ({theme, themeImage})
     ThemesArray.forEach(playerAvatarName => {
       importImage(playerAvatarName);
     });
-
-    // for(const key in PlayerAvatarsEnum) {
-    //   console.log('key',key, typeof key);
-    // }
   }, []);
 
   // update selected image by name from redux
@@ -104,90 +101,13 @@ const SettingsChangeCosmeticsScreenList: React.FC<Props> = ({theme, themeImage})
     closeDropDownHandler();
   }
   //endregion
-
-  //region -------------------- Styles --------------------
-  const blurScreenStyles: CSSProperties = {
-    display: isDropDownOpened ? 'block' : 'none',
-    width: '100%',
-    height: '100%',
-    position: "absolute",
-    // backgroundColor: isDropDownOpened ? 'rgba(255,255,255,0.1 )' : 'transparent',
-    backdropFilter: isDropDownOpened ? 'blur(0.4rem)' : 'none',
-  }
-
-  const singleSettingStyles: CSSProperties = {
-    backgroundColor: theme === ThemesEnum.black ? '#251152' : '#fff',
-  }
-
-  const settingTitleStyles: CSSProperties = {
-    fontSize: '0.56rem',
-    fontWeight: 400,
-  }
-
-  const horizontalLineStyles: CSSProperties = {
-    backgroundColor: theme === ThemesEnum.black ? '#5422b0' : '#DAD8E6',
-  }
-
-  const _dropDownWhiteTheme = 'linear-gradient(180deg, rgba(255, 255, 255,0.8), rgba(214, 214, 214,0.8))';
-
-  const _dropDownBlackTheme = 'linear-gradient(180deg, rgba(81, 31, 194,0.8), rgba(54, 17, 138,0.8))';
-
-  const dropDownStyles: CSSProperties = {
-    background: theme === ThemesEnum.white ? _dropDownWhiteTheme : _dropDownBlackTheme,
-    backdropFilter: isDropDownOpened ? 'blur(0.4rem)' : 'none',
-    // border: '1px solid red',
-  }
-  //endregion
-
-  //region -------------------- JSX Blocks (React elements) --------------------
-  const dropDownBlock = (
-    <div className={classes.DropDownThemeImage} style={dropDownStyles}>
-      {allImportedImages.map(image => {
-        return (
-          <div className={classes.ImageToSelectContainer} key={image.title}
-               onClick={(e) => setSelectedImageHandler(e, image)}>
-            <img src={image.image} className={classes.ImageToSelect}/>
-          </div>
-        )
-      })}
-    </div>
-  )
-  //endregion
-
-  return (
-    <div className={classes.SettingsChangeCosmeticsScreenList} onClick={closeDropDownHandler}>
-      <div style={blurScreenStyles}/>
-      <div className={classes.SingleSetting} style={singleSettingStyles}>
-        <div className={classes.SettingImageWrapper}>
-          <img className={classes.Image} src={darkModeImg}/>
-        </div>
-        <div className={classes.SettingTitleWrapper}>
-          <LeadText styles={settingTitleStyles}>
-            Темный режим
-          </LeadText>
-        </div>
-        <div className={classes.SwitchWrapper}>
-          <Switch value={theme === ThemesEnum.black} onChange={changeDarkModeHandler}/>
-        </div>
-      </div>
-      <div className={classes.HorizontalLine} style={horizontalLineStyles}/>
-      <div className={classes.ThemeImageSetting} style={singleSettingStyles} onClick={openDropDownHandler}>
-        <div className={classes.SettingImageWrapper}>
-          <img className={classes.Image} src={themeImageImg}/>
-        </div>
-        <div className={classes.SettingTitleWrapper}>
-          <LeadText styles={settingTitleStyles}>
-            Заставка телефона
-          </LeadText>
-        </div>
-        <div className={classes.Arrow}>
-          <img src={selectedImage.image}/>
-        </div>
-        {isDropDownOpened && dropDownBlock}
-      </div>
-      <div className={classes.HorizontalLine} style={horizontalLineStyles}/>
-    </div>
-  );
+  
+  return <SettingsChangeCosmeticsScreenListStateless theme={theme} onOpenDropDown={openDropDownHandler}
+                                                     onCloseDropDown={closeDropDownHandler}
+                                                     onSetSelectedImage={setSelectedImageHandler}
+                                                     onChangeDarkMode={changeDarkModeHandler}
+                                                     allImportedImages={allImportedImages}
+                                                     selectedImage={selectedImage} isDropDownOpened={isDropDownOpened}/>
 };
 
 export default SettingsChangeCosmeticsScreenList;

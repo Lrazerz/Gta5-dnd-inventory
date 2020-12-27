@@ -1,10 +1,5 @@
 import React, {useState, useEffect, useRef} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-// @ts-ignore
-import classes from '../styles/hud/HudApp.module.scss';
-import CarInfo from "./components/CarInfo";
-import PlayerInfo from "./components/PlayerInfo/PlayerInfo";
-import {BuffInterface} from "./models/Buff";
 import {openCar, setFuel, setSpeed} from "../utils/windowFuncs/hud/CarInfo/CarInfoInterceptors";
 import {
   setNetwork,
@@ -12,34 +7,19 @@ import {
   setPlayerBuffs, setPlayerIndicators,
   setPlayerRank, setTime
 } from "../utils/windowFuncs/hud/PlayerInfo/PlayerInfoInterceptors";
-import Hotkeys from "./components/Hotkeys/Hotkeys";
-import Phone from "./components/Phone/Phone";
 import {closePhone, openPhone, phone_openIncomingCall} from "../utils/windowFuncs/hud/phone/windowFuncs";
 import {setPhoneTime, setPlayerAvatarAction} from "../redux/actions/hud/phone";
 import {
   windowCloseInteractions,
   windowOpenInteractions,
 } from "../utils/windowFuncs/hud/Interactions/interactionWindowFuncs";
-import InteractionsContainer from "./components/Interactions/InteractionsContainer";
-import {SingleInteractionInterface} from "./components/Interactions/models/interfaces/interactionInterfaces";
+import {SingleInteractionInterface} from "./models/InteractionInterfaces";
 import {mpTrigger_interactions_closeInteractions} from "../utils/mpTriggers/hud/hudMpTriggers";
-
-//region ------------------------------ Props, defaults, state ------------------------------
-interface PlayerStateData {
-  playerAvatarName: string,
-  playerRankTitle: string,
-  stateIndicators: {
-    firstIndicator: number,
-    secondIndicator: number,
-    thirdIndicator: number
-  };
-  network: number,
-  time: string,
-  buffs: BuffInterface[],
-}
+import HudAppStateless from "./HudAppStateless";
+import {DefaultHudDataInterface} from "../App";
 
 interface Props {
-  data: PlayerStateData;
+  data: DefaultHudDataInterface;
 }
 
 interface CarInfoState {
@@ -57,7 +37,7 @@ interface CarInfoState {
   };
 }
 
-const playerInfoDefaultState: PlayerStateData = {
+const playerInfoDefaultState: DefaultHudDataInterface = {
   playerAvatarName: "",
   playerRankTitle: "",
   stateIndicators: {
@@ -83,10 +63,9 @@ const carInfoDefaultState = {
     fuel: 0,
   }
 }
-//endregion
 
 const HudApp: React.FC<Props> = React.memo(function HudApp({data}) {
-  const [playerInfo, setPlayerInfo]: [PlayerStateData, (any) => void] = useState(playerInfoDefaultState);
+  const [playerInfo, setPlayerInfo]: [DefaultHudDataInterface, (any) => void] = useState(playerInfoDefaultState);
   const [carInfo, setCarInfo]: [CarInfoState, (any) => void] = useState(carInfoDefaultState);
 
   const dispatch = useDispatch();
@@ -298,38 +277,8 @@ const HudApp: React.FC<Props> = React.memo(function HudApp({data}) {
     } catch (e) {}
   }
 
-  const carInfoOrHotkeysBlock = carInfo.isCarOpen ? (
-    <div className={classes.CarInfoWrapper}>
-      <CarInfo isCarRunning={carInfo.carIndicators.isCarRunning} isDoorsOpened={carInfo.carIndicators.isDoorsOpen}
-               speed={carInfo.carIndicators.speed} fuel={carInfo.carIndicators.fuel}/>
-    </div>
-  ) : (
-    <div className={classes.HotkeysWrapper}>
-      <Hotkeys/>
-    </div>
-  );
+  return <HudAppStateless playerState={playerInfo} carInfo={carInfo} onInteractionsClose={interactionsCloseHandler} />
 
-  return (
-      <div className={classes.HudApp}>
-        <div className={classes.TopOfTheScreenWrapper}>
-          <div/>
-          <div className={classes.PlayerInfoWrapper}>
-            <PlayerInfo data={playerInfo}/>
-          </div>
-        </div>
-        <div className={classes.BottomOfTheScreenWrapper}>
-          {carInfoOrHotkeysBlock}
-        </div>
-        <div ref={phoneWrapperRef} className={classes.PhoneWrapper}>
-          {isPhoneOpenedRedux && <Phone/>}
-        </div>
-        {isInteractionsOpenedRedux && (
-          <div className={classes.InteractionsWrapper} onClick={() => {interactionsCloseHandler()}}>
-            <InteractionsContainer/>
-          </div>
-        )}
-      </div>
-  );
 })
 
 export default HudApp;

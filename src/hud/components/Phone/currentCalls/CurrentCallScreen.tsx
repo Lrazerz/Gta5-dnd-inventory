@@ -66,13 +66,11 @@ const CurrentCallScreen = () => {
     dispatch(abortCall());
   }
 
-  //region ------------------------------
   const optionTextStyles: CSSProperties = {
     color: '#fff',
     textAlign: 'center',
     fontSize: '0.6rem',
   }
-  //endregion
 
   // const options = (
   //   <div className={classes.Option}>
@@ -166,7 +164,6 @@ const CurrentCallScreen = () => {
           </div>
         </div>
       </div>
-
     </div>
   );
 };

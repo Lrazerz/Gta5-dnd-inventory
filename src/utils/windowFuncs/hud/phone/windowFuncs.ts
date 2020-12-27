@@ -9,7 +9,7 @@ import {
   IncomingCallInterface, LastMessageInterface,
   SettingsInterface,
   ThemesEnum
-} from "../../../../hud/components/Phone/models/interfaces/reducerInterfaces";
+} from "../../../../hud/models/Phone/reducerInterfaces";
 import {
   abortCall,
   openCall,

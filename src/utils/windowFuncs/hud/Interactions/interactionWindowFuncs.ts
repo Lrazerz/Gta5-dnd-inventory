@@ -3,7 +3,7 @@ import {
   setAllInteractionsAction,
   setIsOpenedInteractionsAction
 } from "../../../../redux/actions/hud/interactions";
-import {SingleInteractionInterface} from "../../../../hud/components/Interactions/models/interfaces/interactionInterfaces";
+import {SingleInteractionInterface} from "../../../../hud/models/InteractionInterfaces";
 const dispatch = store.dispatch;
 
 let windowOpenInteractions: (parsedDataValues: Array<any>) => void;

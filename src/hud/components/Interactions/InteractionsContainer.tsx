@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useRef} from 'react';
 import {useSelector} from 'react-redux';
-import InteractionsWrapper from "./InteractionsWrapper";
-import {SingleInteractionInterface} from "./models/interfaces/interactionInterfaces";
+import InteractionsContainerStateless from "./InteractionsContainerStateless";
+import {SingleInteractionInterface} from "../../models/InteractionInterfaces";
 import {
   mpTrigger_interactions_closeInteractions,
   mpTrigger_interactions_openInteraction
@@ -407,9 +407,9 @@ const InteractionsContainer = React.memo(() => {
   //endregion
 
   return (
-    <InteractionsWrapper crossRef={crossRef} onPickInteraction={pickInteractionHandler}
-    onClose={closeClickHandler} dimensions={dimensionsProps}
-                         interactionsArrays={sortedInteractions && sortedInteractions}/>
+    <InteractionsContainerStateless crossRef={crossRef} onPickInteraction={pickInteractionHandler}
+                                    onClose={closeClickHandler} dimensions={dimensionsProps}
+                                    interactionsArrays={sortedInteractions && sortedInteractions}/>
   );
 });
 

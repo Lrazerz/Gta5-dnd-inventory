@@ -2,7 +2,7 @@ import {
   SET_IS_OPENED_INTERACTIONS,
   SET_ALL_INTERACTIONS
 } from "../../actions/hud/interactionTypes";
-import {SingleInteractionInterface} from "../../../hud/components/Interactions/models/interfaces/interactionInterfaces";
+import {SingleInteractionInterface} from "../../../hud/models/InteractionInterfaces";
 
 interface InitialStateInterface {
   isOpened: boolean;

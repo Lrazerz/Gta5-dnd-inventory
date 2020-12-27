@@ -51,7 +51,7 @@ import {
   mpTrigger_phone_openSingleChat,
   mpTrigger_phone_removeSingleChat
 } from "../../../utils/mpTriggers/hud/hudMpTriggers";
-import {LastMessageInterface} from "../../../hud/components/Phone/models/interfaces/reducerInterfaces";
+import {LastMessageInterface} from "../../../hud/models/Phone/reducerInterfaces";
 
 const phoneOpen = (lastMessages: LastMessageInterface[], settings) => {
   return {type: PHONE_OPEN, lastMessages, settings}

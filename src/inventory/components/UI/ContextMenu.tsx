@@ -2,12 +2,12 @@ import React from 'react';
 import classes from '../../../styles/inventory/UI/ContextMenu.module.scss';
 import SecondaryText from "../layout/SecondaryText";
 import {getContextActionsForCell} from "../../../redux/actions/inventory/contextMenu";
-import Item from "../../models/Item";
+import ItemModel from "../../models/Item";
 
 interface Props {
   leftOffset: number;
   topOffset: number;
-  contextItem: Item;
+  contextItem: ItemModel;
   hoveredArea: number;
 }
 

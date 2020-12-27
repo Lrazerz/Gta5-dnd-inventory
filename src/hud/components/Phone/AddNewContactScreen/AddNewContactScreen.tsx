@@ -3,7 +3,7 @@ import {useSwipeable} from "react-swipeable";
 import {useSelector, useDispatch} from 'react-redux';
 // @ts-ignore
 import classes from '../../../../styles/hud/components/Phone/AddNewContactScreen/AddNewContactScreen.module.scss';
-import {OpenedScreenEnum, PlayerAvatarsArray, ThemesEnum} from "../models/interfaces/enums";
+import {OpenedScreenEnum, PlayerAvatarsArray, ThemesEnum} from "../../../models/Phone/enums";
 import {addNewContactAction, openPrevScreen, openScreen} from "../../../../redux/actions/hud/phone";
 import LeadText from "../Text/LeadText";
 import phoneTheme from "../consts/phoneTheme";
