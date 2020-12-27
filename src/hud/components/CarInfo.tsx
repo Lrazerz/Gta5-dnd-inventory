@@ -39,20 +39,16 @@ const CarInfo: React.FC<Props> = React.memo(({isCarRunning, isDoorsOpened, speed
     }
 
     let bar = new ProgressBar.Circle('#fuel-svg-container', {
-      // color: '#FFEA82',
       trailColor: 'rgba(188, 207, 193,0.3)',
       trailWidth: 4,
       easing: 'easeInOut',
       strokeWidth: 4,
       svgStyle: {
         display: 'block',
-        // Important: make sure that your container has same
-        // aspect ratio as the SVG canvas. See SVG canvas sizes above.
         width: '100%'
       },
       from: {color: '#fff', a: 1},
       to: {color: '#fff', a: 1},
-      // Set default step function for all animate calls
       step: function (state, circle) {
         circle.path.setAttribute('stroke', state.color);
       }
