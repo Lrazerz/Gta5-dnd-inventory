@@ -1,6 +1,6 @@
 import React, {useState, useRef, useEffect} from 'react';
 import classes from '../../../styles/hud/components/PlayerInfo/PlayerAvatarAndRank.module.scss';
-import {ThemesEnum} from "../../models/Phone/enums";
+import {ThemesEnum} from "../../models/phone/enums";
 
 interface Props {
   avatarName: string;

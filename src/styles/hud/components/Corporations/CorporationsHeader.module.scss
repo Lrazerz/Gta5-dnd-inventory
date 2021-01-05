@@ -1,0 +1,22 @@
+@use '../../../../hud/components/Corporations/consts/corporationsTheme';
+
+.CorporationsHeader {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgba(corporationsTheme.$bg_darkGrey, 0.95);
+
+  .TabsWrapper {
+    height: 100%;
+    padding-left: 2.1%;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+  }
+
+  .AdditionalButtonWrapper {
+    height: 100%;
+  }
+}

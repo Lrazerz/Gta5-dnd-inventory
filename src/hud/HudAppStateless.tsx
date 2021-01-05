@@ -7,6 +7,7 @@ import PlayerInfo from "./components/PlayerInfo/PlayerInfo";
 import Hotkeys from "./components/Hotkeys/Hotkeys";
 import Phone from "./components/Phone/Phone";
 import InteractionsContainer from "./components/Interactions/InteractionsContainer";
+import Corporations from "./components/Corporations/Corporations";
 
 //region ------------------------------ Props, defaults, state ------------------------------
 interface Props {
@@ -23,12 +24,17 @@ const HudAppStateless: React.FC<Props> = React.memo(function HudApp({playerState
 
   const phoneWrapperRef = useRef();
 
-  const {isPhoneOpenedRedux, isInteractionsOpenedRedux} = useSelector(({hud: {phone, interactions}}) =>
-    ({isPhoneOpenedRedux: phone.isPhoneOpened, isInteractionsOpenedRedux: interactions.isOpened}));
+  const {isPhoneOpenedRedux, isInteractionsOpenedRedux, isCorporationsOpenedRedux} =
+    useSelector(({hud: {phone, interactions, corporations}}) =>
+      ({
+        isPhoneOpenedRedux: phone.isPhoneOpened,
+        isInteractionsOpenedRedux: interactions.isOpened,
+        isCorporationsOpenedRedux: corporations.corporations.isOpened
+      }));
 
   //region -------------------- Set up and clean up dimensions --------------------
   useEffect(() => {
-    if(phoneWrapperRef.current) {
+    if (phoneWrapperRef.current) {
       // @ts-ignore
       const width = window.getComputedStyle(phoneWrapperRef.current).width;
       // @ts-ignore
@@ -37,13 +43,13 @@ const HudAppStateless: React.FC<Props> = React.memo(function HudApp({playerState
   }, [phoneWrapperRef.current]);
 
   //need to handle PlayerInfoWrapper and CarInfoWrapper the same way
-  if(playerInfoWrapperHeight === 0) {
+  if (playerInfoWrapperHeight === 0) {
     setPlayerInfoWrapperHeight(window.innerWidth * 0.1719 * 0.7527);
   }
-  if(carInfoWrapperHeight === 0) {
+  if (carInfoWrapperHeight === 0) {
     setCarInfoWrapperHeight(window.innerWidth * 0.1745 * 0.5398);
   }
-  if(hotkeyWrapperHeight === 0) {
+  if (hotkeyWrapperHeight === 0) {
     setHotkeyWrapperHeight(window.innerWidth * 0.263 * 0.2178);
   }
   //endregion
@@ -92,9 +98,13 @@ const HudAppStateless: React.FC<Props> = React.memo(function HudApp({playerState
           <InteractionsContainer/>
         </div>
       )}
+      {isCorporationsOpenedRedux && (
+        <div className={classes.InteractionsWrapper}>
+          <Corporations/>
+        </div>
+      )}
     </div>
   );
 })
 
 export default HudAppStateless;
-

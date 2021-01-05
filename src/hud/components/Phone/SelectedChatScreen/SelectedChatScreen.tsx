@@ -2,7 +2,7 @@ import React, {CSSProperties, useEffect, useRef, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {useSwipeable} from "react-swipeable";
 import classes from '../../../../styles/hud/components/Phone/SelectedChatScreen/SelectedChatScreen.module.scss';
-import {OpenedScreenEnum, ThemesEnum} from "../../../models/Phone/enums";
+import {OpenedScreenEnum, ThemesEnum} from "../../../models/phone/enums";
 import LeadText from "../Text/LeadText";
 import backButton from '../../../../assets/hud/images/components/Phone/components/SelectedChatScreen/back.svg';
 import removeChat from '../../../../assets/hud/images/components/Phone/components/SelectedChatScreen/remove-chat.svg';

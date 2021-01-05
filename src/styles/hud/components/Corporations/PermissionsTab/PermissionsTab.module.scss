@@ -1,0 +1,20 @@
+.PermissionsTab {
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+
+  .RolesListWrapper {
+    width: 16.08%;
+    height: 100%;
+  }
+
+  .CommonPermissionsWrapper {
+    width: 19.55%;
+    height: 100%;
+  }
+
+  .RightContentWrapper {
+    flex-grow: 1;
+    height: 100%;
+  }
+}

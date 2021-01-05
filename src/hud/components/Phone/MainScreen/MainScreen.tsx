@@ -6,7 +6,7 @@ import browserButton from '../../../../assets/hud/images/components/Phone/compon
 import chatButton from '../../../../assets/hud/images/components/Phone/components/MainScreen/chatButton.svg';
 import settingsButton from '../../../../assets/hud/images/components/Phone/components/MainScreen/settingsButton.svg';
 import {openScreen} from "../../../../redux/actions/hud/phone";
-import {OpenedScreenEnum} from "../../../models/Phone/enums";
+import {OpenedScreenEnum} from "../../../models/phone/enums";
 import LastMessage from "./LastMessage";
 import {preventImageDrag} from "../../../../utils/utils";
 

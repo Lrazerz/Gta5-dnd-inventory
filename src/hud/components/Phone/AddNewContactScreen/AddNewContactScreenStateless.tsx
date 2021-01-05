@@ -1,7 +1,7 @@
 import React, {CSSProperties} from 'react';
 // @ts-ignore
 import classes from '../../../../styles/hud/components/Phone/AddNewContactScreen/AddNewContactScreen.module.scss';
-import {ThemesEnum} from "../../../models/Phone/enums";
+import {ThemesEnum} from "../../../models/phone/enums";
 import LeadText from "../Text/LeadText";
 import phoneTheme from "../consts/phoneTheme";
 import {maxContactLength} from "../../../../constants/hud/constants";

@@ -1,0 +1,33 @@
+@use '../../../../../../../../hud/components/Corporations/consts/corporationsTheme';
+
+.ModelInfo {
+  width: 100%;
+  height: 100%;
+
+  .ModelInfoRowWrapper {
+    width: 100%;
+    height: 8.83%;
+  }
+
+  .DropdownWrapper {
+    position: relative;
+  }
+
+  .PermissionsWrapper {
+    width: 100%;
+    overflow-y: auto;
+    max-height: calc(100% - 26.49% - 6px - 7.4% - 1rem);
+
+    &::-webkit-scrollbar {
+      width: 0.2rem;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: #50535C;
+      border-radius: 0.3rem;
+    }
+
+    .PermissionWrapper {
+      width: 35.17%;
+    }
+  }
+}

@@ -1,0 +1,30 @@
+.PermissionsSubTab {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16.71% 0;
+  box-sizing: border-box;
+
+  .Content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+
+    .ImageWrapper {
+      //padding-bottom: 7.44%;
+      height: 50%;
+      box-sizing: border-box;
+    }
+
+    .TitleTextWrapper {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+  }
+}

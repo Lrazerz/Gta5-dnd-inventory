@@ -4,7 +4,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import classes from '../../../../styles/hud/components/Phone/SettingsScreen/SettingsScreen.module.scss';
 import LeadText from "../Text/LeadText";
 import SettingsList from "./SettingsList";
-import {OpenedScreenEnum, ThemesEnum} from "../../../models/Phone/enums";
+import {OpenedScreenEnum, ThemesEnum} from "../../../models/phone/enums";
 import {openScreen} from "../../../../redux/actions/hud/phone";
 import ScreenTitleWrapper from "../ScreenTitleWrapper";
 

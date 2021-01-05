@@ -1,6 +1,6 @@
 import React, {CSSProperties} from 'react';
 import classes from '../../../../styles/hud/components/Phone/SettingsScreen/SettingsChangeRingtoneScreen.module.scss';
-import {RingtonesArray, ThemesEnum} from "../../../models/Phone/enums";
+import {RingtonesArray, ThemesEnum} from "../../../models/phone/enums";
 import LeadText from "../Text/LeadText";
 import ringtoneImg from "../../../../assets/hud/images/components/Phone/components/SettingsList/ringtone.svg";
 import phoneTheme from "../consts/phoneTheme";

@@ -4,7 +4,7 @@ import classes
   from '../../../../styles/hud/components/Phone/CallContactsChatWrapper/CallContactsChatWrapper.module.scss';
 import Tabs from "./Tabs";
 import {useSwipeable} from "react-swipeable";
-import {OpenedScreenEnum} from "../../../models/Phone/enums";
+import {OpenedScreenEnum} from "../../../models/phone/enums";
 import {openScreen} from "../../../../redux/actions/hud/phone";
 import PhoneTypingScreen from "./PhoneTypingScreen";
 import CallsScreen from "./CallsScreen/CallsScreen";

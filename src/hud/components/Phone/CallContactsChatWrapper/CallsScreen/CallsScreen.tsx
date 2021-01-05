@@ -2,7 +2,7 @@ import React from 'react';
 import {useSelector} from 'react-redux';
 import classes from '../../../../../styles/hud/components/Phone/CallContactsChatWrapper/CallsScreen/CallsScreen.module.scss';
 import SingleCall from "./SingleCall";
-import {ThemesEnum} from "../../../../models/Phone/enums";
+import {ThemesEnum} from "../../../../models/phone/enums";
 
 const CallsScreen = React.memo(() => {
 

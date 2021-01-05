@@ -1,0 +1,16 @@
+.TitleAndSwitchRow {
+  width: 100%;
+  height: 100%;
+  padding: 8.73% 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .TitleWrapper {
+    max-width: 80%;
+  }
+
+  .SwitchWrapper {
+    width: 12.73%;
+  }
+}

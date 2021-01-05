@@ -1,4 +1,4 @@
-import {SET_ALL_INTERACTIONS, SET_IS_OPENED_INTERACTIONS} from "./interactionTypes";
+import {SET_ALL_INTERACTIONS, SET_IS_OPENED_INTERACTIONS} from "./interactionsTypes";
 import {SingleInteractionInterface} from "../../../hud/models/InteractionInterfaces";
 
 // for now only for close

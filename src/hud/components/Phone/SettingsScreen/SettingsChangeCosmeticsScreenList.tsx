@@ -7,7 +7,7 @@ import LeadText from "../Text/LeadText";
 import Switch from "./Switch";
 import themeImageImg
   from "../../../../assets/hud/images/components/Phone/components/SettingsList/cosmetics_themeImage.svg";
-import {ThemesArray, ThemesEnum} from "../../../models/Phone/enums";
+import {ThemesArray, ThemesEnum} from "../../../models/phone/enums";
 import {setCosmeticSetting} from "../../../../redux/actions/hud/phone";
 import SettingsChangeCosmeticsScreenListStateless from "./SettingsChangeCosmeticsScreenListStateless";
 
@@ -80,7 +80,7 @@ const SettingsChangeCosmeticsScreenList: React.FC<Props> = ({theme, themeImage})
 
   //region -------------------- Handlers --------------------
   const changeDarkModeHandler = () => {
-    const newThemeValue = theme === ThemesEnum.white ? ThemesEnum.black : ThemesEnum.white;
+    const newThemeValue = theme === ThemesEnum.black ? ThemesEnum.white : ThemesEnum.black;
     dispatch(setCosmeticSetting('theme', newThemeValue));
   }
 

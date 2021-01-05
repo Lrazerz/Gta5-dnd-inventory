@@ -1,0 +1,19 @@
+@use '../../../../../../hud/components/Corporations/consts/corporationsTheme';
+
+.PermissionsSubTabs {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  .Header {
+    width: 100%;
+    height: 16.33%;
+  }
+
+  .TabContent {
+    flex-grow: 1;
+    width: 100%;
+    background-color: corporationsTheme.$bg_darkGrey2;
+  }
+}

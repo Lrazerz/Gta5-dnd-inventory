@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {useSwipeable} from "react-swipeable";
 import {useSelector, useDispatch} from 'react-redux';
-import {OpenedScreenEnum} from "../../../models/Phone/enums";
+import {OpenedScreenEnum} from "../../../models/phone/enums";
 import {openScreen, setRingtone} from "../../../../redux/actions/hud/phone";
 import SettingsChangeRingtoneScreenStateless from "./SettingsChangeRingtoneScreenStateless";
 

@@ -8,7 +8,7 @@ import phoneSettingImg from '../../../../assets/hud/images/components/Phone/comp
 import LeadText from "../Text/LeadText";
 import Switch from "./Switch";
 import {openScreen, setSetting} from "../../../../redux/actions/hud/phone";
-import {OpenedScreenEnum, ThemesEnum} from "../../../models/Phone/enums";
+import {OpenedScreenEnum, ThemesEnum} from "../../../models/phone/enums";
 
 const SettingsList = React.memo(() => {
 

@@ -6,7 +6,7 @@ import extWifiImg from '../../../../assets/hud/images/components/Phone/component
 import networkImg from '../../../../assets/hud/images/components/Phone/components/PhoneHud/network.svg';
 import batteryImg from '../../../../assets/hud/images/components/Phone/components/PhoneHud/battery.svg';
 import LeadText from "../Text/LeadText";
-import {OpenedScreenEnum, ThemesEnum} from "../../../models/Phone/enums";
+import {OpenedScreenEnum, ThemesEnum} from "../../../models/phone/enums";
 
 interface Props {
   children: any;

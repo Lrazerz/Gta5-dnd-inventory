@@ -1,6 +1,6 @@
 import React, {CSSProperties} from 'react';
 import classes from '../../../styles/hud/components/Phone/SettingsScreen/ScreenTitleWrapper.module.scss';
-import {ThemesEnum} from "../../models/Phone/enums";
+import {ThemesEnum} from "../../models/phone/enums";
 import leftArrowImg from "../../../assets/hud/images/components/Phone/components/SettingsList/left-arrow.svg";
 import LeadText from "./Text/LeadText";
 

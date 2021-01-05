@@ -1,0 +1,18 @@
+.ModelsList {
+  width: 100%;
+  height: 100%;
+  //background-color: red;
+
+  .SearchWrapper {
+    width: 100%;
+    height: 6.84%;
+    box-sizing: border-box;
+    padding: 0 9.8%;
+  }
+
+  .ListWrapper {
+    width: 100%;
+    height: calc(93.16% - 2px);
+    max-height: calc(93.16% - 2px);
+  }
+}

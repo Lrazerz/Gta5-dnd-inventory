@@ -1,0 +1,15 @@
+.PermissionTabRightContent {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  .HeaderWrapper {
+    width: 100%;
+    height: 7.19%;
+  }
+
+  .ContentWrapper {
+    flex-grow: 1;
+  }
+}

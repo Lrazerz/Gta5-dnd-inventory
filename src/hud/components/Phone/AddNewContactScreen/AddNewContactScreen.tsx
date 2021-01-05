@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useSwipeable} from "react-swipeable";
 import {useSelector, useDispatch} from 'react-redux';
-import {OpenedScreenEnum, PlayerAvatarsArray} from "../../../models/Phone/enums";
+import {OpenedScreenEnum, PlayerAvatarsArray} from "../../../models/phone/enums";
 import {addNewContactAction, openPrevScreen, openScreen} from "../../../../redux/actions/hud/phone";
 import defaultAvatar from '../../../../assets/avatars/avatar1.svg';
 import {minContactLength} from "../../../../constants/hud/constants";

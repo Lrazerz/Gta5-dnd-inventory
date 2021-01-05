@@ -6,7 +6,7 @@ import LeadText from "../Text/LeadText";
 import Switch from "./Switch";
 import themeImageImg
   from "../../../../assets/hud/images/components/Phone/components/SettingsList/cosmetics_themeImage.svg";
-import {ThemesEnum} from "../../../models/Phone/enums";
+import {ThemesEnum} from "../../../models/phone/enums";
 
 interface ThemeImageInterface {
   title: string;

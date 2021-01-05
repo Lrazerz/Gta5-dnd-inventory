@@ -1,0 +1,37 @@
+@use '../../../../../../hud/components/Corporations/consts/corporationsTheme';
+
+.CommonPermissionsList {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(corporationsTheme.$bg_darkBlack, 0.95);
+  padding: 0 7.95%;
+  box-sizing: border-box;
+
+  .HeaderWrapper {
+    width: 100%;
+    height: 15.7%;
+  }
+
+  .InputWrapper {
+    width: 100%;
+    height: 5.3%;
+  }
+
+  .PermissionsSetsWrapper {
+    width: 100%;
+    max-width: 100%;
+    height: 79%;
+    max-height: 79%;
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    &::-webkit-scrollbar {
+      position: absolute;
+      width: 0.2rem;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: #50535C;
+      border-radius: 0.3rem;
+    }
+  }
+}

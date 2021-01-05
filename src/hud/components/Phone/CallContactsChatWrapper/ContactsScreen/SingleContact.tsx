@@ -1,6 +1,6 @@
 import React, {CSSProperties, useEffect, useState} from 'react';
 import classes from '../../../../../styles/hud/components/Phone/CallContactsChatWrapper/ContactsScreen/SingleContact.module.scss';
-import {CallsInterface, ThemesEnum} from "../../../../models/Phone/reducerInterfaces";
+import {CallsInterface, ThemesEnum} from "../../../../models/phone/reducerInterfaces";
 import phoneTheme from '../../consts/phoneTheme';
 import LeadText from "../../Text/LeadText";
 import {preventImageDrag} from "../../../../../utils/utils";

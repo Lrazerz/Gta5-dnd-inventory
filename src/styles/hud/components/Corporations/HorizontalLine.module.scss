@@ -1,0 +1,10 @@
+.HorizontalLine {
+  width: 100%;
+  //background-color: #252932;
+  background-color: #30343F;
+  height: 1px;
+
+  @media (min-width: 2500px) {
+    height: 2px;
+  }
+}

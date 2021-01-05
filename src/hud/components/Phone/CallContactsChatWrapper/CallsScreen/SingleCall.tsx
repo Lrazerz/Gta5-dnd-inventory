@@ -1,7 +1,7 @@
 import React, {CSSProperties, useEffect, useState} from 'react';
 import {useDispatch} from 'react-redux';
 import classes from '../../../../../styles/hud/components/Phone/CallContactsChatWrapper/CallsScreen/SingleCall.module.scss';
-import {CallsInterface, ThemesEnum} from "../../../../models/Phone/reducerInterfaces";
+import {CallsInterface, ThemesEnum} from "../../../../models/phone/reducerInterfaces";
 import phoneTheme from '../../consts/phoneTheme';
 import LeadText from "../../Text/LeadText";
 import {preventImageDrag} from "../../../../../utils/utils";

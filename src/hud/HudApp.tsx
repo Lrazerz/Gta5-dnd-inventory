@@ -70,9 +70,6 @@ const HudApp: React.FC<Props> = React.memo(function HudApp({data}) {
 
   const dispatch = useDispatch();
 
-  const {isPhoneOpenedRedux, isInteractionsOpenedRedux} = useSelector(({hud: {phone, interactions}}) =>
-    ({isPhoneOpenedRedux: phone.isPhoneOpened, isInteractionsOpenedRedux: interactions.isOpened}));
-
   const phoneWrapperRef = useRef();
 
   useEffect(() => {

@@ -2,12 +2,12 @@ import React, {CSSProperties, useEffect, useRef, useState} from 'react';
 import {useDispatch} from 'react-redux';
 import classes
   from '../../../../../styles/hud/components/Phone/CallContactsChatWrapper/ChatsScreen/SingleChat.module.scss';
-import {ChatsDemoInterface, ThemesEnum} from "../../../../models/Phone/reducerInterfaces";
+import {ChatsDemoInterface, ThemesEnum} from "../../../../models/phone/reducerInterfaces";
 import phoneTheme from '../../consts/phoneTheme';
 import LeadText from "../../Text/LeadText";
 import {preventImageDrag} from "../../../../../utils/utils";
 import {openScreen, setSelectedChat} from "../../../../../redux/actions/hud/phone";
-import {OpenedScreenEnum} from "../../../../models/Phone/enums";
+import {OpenedScreenEnum} from "../../../../models/phone/enums";
 
 interface Props {
   chat: ChatsDemoInterface;

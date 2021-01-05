@@ -1,6 +1,6 @@
 import React, {CSSProperties, useEffect, useState} from 'react';
 import classes from '../../../../styles/hud/components/Phone/MainScreen/LastMessage.module.scss';
-import {LastMessageInterface, ThemesEnum} from "../../../models/Phone/reducerInterfaces";
+import {LastMessageInterface, ThemesEnum} from "../../../models/phone/reducerInterfaces";
 import LeadText from "../Text/LeadText";
 import phoneTheme from "../consts/phoneTheme";
 import {preventImageDrag} from "../../../../utils/utils";

@@ -1,0 +1,17 @@
+@use '../../../../hud/components/Corporations/consts/corporationsTheme';
+
+.LeftVerticalLine {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 1px;
+
+  background-color: corporationsTheme.$bg_orange_picked;
+  @media(min-width: 1900px) {
+    width: 2px;
+  }
+  @media(min-width: 2500px) {
+    width: 4px;
+  }
+}

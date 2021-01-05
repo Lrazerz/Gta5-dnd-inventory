@@ -1,0 +1,12 @@
+@use '../../../../../../../../hud/components/Corporations/consts/corporationsTheme';
+
+.ModelsListItem {
+  position: relative;
+  width: 100%;
+  padding: 12.25%;
+  box-sizing: border-box;
+
+  &:hover {
+    background-color: rgba(corporationsTheme.$text_white3, 0.15);
+  }
+}

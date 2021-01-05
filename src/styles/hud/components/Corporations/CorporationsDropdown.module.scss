@@ -1,0 +1,47 @@
+@use '../../../../hud/components/Corporations/consts/corporationsTheme';
+
+.CorporationsDropdown {
+  //border-radius: 0.3rem;
+  //padding-bottom: 2%;
+  //padding-left: 2%;
+  //padding-right: 2%;
+  //box-sizing: border-box;
+  //background-color: corporationsTheme.$bg_gray2;
+
+  position: absolute;
+  top: 0;
+  border-radius: 0.294rem;
+  box-sizing: border-box;
+  background-color: corporationsTheme.$bg_gray2;
+  padding-bottom: 15%;
+
+
+  //
+  .ListItemWrapper {
+    height: 1.65rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    //padding-left: 15%;
+    //padding-right: 15%;
+
+
+    &:hover {
+      background-color: rgba(corporationsTheme.$text_white3, 0.15);
+    }
+  }
+}
+
+.SelectedItem {
+  position: relative;
+  background-color: corporationsTheme.$bg_gray;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0.294rem;
+  //padding: 0.91% 1.57%;
+  padding: 0.91% 1.7%;
+  box-sizing: border-box;
+
+
+}

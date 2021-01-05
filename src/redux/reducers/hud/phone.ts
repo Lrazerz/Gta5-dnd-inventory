@@ -23,8 +23,8 @@ import {
   LastMessageInterface,
   PhoneHudDataInterface, SelectedChatInterface,
   SettingsInterface
-} from "../../../hud/models/Phone/reducerInterfaces";
-import {OpenedScreenEnum, ThemesEnum} from "../../../hud/models/Phone/enums";
+} from "../../../hud/models/phone/reducerInterfaces";
+import {OpenedScreenEnum, ThemesEnum} from "../../../hud/models/phone/enums";
 
 interface InitialStateInterface {
   isPhoneOpened: boolean;
@@ -58,13 +58,13 @@ interface InitialStateInterface {
 }
 
 const initialState = {
-  isPhoneOpened: false,
+  isPhoneOpened: true,
   // to display in chats
   playerAvatar: "default-avatar",
 
   lastMessages: [],
 
-  openedScreen: OpenedScreenEnum.mainScreen,
+  openedScreen: OpenedScreenEnum.settings,
   // to come back from curr call and inc call
   prevOpenedScreen: OpenedScreenEnum.mainScreen,
 

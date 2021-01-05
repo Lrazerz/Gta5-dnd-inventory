@@ -1,0 +1,12 @@
+@use '../../../../hud/components/Corporations/consts/corporationsTheme';
+
+.CorporationsGraySquare {
+  background-color: corporationsTheme.$bg_gray;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0.294rem;
+  //padding: 0.91% 1.57%;
+  padding: 0.91% 1.7%;
+  box-sizing: border-box;
+}

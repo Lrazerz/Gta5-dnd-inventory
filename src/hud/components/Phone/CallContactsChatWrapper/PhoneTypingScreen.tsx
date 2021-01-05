@@ -4,7 +4,7 @@ import classes from '../../../../styles/hud/components/Phone/CallContactsChatWra
 import LeadText from "../Text/LeadText";
 import makeCallImg
   from '../../../../assets/hud/images/components/Phone/components/CallContactsChatWrapper/make-call.svg';
-import {OpenedScreenEnum, ThemesEnum} from "../../../models/Phone/enums";
+import {OpenedScreenEnum, ThemesEnum} from "../../../models/phone/enums";
 import {preventImageDrag} from "../../../../utils/utils";
 import {openOutComingCall, openScreen, setAddNewContactPhoneNumber} from "../../../../redux/actions/hud/phone";
 import phoneTheme from "../consts/phoneTheme";

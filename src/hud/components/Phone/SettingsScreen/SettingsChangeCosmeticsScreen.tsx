@@ -2,7 +2,7 @@ import React, {CSSProperties} from 'react';
 import {useSwipeable} from "react-swipeable";
 import {useSelector, useDispatch} from 'react-redux';
 import classes from '../../../../styles/hud/components/Phone/SettingsScreen/SettingsChangeCosmeticsScreen.module.scss';
-import {OpenedScreenEnum} from "../../../models/Phone/enums";
+import {OpenedScreenEnum} from "../../../models/phone/enums";
 import SettingsChangeCosmeticsScreenList from "./SettingsChangeCosmeticsScreenList";
 import {openScreen} from "../../../../redux/actions/hud/phone";
 import ScreenTitleWrapper from "../ScreenTitleWrapper";

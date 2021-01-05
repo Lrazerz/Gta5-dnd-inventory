@@ -3,7 +3,7 @@ import {useSelector} from 'react-redux';
 import PhoneBorders from "./UI/PhoneBorders";
 import classes from '../../../styles/hud/components/Phone/Phone.module.scss';
 import PhoneHud from "./UI/PhoneHud";
-import {OpenedScreenEnum} from "../../models/Phone/enums";
+import {OpenedScreenEnum} from "../../models/phone/enums";
 import MainScreen from "./MainScreen/MainScreen";
 import SelectedChatScreen from "./SelectedChatScreen/SelectedChatScreen";
 import SettingsScreen from "./SettingsScreen/SettingsScreen";
