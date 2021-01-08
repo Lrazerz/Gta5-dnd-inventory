@@ -14,9 +14,11 @@ interface Props {
 const CommonPermissionsList: React.FC<Props> = React.memo(() => {
 
   const permissionsSets: CommonPermissionsSetInterface[] =
-    useSelector(({hud}) => hud.corporations.tabs.permissions.commonPermissions);
+    useSelector(({hud}) => hud.corporations.tabs.permissions.permissions.commonPermissionsSets);
 
-  console.log(permissionsSets);
+  if(!permissionsSets) {
+    return <div className={classes.CommonPermissionsList}></div>
+  }
 
   return (
     <div className={classes.CommonPermissionsList}>
@@ -29,7 +31,7 @@ const CommonPermissionsList: React.FC<Props> = React.memo(() => {
       <HorizontalLine/>
       <div className={classes.PermissionsSetsWrapper}>
         {permissionsSets.map(permSet => (
-          <CommonPermissionsSet title={permSet.title} permissions={permSet.permissions} key={permSet.title}/>
+          <CommonPermissionsSet id={permSet.id} title={permSet.title} permissions={permSet.permissions} key={permSet.id}/>
         ))}
       </div>
     </div>

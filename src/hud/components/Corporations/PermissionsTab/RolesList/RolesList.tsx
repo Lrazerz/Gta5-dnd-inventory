@@ -8,7 +8,7 @@ import RolesListContent from "./RolesListContent";
 import {
   permissionsRemoveRoleAction,
   permissionsSelectRoleAction
-} from "../../../../../redux/actions/hud/corporations/tabs/permissions";
+} from "../../../../../redux/actions/hud/corporations/tabs/permissions/permissions";
 
 const RolesList = React.memo(() => {
 
@@ -19,8 +19,8 @@ const RolesList = React.memo(() => {
 
   const {roles, selectedRole} = useSelector(({hud}) => {
     return {
-      roles: hud.corporations.tabs.permissions.roles,
-      selectedRole: hud.corporations.tabs.permissions.selectedRole
+      roles: hud.corporations.tabs.permissions.permissions.roles,
+      selectedRole: hud.corporations.tabs.permissions.permissions.selectedRole
     }
   })
 

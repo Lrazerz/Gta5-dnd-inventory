@@ -2,11 +2,11 @@ import {CORPORATIONS_CLOSE, CORPORATIONS_OPEN, CORPORATIONS_TAB_OPEN} from "./co
 import {CorporationsTabsEnum} from "../../../../hud/models/corporations/enums";
 
 // todo maybe main screen data too
-const corporationsOpen = () => {
+const corporationsOpenAction = () => {
   return {type: CORPORATIONS_OPEN};
 }
 
-const corporationsClose = () => {
+const corporationsCloseAction = () => {
   return {type: CORPORATIONS_CLOSE};
 }
 
@@ -15,7 +15,7 @@ const corporationsTabOpen = (openedTab: CorporationsTabsEnum) => {
 }
 
 export {
-  corporationsOpen,
-  corporationsClose,
+  corporationsOpenAction,
+  corporationsCloseAction,
   corporationsTabOpen
 }

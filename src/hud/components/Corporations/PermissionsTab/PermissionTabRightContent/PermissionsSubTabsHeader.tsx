@@ -1,5 +1,5 @@
 import React, {ReactElement} from 'react';
-import {useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import classes
   from '../../../../../styles/hud/components/Corporations/PermissionsTab/PermissionTabRightContent/PermissionsSubTabsHeader.module.scss';
 import {
@@ -10,18 +10,38 @@ import {
 import PermissionsSubTabHeader from "./PermissionsSubTabHeader";
 
 import {corporationsTheme} from "../../consts/corporationsTheme";
+import {permissionsOpenTabAction} from "../../../../../redux/actions/hud/corporations/tabs/permissions/permissions";
+import {mpTrigger_corporations_permissions_openTab} from "../../../../../utils/mpTriggers/hud/hudMpTriggers";
 
 interface Props {
-  openedTab
+  openedTab: CorporationsPermissionsTabsEnum
 }
 
 const PermissionsSubTabsHeader: React.FC<Props> = React.memo((Props) => {
+
+  const dispatch = useDispatch();
+
+  const selectTabHandler = (tabRussian: string, isActive: boolean) => {
+    if(isActive) return;
+    let tabEng: string;
+
+    for (const key in PermissionsSubTabsDict) {
+      if(PermissionsSubTabsDict[key].toLowerCase() === tabRussian.toLowerCase()) {
+        tabEng = key;
+      }
+    }
+    const tab: CorporationsPermissionsTabsEnum = CorporationsPermissionsTabsEnum[tabEng];
+
+    console.log('tab', tab);
+    dispatch(permissionsOpenTabAction(tab));
+    mpTrigger_corporations_permissions_openTab(tab);
+  }
 
   const tabsBlock = PermissionsSubTabsRussian.map(tab => {
     const isActive = PermissionsSubTabsDict[CorporationsPermissionsTabsEnum[Props.openedTab]].toLowerCase() === tab.toLowerCase();
 
     return (
-      <div className={classes.TabWrapper} key={tab}>
+      <div className={classes.TabWrapper} key={tab} onClick={() => selectTabHandler(tab, isActive)}>
       <PermissionsSubTabHeader title={tab} imageUrl={_getImageForTab(tab, isActive)}
                                isActive={isActive} />
 

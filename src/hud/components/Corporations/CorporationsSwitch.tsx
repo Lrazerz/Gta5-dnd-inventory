@@ -21,7 +21,6 @@ const CorporationsSwitch: React.FC<Props> = React.memo((Props) => {
     }
   }, [containerRef.current]);
 
-  console.log('switch container height', height)
   const indicatorStyles: CSSProperties = {
     transform: Props.value ? 'translateX(105.9%)' : 'none',
     backgroundColor: Props.value ? corporationsTheme.bg_green : corporationsTheme.bg_lightGray,

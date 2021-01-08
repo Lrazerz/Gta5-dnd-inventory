@@ -12,7 +12,8 @@ interface Props {
 
 const PermissionsSubTabs = React.memo((Props) => {
 
-  const openedTab: CorporationsPermissionsTabsEnum = useSelector(({hud}) => hud.corporations.tabs.permissions.openedTab);
+  const openedTab: CorporationsPermissionsTabsEnum = useSelector(({hud}) =>
+    hud.corporations.tabs.permissions.permissions.openedTab);
 
   let tabContent: ReactElement;
 
@@ -37,7 +38,6 @@ const PermissionsSubTabs = React.memo((Props) => {
       tabContent = <div></div>;
       break;
     }
-
   }
 
   return (

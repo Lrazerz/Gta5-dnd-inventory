@@ -6,6 +6,7 @@ import CorporationsText from "./CorporationsText";
 interface Props {
   title: string;
   isActive: boolean;
+  onClick: any;
 }
 
 const CorporationsHeaderTab: React.FC<Props> = React.memo((Props) => {
@@ -23,7 +24,7 @@ const CorporationsHeaderTab: React.FC<Props> = React.memo((Props) => {
   }
 
   return (
-    <div style={containerStyles} className={classes.CorporationsHeaderTab}>
+    <div style={containerStyles} className={classes.CorporationsHeaderTab} onClick={Props.onClick}>
       <CorporationsText styles={titleTextStyles}>
         {Props.title}
       </CorporationsText>

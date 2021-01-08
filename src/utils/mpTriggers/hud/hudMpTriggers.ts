@@ -1,6 +1,8 @@
 //region -------------------- Phone triggers --------------------
 // mainScreen, 3 messages
 
+import {CorporationsPermissionsTabsEnum, CorporationsTabsEnum} from "../../../hud/models/corporations/enums";
+
 const mpTrigger_phone_openLastMessages = () => {
   console.log('mp trig phone openLastMessages');
   try {
@@ -183,6 +185,71 @@ const mpTrigger_interactions_closeInteractions = () => {
 }
 //endregion
 
+//region -------------------- Corporations triggers --------------------
+
+
+const mpTrigger_corporations_openTab = (tabId: CorporationsTabsEnum) => {
+  console.log('open tab trigger', tabId);
+  try {
+    // @ts-ignore
+    mp.trigger('cef_cl_corporations_openTab', tabId);
+  } catch (e) {}
+}
+
+// tab permissions
+const mpTrigger_corporations_permissions_selectRole = (id: string) => {
+  console.log('select role trigger')
+  try {
+    // @ts-ignore
+    mp.trigger('cef_cl_corporations_permissions_selectRole', id);
+  } catch (e) {}
+}
+
+const mpTrigger_corporations_permissions_changePermission =
+  (setId: string, permissionId: string, value: boolean) => {
+  console.log('change permission trigger', setId, permissionId, value)
+  try {
+    // @ts-ignore
+    mp.trigger('cef_cl_corporations_permissions_changePermission',
+      JSON.stringify({SetId: setId, PermissionId: permissionId, Value: value}));
+  } catch (e) {}
+}
+
+// 0 - Модули, 1 - Недвижимость, 2 - Предприятия, 3 - Техника, 4 - Имущество корпорации
+const mpTrigger_corporations_permissions_openTab = (tabId: CorporationsPermissionsTabsEnum) => {
+  try {
+    // @ts-ignore
+    mp.trigger('cef_cl_corporations_permissions_openTab', tabId);
+  } catch (e) {}
+}
+
+// sub tab auto
+const mpTrigger_corporations_permissions_auto_selectModel = (autoId: string) => {
+  console.log('select model trigger', autoId)
+  try {
+    // @ts-ignore
+    mp.trigger('cef_cl_corporations_permissions_auto_selectModel', autoId);
+  } catch (e) {}
+}
+
+const mpTrigger_corporations_permissions_auto_changeResponsible = (responsibleId: string) => {
+  console.log('select responsible trigger', responsibleId)
+  try {
+    // @ts-ignore
+    mp.trigger('cef_cl_corporations_permissions_auto_changeResponsible', responsibleId);
+  } catch (e) {}
+}
+
+const mpTrigger_corporations_permissions_auto_changePermission = (permissionId: string, value: boolean) => {
+  console.log('select responsible trigger', permissionId, value);
+  try {
+    // @ts-ignore
+    mp.trigger('cef_cl_corporations_permissions_auto_changePermission',
+      JSON.stringify({Id: permissionId, Value: value}));
+  } catch (e) {}
+}
+//endregion
+
 export {
   // phone triggers
   mpTrigger_phone_openLastMessages,
@@ -208,4 +275,14 @@ export {
   // interaction triggers
   mpTrigger_interactions_openInteraction,
   mpTrigger_interactions_closeInteractions,
+
+  // corporations triggers
+  mpTrigger_corporations_openTab,
+  mpTrigger_corporations_permissions_selectRole,
+  mpTrigger_corporations_permissions_changePermission,
+  mpTrigger_corporations_permissions_openTab,
+
+  mpTrigger_corporations_permissions_auto_selectModel,
+  mpTrigger_corporations_permissions_auto_changeResponsible,
+  mpTrigger_corporations_permissions_auto_changePermission
 }

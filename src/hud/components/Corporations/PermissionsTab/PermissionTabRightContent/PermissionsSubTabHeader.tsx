@@ -12,7 +12,6 @@ interface Props {
 
 const PermissionsSubTabHeader: React.FC<Props> = React.memo((Props) => {
 
-  console.log('imageUrl', Props.imageUrl)
   const titleTextStyles: CSSProperties = {
     whiteSpace: 'nowrap',
     fontSize: '0.7647rem',

@@ -5,7 +5,6 @@ import {
 } from "../../../actions/hud/corporations/corporationsTypes";
 import {CorporationsTabsEnum} from "../../../../hud/models/corporations/enums";
 
-
 interface InitialStateInterface {
   isOpened: boolean;
   openedTab: CorporationsTabsEnum;
@@ -13,13 +12,14 @@ interface InitialStateInterface {
 }
 
 const initialState: InitialStateInterface = {
-  isOpened: true,
+  isOpened: false,
   openedTab: CorporationsTabsEnum.permissions,
 }
 
 export default (state = initialState, action) => {
   switch (action.type) {
     case CORPORATIONS_OPEN: {
+      console.log('open corporations reducer')
       return {
         ...state,
         isOpened: true,

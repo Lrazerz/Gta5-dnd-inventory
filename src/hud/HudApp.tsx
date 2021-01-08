@@ -17,6 +17,8 @@ import {SingleInteractionInterface} from "./models/InteractionInterfaces";
 import {mpTrigger_interactions_closeInteractions} from "../utils/mpTriggers/hud/hudMpTriggers";
 import HudAppStateless from "./HudAppStateless";
 import {DefaultHudDataInterface} from "../App";
+import {openCorporations} from "../utils/windowFuncs/hud/Corporations/CorporationsInterceptors";
+import {corporationsOpenAction, corporationsCloseAction} from "../redux/actions/hud/corporations/corporations";
 
 interface Props {
   data: DefaultHudDataInterface;
@@ -215,19 +217,31 @@ const HudApp: React.FC<Props> = React.memo(function HudApp({data}) {
     }
     //endregion
 
+    //region -------------------- Corporations interceptors --------------------
+    // @ts-ignore
+    if(!window.openCorporations) {
+      // @ts-ignore
+      window.openCorporations = (mainScreenData) => {
+        const data = openCorporations(mainScreenData);
+        dispatch(corporationsOpenAction());
+      }
+    }
+
+    // @ts-ignore
+    if(!window.closeCorporations) {
+      // @ts-ignore
+      window.closeCorporations = () => {
+        dispatch(corporationsCloseAction());
+      }
+    }
+    //endregion
+
     return () => {
       //region -------------------- Phone window functions --------------------
       // @ts-ignore
       window.openPhone = undefined;
       // @ts-ignore
       window.closePhone = undefined;
-      //endregion
-
-      //region -------------------- Interactions window functions --------------------
-      // @ts-ignore
-      window.openInteractions = undefined;
-      // @ts-ignore
-      window.closeInteractions = undefined;
       //endregion
 
       // @ts-ignore
@@ -252,7 +266,20 @@ const HudApp: React.FC<Props> = React.memo(function HudApp({data}) {
       window.setSpeed = undefined;
       // @ts-ignore
       window.setFuel = undefined;
+
+      //region -------------------- Interactions window functions --------------------
       // @ts-ignore
+      window.openInteractions = undefined;
+      // @ts-ignore
+      window.closeInteractions = undefined;
+      //endregion
+
+      //region -------------------- Corporations window functions --------------------
+      // @ts-ignore
+      window.openCorporations = undefined;
+      // @ts-ignore
+      window.closeCorporations = undefined;
+      //endregion
     }
   }, []);
   //endregion

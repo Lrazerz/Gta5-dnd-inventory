@@ -1,5 +1,11 @@
 // permissions tab
+interface SingleRoleInterface {
+  id: string;
+  title: string;
+}
+
 interface CommonPermissionsSetInterface {
+  id: string;
   title: string;
   permissions: PermissionInterface[];
 }
@@ -11,7 +17,12 @@ interface PermissionInterface {
 }
 
 // auto sub tab
-interface ResponsibleForAuto {
+interface PermissionsTabAutoInterface {
+  models: SingleAutoModelTitleInterface[];
+  selectedModelInfo: PermissionsAutoModelInterface;
+}
+
+interface SingleAutoModelTitleInterface {
   id: string;
   title: string;
 }
@@ -20,28 +31,26 @@ interface PermissionsAutoModelInterface {
   id: string;
   title: string;
   availableInventorySlots: number;
-  responsible: ResponsibleForAuto
-  potentialResponsible: ResponsibleForAuto[];
+  responsible: ResponsibleForAutoInterface
+  potentialResponsibles: ResponsibleForAutoInterface[];
   availableGaragePlaces: number;
   permissions: PermissionInterface[];
 }
 
-interface SingleAutoModelTitle {
+interface ResponsibleForAutoInterface {
   id: string;
   title: string;
 }
 
-interface PermissionsTabAutoInterface {
-  models: SingleAutoModelTitle[];
-  selectedModelInfo: PermissionsAutoModelInterface;
-}
-
-
 export {
+  SingleRoleInterface,
+
   CommonPermissionsSetInterface,
   PermissionInterface,
 
-  SingleAutoModelTitle,
+  SingleAutoModelTitleInterface,
   PermissionsAutoModelInterface,
-  PermissionsTabAutoInterface
+  PermissionsTabAutoInterface,
+
+  ResponsibleForAutoInterface
 }

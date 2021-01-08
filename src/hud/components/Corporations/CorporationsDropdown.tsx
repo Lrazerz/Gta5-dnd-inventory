@@ -4,6 +4,8 @@ import CorporationsText from "./CorporationsText";
 import HorizontalLine from "./HorizontalLine";
 import {corporationsTheme} from "./consts/corporationsTheme";
 import CorporationsGraySquare from "./CorporationsGraySquare";
+import {permissionsAutoChangeResponsibleAction} from "../../../redux/actions/hud/corporations/tabs/permissions/tabs/auto";
+import {ResponsibleForAutoInterface} from "../../models/corporations/interfaces";
 
 interface SingleItemInterface {
   id: string;
@@ -28,7 +30,7 @@ const CorporationsDropdown: React.FC<Props> = React.memo((Props) => {
       // @ts-ignore
       containerRef.current.style.width = +window.getComputedStyle(containerRef.current).width.match(/(\.|\d)+/)[0] * 1.3 + 'px';
     }
-  }, containerRef.current)
+  }, [containerRef.current])
 
 
   const openDropdownHandler = () => {
@@ -62,8 +64,9 @@ const CorporationsDropdown: React.FC<Props> = React.memo((Props) => {
   //   </div>
   // );
 
-  const pickItemHandler = () => {
+  const pickItemHandler = (listItem: ResponsibleForAutoInterface) => {
     setIsOpened(false);
+    Props.onSelect(listItem);
   }
 
   const pickedItemTextStyles: CSSProperties = {
@@ -84,11 +87,11 @@ const CorporationsDropdown: React.FC<Props> = React.memo((Props) => {
     backgroundColor: corporationsTheme.bg_pickledBlueWood,
   }
 
-  const listBlock: JSX.Element[] = [<HorizontalLine styles={horizontalLineStyles}/>];
+  const listBlock: JSX.Element[] = [<HorizontalLine styles={horizontalLineStyles} key={'horizontalLine'}/>];
 
   listBlock.push(...Props.list.map(listItem => {
     return (
-      <div className={classes.ListItemWrapper} onClick={pickItemHandler}>
+      <div key={listItem.id} className={classes.ListItemWrapper} onClick={() => pickItemHandler(listItem)}>
         <CorporationsText styles={listTextStyles}>
           {listItem.title}
         </CorporationsText>
@@ -102,7 +105,7 @@ const CorporationsDropdown: React.FC<Props> = React.memo((Props) => {
         {Props.selectedItem.title}
       </CorporationsText>
       <div className={classes.CorporationsDropdown} ref={containerRef}>
-        <div className={classes.ListItemWrapper}>
+        <div className={classes.ListItemWrapper} key={Props.selectedItem.id}>
           <CorporationsText styles={pickedItemTextStyles}>
             {Props.selectedItem.title}
           </CorporationsText>

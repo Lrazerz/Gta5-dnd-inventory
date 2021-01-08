@@ -26,7 +26,7 @@ const TitleAndSwitchRow: React.FC<Props> = React.memo((Props) => {
         </CorporationsText>
       </div>
       <div className={classes.SwitchWrapper}>
-        <CorporationsSwitch value={Props.value} onChange={() => {}} />
+        <CorporationsSwitch value={Props.value} onChange={Props.onChange} />
       </div>
     </div>
   );

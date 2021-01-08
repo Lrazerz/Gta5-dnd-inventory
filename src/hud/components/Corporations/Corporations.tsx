@@ -1,8 +1,10 @@
-import React, {ReactElement, useState} from 'react';
-import {useSelector} from 'react-redux';
+import React, {ReactElement, useEffect, useState} from 'react';
+import {useSelector, useDispatch} from 'react-redux';
 import CorporationsTabs from "./CorporationsTabs";
 import {CorporationsTabsEnum} from "../../models/corporations/enums";
 import PermissionsTab from "./PermissionsTab/PermissionsTab";
+import {corporationsOpenPermissionsTab} from "../../../utils/windowFuncs/hud/Corporations/CorporationsInterceptors";
+import {permissionsSetRolesPermissions} from "../../../redux/actions/hud/corporations/tabs/permissions/permissions";
 
 export interface CorporationsDimensionsInterface {
   width: number;
@@ -58,6 +60,8 @@ getDimensions = () => {
 // also can be opened permissions
 const Corporations = React.memo(() => {
 
+  const dispatch = useDispatch();
+
   const [dimensions, setDimensions]: [CorporationsDimensionsInterface, any] = useState(null);
 
   const openedTab: CorporationsTabsEnum = useSelector(({hud}) =>
@@ -67,6 +71,18 @@ const Corporations = React.memo(() => {
     const dimensions: CorporationsDimensionsInterface = getDimensions();
     setDimensions(dimensions);
   }
+
+  useEffect(() => {
+    // @ts-ignore
+    if(!window.corporations_openPermissions) {
+      // @ts-ignore
+      window.corporations_openPermissions = (dataJSON: string) => {
+        const parsedData = corporationsOpenPermissionsTab(dataJSON);
+        dispatch(permissionsSetRolesPermissions(parsedData.roles, parsedData.selectedRoleInfo.id,
+          parsedData.selectedRoleInfo.commonPermissionsSets));
+      }
+    }
+  }, []);
 
   let contentToReturn: ReactElement;
 
