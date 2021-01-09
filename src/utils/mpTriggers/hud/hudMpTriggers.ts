@@ -187,7 +187,6 @@ const mpTrigger_interactions_closeInteractions = () => {
 
 //region -------------------- Corporations triggers --------------------
 
-
 const mpTrigger_corporations_openTab = (tabId: CorporationsTabsEnum) => {
   console.log('open tab trigger', tabId);
   try {
@@ -202,6 +201,14 @@ const mpTrigger_corporations_permissions_selectRole = (id: string) => {
   try {
     // @ts-ignore
     mp.trigger('cef_cl_corporations_permissions_selectRole', id);
+  } catch (e) {}
+}
+
+const mpTrigger_corporations_permissions_removeRole = (id: string) => {
+  console.log('remove role trigger')
+  try {
+    // @ts-ignore
+    mp.trigger('cef_cl_corporations_permissions_removeRole', id);
   } catch (e) {}
 }
 
@@ -279,6 +286,7 @@ export {
   // corporations triggers
   mpTrigger_corporations_openTab,
   mpTrigger_corporations_permissions_selectRole,
+  mpTrigger_corporations_permissions_removeRole,
   mpTrigger_corporations_permissions_changePermission,
   mpTrigger_corporations_permissions_openTab,
 

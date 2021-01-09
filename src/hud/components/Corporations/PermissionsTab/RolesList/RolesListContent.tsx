@@ -11,8 +11,14 @@ import SixCircles from "../../SixCircles";
 import {corporationsTheme} from "../../consts/corporationsTheme";
 import LeftVerticalLine from "../../LeftVerticalLine";
 import {SingleRoleInterface} from "../../../../models/corporations/interfaces";
-import {permissionsSelectRoleAction} from "../../../../../redux/actions/hud/corporations/tabs/permissions/permissions";
-import {mpTrigger_corporations_permissions_selectRole} from "../../../../../utils/mpTriggers/hud/hudMpTriggers";
+import {
+  permissionsRemoveRoleAction,
+  permissionsSelectRoleAction
+} from "../../../../../redux/actions/hud/corporations/tabs/permissions/permissions";
+import {
+  mpTrigger_corporations_permissions_removeRole,
+  mpTrigger_corporations_permissions_selectRole
+} from "../../../../../utils/mpTriggers/hud/hudMpTriggers";
 
 interface Props {
   roles: SingleRoleInterface[];
@@ -35,6 +41,11 @@ const RolesListContent: React.FC<Props> = React.memo((Props) => {
       dispatch(permissionsSelectRoleAction(role.id));
       mpTrigger_corporations_permissions_selectRole(role.id);
     }
+  }
+
+  const removeRoleHandler = (roleId: string) => {
+    dispatch(permissionsRemoveRoleAction(roleId));
+    mpTrigger_corporations_permissions_removeRole(roleId);
   }
 
   const singleRoleStyles: CSSProperties = {
@@ -79,7 +90,8 @@ const RolesListContent: React.FC<Props> = React.memo((Props) => {
           </CorporationsText>
         </div>
         {/*<img className={classes.AddNewRoleImageWrapper} src={newRoleImg}/>*/}
-        <img className={classes.RemoveRoleImageWrapper} src={removeRoleImg}/>
+        {isSelectedRole && <img className={classes.RemoveRoleImageWrapper} src={removeRoleImg}
+                                onClick={() => removeRoleHandler(role.id)}/>}
       </div>
       <HorizontalLine/>
     </div>)

@@ -25,8 +25,8 @@ const permissionsSetRoleInfoAction =
   return {type: PERMISSIONS_ROLE_SET_INFO, permissionsSets: roleInfo.commonPermissionsSets}
 }
 
-const permissionsRemoveRoleAction = (selectedRole: string) => {
-  return {type: PERMISSIONS_ROLE_REMOVE, selectedRole};
+const permissionsRemoveRoleAction = (roleId: string) => {
+  return {type: PERMISSIONS_ROLE_REMOVE, id: roleId};
 }
 
 const permissionsCommonPermChangeAction = (permissionsSetTitle: string, permissionTitle: string, permissionValue: boolean) => {

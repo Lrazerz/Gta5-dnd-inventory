@@ -10,6 +10,7 @@ const corporationsTheme = {
 
   bg_darkGrey: '#1F2229',
   bg_darkGrey2: '#2A2D38',
+  bg_darkGrey3: '#252831',
 
   bg_darkGray_picked: '#252931',
 

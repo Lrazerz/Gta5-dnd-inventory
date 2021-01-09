@@ -40,7 +40,7 @@ const defaultHudData: DefaultHudDataInterface = {
 
 const App = React.memo(function App() {
 
-  const [openedPart, setOpenedPart]: [number, (newState: number) => void] = useState();
+  const [openedPart, setOpenedPart]: [number, (newState: number) => void] = useState(null);
   const [hudData, setHudData]: [DefaultHudDataInterface, any] = useState(defaultHudData);
 
   useEffect(() => {

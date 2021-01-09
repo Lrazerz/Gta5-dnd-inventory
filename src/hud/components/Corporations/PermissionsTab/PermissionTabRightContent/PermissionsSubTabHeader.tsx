@@ -12,15 +12,20 @@ interface Props {
 
 const PermissionsSubTabHeader: React.FC<Props> = React.memo((Props) => {
 
+  const containerStyles: CSSProperties = {
+    backgroundColor: Props.isActive ? corporationsTheme.bg_darkGrey2 : 'transparent',
+    opacity: Props.isActive ? 0.95 : 1,
+  }
+
   const titleTextStyles: CSSProperties = {
     whiteSpace: 'nowrap',
     fontSize: '0.7647rem',
     lineHeight: '0.9324rem',
-    color: Props.isActive ? corporationsTheme.text_white : corporationsTheme.text_gray
+    color: Props.isActive ? corporationsTheme.text_white : corporationsTheme.text_gray,
   }
 
   return (
-    <div className={classes.PermissionsSubTab}>
+    <div style={containerStyles} className={classes.PermissionsSubTab}>
       <div className={classes.Content}>
         <div className={classes.ImageWrapper}>
           {Props.imageUrl}

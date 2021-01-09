@@ -1,3 +1,5 @@
+@use '../../../../../../hud/components/Corporations/consts/corporationsTheme';
+
 .PermissionsSubTab {
   width: 100%;
   height: 100%;
@@ -6,6 +8,7 @@
   align-items: center;
   padding: 16.71% 0;
   box-sizing: border-box;
+  border-left: 1px solid corporationsTheme.$bg_darkGrey3;
 
   .Content {
     width: 100%;

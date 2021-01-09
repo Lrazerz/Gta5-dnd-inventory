@@ -7,7 +7,10 @@ import {
   PERMISSIONS_AUTO_SELECT_MODEL,
   PERMISSIONS_AUTO_SET_DATA, PERMISSIONS_AUTO_SET_RESPONSIBLE
 } from "../../../../../../actions/hud/corporations/tabs/permissions/tabs/autoTypes";
-import {PERMISSIONS_ROLE_SELECT} from "../../../../../../actions/hud/corporations/tabs/permissions/permissionsTypes";
+import {
+  PERMISSIONS_ROLE_REMOVE,
+  PERMISSIONS_ROLE_SELECT
+} from "../../../../../../actions/hud/corporations/tabs/permissions/permissionsTypes";
 
 const initialState: PermissionsTabAutoInterface = {
   models: null,
@@ -106,8 +109,9 @@ const initialState: PermissionsTabAutoInterface = {
 
 export default (state = initialState, action) => {
   switch(action.type) {
-    case PERMISSIONS_ROLE_SELECT: {
-      return initialState;
+    case PERMISSIONS_ROLE_SELECT:
+    case PERMISSIONS_ROLE_REMOVE: {
+        return initialState;
     }
     case PERMISSIONS_AUTO_SET_DATA: {
       return {
