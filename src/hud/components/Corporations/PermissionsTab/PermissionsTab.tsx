@@ -66,7 +66,6 @@ const PermissionsTab: React.FC<Props> = React.memo(({dimensions}) => {
       window.corporations_permissions_RefreshPermissions = undefined;
       // @ts-ignore
       window.corporations_permissions_openAutoTab = undefined;
-
     }
   })
 

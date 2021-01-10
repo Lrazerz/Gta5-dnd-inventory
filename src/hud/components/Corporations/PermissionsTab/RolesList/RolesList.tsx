@@ -9,6 +9,7 @@ import {
   permissionsRemoveRoleAction,
   permissionsSelectRoleAction
 } from "../../../../../redux/actions/hud/corporations/tabs/permissions/permissions";
+import {SingleRoleInterface} from "../../../../models/corporations/interfaces";
 
 const RolesList = React.memo(() => {
 
@@ -16,6 +17,7 @@ const RolesList = React.memo(() => {
 
   const [searchText, setSearchText]: [string, any] = useState("");
   const [roleHeight, setRoleHeight]: [number, any] = useState(0);
+  const [filteredRoles, setFilteredRoles]: [SingleRoleInterface[], any] = useState();
 
   const {roles, selectedRole} = useSelector(({hud}) => {
     return {
@@ -25,13 +27,21 @@ const RolesList = React.memo(() => {
   })
 
   useEffect(() => {
+    if(searchText.length > 0) {
+      setFilteredRoles(roles.filter(role => role.title.toLowerCase().includes(searchText.toLowerCase())));
+    } else {
+      setFilteredRoles(roles);
+    }
+   }, [searchText, roles]);
+
+  useEffect(() => {
     if(containerRef.current) {
       const width: string = window.getComputedStyle(containerRef.current).width;
       const widthNumber: number = +width.match(/(\d|\.)+/)[0];
       const singleRoleHeight: number = 0.2342 * widthNumber;
       setRoleHeight(singleRoleHeight);
     }
-  }, [containerRef.current])
+  }, [containerRef.current]);
 
   return (
     <div ref={containerRef} className={classes.RolesList}>
@@ -45,7 +55,7 @@ const RolesList = React.memo(() => {
       <HorizontalLine />
       <div className={classes.RolesListContent}>
         {roleHeight ? (<RolesListContent
-          roles={roles} selectedRole={selectedRole}
+          roles={filteredRoles} selectedRole={selectedRole}
           onSelectRole={permissionsSelectRoleAction}
           onRemoveRole={permissionsRemoveRoleAction}
           roleHeight={roleHeight}/>) : null}

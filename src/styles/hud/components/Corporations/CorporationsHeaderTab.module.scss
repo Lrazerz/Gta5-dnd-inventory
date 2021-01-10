@@ -1,3 +1,5 @@
+@use '../../../../hud/components/Corporations/consts/corporationsTheme';
+
 .CorporationsHeaderTab {
   //height: 100%;
   padding: 0.5882rem 1rem;
@@ -5,4 +7,8 @@
   //background-color: red;
   display: flex;
   align-items: center;
+
+  &:hover {
+    background-color: rgba(corporationsTheme.$text_white3, 0.15);
+  }
 }

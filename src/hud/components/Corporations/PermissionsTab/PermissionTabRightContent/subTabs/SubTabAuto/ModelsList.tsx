@@ -1,4 +1,4 @@
-import React, {ReactElement} from 'react';
+import React, {ReactElement, useEffect, useState} from 'react';
 import {useDispatch} from 'react-redux';
 import classes
   from '../../../../../../../styles/hud/components/Corporations/PermissionsTab/PermissionTabRightContent/subTabs/SubTabAuto/ModelsList.module.scss';
@@ -18,6 +18,9 @@ const ModelsList: React.FC<Props> = React.memo((Props) => {
 
   const dispatch = useDispatch();
 
+  const [searchText, setSearchText]: [string, any] = useState("");
+  const [filteredModels, setFilteredModels]: [SingleAutoModelTitleInterface[], any] = useState();
+
   const selectModelHandler = (model: SingleAutoModelTitleInterface) => {
     if(Props.selectedModelId !== model.id) {
       dispatch(permissionsAutoSelectModelAction(model.id));
@@ -25,23 +28,35 @@ const ModelsList: React.FC<Props> = React.memo((Props) => {
     }
   }
 
+  const searchTextChangeHandler = (text: string) => {
+    setSearchText(text);
+  }
+
+  useEffect(() => {
+    if(searchText.length > 0) {
+      setFilteredModels(Props.models.filter(model => model.title.toLowerCase().includes(searchText.toLowerCase())));
+    } else {
+      setFilteredModels(Props.models);
+    }
+  }, [searchText, Props.models])
+
   if(!Props.models || Props.models.length === 0) {
     return <div></div>;
   }
 
-  const modelsListBlock = Props.models.map(model => {
+  const modelsListBlock = filteredModels && filteredModels.map(model => {
     return (
       <div key={model.id} onClick={() => selectModelHandler(model)}>
         <ModelsListItem title={model.title} isActive={model.id === Props.selectedModelId}/>
         <HorizontalLine/>
       </div>
     )
-  })
+  });
 
   return (
     <div className={classes.ModelsList}>
       <div className={classes.SearchWrapper}>
-        <CorporationsInput value={''} onChange={() => {}} placeholder={'Search'} />
+        <CorporationsInput value={searchText} onChange={searchTextChangeHandler} placeholder={'Search'} />
       </div>
       <HorizontalLine/>
       <div className={classes.ListWrapper}>

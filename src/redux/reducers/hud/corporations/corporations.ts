@@ -19,7 +19,6 @@ const initialState: InitialStateInterface = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case CORPORATIONS_OPEN: {
-      console.log('open corporations reducer')
       return {
         ...state,
         isOpened: true,

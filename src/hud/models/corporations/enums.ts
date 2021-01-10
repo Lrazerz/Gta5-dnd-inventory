@@ -1,3 +1,4 @@
+// displayed tabs
 const CorporationsTabsDict = {
   permissions: 'Разрешения',
   staff: 'Персонал',
@@ -5,7 +6,7 @@ const CorporationsTabsDict = {
   property: 'Управление имуществом',
   territory: 'Контроль территории',
   logs: 'Логи',
-  tasks: 'Задачи',
+  tasks: 'Задачи'
 }
 
 enum CorporationsTabsEnum {

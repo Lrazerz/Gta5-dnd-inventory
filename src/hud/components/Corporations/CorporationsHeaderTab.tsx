@@ -12,9 +12,12 @@ interface Props {
 const CorporationsHeaderTab: React.FC<Props> = React.memo((Props) => {
 
   const containerStyles: CSSProperties = {
-    borderRadius: Props.isActive ? '1rem' : 'none',
-    // backgroundColor: Props.isActive ? `rgba(196, 196, 196, 0.1)` : 'transparent',
-    backgroundColor: Props.isActive ? `rgba(196, 196, 196, 0.7)` : 'transparent',
+    borderRadius: '1rem',
+    // backgroundColor: Props.isActive ? `rgba(196, 196, 196, 0.7)` : 'transparent',
+  }
+
+  if(Props.isActive) {
+    containerStyles.backgroundColor =  `rgba(196, 196, 196, 0.7)`
   }
 
   const titleTextStyles: CSSProperties = {

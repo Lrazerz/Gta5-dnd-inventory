@@ -58,7 +58,7 @@ interface InitialStateInterface {
 }
 
 const initialState = {
-  isPhoneOpened: true,
+  isPhoneOpened: false,
   // to display in chats
   playerAvatar: "default-avatar",
 

@@ -35,7 +35,7 @@ const PermissionsSubTabs = React.memo((Props) => {
       break;
     }
     case CorporationsPermissionsTabsEnum.property: {
-      tabContent = <div></div>;
+      // tabContent = ;
       break;
     }
   }

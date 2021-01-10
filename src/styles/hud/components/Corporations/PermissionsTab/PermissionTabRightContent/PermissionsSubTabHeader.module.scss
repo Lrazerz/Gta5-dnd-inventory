@@ -10,6 +10,10 @@
   box-sizing: border-box;
   border-left: 1px solid corporationsTheme.$bg_darkGrey3;
 
+  &:hover {
+    background-color: rgba(corporationsTheme.$text_white3, 0.15);
+  }
+
   .Content {
     width: 100%;
     height: 100%;
@@ -20,7 +24,9 @@
 
     .ImageWrapper {
       //padding-bottom: 7.44%;
-      height: 50%;
+      //height: 50%;
+      height: 52.5%;
+      //background-color: red;
       box-sizing: border-box;
     }
 

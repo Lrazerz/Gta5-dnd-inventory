@@ -16,6 +16,11 @@ interface PermissionInterface {
   value: boolean;
 }
 
+// boost tab
+interface BoostTabInterface {
+
+}
+
 // auto sub tab
 interface PermissionsTabAutoInterface {
   models: SingleAutoModelTitleInterface[];

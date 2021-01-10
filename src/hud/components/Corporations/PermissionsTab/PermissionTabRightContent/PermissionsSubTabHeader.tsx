@@ -13,8 +13,11 @@ interface Props {
 const PermissionsSubTabHeader: React.FC<Props> = React.memo((Props) => {
 
   const containerStyles: CSSProperties = {
-    backgroundColor: Props.isActive ? corporationsTheme.bg_darkGrey2 : 'transparent',
     opacity: Props.isActive ? 0.95 : 1,
+  }
+
+  if(Props.isActive) {
+    containerStyles.backgroundColor = corporationsTheme.bg_darkGrey2;
   }
 
   const titleTextStyles: CSSProperties = {

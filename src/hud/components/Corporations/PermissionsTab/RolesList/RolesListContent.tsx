@@ -37,7 +37,9 @@ const RolesListContent: React.FC<Props> = React.memo((Props) => {
   const dispatch = useDispatch();
 
   const selectRoleHandler = (role: SingleRoleInterface) => {
-    if(!(Props.selectedRole.id === role.id)) {
+
+    if(!(Props.selectedRole && Props.selectedRole.id === role.id)) {
+      // check if not selected
       dispatch(permissionsSelectRoleAction(role.id));
       mpTrigger_corporations_permissions_selectRole(role.id);
     }
@@ -65,7 +67,7 @@ const RolesListContent: React.FC<Props> = React.memo((Props) => {
   }
 
   const rolesListJSX: ReactElement[] = Props.roles.map(role => {
-    const isSelectedRole = role.id === Props.selectedRole.id;
+    const isSelectedRole = Props.selectedRole && role.id === Props.selectedRole.id;
     // to not change global value
     const localRoleStyles: CSSProperties = {...singleRoleStyles};
     const localTitleStyles: CSSProperties = {...roleTitleStyles};

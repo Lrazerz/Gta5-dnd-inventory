@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {CSSProperties} from 'react';
 import {useDispatch} from 'react-redux';
 import classes from '../../../styles/hud/components/Corporations/CorporationsHeader.module.scss';
 import {
@@ -32,8 +32,16 @@ const CorporationsHeader: React.FC<Props> = React.memo((Props) => {
     mpTrigger_corporations_openTab(CorporationsTabsEnum[tabEng]);
   }
 
+  const openBoostHandler = () => {
+    dispatch(corporationsTabOpen(CorporationsTabsEnum.boost));
+    mpTrigger_corporations_openTab(CorporationsTabsEnum.boost);
+  }
+
   const tabsBlock = CorporationsTabsRussian.map(tab => {
-    const isActive: boolean = CorporationsTabsDict[CorporationsTabsEnum[Props.openedTab]].toLowerCase() === tab.toLowerCase();
+    let isActive: boolean = false;
+    if(CorporationsTabsDict[CorporationsTabsEnum[Props.openedTab]]) {
+      isActive = CorporationsTabsDict[CorporationsTabsEnum[Props.openedTab]].toLowerCase() === tab.toLowerCase();
+    }
     return (
       <CorporationsHeaderTab key={tab} title={tab}
                              isActive={isActive}
@@ -48,7 +56,7 @@ const CorporationsHeader: React.FC<Props> = React.memo((Props) => {
         {tabsBlock}
       </div>
       <div className={classes.AdditionalButtonWrapper}>
-        <img src={boostButtonImg} width="100%" height="100%" />
+        <img className={classes.Image} src={boostButtonImg} width="100%" height="100%" onClick={openBoostHandler}/>
       </div>
     </div>
   );

@@ -21,7 +21,6 @@ const SubTabAuto: React.FC<Props> = React.memo(() => {
       <div className={classes.ModelInfoWrapper}>
         <ModelInfo info={selectedModelInfo} />
       </div>
-
     </div>
   );
 });

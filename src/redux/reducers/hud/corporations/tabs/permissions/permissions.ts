@@ -21,99 +21,99 @@ interface InitialStateInterface {
   commonPermissionsSets: CommonPermissionsSetInterface[];
 }
 
-// const initialState: InitialStateInterface = {
-//   openedTab: CorporationsPermissionsTabsEnum.auto,
-//   roles: null,
-//   selectedRole: null,
-//   commonPermissionsSets: null
-// }
-
 const initialState: InitialStateInterface = {
   openedTab: CorporationsPermissionsTabsEnum.auto,
-  roles: [
-    {id: '0', title: 'DigitalNox Design1'},
-    {id: '1', title: 'DigitalNox Design2'},
-    {id: '2', title: 'DigitalNox Design3'},
-    {id: '3', title: 'DigitalNox Design4'},
-    {id: '4', title: 'DigitalNox Design5'},
-    {id: '5', title: 'DigitalNox Design6'},
-    {id: '6', title: 'DigitalNox Design7'},
-    {id: '7', title: 'DigitalNox Design8'},
-    {id: '8', title: 'DigitalNox Design9'},
-    {id: '9', title: 'DigitalNox Design10'},
-    {id: '10', title: 'DigitalNox Design11'},
-    {id: '11', title: 'DigitalNox Design12'},
-    {id: '12', title: 'DigitalNox Design13'},
-    {id: '13', title: 'DigitalNox Design14'},
-  ],
-  selectedRole: {id: '2', title: 'DigitalNox Design4'},
-  commonPermissionsSets: [
-    {
-      id: '0',
-      title: 'Общие разрешения',
-      permissions: [
-        {
-          id: '0',
-          title: 'Доступ в панель разрешений',
-          value: false
-        },
-        {
-          id: '1',
-          title: 'Возможность изменять разрешения ролей',
-          value: true
-        },
-        {
-          id: '2',
-          title: 'Возможность изменять оплату ролей',
-          value: false
-        }
-      ]
-    },
-    {
-      id: '1',
-      title: 'Персонал',
-      permissions: [
-        {
-          id: '0',
-          title: 'Доступ в меню персонала',
-          value: true
-        },
-        {
-          id: '1',
-          title: 'Возможность приглашать игроков',
-          value: true
-        },
-        {
-          id: '2',
-          title: 'Возможность кикать игроков',
-          value: false
-        }
-      ]
-    },
-    {
-      id: '3',
-      title: 'Казна',
-      permissions: [
-        {
-          id: '0',
-          title: 'Доступ в меню казны',
-          value: false
-        }
-      ]
-    },
-    {
-      id: '4',
-      title: 'asd',
-      permissions: [
-        {
-          id: '0',
-          title: 'Доступ в меню казны',
-          value: false
-        }
-      ]
-    },
-  ]
+  roles: null,
+  selectedRole: null,
+  commonPermissionsSets: null
 }
+
+// const initialState: InitialStateInterface = {
+//   openedTab: CorporationsPermissionsTabsEnum.auto,
+//   roles: [
+//     {id: '0', title: 'DigitalNox Design1'},
+//     {id: '1', title: 'DigitalNox Design2'},
+//     {id: '2', title: 'DigitalNox Design3'},
+//     {id: '3', title: 'DigitalNox Design4'},
+//     {id: '4', title: 'DigitalNox Design5'},
+//     {id: '5', title: 'DigitalNox Design6'},
+//     {id: '6', title: 'DigitalNox Design7'},
+//     {id: '7', title: 'DigitalNox Design8'},
+//     {id: '8', title: 'DigitalNox Design9'},
+//     {id: '9', title: 'DigitalNox Design10'},
+//     {id: '10', title: 'DigitalNox Design11'},
+//     {id: '11', title: 'DigitalNox Design12'},
+//     {id: '12', title: 'DigitalNox Design13'},
+//     {id: '13', title: 'DigitalNox Design14'},
+//   ],
+//   selectedRole: {id: '2', title: 'DigitalNox Design4'},
+//   commonPermissionsSets: [
+//     {
+//       id: '0',
+//       title: 'Общие разрешения',
+//       permissions: [
+//         {
+//           id: '0',
+//           title: 'Доступ в панель разрешений',
+//           value: false
+//         },
+//         {
+//           id: '1',
+//           title: 'Возможность изменять разрешения ролей',
+//           value: true
+//         },
+//         {
+//           id: '2',
+//           title: 'Возможность изменять оплату ролей',
+//           value: false
+//         }
+//       ]
+//     },
+//     {
+//       id: '1',
+//       title: 'Персонал',
+//       permissions: [
+//         {
+//           id: '0',
+//           title: 'Доступ в меню персонала',
+//           value: true
+//         },
+//         {
+//           id: '1',
+//           title: 'Возможность приглашать игроков',
+//           value: true
+//         },
+//         {
+//           id: '2',
+//           title: 'Возможность кикать игроков',
+//           value: false
+//         }
+//       ]
+//     },
+//     {
+//       id: '3',
+//       title: 'Казна',
+//       permissions: [
+//         {
+//           id: '0',
+//           title: 'Доступ в меню казны',
+//           value: false
+//         }
+//       ]
+//     },
+//     {
+//       id: '4',
+//       title: 'asd',
+//       permissions: [
+//         {
+//           id: '0',
+//           title: 'Доступ в меню казны',
+//           value: false
+//         }
+//       ]
+//     },
+//   ]
+// }
 
 export default (state = initialState, action) => {
   switch (action.type) {
