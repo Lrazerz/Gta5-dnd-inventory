@@ -19,6 +19,7 @@ import HudAppStateless from "./HudAppStateless";
 import {DefaultHudDataInterface} from "../App";
 import {openCorporations} from "../utils/windowFuncs/hud/Corporations/CorporationsInterceptors";
 import {corporationsOpenAction, corporationsCloseAction} from "../redux/actions/hud/corporations/corporations";
+// import Notification from 'rc-notification';
 
 interface Props {
   data: DefaultHudDataInterface;
@@ -67,6 +68,20 @@ const carInfoDefaultState = {
 }
 
 const HudApp: React.FC<Props> = React.memo(function HudApp({data}) {
+  //
+  // setTimeout(() => {
+  //   Notification.newInstance({}, notification => {
+  //     notification.notice({
+  //       content: 'content',
+  //       style: {
+  //         position: 'absolute',
+  //         top: 0,
+  //         left: 0
+  //       }
+  //     });
+  //   });
+  // }, 1000)
+
   const [playerInfo, setPlayerInfo]: [DefaultHudDataInterface, (any) => void] = useState(playerInfoDefaultState);
   const [carInfo, setCarInfo]: [CarInfoState, (any) => void] = useState(carInfoDefaultState);
 
