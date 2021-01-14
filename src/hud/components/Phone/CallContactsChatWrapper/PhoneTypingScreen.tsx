@@ -5,7 +5,6 @@ import LeadText from "../Text/LeadText";
 import makeCallImg
   from '../../../../assets/hud/images/components/Phone/components/CallContactsChatWrapper/make-call.svg';
 import {OpenedScreenEnum, ThemesEnum} from "../../../models/phone/enums";
-import {preventImageDrag} from "../../../../utils/utils";
 import {openOutComingCall, openScreen, setAddNewContactPhoneNumber} from "../../../../redux/actions/hud/phone";
 import phoneTheme from "../consts/phoneTheme";
 
@@ -119,8 +118,7 @@ const PhoneTypingScreen = React.memo(() => {
         </div>
         <div className={classes.CallCleanButtonsWrapper}>
           <div className={classes.CallButton}>
-            <img src={makeCallImg} style={{marginTop: '-33%'}}
-                 onDragStart={preventImageDrag}/>
+            <img src={makeCallImg} style={{marginTop: '-33%'}}/>
             <div className={classes.ClickableMakeCall} onClick={makeCallHandler}/>
           </div>
           <div className={classes.ClearButtonContainer}>

@@ -1,0 +1,10 @@
+@use '../../constants/alert/alertsTheme';
+
+.AlertsText {
+  font-family: Montserrat, monospace;
+  font-weight: 600;
+  color: alertsTheme.$textBlack;
+  font-size: 1rem;
+  line-height: 1.2rem;
+  text-align: center;
+}

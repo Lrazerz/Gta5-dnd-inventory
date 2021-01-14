@@ -8,7 +8,6 @@ import settingsButton from '../../../../assets/hud/images/components/Phone/compo
 import {openScreen} from "../../../../redux/actions/hud/phone";
 import {OpenedScreenEnum} from "../../../models/phone/enums";
 import LastMessage from "./LastMessage";
-import {preventImageDrag} from "../../../../utils/utils";
 
 const MainScreen = React.memo(() => {
 
@@ -37,13 +36,12 @@ const MainScreen = React.memo(() => {
       </div>
       <div className={classes.ButtonsWrapper}>
         <img src={phoneButton} className={classes.SingleButton}
-             onClick={() => dispatch(openScreen(OpenedScreenEnum.phoneTyping))} onDragStart={preventImageDrag}/>
-        <img src={browserButton} className={classes.SingleButton}
-             onDragStart={preventImageDrag}/>
+             onClick={() => dispatch(openScreen(OpenedScreenEnum.phoneTyping))}/>
+        <img src={browserButton} className={classes.SingleButton}/>
         <img src={chatButton} className={classes.SingleButton}
-             onClick={() => dispatch(openScreen(OpenedScreenEnum.chats))} onDragStart={preventImageDrag}/>
+             onClick={() => dispatch(openScreen(OpenedScreenEnum.chats))}/>
         <img src={settingsButton} className={classes.SingleButton}
-             onClick={() => dispatch(openScreen(OpenedScreenEnum.settings))} onDragStart={preventImageDrag}/>
+             onClick={() => dispatch(openScreen(OpenedScreenEnum.settings))}/>
       </div>
     </div>
   );

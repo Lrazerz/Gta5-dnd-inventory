@@ -18,15 +18,18 @@
 
   .AdditionalButtonWrapper {
     height: 100%;
+    background-image: url("../../../../assets/hud/images/components/Corporations/boostButton.svg");
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-    .Image {
-      opacity: 1;
-
-      &:hover {
-        filter: contrast(150%);
-        //filter: drop-shadow(0.1rem 0.1rem 0.3rem corporationsTheme.$text_white3) contrast(150%);
-        //filter: brightness(80%);
-      }
+    &:hover {
+      filter: contrast(130%);
+      //filter: drop-shadow(0.1rem 0.1rem 0.3rem corporationsTheme.$text_white3) contrast(150%);
+      //filter: brightness(80%);
     }
+
   }
 }

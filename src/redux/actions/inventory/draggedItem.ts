@@ -1,14 +1,10 @@
-import {
-  DRAGGED_ITEM_SET,
-  HOVERED_SQUARES_SET,
-  DRAGGED_ITEM_RELEASE,
-  GOING_TO_DROP_SET
-} from "./types";
-import {xMin, xMax, yMin, yMax} from "../../../inventory/constants/boardDimensions";
+import {DRAGGED_ITEM_RELEASE, DRAGGED_ITEM_SET, GOING_TO_DROP_SET, HOVERED_SQUARES_SET} from "./types";
+import {xMax, xMin, yMax, yMin} from "../../../inventory/constants/boardDimensions";
 import ItemModel from "../../../inventory/models/ItemModel";
 import {GoingToStack} from "../../reducers/inventory/draggedItem";
 import {
-  addItem, addItemBySquares,
+  addItem,
+  addItemBySquares,
   boardChangeCurrentCountByItemId,
   changeEquippedState,
   removeItem,
@@ -23,7 +19,8 @@ import {
 import {EquippedCategoriesToCells} from "../../../inventory/constants/dnd/equippedCategoriesToCells";
 import {ItemTypes} from "../../../inventory/constants/dnd/types";
 import {
-  addExternalBoardItem, addExternalItemsBySquares,
+  addExternalBoardItem,
+  addExternalItemsBySquares,
   externalBoardChangeCurrentCountByItemId,
   removeExternalBoardItem,
   removeExternalBoardItemById
@@ -31,10 +28,16 @@ import {
 import {addHoveredItem} from "./hoveredItem";
 import {
   mpTriggerDropExternalItem,
-  mpTriggerDropItem, mpTriggerRotateBoardItem, mpTriggerRotateExternalItem, mpTriggerStackFromExternalItem,
+  mpTriggerDropItem,
+  mpTriggerRotateBoardItem,
+  mpTriggerRotateExternalItem,
+  mpTriggerStackFromExternalItem,
   mpTriggerStackFromExternalToExternalItem,
-  mpTriggerStackItem, mpTriggerStackToExternalItem
+  mpTriggerStackItem,
+  mpTriggerStackToExternalItem
 } from "../../../utils/mpTriggers/inventory/mpTriggers";
+import {setAlert} from "../alert/alert";
+import {AlertTypesEnum} from "../../../models/alert/enums";
 
 const _addDraggedItem = (item, xUp, xDown, yUp, yDown, draggedItemArea = 1) => {
   return {type: DRAGGED_ITEM_SET, item, xUp, xDown, yUp, yDown, draggedItemArea};
@@ -500,6 +503,9 @@ const rotateItemOnBoard = (item, hoveredItemArea) => {
         dispatch(addItemBySquares(allHoveredSquares, newItem));
         dispatch(addHoveredItem(newItem, 1));
         mpTriggerRotateBoardItem(newItem);
+      } else {
+        console.log('cant rotate');
+        dispatch(setAlert("Can't rotate", AlertTypesEnum.warning));
       }
     }
     //endregion
@@ -526,6 +532,8 @@ const rotateItemOnBoard = (item, hoveredItemArea) => {
         dispatch(addExternalItemsBySquares(allHoveredSquares, newItem));
         dispatch(addHoveredItem(newItem, 2));
         mpTriggerRotateExternalItem(newItem);
+      } else {
+        console.log('cant rotate')
       }
     }
     //endregion

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {Provider} from 'react-redux';
 import InventoryApp from "./inventory/InventoryApp";
 import store from './redux/store';
@@ -6,6 +6,10 @@ import HudApp from "./hud/HudApp";
 import {openHud} from "./utils/windowFuncs/hud/PlayerInfo/PlayerInfoInterceptors";
 import {setPhoneTime, setPlayerAvatarAction} from "./redux/actions/hud/phone";
 import {openDoubleInventory, openOrRefreshInventory} from "./utils/windowFuncs/inventory/inventoryWindowFuncs";
+import classes from './styles/App.module.scss';
+import Alerts from "./alert/Alerts";
+import {setAlert} from "./redux/actions/alert/alert";
+import {AlertTypesEnum} from "./models/alert/enums";
 
 enum OpenedPartsEnum {
   inventory,
@@ -39,6 +43,18 @@ const defaultHudData: DefaultHudDataInterface = {
 }
 
 const App = React.memo(function App() {
+
+  const alertsContainerRef = useRef();
+
+  useEffect(() => {
+    if(alertsContainerRef.current) {
+      // @ts-ignore
+      const width: string = window.getComputedStyle(alertsContainerRef.current).width;
+      const widthNumber: number = +width.match(/(\.|\d)+/)[0];
+      // @ts-ignore
+      alertsContainerRef.current.style.height = widthNumber * 0.8 + 'px';
+    }
+  }, [alertsContainerRef.current])
 
   const [openedPart, setOpenedPart]: [number, (newState: number) => void] = useState(null);
   const [hudData, setHudData]: [DefaultHudDataInterface, any] = useState(defaultHudData);
@@ -119,7 +135,12 @@ const App = React.memo(function App() {
 
   return (
     <Provider store={store}>
-      {contentBlock}
+      <div className={classes.App}>
+        {contentBlock}
+        <div ref={alertsContainerRef} className={classes.AlertsWrapper}>
+          <Alerts />
+        </div>
+      </div>
     </Provider>
   );
 });

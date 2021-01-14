@@ -31,9 +31,9 @@ const initialState: InitialStateInterface = {
 // const initialState: InitialStateInterface = {
 //   openedTab: CorporationsPermissionsTabsEnum.auto,
 //   roles: [
-//     {id: '0', title: 'DigitalNox Design1'},
-//     {id: '1', title: 'DigitalNox Design2'},
-//     {id: '2', title: 'DigitalNox Design3'},
+//     {id: '0', title: 'ЮЮЮЮЮЮЮЮЮЮЮ'},
+//     {id: '1', title: 'ЮЮЮЮЮЮЮЮЮЮ'},
+//     {id: '2', title: 'ЮЮЮЮЮЮЮЮЮЮЮЮ'},
 //     {id: '3', title: 'DigitalNox Design4'},
 //     {id: '4', title: 'DigitalNox Design5'},
 //     {id: '5', title: 'DigitalNox Design6'},
@@ -50,7 +50,7 @@ const initialState: InitialStateInterface = {
 //   commonPermissionsSets: [
 //     {
 //       id: '0',
-//       title: 'Общие разрешения',
+//       title: 'ЮЮЮЮЮЮЮЮЮЮЮЮЮЮЮ',
 //       permissions: [
 //         {
 //           id: '0',
@@ -175,7 +175,7 @@ export default (state = initialState, action) => {
       const selectedPermissionsSetIdx = newCommonPermissionsSets.findIndex(set => set.id === action.setId);
       const selectedPermissionIdx =
         newCommonPermissionsSets[selectedPermissionsSetIdx].permissions
-          .findIndex(permission => permission.id === action.permissionId)
+          .findIndex(permission => permission.id === action.permissionId);
 
       newCommonPermissionsSets[selectedPermissionsSetIdx].permissions[selectedPermissionIdx].value = action.value;
 

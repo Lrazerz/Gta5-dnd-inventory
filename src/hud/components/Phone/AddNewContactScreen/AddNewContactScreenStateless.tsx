@@ -125,7 +125,7 @@ const AddNewContactScreenStateless: React.FC<Props> = React.memo(
       <div className={classes.AvatarPreviewContainer}>
         <div className={classes.AvatarPreviewWrapper}>
           <img src={selectedImage.image} className={classes.PreviewImage} style={previewImageStyles}
-               onClick={onDropDownOpen} onDragStart={e => e.preventDefault()} onMouseDown={(e) => e.stopPropagation()}/>
+               onClick={onDropDownOpen} onMouseDown={(e) => e.stopPropagation()}/>
         </div>
       </div>
       <div className={classes.AvatarChooseButtonContainer}>

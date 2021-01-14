@@ -5,7 +5,6 @@ import classes
 import {ChatsDemoInterface, ThemesEnum} from "../../../../models/phone/reducerInterfaces";
 import phoneTheme from '../../consts/phoneTheme';
 import LeadText from "../../Text/LeadText";
-import {preventImageDrag} from "../../../../../utils/utils";
 import {openScreen, setSelectedChat} from "../../../../../redux/actions/hud/phone";
 import {OpenedScreenEnum} from "../../../../models/phone/enums";
 
@@ -111,7 +110,7 @@ const SingleChat: React.FC<Props> = React.memo(({chat, theme}) => {
     <div className={classes.SingleChat} onClick={selectChatHandler}>
       <div className={classes.ImageContainer}>
         <div className={classes.ImageWrapper}>
-          <img className={classes.Image} src={importedAvatarImg} onDragStart={preventImageDrag}/>
+          <img className={classes.Image} src={importedAvatarImg}/>
           {chat.unreadMessages > 0 && (<div className={classes.UnreadMessages} ref={unreadMessagesRef}>
             <div className={classes.UnreadMessagesText}>
               {chat.unreadMessages > 9 ? '9+' : chat.unreadMessages}

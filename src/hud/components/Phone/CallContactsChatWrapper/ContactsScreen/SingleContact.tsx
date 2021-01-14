@@ -3,7 +3,6 @@ import classes from '../../../../../styles/hud/components/Phone/CallContactsChat
 import {CallsInterface, ThemesEnum} from "../../../../models/phone/reducerInterfaces";
 import phoneTheme from '../../consts/phoneTheme';
 import LeadText from "../../Text/LeadText";
-import {preventImageDrag} from "../../../../../utils/utils";
 
 interface Props {
   contact: CallsInterface;
@@ -46,7 +45,7 @@ const SingleContact: React.FC<Props> = React.memo(({contact, theme}) => {
     <div className={classes.SingleContact}>
       <div className={classes.ImageContainer}>
         <div className={classes.ImageWrapper}>
-          <img className={classes.Image} src={importedAvatarImg} onDragStart={preventImageDrag}/>
+          <img className={classes.Image} src={importedAvatarImg}/>
         </div>
       </div>
       <div className={classes.InfoWrapper}>

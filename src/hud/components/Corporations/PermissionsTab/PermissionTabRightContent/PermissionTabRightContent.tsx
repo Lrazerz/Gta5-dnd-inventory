@@ -9,7 +9,7 @@ const PermissionTabRightContent = React.memo(() => {
   return (
     <div className={classes.PermissionTabRightContent}>
       <div className={classes.HeaderWrapper}>
-        <CorporationsHeader openedTab={CorporationsTabsEnum.permissions}/>
+        <CorporationsHeader openedTab={CorporationsTabsEnum.permissions} isFromPermissionsTab={true}/>
       </div>
       <div className={classes.ContentWrapper}>
         <PermissionsSubTabs />

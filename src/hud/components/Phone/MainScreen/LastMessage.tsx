@@ -3,7 +3,6 @@ import classes from '../../../../styles/hud/components/Phone/MainScreen/LastMess
 import {LastMessageInterface, ThemesEnum} from "../../../models/phone/reducerInterfaces";
 import LeadText from "../Text/LeadText";
 import phoneTheme from "../consts/phoneTheme";
-import {preventImageDrag} from "../../../../utils/utils";
 
 interface Props {
   messageInfo: LastMessageInterface,
@@ -96,7 +95,7 @@ const LastMessage: React.FC<Props> = React.memo(({messageInfo, theme}) => {
       <div className={classes.LastMessage}>
         <div className={classes.ImageContainer}>
           <div className={classes.ImageWrapper}>
-            <img className={classes.Image} src={importedAvatarImg} onDragStart={preventImageDrag}/>
+            <img className={classes.Image} src={importedAvatarImg}/>
           </div>
         </div>
 

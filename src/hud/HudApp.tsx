@@ -19,6 +19,8 @@ import HudAppStateless from "./HudAppStateless";
 import {DefaultHudDataInterface} from "../App";
 import {openCorporations} from "../utils/windowFuncs/hud/Corporations/CorporationsInterceptors";
 import {corporationsOpenAction, corporationsCloseAction} from "../redux/actions/hud/corporations/corporations";
+import {setAlert} from "../redux/actions/alert/alert";
+import {AlertTypesEnum} from "../models/alert/enums";
 // import Notification from 'rc-notification';
 
 interface Props {
@@ -68,6 +70,8 @@ const carInfoDefaultState = {
 }
 
 const HudApp: React.FC<Props> = React.memo(function HudApp({data}) {
+
+  const dispatch = useDispatch();
   //
   // setTimeout(() => {
   //   Notification.newInstance({}, notification => {
@@ -85,8 +89,6 @@ const HudApp: React.FC<Props> = React.memo(function HudApp({data}) {
   const [playerInfo, setPlayerInfo]: [DefaultHudDataInterface, (any) => void] = useState(playerInfoDefaultState);
   const [carInfo, setCarInfo]: [CarInfoState, (any) => void] = useState(carInfoDefaultState);
 
-  const dispatch = useDispatch();
-
   const phoneWrapperRef = useRef();
 
   useEffect(() => {
@@ -95,11 +97,22 @@ const HudApp: React.FC<Props> = React.memo(function HudApp({data}) {
 
   //region -------------------- Set up and clean up window functions --------------------
   useEffect(() => {
-    // @ts-ignore
-    if(!window.phone_openIncomingCall) {
-      // @ts-ignore
-      window.phone_openIncomingCall = phone_openIncomingCall;
-    }
+    // // todo remove
+    // const timeout = setTimeout(() => {
+    //   dispatch(setAlert('New ipsum dolor sit amet, consectetur adipiscing elit. Proin nibh justo',
+    //     AlertTypesEnum.error, 3000));
+    // }, 2000)
+    // const timeout2 = setTimeout(() => {
+    //   dispatch(setAlert('New non nisl id, fringilla vehicula dolor. Vestibulum nulla purus, fermentum egetullamcorper non nisl id, fringilla vehicula dolor. Vestibulum nulla purus, fermentum eget',
+    //     AlertTypesEnum.success, 1000))
+    // }, 3000)
+    // dispatch(setAlert('New ipsum dolor sit amet, consectetur adipiscing elit. Proin nibh justo',
+    //   AlertTypesEnum.warning, 3000));
+    // // @ts-ignore
+    // if(!window.phone_openIncomingCall) {
+    //   // @ts-ignore
+    //   window.phone_openIncomingCall = phone_openIncomingCall;
+    // }
 
     //region ------------------------------ PlayerInfo window interceptors ------------------------------
     //@ts-ignore
@@ -252,6 +265,8 @@ const HudApp: React.FC<Props> = React.memo(function HudApp({data}) {
     //endregion
 
     return () => {
+      // clearTimeout(timeout)
+      // clearTimeout(timeout2)
       //region -------------------- Phone window functions --------------------
       // @ts-ignore
       window.openPhone = undefined;

@@ -10,9 +10,11 @@ import boostButtonImg from '../../../assets/hud/images/components/Corporations/b
 import CorporationsHeaderTab from "./CorporationsHeaderTab";
 import {corporationsTabOpen} from "../../../redux/actions/hud/corporations/corporations";
 import {mpTrigger_corporations_openTab} from "../../../utils/mpTriggers/hud/hudMpTriggers";
+import CorporationsText from "./CorporationsText";
 
 interface Props {
   openedTab: CorporationsTabsEnum;
+  isFromPermissionsTab?: boolean;
 }
 
 const CorporationsHeader: React.FC<Props> = React.memo((Props) => {
@@ -45,18 +47,30 @@ const CorporationsHeader: React.FC<Props> = React.memo((Props) => {
     return (
       <CorporationsHeaderTab key={tab} title={tab}
                              isActive={isActive}
-      onClick={() => selectTabHandler(tab, isActive)}
-      />
+      onClick={() => selectTabHandler(tab, isActive)}/>
     )
   });
+
+  const boostImageStyles: CSSProperties = {
+    width: Props.isFromPermissionsTab ? '16%' : '13%'
+  }
+
+  const boostTextStyles: CSSProperties = {
+    fontSize: '0.7647rem',
+    lineHeight: '0.9324rem',
+    fontWeight: 700
+  }
 
   return (
     <div className={classes.CorporationsHeader}>
       <div className={classes.TabsWrapper}>
         {tabsBlock}
       </div>
-      <div className={classes.AdditionalButtonWrapper}>
-        <img className={classes.Image} src={boostButtonImg} width="100%" height="100%" onClick={openBoostHandler}/>
+      <div style={boostImageStyles} className={classes.AdditionalButtonWrapper} onClick={openBoostHandler}>
+        {/*<img className={classes.Image} src={boostButtonImg} width="100%" height="100%" onClick={openBoostHandler}/>*/}
+        <CorporationsText styles={boostTextStyles}>
+          Буст статус
+        </CorporationsText>
       </div>
     </div>
   );

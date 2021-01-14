@@ -4,7 +4,6 @@ import classes from '../../../../../styles/hud/components/Phone/CallContactsChat
 import {CallsInterface, ThemesEnum} from "../../../../models/phone/reducerInterfaces";
 import phoneTheme from '../../consts/phoneTheme';
 import LeadText from "../../Text/LeadText";
-import {preventImageDrag} from "../../../../../utils/utils";
 import {openOutComingCall} from "../../../../../redux/actions/hud/phone";
 
 interface Props {
@@ -98,7 +97,7 @@ const SingleCall: React.FC<Props> = React.memo(({call, theme}) => {
     <div className={classes.SingleCall} onClick={makeCallHandler}>
       <div className={classes.ImageContainer}>
         <div className={classes.ImageWrapper}>
-          <img className={classes.Image} src={importedAvatarImg} onDragStart={preventImageDrag}/>
+          <img className={classes.Image} src={importedAvatarImg}/>
         </div>
       </div>
       <div className={classes.InfoWrapper}>

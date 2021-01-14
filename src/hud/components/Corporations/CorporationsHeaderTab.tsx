@@ -24,6 +24,7 @@ const CorporationsHeaderTab: React.FC<Props> = React.memo((Props) => {
     fontSize: '0.7647rem',
     lineHeight: '0.9324rem',
     color: Props.isActive ? corporationsTheme.text_white : corporationsTheme.text_gray,
+    whiteSpace: 'nowrap'
   }
 
   return (

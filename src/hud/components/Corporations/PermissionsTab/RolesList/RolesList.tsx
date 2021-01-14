@@ -10,6 +10,7 @@ import {
   permissionsSelectRoleAction
 } from "../../../../../redux/actions/hud/corporations/tabs/permissions/permissions";
 import {SingleRoleInterface} from "../../../../models/corporations/interfaces";
+import {maxRoleLength} from "../../../../../constants/hud/corporations/corporationsConstants";
 
 const RolesList = React.memo(() => {
 
@@ -50,7 +51,7 @@ const RolesList = React.memo(() => {
       </div>
       <HorizontalLine />
       <div className={classes.RolesSearchWrapper}>
-        <CorporationsInput value={searchText} onChange={setSearchText}/>
+        <CorporationsInput value={searchText} onChange={setSearchText} maxLength={maxRoleLength}/>
       </div>
       <HorizontalLine />
       <div className={classes.RolesListContent}>

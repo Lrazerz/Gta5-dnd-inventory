@@ -6,9 +6,11 @@ interface Props {
   onChange: (textFilter: string) => any;
   placeholder?: string;
   styles?: CSSProperties;
+  // text input styles?
+  maxLength?: number;
 }
 
-const CorporationsInput: React.FC<Props> = React.memo(({value, onChange, placeholder = 'Search', styles}) => {
+const CorporationsInput: React.FC<Props> = React.memo(({value, onChange, placeholder = 'Search', styles, maxLength}) => {
 
   const changeTextHandler = (newText: string) => {
     if(newText === ' ') {
@@ -18,7 +20,7 @@ const CorporationsInput: React.FC<Props> = React.memo(({value, onChange, placeho
 
   return (
     <div style={styles} className={classes.CorporationsInput}>
-      <input className={classes.TextInput} placeholder={placeholder} type="text" value={value}
+      <input className={classes.TextInput} placeholder={placeholder} type="text" value={value} maxLength={maxLength}
       onChange={e => changeTextHandler(e.target.value)}/>
     </div>
   );
