@@ -18,7 +18,7 @@ interface Props {
   onSelect: any;
 }
 
-const CorporationsDropdown: React.FC<Props> = React.memo((Props) => {
+const CorporationsDropdown: React.FC<Props> = (Props) => {
 
   // to create horizontal padding
   const containerRef = useRef();
@@ -26,12 +26,20 @@ const CorporationsDropdown: React.FC<Props> = React.memo((Props) => {
   const [isOpened, setIsOpened]: [boolean, any] = useState(false);
 
   useEffect(() => {
+    console.log('dropdown useeffect', containerRef.current);
     if(containerRef.current) {
-      // @ts-ignore
-      containerRef.current.style.width = +window.getComputedStyle(containerRef.current).width.match(/(\.|\d)+/)[0] * 1.3 + 'px';
-    }
-  }, [containerRef.current])
 
+      // @ts-ignore
+      if(containerRef.current.childNodes[1]) {
+        // @ts-ignore
+        const widthNumber = +window.getComputedStyle(containerRef.current.childNodes[1]).width.match(/(\.|\d)+/)[0] * 1.3 + 'px';
+
+        console.log('set width number');
+        // @ts-ignore
+        containerRef.current.childNodes[1].style.width = widthNumber;
+      }
+    }
+  }, [containerRef.current, isOpened])
 
   const openDropdownHandler = () => {
     setIsOpened(true);
@@ -43,28 +51,8 @@ const CorporationsDropdown: React.FC<Props> = React.memo((Props) => {
     color: corporationsTheme.bg_orange_picked2,
   }
 
-  if(!isOpened) {
-    return (
-      <div className={classes.SelectedItem} onClick={openDropdownHandler}>
-        <CorporationsText styles={selectedTextStyles}>
-          {Props.selectedItem.title}
-        </CorporationsText>
-      </div>
-    )
-  }
-
-  // return (
-  //   <div className={classes.CorporationsDropdown}>
-  //     <div className={classes.ListItemWrapper}>
-  //       <CorporationsText styles={pickedItemTextStyles}>
-  //         {Props.selectedItem.title}
-  //       </CorporationsText>
-  //     </div>
-  //     {isOpened && listBlock}
-  //   </div>
-  // );
-
-  const pickItemHandler = (listItem: ResponsibleForAutoInterface) => {
+  const pickItemHandler = (listItem: ResponsibleForAutoInterface, e: any) => {
+    e.stopPropagation();
     setIsOpened(false);
     Props.onSelect(listItem);
   }
@@ -91,7 +79,7 @@ const CorporationsDropdown: React.FC<Props> = React.memo((Props) => {
 
   listBlock.push(...Props.list.map(listItem => {
     return (
-      <div key={listItem.id} className={classes.ListItemWrapper} onClick={() => pickItemHandler(listItem)}>
+      <div key={listItem.id} className={classes.ListItemWrapper} onClick={(e) => pickItemHandler(listItem, e)}>
         <CorporationsText styles={listTextStyles}>
           {listItem.title}
         </CorporationsText>
@@ -100,20 +88,20 @@ const CorporationsDropdown: React.FC<Props> = React.memo((Props) => {
   }));
 
   return (
-    <div className={classes.SelectedItem}>
+    <div className={classes.SelectedItem} ref={containerRef} onClick={openDropdownHandler}>
       <CorporationsText styles={selectedTextStyles}>
         {Props.selectedItem.title}
       </CorporationsText>
-      <div className={classes.CorporationsDropdown} ref={containerRef}>
-        <div className={classes.ListItemWrapper} key={Props.selectedItem.id}>
+      { isOpened && (<div className={classes.CorporationsDropdown}>
+        <div className={classes.ListItemWrapper}>
           <CorporationsText styles={pickedItemTextStyles}>
             {Props.selectedItem.title}
           </CorporationsText>
         </div>
-        {isOpened && listBlock}
-      </div>
+        {listBlock}
+      </div>)}
     </div>
   );
-});
+}
 
 export default CorporationsDropdown;

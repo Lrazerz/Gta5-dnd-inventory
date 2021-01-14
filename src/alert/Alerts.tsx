@@ -21,7 +21,6 @@ const Alerts: React.FC<Props> = React.memo(() => {
 
   const [alertsWithDisappearing, setAlertsWithDisappearing]: [AlertWithDisappearingInterface[], any] = useState([]);
 
-  console.log('alerts', alerts);
   useEffect(() => {
     const timeOuts = [];
     // max length of list with dissap - 3, max length of the new list - 3
@@ -90,8 +89,6 @@ const Alerts: React.FC<Props> = React.memo(() => {
   //     {alertMessage}
   //   </div>
   // ))
-
-  console.log('alertsWithDis', alertsWithDisappearing);
 
   const alertsBlock: JSX.Element[] = alertsWithDisappearing.length > 0 && alertsWithDisappearing.map(alertWithDisappearing => {
 

@@ -33,7 +33,7 @@ const initialState: InitialStateInterface = {
 //   roles: [
 //     {id: '0', title: 'ЮЮЮЮЮЮЮЮЮЮЮ'},
 //     {id: '1', title: 'ЮЮЮЮЮЮЮЮЮЮ'},
-//     {id: '2', title: 'ЮЮЮЮЮЮЮЮЮЮЮЮ'},
+//     {id: '2', title: 'ЮЮЮЮЮЮЮЮЮЮЮ'},
 //     {id: '3', title: 'DigitalNox Design4'},
 //     {id: '4', title: 'DigitalNox Design5'},
 //     {id: '5', title: 'DigitalNox Design6'},
@@ -50,11 +50,11 @@ const initialState: InitialStateInterface = {
 //   commonPermissionsSets: [
 //     {
 //       id: '0',
-//       title: 'ЮЮЮЮЮЮЮЮЮЮЮЮЮЮЮ',
+//       title: 'ЮЮЮЮЮЮЮЮЮЮЮЮЮЮЮ', //15
 //       permissions: [
 //         {
 //           id: '0',
-//           title: 'Доступ в панель разрешений',
+//           title: 'ЮЮЮЮЮЮЮЮЮЮЮЮЮЮЮ', //15
 //           value: false
 //         },
 //         {

@@ -7,6 +7,7 @@ import CorporationsInput from "../../CorporationsInput";
 import HorizontalLine from "../../HorizontalLine";
 import {CommonPermissionsSetInterface} from "../../../../models/corporations/interfaces";
 import CommonPermissionsSet from "./CommonPermissionsSet";
+import {maxCommonPermissionLength} from "../../../../../constants/hud/corporations/corporationsConstants";
 
 interface Props {
 
@@ -75,7 +76,7 @@ const CommonPermissionsList: React.FC<Props> = React.memo(() => {
         <CommonPermissionsHeader/>
       </div>
       <div className={classes.InputWrapper}>
-        <CorporationsInput styles={{paddingLeft: '0', paddingRight: '0'}}
+        <CorporationsInput styles={{paddingLeft: '0', paddingRight: '0'}} maxLength={maxCommonPermissionLength}
                            value={searchText} onChange={setSearchText} placeholder={"Название разрешения"}/>
       </div>
       <div style={horizontalLineWrapperStyles}>

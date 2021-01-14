@@ -8,6 +8,7 @@ import {SingleAutoModelTitleInterface} from "../../../../../../models/corporatio
 import ModelsListItem from "./ModelsListItem";
 import {permissionsAutoSelectModelAction} from "../../../../../../../redux/actions/hud/corporations/tabs/permissions/tabs/auto";
 import {mpTrigger_corporations_permissions_auto_selectModel} from "../../../../../../../utils/mpTriggers/hud/hudMpTriggers";
+import {maxModelLength} from "../../../../../../../constants/hud/corporations/corporationsConstants";
 
 interface Props {
   models: SingleAutoModelTitleInterface[];
@@ -22,7 +23,7 @@ const ModelsList: React.FC<Props> = React.memo((Props) => {
   const [filteredModels, setFilteredModels]: [SingleAutoModelTitleInterface[], any] = useState();
 
   const selectModelHandler = (model: SingleAutoModelTitleInterface) => {
-    if(Props.selectedModelId !== model.id) {
+    if (Props.selectedModelId !== model.id) {
       dispatch(permissionsAutoSelectModelAction(model.id));
       mpTrigger_corporations_permissions_auto_selectModel(model.id);
     }
@@ -33,14 +34,14 @@ const ModelsList: React.FC<Props> = React.memo((Props) => {
   }
 
   useEffect(() => {
-    if(searchText.length > 0) {
+    if (searchText.length > 0) {
       setFilteredModels(Props.models.filter(model => model.title.toLowerCase().includes(searchText.toLowerCase())));
     } else {
       setFilteredModels(Props.models);
     }
   }, [searchText, Props.models])
 
-  if(!Props.models || Props.models.length === 0) {
+  if (!Props.models || Props.models.length === 0) {
     return <div></div>;
   }
 
@@ -56,7 +57,8 @@ const ModelsList: React.FC<Props> = React.memo((Props) => {
   return (
     <div className={classes.ModelsList}>
       <div className={classes.SearchWrapper}>
-        <CorporationsInput value={searchText} onChange={searchTextChangeHandler} placeholder={'Search'} />
+        <CorporationsInput value={searchText} onChange={searchTextChangeHandler} placeholder={'Search'}
+                           maxLength={maxModelLength}/>
       </div>
       <HorizontalLine/>
       <div className={classes.ListWrapper}>

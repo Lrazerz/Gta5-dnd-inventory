@@ -21,7 +21,7 @@ const initialState: PermissionsTabAutoInterface = {
 //   models: [
 //     {
 //       id: '0',
-//       title: 'Пример модели 1'
+//       title: 'ЮЮЮЮЮЮЮЮЮЮ' // 10
 //     },
 //     {
 //       id: '1',
@@ -82,20 +82,20 @@ const initialState: PermissionsTabAutoInterface = {
 //     availableInventorySlots: 1,
 //     responsible: {
 //       id: '0',
-//       title: 'Hova)_Type_1'
+//       title: 'Hova)_Type'
 //     },
 //     potentialResponsibles: [
 //       {
-//         id: '0',
-//         title: 'Hova)_Type_1'
+//         id: '1',
+//         title: 'Ho'
 //       },
 //       {
-//         id: '1',
+//         id: '2',
 //         title: 'Raciman'
 //       },
 //       {
-//         id: '0',
-//         title: 'DigitalNoxDesign'
+//         id: '3',
+//         title: 'DigitalNoxDesigns'
 //       }
 //     ],
 //     availableGaragePlaces: 3,
