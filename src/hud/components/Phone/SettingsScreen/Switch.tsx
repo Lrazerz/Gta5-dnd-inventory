@@ -17,7 +17,7 @@ const Switch: React.FC<Props> = React.memo(({value, onChange}) => {
   useEffect(() => {
     if(switchRef.current) {
       const widthWithPx: string = window.getComputedStyle(switchRef.current).width;
-      const width: number = +widthWithPx.match(/(\.|\d)+/)[0]
+      const width: number = +widthWithPx.match(/(\.|\d)+/)[0];
       const newHeight: number = width * 0.49;
 
       // @ts-ignore
@@ -37,7 +37,7 @@ const Switch: React.FC<Props> = React.memo(({value, onChange}) => {
   return (
     <label style={switchStyles} className={classes.Switch} ref={switchRef}>
       <input type="checkbox" checked={false} onChange={onChange}
-      style={{width: 0, height: 0, opacity: 0}}/>
+      style={{width: 0, height: 0, opacity: 0, position: 'absolute'}}/>
       <div style={indicatorStyles} className={classes.Indicator}/>
     </label>
   );

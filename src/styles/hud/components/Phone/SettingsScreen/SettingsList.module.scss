@@ -11,6 +11,10 @@
     padding-left: 10%;
     padding-right: 5%;
 
+    &:hover {
+      filter: invert(5%);
+    }
+
     .SettingImageWrapper {
       width: 12%;
       height: 100%;

@@ -61,7 +61,7 @@ const SettingsList = React.memo(() => {
         </div>
       </div>
       <div className={classes.HorizontalLine} style={horizontalLineStyles}/>
-      <div className={classes.SingleSetting} style={singleSettingStyles} onClick={openCosmeticsScreenHandler}>
+      <div style={singleSettingStyles} className={classes.SingleSetting} onClick={openCosmeticsScreenHandler}>
         <div className={classes.SettingImageWrapper}>
           <img className={classes.Image} src={cosmeticsSettingImg}/>
         </div>
@@ -75,7 +75,7 @@ const SettingsList = React.memo(() => {
         </div>
       </div>
       <div className={classes.HorizontalLine} style={horizontalLineStyles}/>
-      <div className={classes.SingleSetting} style={singleSettingStyles} onClick={openRingtoneScreenHandler}>
+      <div style={singleSettingStyles} className={classes.SingleSetting} onClick={openRingtoneScreenHandler}>
         <div className={classes.SettingImageWrapper}>
           <img className={classes.Image} src={phoneSettingImg}/>
         </div>

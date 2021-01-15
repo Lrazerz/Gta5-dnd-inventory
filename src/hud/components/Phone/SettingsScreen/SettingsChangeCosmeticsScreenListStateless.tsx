@@ -53,13 +53,13 @@ const SettingsChangeCosmeticsScreenListStateless: React.FC<Props> = (
     backgroundColor: theme === ThemesEnum.black ? '#5422b0' : '#DAD8E6',
   }
 
-  const _dropDownWhiteTheme = 'linear-gradient(180deg, rgba(255, 255, 255,0.8), rgba(214, 214, 214,0.8))';
+  const _dropDownWhiteTheme = 'linear-gradient(180deg, rgba(235, 235, 235,0.7), rgba(214, 214, 214,0.6))';
 
   const _dropDownBlackTheme = 'linear-gradient(180deg, rgba(81, 31, 194,0.8), rgba(54, 17, 138,0.8))';
 
   const dropDownStyles: CSSProperties = {
-    background: theme === ThemesEnum.white ? _dropDownWhiteTheme : _dropDownBlackTheme,
-    backdropFilter: isDropDownOpened ? 'blur(0.4rem)' : 'none',
+    background: theme === ThemesEnum.black ? _dropDownBlackTheme : _dropDownWhiteTheme,
+    // backdropFilter: isDropDownOpened ? 'blur(0.4rem)' : 'none',
   }
 
   const dropDownBlock = (
@@ -70,14 +70,13 @@ const SettingsChangeCosmeticsScreenListStateless: React.FC<Props> = (
                onClick={(e) => onSetSelectedImage(e, image)}>
             <img src={image.image} className={classes.ImageToSelect}/>
           </div>
-        )
+        );
       })}
     </div>
-  )
+  );
 
   return (
     <div className={classes.SettingsChangeCosmeticsScreenList} onClick={onCloseDropDown}>
-      <div style={blurScreenStyles}/>
       <div className={classes.SingleSetting} style={singleSettingStyles}>
         <div className={classes.SettingImageWrapper}>
           <img className={classes.Image} src={darkModeImg}/>
@@ -92,7 +91,9 @@ const SettingsChangeCosmeticsScreenListStateless: React.FC<Props> = (
         </div>
       </div>
       <div className={classes.HorizontalLine} style={horizontalLineStyles}/>
-      <div className={classes.ThemeImageSetting} style={singleSettingStyles} onClick={onOpenDropDown}>
+      <div style={singleSettingStyles} className={classes.ThemeImageSetting} onClick={onOpenDropDown}>
+
+        <div style={blurScreenStyles}/>
         <div className={classes.SettingImageWrapper}>
           <img className={classes.Image} src={themeImageImg}/>
         </div>

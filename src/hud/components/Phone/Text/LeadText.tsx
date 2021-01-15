@@ -6,9 +6,10 @@ import {ThemesEnum} from "../../../models/phone/enums";
 interface Props {
   children: any;
   styles?: CSSProperties;
+  onClick?: (any) => any;
 }
 
-const LeadText: React.FC<Props> = React.memo(({styles, children}) => {
+const LeadText: React.FC<Props> = React.memo(({styles, children, onClick}) => {
 
   const theme = useSelector(({hud: {phone}}) => phone.settings.cosmetics.theme);
 
@@ -17,7 +18,7 @@ const LeadText: React.FC<Props> = React.memo(({styles, children}) => {
   }
 
   return (
-    <div className={classes.LeadText} style={{...innerStyles, ...styles}}>
+    <div className={classes.LeadText} style={{...innerStyles, ...styles}} onClick={onClick}>
       {children}
     </div>
   );

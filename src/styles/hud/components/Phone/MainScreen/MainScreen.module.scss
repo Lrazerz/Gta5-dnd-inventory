@@ -39,6 +39,10 @@
     .SingleButton {
       width: 19.5%;
       height: 100%;
+
+      &:hover {
+        filter: contrast(130%);
+      }
     }
   }
 }

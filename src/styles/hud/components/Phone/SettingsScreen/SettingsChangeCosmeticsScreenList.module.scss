@@ -11,6 +11,10 @@
     box-sizing: border-box;
     padding-left: 10%;
     padding-right: 5%;
+
+    &:hover {
+      filter: invert(5%);
+    }
   }
 
   .ThemeImageSetting {
@@ -22,6 +26,10 @@
     box-sizing: border-box;
     padding-left: 10%;
     padding-right: 5%;
+
+    &:hover {
+      filter: invert(5%);
+    }
   }
 
   .SettingImageWrapper {
@@ -101,6 +109,10 @@
         width: 100% !important;
         height: 100% !important;
         display: block;
+
+        &:hover {
+          filter: contrast(130%);
+        }
       }
     }
   }

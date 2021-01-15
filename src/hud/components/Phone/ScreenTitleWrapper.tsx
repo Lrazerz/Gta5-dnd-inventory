@@ -27,7 +27,7 @@ const ScreenTitleWrapper: React.FC<Props> = React.memo(({theme, titleText, onBac
         <div className={classes.BackArrowWrapper} onClick={onBackButtonPress}>
           <img src={leftArrowImg} width="100%" height="100%" />
         </div>
-        <LeadText styles={titleTextStyles}>
+        <LeadText styles={titleTextStyles} onClick={onBackButtonPress}>
           {titleText}
         </LeadText>
       </div>

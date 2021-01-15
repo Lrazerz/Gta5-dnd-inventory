@@ -64,7 +64,7 @@ const initialState = {
 
   lastMessages: [],
 
-  openedScreen: OpenedScreenEnum.settings,
+  openedScreen: OpenedScreenEnum.settings_changeCosmetics,
   // to come back from curr call and inc call
   prevOpenedScreen: OpenedScreenEnum.mainScreen,
 

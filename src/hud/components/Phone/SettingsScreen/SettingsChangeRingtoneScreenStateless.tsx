@@ -27,10 +27,12 @@ const SettingsChangeRingtoneScreenStateless: React.FC<Props> = React.memo(
   //region -------------------- Styles --------------------
   const blurScreenStyles: CSSProperties = {
     display: isDropDownOpened ? 'block' : 'none',
-    width: '100%',
+    width: '117.647%',
+    left: '-11.7647%',
     height: '100%',
     position: "absolute",
-    backdropFilter: isDropDownOpened ? 'blur(0.3rem)' : 'none',
+    // backdropFilter: isDropDownOpened ? 'blur(0.3rem)' : 'none',
+    backgroundColor: 'red',
   }
 
   const horizontalLineStyles: CSSProperties = {
@@ -57,12 +59,17 @@ const SettingsChangeRingtoneScreenStateless: React.FC<Props> = React.memo(
     overflow: 'hidden',
   }
 
-  const _dropDownWhiteTheme = 'linear-gradient(180deg, rgba(255, 255, 255,0.8), rgba(214, 214, 214,0.8))';
+  const chooseRingtoneSettingStyles: CSSProperties = {
+    backgroundColor: theme === ThemesEnum.black ? '#251152' : '#fff',
+  }
+
+  const _dropDownWhiteTheme = 'linear-gradient(180deg, rgba(235, 235, 235,0.7), rgba(214, 214, 214,0.6))';
 
   const _dropDownBlackTheme = 'linear-gradient(180deg, rgba(81, 31, 194,0.8), rgba(54, 17, 138,0.8))';
 
   const dropDownStyles: CSSProperties = {
-    background: theme === ThemesEnum.white ? _dropDownWhiteTheme : _dropDownBlackTheme,
+    background: theme === ThemesEnum.black ? _dropDownBlackTheme : _dropDownWhiteTheme,
+    backdropFilter: 'blur(0.4rem)'
   }
 
   const singleRingtoneTextStyles: CSSProperties = {
@@ -98,7 +105,7 @@ const SettingsChangeRingtoneScreenStateless: React.FC<Props> = React.memo(
       <div className={classes.HorizontalLine} style={horizontalLineStyles}/>
       <div className={classes.SettingsListWrapper}>
         <div style={blurScreenStyles}/>
-        <div className={classes.ChooseRingtoneSetting} onClick={onOpenDropDown}>
+        <div style={chooseRingtoneSettingStyles} className={classes.ChooseRingtoneSetting} onClick={onOpenDropDown}>
           <div className={classes.SettingImageWrapper}>
             <img className={classes.Image} src={ringtoneImg}/>
           </div>
