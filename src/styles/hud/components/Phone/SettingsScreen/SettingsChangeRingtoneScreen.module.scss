@@ -10,12 +10,12 @@
   }
 
   .SettingsListWrapper {
-    //position: relative;
+    //padding-top: 3%;
+    position: relative;
     width: 100%;
     flex-grow: 1;
 
     .ChooseRingtoneSetting {
-      position: relative;
       display: flex;
       align-items: center;
       width: 100%;
@@ -29,11 +29,14 @@
       }
 
       .SettingImageWrapper {
+        padding-top: 1%;
         width: 12%;
         height: 100%;
         display: flex;
         justify-content: center;
         align-items: center;
+        padding-bottom: 1%;
+        box-sizing: border-box;
 
         .Image {
           width: 100%;
@@ -58,45 +61,48 @@
         display: flex;
         align-items: center;
       }
+    }
+  }
+}
+.DropDownRingtones {
+  position: absolute;
+  width: 50%;
+  height: 50%;
+  top: 2%;
+  left: 25%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  border-radius: 0.5rem;
+  box-sizing: border-box;
+  z-index: 1;
 
-      .DropDownRingtones {
-        position: absolute;
-        width: 50%;
-        //height: 50%;
-        height: 600%;
-        top: 2%;
-        left: 25%;
-        overflow-x: hidden;
-        overflow-y: auto;
-        border-radius: 0.5rem;
-        box-sizing: border-box;
+  &::-webkit-scrollbar {
+    width: 0.2rem;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #706390;
+    border-radius: 0.3rem;
+  }
 
-        &::-webkit-scrollbar {
-          width: 0.2rem;
-        }
-        &::-webkit-scrollbar-thumb {
-          background-color: #706390;
-          border-radius: 0.3rem;
-        }
+  .RingtoneContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 15%;
+    width: 100%;
 
-        .RingtoneContainer {
-          display: flex;
-          flex-direction: column;
-          justify-content: space-between;
-          height: 15%;
-          width: 100%;
+    &:hover {
+      filter: invert(10%);
+    }
 
-          .RingtoneTextWrapper {
-            width: 100%;
-            flex-grow: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 0.5rem;
-            box-sizing: border-box;
-          }
-        }
-      }
+    .RingtoneTextWrapper {
+      width: 100%;
+      flex-grow: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 0.5rem;
+      box-sizing: border-box;
     }
   }
 }

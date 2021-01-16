@@ -32,6 +32,8 @@ const PhoneTypingScreen = React.memo(() => {
   const keyDownHandler = (e) => {
     if(buttons.includes(e.key)) {
       typingHandler(e.key);
+    } else if(e.key.toLowerCase() === 'backspace') {
+      removeLastChar();
     }
   }
 

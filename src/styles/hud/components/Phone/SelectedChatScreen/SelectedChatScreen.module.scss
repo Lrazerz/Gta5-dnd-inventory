@@ -52,6 +52,10 @@
         width: 6.42%;
         height: 100%;
 
+        &:hover {
+          filter: contrast(130%) invert(10%);
+        }
+
         .RemoveButton {
           margin-top: -12%;
           display: block;
@@ -131,6 +135,10 @@
       max-width: 18%;
       height: 100%;
       display: flex;
+
+      &:hover {
+        filter: contrast(130%);
+      }
 
       .SendButtonWrapper {
         width: 44.12%;

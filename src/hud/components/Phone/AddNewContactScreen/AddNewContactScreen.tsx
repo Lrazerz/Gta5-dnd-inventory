@@ -49,12 +49,12 @@ const AddNewContactScreen = () => {
 
   }, []);
 
-  const swipeHandler = () => {
+  const openMainScreen = () => {
     dispatch(openScreen(OpenedScreenEnum.mainScreen));
   }
   // to external lib
   const handlers = useSwipeable({
-    onSwipedUp: () => swipeHandler(),
+    onSwipedUp: () => openMainScreen(),
     preventDefaultTouchmoveEvent: true,
     trackMouse: true,
   });
@@ -93,7 +93,7 @@ const AddNewContactScreen = () => {
                                        onDropDownClose={dropDownCloseHandler}
                                        onSetSelectedImage={setSelectedImage} onNameTextChange={nameTextChangeHandler}
                                        onPhoneTextChange={phoneTextChangeHandler} onAddContact={addContactClickHandler}
-                                       handlers={handlers} />
+                                       onOpenMainScreen={openMainScreen} handlers={handlers} />
 };
 
 export default AddNewContactScreen;

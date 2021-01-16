@@ -25,14 +25,8 @@ const SettingsChangeRingtoneScreenStateless: React.FC<Props> = React.memo(
                                                     handlers}) {
 
   //region -------------------- Styles --------------------
-  const blurScreenStyles: CSSProperties = {
-    display: isDropDownOpened ? 'block' : 'none',
-    width: '117.647%',
-    left: '-11.7647%',
-    height: '100%',
-    position: "absolute",
-    // backdropFilter: isDropDownOpened ? 'blur(0.3rem)' : 'none',
-    backgroundColor: 'red',
+  const listScreenBlurStyles: CSSProperties = {
+    filter: isDropDownOpened ? 'blur(0.1rem)' : 'none',
   }
 
   const horizontalLineStyles: CSSProperties = {
@@ -69,7 +63,7 @@ const SettingsChangeRingtoneScreenStateless: React.FC<Props> = React.memo(
 
   const dropDownStyles: CSSProperties = {
     background: theme === ThemesEnum.black ? _dropDownBlackTheme : _dropDownWhiteTheme,
-    backdropFilter: 'blur(0.4rem)'
+    // backdropFilter: 'blur(0.4rem)'
   }
 
   const singleRingtoneTextStyles: CSSProperties = {
@@ -99,27 +93,30 @@ const SettingsChangeRingtoneScreenStateless: React.FC<Props> = React.memo(
   );
 
   return (
-    <div className={classes.SettingsChangeRingtoneScreen} {...handlers} onClick={onCloseDropDown}>
+    <div className={classes.SettingsChangeRingtoneScreen} {...handlers}>
       <ScreenTitleWrapper theme={theme} titleText={'Изменить рингтон телефона'}
                           onBackButtonPress={onOpenSettingsScreen} />
-      <div className={classes.HorizontalLine} style={horizontalLineStyles}/>
       <div className={classes.SettingsListWrapper}>
-        <div style={blurScreenStyles}/>
-        <div style={chooseRingtoneSettingStyles} className={classes.ChooseRingtoneSetting} onClick={onOpenDropDown}>
-          <div className={classes.SettingImageWrapper}>
-            <img className={classes.Image} src={ringtoneImg}/>
+        {/*<div style={blurScreenStyles}/>*/}
+
+        <div className={classes.SettingsList} onClick={onCloseDropDown} style={listScreenBlurStyles}>
+          <div style={chooseRingtoneSettingStyles} className={classes.ChooseRingtoneSetting} onClick={onOpenDropDown}>
+
+            <div className={classes.SettingImageWrapper}>
+              <img className={classes.Image} src={ringtoneImg}/>
+            </div>
+            <div className={classes.SettingTitleWrapper}>
+              <LeadText styles={settingTitleStyles}>
+                Выбрать рингтон
+              </LeadText>
+            </div>
+            <div className={classes.SelectedRingtoneWrapper}>
+              <LeadText styles={selectedRingtoneTextStyles}>{selectedRingtone}</LeadText>
+            </div>
           </div>
-          <div className={classes.SettingTitleWrapper}>
-            <LeadText styles={settingTitleStyles}>
-              Выбрать рингтон
-            </LeadText>
-          </div>
-          <div className={classes.SelectedRingtoneWrapper}>
-            <LeadText styles={selectedRingtoneTextStyles}>{selectedRingtone}</LeadText>
-          </div>
-          {isDropDownOpened && dropDownBlock}
+          <div className={classes.HorizontalLine} style={horizontalLineStyles}/>
         </div>
-        <div className={classes.HorizontalLine} style={horizontalLineStyles}/>
+        {isDropDownOpened && dropDownBlock}
       </div>
     </div>
   );

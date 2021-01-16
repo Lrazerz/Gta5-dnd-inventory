@@ -13,6 +13,10 @@
     padding-left: 2.5%;
     padding-top: 5.5%;
     box-sizing: border-box;
+
+    &:hover {
+      filter: contrast(130%) opacity(90%) invert(10%);
+    }
   }
 
   // First block

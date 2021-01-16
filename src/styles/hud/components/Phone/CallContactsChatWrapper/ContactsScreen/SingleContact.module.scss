@@ -3,6 +3,10 @@
   height: 100%;
   display: flex;
 
+  &:hover {
+    filter: contrast(130%) opacity(80%);
+  }
+
   .ImageContainer {
     height: 100%;
     width: 24.42%;

@@ -5,6 +5,7 @@ import {ThemesEnum} from "../../../models/phone/enums";
 import LeadText from "../Text/LeadText";
 import phoneTheme from "../consts/phoneTheme";
 import {maxContactLength} from "../../../../constants/hud/constants";
+import ScreenTitleWrapper from "../ScreenTitleWrapper";
 
 interface ImportedImageInterface {
   title: string;
@@ -25,6 +26,7 @@ interface Props {
   onNameTextChange: (e: any) => void;
   onPhoneTextChange: (e: any) => void;
   onAddContact: (e: any) => void;
+  onOpenMainScreen: () => void;
 
   // to external library
   handlers: any;
@@ -33,7 +35,8 @@ interface Props {
 const AddNewContactScreenStateless: React.FC<Props> = React.memo(
   function AddNewContactScreenStateless ({allImportedImages, isDropDownOpened, selectedImage, nameText,
                                            phoneText, theme, onDropDownOpen, onDropDownClose, onSetSelectedImage,
-                                           onNameTextChange, onPhoneTextChange, onAddContact, handlers}) {
+                                           onNameTextChange, onPhoneTextChange, onAddContact, onOpenMainScreen,
+                                           handlers}) {
 
   const blurScreenStyles: CSSProperties = {
     display: isDropDownOpened ? 'block' : 'none',
@@ -63,7 +66,7 @@ const AddNewContactScreenStateless: React.FC<Props> = React.memo(
   const _dropDownBlackTheme = 'linear-gradient(180deg, rgba(81, 31, 194,0.8), rgba(54, 17, 138,0.8))';
 
   const dropDownContainerStyles: CSSProperties = {
-    background: theme === ThemesEnum.white ? _dropDownWhiteTheme : _dropDownBlackTheme,
+    background: theme === ThemesEnum.black ? _dropDownBlackTheme : _dropDownWhiteTheme,
     borderRadius: '0.5rem',
     filter: 'none',
     // backdropFilter: 'blur(0.5rem)'
@@ -71,7 +74,7 @@ const AddNewContactScreenStateless: React.FC<Props> = React.memo(
 
   const previewImageStyles: CSSProperties = {
     border:selectedImage ? `0.1rem solid 
-    ${theme === ThemesEnum.white ? 'rgba(148, 150, 157, 0.5)' : phoneTheme.lightPurple}` : 'none',
+    ${theme === ThemesEnum.black ? phoneTheme.lightPurple : 'rgba(148, 150, 157, 0.5)'}` : 'none',
   }
 
   const addContactTextStyles: CSSProperties = {
@@ -82,7 +85,7 @@ const AddNewContactScreenStateless: React.FC<Props> = React.memo(
   const nameTextInputStyles: CSSProperties = {
     // backgroundColor: theme === ThemesEnum.white ? 'rgba(134, 132, 138, 0.2)' : 'rgba(134, 132, 138, 0.2)',
     backgroundColor: 'transparent',
-    color: theme === ThemesEnum.white ? phoneTheme.darkPurple : '#fff',
+    color: theme === ThemesEnum.black ? '#fff' : phoneTheme.darkPurple,
   }
 
   const avatarChooseButtonBlock = (
@@ -116,12 +119,13 @@ const AddNewContactScreenStateless: React.FC<Props> = React.memo(
   return (
     <div className={classes.AddNewContactScreen} {...handlers} onClick={onDropDownClose}>
       <div style={blurScreenStyles}/>
-      <div className={classes.ScreenTitleWrapper}>
-        <LeadText styles={screenTitleTextStyles}>
-          Добавить контакт
-        </LeadText>
-      </div>
-      <div className={classes.HorizontalLine} style={horizontalLineStyles}/>
+      {/*<div className={classes.ScreenTitleWrapper}>*/}
+      {/*  <LeadText styles={screenTitleTextStyles}>*/}
+      {/*    Добавить контакт*/}
+      {/*  </LeadText>*/}
+      {/*</div>*/}
+      {/*<div className={classes.HorizontalLine} style={horizontalLineStyles}/>*/}
+      <ScreenTitleWrapper theme={theme} titleText={"Добавить контакт"} onBackButtonPress={onOpenMainScreen} />
       <div className={classes.AvatarPreviewContainer}>
         <div className={classes.AvatarPreviewWrapper}>
           <img src={selectedImage.image} className={classes.PreviewImage} style={previewImageStyles}

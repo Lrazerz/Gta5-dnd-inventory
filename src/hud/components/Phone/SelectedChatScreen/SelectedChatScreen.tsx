@@ -10,13 +10,15 @@ import ChatMessagesList from "./ChatMessagesList";
 
 import sendMessageImg from '../../../../assets/hud/images/components/Phone/components/SelectedChatScreen/send-message.svg';
 import phoneTheme from "../consts/phoneTheme";
-import {openPrevScreen, openScreen, removeSelectedChat} from "../../../../redux/actions/hud/phone";
+import {
+  openPrevScreen,
+  openScreen,
+  removeSelectedChat,
+  setLastOutcomingMessage
+} from "../../../../redux/actions/hud/phone";
+import {maxMessageTextLength, maxMessageTextRows, minMessageTextLength} from "../../../../constants/hud/constants";
 
-const maxMessageLength = 100;
-const maxMessageRows = 10;
 const maxDisplayedRows = 6;
-// 26 and more = show +1 line
-const maxDisplayedColumns = 25;
 
 const SelectedChatScreen = React.memo(() => {
 
@@ -69,14 +71,12 @@ const SelectedChatScreen = React.memo(() => {
   // to external lib
   const handlers = useSwipeable({
     // onSwipedLeft: () => swipeHandler(true),
-    onSwipedRight: () => openChatsScreen(),
+    // onSwipedRight: () => openChatsScreen(),
     onSwipedUp: () => swipeUpHandler(),
     preventDefaultTouchmoveEvent: true,
     trackMouse: true
   });
   //endregion
-
-
 
   const openChatsScreen = () => {
     dispatch(openScreen(OpenedScreenEnum.chats));
@@ -99,7 +99,7 @@ const SelectedChatScreen = React.memo(() => {
       setMessageText("");
       return;
     }
-    const targetValue = e.target.value.slice(0, maxMessageLength);
+    const targetValue = e.target.value.slice(0, maxMessageTextLength);
 
     let splittedByNewLineRows = targetValue.split('\n');
 
@@ -126,11 +126,19 @@ const SelectedChatScreen = React.memo(() => {
     let resRowsCount = splittedByNewLineRows.length;
     // const resStr = splittedByNewLineRows.join('\n');
 
-    if(resRowsCount > maxMessageRows) {
+    if(resRowsCount > maxMessageTextRows) {
       return;
     }
     setRowsCount(maxDisplayedRows);
     setMessageText(e.target.value);
+  }
+
+  const sendMessageHandler = () => {
+    // @ts-ignore
+    if(messageText && messageText.length >= minMessageTextLength) {
+      dispatch(setLastOutcomingMessage(selectedChat.id, messageText));
+    }
+    // todo send message
   }
 
   const horizontalLineStyles: CSSProperties = {
@@ -147,7 +155,7 @@ const SelectedChatScreen = React.memo(() => {
   const sendMessageContainerStyles: CSSProperties = {
     minHeight: 0.675 * (rowsCount + additionalRowsCount) + 1 + 'rem',
     // maxHeight: 0.45 * rowsCount + 1 + 'rem',
-    backgroundColor: theme === ThemesEnum.white ? '#fff' : phoneTheme.lightBlack,
+    backgroundColor: theme === ThemesEnum.black ? phoneTheme.lightBlack : '#fff',
     borderTop: `0.015rem solid ${theme === ThemesEnum.black ? '#5422b0' : '#DAD8E6'}`,
   }
 
@@ -158,7 +166,7 @@ const SelectedChatScreen = React.memo(() => {
   const textTypingStyles = {
     fontSize: '0.57rem',
     backgroundColor: 'transparent',
-    color: theme === ThemesEnum.white ? phoneTheme.darkGray : phoneTheme.white,
+    color: theme === ThemesEnum.black ? phoneTheme.white : phoneTheme.darkGray,
   }
 
   return (
@@ -176,8 +184,8 @@ const SelectedChatScreen = React.memo(() => {
               </LeadText>
             </div>
           </div>
-          <div className={classes.RemoveButtonWrapper}>
-            <img src={removeChat} className={classes.RemoveButton} onClick={removeChatHandler}/>
+          <div className={classes.RemoveButtonWrapper} onClick={removeChatHandler}>
+            <img src={removeChat} className={classes.RemoveButton}/>
           </div>
         </div>
       </div>
@@ -195,7 +203,7 @@ const SelectedChatScreen = React.memo(() => {
                     name="story" rows={rowsCount + additionalRowsCount}
           placeholder={"Когда зайдешь в игру уже ?"} maxLength={100} onChange={setTextHandler} value={messageText}/>
         </div>
-        <div className={classes.SendButtonContainer} style={sendButtonContainerStyles}>
+        <div className={classes.SendButtonContainer} style={sendButtonContainerStyles} onClick={sendMessageHandler}>
           <div className={classes.SendButtonWrapper}>
             <img src={sendMessageImg} className={classes.Button}/>
           </div>

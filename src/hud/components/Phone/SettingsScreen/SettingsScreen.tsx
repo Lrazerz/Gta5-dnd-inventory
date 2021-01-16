@@ -40,7 +40,7 @@ const SettingsScreen = React.memo(() => {
     <div className={classes.SettingsScreen} {...handlers}>
       <ScreenTitleWrapper theme={theme} titleText={'Настройки'}
                           onBackButtonPress={swipeHandler} />
-      <div className={classes.HorizontalLine} style={horizontalLineStyles}/>
+      {/*<div className={classes.HorizontalLine} style={horizontalLineStyles}/>*/}
       <div className={classes.SettingsListWrapper}>
         <SettingsList/>
       </div>

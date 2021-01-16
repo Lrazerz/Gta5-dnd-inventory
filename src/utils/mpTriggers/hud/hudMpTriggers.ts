@@ -73,11 +73,20 @@ const mpTrigger_phone_openChats = () => {
 }
 
 //region -------------------- Single chat --------------------
-const mpTrigger_phone_openSingleChat = (id) => {
+const mpTrigger_phone_openSingleChat = (id: string) => {
   console.log('mp trig phone openSingleChat', id);
   try {
     // @ts-ignore
     mp.trigger('cef_cl_phone_openChat', id);
+  } catch (e) {}
+}
+
+const mpTrigger_phone_sendMessage = (chatId: string, message: string) => {
+  console.log('mp trig phone sendMessage', chatId, message);
+  try {
+    const dataJSON = JSON.stringify({ChatId: chatId, Message: message});
+    // @ts-ignore
+    mp.trigger('cef_cl_phone_sendMessage', dataJSON);
   } catch (e) {}
 }
 
@@ -275,6 +284,7 @@ export {
   mpTrigger_phone_openChats,
 
   mpTrigger_phone_openSingleChat,
+  mpTrigger_phone_sendMessage,
   mpTrigger_phone_removeSingleChat,
 
   mpTrigger_phone_addNewContact,

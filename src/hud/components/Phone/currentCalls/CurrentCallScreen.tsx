@@ -157,8 +157,8 @@ const CurrentCallScreen = () => {
           </div>
         </div>
         <div className={classes.DeclineButtonWrapper}>
-          <div className={classes.DeclineButton}>
-            <img src={declineCallImg} onClick={abortCallHandler}/>
+          <div className={classes.DeclineButton} onClick={abortCallHandler}>
+            <img src={declineCallImg}/>
           </div>
         </div>
       </div>

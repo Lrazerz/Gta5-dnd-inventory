@@ -29,12 +29,14 @@ const ChatMessage: React.FC<Props> = React.memo(({direction, date, message, play
   const dateTextStyles: CSSProperties = {
     fontSize: '0.59rem',
     lineHeight: '1.2rem',
-    color: theme === ThemesEnum.white ? phoneTheme.lightPurpleText : phoneTheme.white,
+    color: theme === ThemesEnum.black ? phoneTheme.white : phoneTheme.lightPurpleText,
   }
 
   const _messageTextStyles = direction === 'in' ?
-    theme === ThemesEnum.white ? phoneTheme.darkPurple : phoneTheme.white
-      : theme === ThemesEnum.white ? phoneTheme.white : phoneTheme.white;
+    theme === ThemesEnum.black ? phoneTheme.white : phoneTheme.darkPurple
+      // ?
+      : phoneTheme.white;
+      // : theme === ThemesEnum.white ? phoneTheme.white : phoneTheme.white;
 
   const messageTextStyles: CSSProperties = {
     fontSize: '0.59rem',
@@ -43,8 +45,8 @@ const ChatMessage: React.FC<Props> = React.memo(({direction, date, message, play
   }
 
   const _messageBgStyles = direction === 'in' ?
-    theme === ThemesEnum.white ? '#fff' : phoneTheme.superLightBlack
-    : theme === ThemesEnum.white ? phoneTheme.chatMessageLightPurpleBg : phoneTheme.darkPurple;
+    theme === ThemesEnum.black ? phoneTheme.superLightBlack : '#fff'
+    : theme === ThemesEnum.black ? phoneTheme.darkPurple : phoneTheme.chatMessageLightPurpleBg;
 
 
   const additionalMessageBgStyles: CSSProperties = {

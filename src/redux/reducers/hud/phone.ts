@@ -8,7 +8,7 @@ import {
   OPEN_SCREEN, PHONE_CLOSE, PHONE_OPEN, REMOVE_SELECTED_CHAT, SET_ADD_NEW_CONTACT_NUMBER,
   SET_CALLS,
   SET_CHATS_DEMO,
-  SET_CONTACTS, SET_COSMETIC_SETTING, SET_PLAYER_AVATAR, SET_RINGTONE,
+  SET_CONTACTS, SET_COSMETIC_SETTING, SET_LAST_OUTCOMING_MESSAGE, SET_PLAYER_AVATAR, SET_RINGTONE,
   SET_SELECTED_CHAT,
   SET_SETTING,
   SET_SETTINGS, SET_TIME,
@@ -18,7 +18,7 @@ import {
   ChatMessageInterface,
   ChatsDemoInterface,
   ContactInterface,
-  CurrentCallInterface,
+  CurrentCallInterface, DateObjectInterface,
   IncomingCallInterface,
   LastMessageInterface,
   PhoneHudDataInterface, SelectedChatInterface,
@@ -64,7 +64,7 @@ const initialState = {
 
   lastMessages: [],
 
-  openedScreen: OpenedScreenEnum.settings_changeCosmetics,
+  openedScreen: OpenedScreenEnum.phoneTyping,
   // to come back from curr call and inc call
   prevOpenedScreen: OpenedScreenEnum.mainScreen,
 
@@ -275,7 +275,55 @@ export default (state = initialState, action) => {
     case SET_SELECTED_CHAT: {
       return {
         ...state,
-        selectedChat: action.chatData,
+        selectedChat: {
+          ...state.selectedChat,
+          ...action.chatData
+        }
+      }
+    }
+    case SET_LAST_OUTCOMING_MESSAGE: {
+      let newChatsDemo: ChatsDemoInterface[] = [
+        ...state.chatsDemo
+      ]
+      // idx only inside array, not id field
+      const selectedChatIdx = newChatsDemo.findIndex(chatDemo => chatDemo.id === action.chatId);
+      // @ts-ignore
+      const selectedChat: SelectedChatInterface = {...state.selectedChat};
+
+      const currentDate = new Date();
+      const dateObj: DateObjectInterface = {
+        minutes: currentDate.getMinutes().toString().padStart(2,'0'),
+        hours: currentDate.getHours().toString().padStart(2,'0'),
+        day: currentDate.getDate().toString().padStart(2,'0'),
+        month: (currentDate.getMonth() + 1).toString().padStart(2,'0'),
+        year: currentDate.getFullYear().toString()
+      }
+
+      const newSelectedChat: SelectedChatInterface = {
+        ...selectedChat,
+        messages: [
+          ...selectedChat.messages,
+          {
+            id: (+selectedChat.messages[selectedChat.messages.length - 1].id + 1).toString(),
+            direction: 'out',
+            date: dateObj,
+            message: action.message
+          }
+        ]
+      }
+
+      newChatsDemo = [
+        ...newChatsDemo.slice(0, selectedChatIdx),
+        {id: action.chatId, name: selectedChat.name, imageName: selectedChat.avatarName,
+        unreadMessages: 0, lastMessage: action.message, lastMessageDate: dateObj},
+        ...newChatsDemo.slice(selectedChatIdx + 1)
+      ]
+
+      return {
+        ...state,
+        // todo
+        selectedChat: newSelectedChat,
+        chatsDemo: newChatsDemo
       }
     }
     case REMOVE_SELECTED_CHAT: {

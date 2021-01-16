@@ -21,7 +21,6 @@ const CallContactsChatWrapper: React.FC<Props> = React.memo(({openedScreen}) => 
 
   //region ------------------------------ Swipe handlers ------------------------------
   const swipeHandler = (toLeft: boolean) => {
-
     if(toLeft) {
       if(openedScreen === OpenedScreenEnum.chats) {
         return;

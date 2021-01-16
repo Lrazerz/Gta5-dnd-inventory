@@ -21,7 +21,7 @@ import {
   SET_ADD_NEW_CONTACT_NUMBER,
   SET_CALLS,
   SET_CHATS_DEMO,
-  SET_CONTACTS, SET_COSMETIC_SETTING,
+  SET_CONTACTS, SET_COSMETIC_SETTING, SET_LAST_OUTCOMING_MESSAGE,
   SET_PLAYER_AVATAR, SET_RINGTONE,
   SET_SELECTED_CHAT,
   SET_SETTING,
@@ -49,9 +49,9 @@ import {
   mpTrigger_phone_openOutComingCall,
   mpTrigger_phone_openSettings,
   mpTrigger_phone_openSingleChat,
-  mpTrigger_phone_removeSingleChat
+  mpTrigger_phone_removeSingleChat, mpTrigger_phone_sendMessage
 } from "../../../utils/mpTriggers/hud/hudMpTriggers";
-import {LastMessageInterface} from "../../../hud/models/phone/reducerInterfaces";
+import {LastMessageInterface, SelectedChatInterface} from "../../../hud/models/phone/reducerInterfaces";
 
 const phoneOpen = (lastMessages: LastMessageInterface[], settings) => {
   return {type: PHONE_OPEN, lastMessages, settings}
@@ -386,8 +386,12 @@ const setChatsDemo = (chatsDemoData: ChatsDemoInterface[]) => {
 }
 
 //region -------------------- Set selected chat --------------------
-const _setSelectedChat = (selectedChatData) => {
+const _setSelectedChat = (selectedChatData: SelectedChatInterface) => {
   return {type: SET_SELECTED_CHAT, chatData: selectedChatData};
+}
+
+const _setLastOutcomingMessage = (chatId: string, message: string) => {
+  return {type: SET_LAST_OUTCOMING_MESSAGE, chatId, message};
 }
 
 const _removeSelectedChat = () => {
@@ -397,6 +401,13 @@ const _removeSelectedChat = () => {
 // params - name, avatarName, messages
 const setSelectedChat  = (selectedChatData) => {
   return _setSelectedChat(selectedChatData);
+}
+
+const setLastOutcomingMessage = (chatId: string, message: string) => {
+  return dispatch => {
+    mpTrigger_phone_sendMessage(chatId, message);
+    dispatch(_setLastOutcomingMessage(chatId, message));
+  }
 }
 
 const removeSelectedChat  = (id) => {
@@ -449,6 +460,7 @@ export {
 
   // single chat
   setSelectedChat,
+  setLastOutcomingMessage,
   removeSelectedChat
 
 }

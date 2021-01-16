@@ -58,6 +58,10 @@
           justify-content: space-between;
           align-items: center;
 
+          &:hover {
+            filter: contrast(130%) invert(20%);
+          }
+
           .Image {
             width: 37%;
             height: 42%;
@@ -85,6 +89,10 @@
 
       .DeclineButton {
         width: 30%;
+
+        &:hover {
+          filter: contrast(130%) invert(5%);
+        }
       }
     }
   }
