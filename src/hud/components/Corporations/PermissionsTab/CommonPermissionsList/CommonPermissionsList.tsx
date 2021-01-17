@@ -19,8 +19,15 @@ const CommonPermissionsList: React.FC<Props> = React.memo(() => {
   const [filteredPermissionsSets, setFilteredPermissionsSets]:
     [CommonPermissionsSetInterface[], any] = useState();
 
-  const permissionsSets: CommonPermissionsSetInterface[] =
-    useSelector(({hud}) => hud.corporations.tabs.permissions.permissions.commonPermissionsSets);
+  const {permSets: permissionsSetsRedux, selectedRole} =
+    useSelector(({hud}) => {
+      return {
+        permSets: hud.corporations.tabs.permissions.permissions.commonPermissionsSets,
+        selectedRole: hud.corporations.tabs.permissions.permissions.selectedRole
+      }
+    });
+
+  const permissionsSets: CommonPermissionsSetInterface[] = permissionsSetsRedux;
 
   useEffect(() => {
     if (searchText.length > 0) {
@@ -84,7 +91,7 @@ const CommonPermissionsList: React.FC<Props> = React.memo(() => {
       </div>
       <div className={classes.PermissionsSetsWrapper}>
         {permissionsSets && filteredPermissionsSets && filteredPermissionsSets.map(permSet => (
-          <CommonPermissionsSet id={permSet.id} title={permSet.title} permissions={permSet.permissions}
+          <CommonPermissionsSet selectedRole={selectedRole} id={permSet.id} title={permSet.title} permissions={permSet.permissions}
                                 key={permSet.id}/>
         ))}
       </div>

@@ -1,5 +1,5 @@
 // displayed tabs
-const CorporationsTabsDict = {
+const _CorporationsDisplayedTabsDict = {
   permissions: 'Разрешения',
   staff: 'Персонал',
   treasury: 'Казна',
@@ -7,6 +7,11 @@ const CorporationsTabsDict = {
   territory: 'Контроль территории',
   logs: 'Логи',
   tasks: 'Задачи'
+}
+// tabs to use in redux, mpTriggers
+const CorporationsTabsDict = {
+  ..._CorporationsDisplayedTabsDict,
+  boost: 'Буст'
 }
 
 enum CorporationsTabsEnum {
@@ -23,13 +28,13 @@ enum CorporationsTabsEnum {
   mainTab
 }
 
-const CorporationsTabsRussian = [];
-for(const key in CorporationsTabsDict) {
-  CorporationsTabsRussian.push(CorporationsTabsDict[key]);
+const CorporationsDisplayedTabsRussian = [];
+for(const key in _CorporationsDisplayedTabsDict) {
+  CorporationsDisplayedTabsRussian.push(CorporationsTabsDict[key]);
 }
 
 // permissions screen
-const PermissionsSubTabsDict = {
+const _PermissionsDisplayedTabsDict = {
   modules: 'Модули',
   houses: 'Недвижимость',
   enterprises: 'Предприятия',
@@ -37,26 +42,32 @@ const PermissionsSubTabsDict = {
   property: 'Имущество корпорации'
 }
 
+const CorporationsPermissionsTabsDict = {
+  ..._PermissionsDisplayedTabsDict,
+  addNewRole: 'Новая роль'
+}
+
+const PermissionsSubTabsRussian = [];
+for(const key in _PermissionsDisplayedTabsDict) {
+  PermissionsSubTabsRussian.push(_PermissionsDisplayedTabsDict[key]);
+}
+
 enum CorporationsPermissionsTabsEnum {
   modules,
   houses,
   enterprises,
   auto,
-  property
-}
+  property,
 
-const PermissionsSubTabsRussian = [];
-
-for(const key in PermissionsSubTabsDict) {
-  PermissionsSubTabsRussian.push(PermissionsSubTabsDict[key]);
+  addNewRole
 }
 
 export {
   CorporationsTabsDict,
   CorporationsTabsEnum,
-  CorporationsTabsRussian,
+  CorporationsDisplayedTabsRussian,
   // permissions tab
-  PermissionsSubTabsDict,
+  CorporationsPermissionsTabsDict,
   CorporationsPermissionsTabsEnum,
   PermissionsSubTabsRussian
 }

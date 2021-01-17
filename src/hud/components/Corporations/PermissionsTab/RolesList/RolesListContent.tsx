@@ -41,7 +41,7 @@ const RolesListContent: React.FC<Props> = React.memo((Props) => {
     if(!(Props.selectedRole && Props.selectedRole.id === role.id)) {
       // check if not selected
       dispatch(permissionsSelectRoleAction(role.id));
-      mpTrigger_corporations_permissions_selectRole(role.id);
+      mpTrigger_corporations_permissions_selectRole(role.title);
     }
   }
 
@@ -93,7 +93,7 @@ const RolesListContent: React.FC<Props> = React.memo((Props) => {
         </div>
         {/*<img className={classes.AddNewRoleImageWrapper} src={newRoleImg}/>*/}
         {isSelectedRole && <img className={classes.RemoveRoleImageWrapper} src={removeRoleImg}
-                                onClick={() => removeRoleHandler(role.id)}/>}
+                                onClick={() => removeRoleHandler(role.title)}/>}
       </div>
       <HorizontalLine/>
     </div>)

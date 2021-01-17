@@ -25,7 +25,7 @@ const ModelsList: React.FC<Props> = React.memo((Props) => {
   const selectModelHandler = (model: SingleAutoModelTitleInterface) => {
     if (Props.selectedModelId !== model.id) {
       dispatch(permissionsAutoSelectModelAction(model.id));
-      mpTrigger_corporations_permissions_auto_selectModel(model.id);
+      mpTrigger_corporations_permissions_auto_selectModel(model.title);
     }
   }
 

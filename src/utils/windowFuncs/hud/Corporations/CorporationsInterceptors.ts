@@ -1,3 +1,4 @@
+import shortId from 'shortid';
 import {
   CommonPermissionsSetInterface, PermissionsAutoModelInterface,
   PermissionsTabAutoInterface,
@@ -22,17 +23,23 @@ corporationsOpenPermissionsTab = (jsonData) => {
 
   const {Roles, SelectedRoleInfo, Modules} = JSON.parse(jsonData);
 
-  console.log('roles', Roles, SelectedRoleInfo, Modules);
+  const roles: SingleRoleInterface[] = Roles.map(role => ({id: shortId.generate(), title: role.Title}));
 
-  const roles: SingleRoleInterface[] = Roles.map(role => ({id: role.Id, title: role.Title}));
+  // find selected role id
+  const selectedRole = roles.find(role => role.title.toLowerCase() === SelectedRoleInfo.Title.toLowerCase());
+  if(!selectedRole) {
+    console.log('error', 'Selected role name doesnt exists in the roles list');
+  }
+  const selectedRoleId = selectedRole ? selectedRole.id : shortId.generate();
+
   const selectedRoleInfo = {
-    id: SelectedRoleInfo.Id,
+    id: selectedRoleId,
     commonPermissionsSets: SelectedRoleInfo.CommonPermissionsSets.map(singlePermissionSet => ({
-      id: singlePermissionSet.Id,
+      id: shortId.generate(),
       title: singlePermissionSet.Title,
       permissions: singlePermissionSet.Permissions.map(singlePermission => (
         {
-          id: singlePermission.Id,
+          id: shortId.generate(),
           title: singlePermission.Title,
           value: singlePermission.Value
         }
@@ -54,10 +61,10 @@ corporationsPermissionsOpenRole = (roleDataJson) => {
   const parsedData = JSON.parse(roleDataJson);
 
   const commonPermissionsSets = parsedData.CommonPermissionsSets.map(permissionSet => ({
-    id: permissionSet.Id,
+    id: shortId.generate(),
     title: permissionSet.Title,
     permissions: permissionSet.Permissions.map(permission => ({
-      id: permission.Id,
+      id: shortId.generate(),
       title: permission.Title,
       value: permission.Value
     }))
@@ -78,10 +85,10 @@ corporationsRefreshPermissions = (permissionsDataJson) => {
 
   const commonPermissionsSets: CommonPermissionsSetInterface[] =
     parsedPermissionsData.CommonPermissionsSets.map(permissionsSet => ({
-      id: permissionsSet.Id,
+      id: shortId.generate(),
       title: permissionsSet.Title,
       permissions: permissionsSet.Permissions.map(permission => ({
-        id: permission.Id,
+        id: shortId.generate(),
         title: permission.Title,
         value: permission.Value
       }))
@@ -108,30 +115,37 @@ corporationsPermissionsOpenAutoTab = (autoData) => {
 
   const parsedAutoData: AcceptedAutoModelDataInterface = JSON.parse(autoData);
 
-  const mappedAutoData = {
-    models: parsedAutoData.Models.map(model => ({id: model.Id, title: model.Title})),
-    selectedModelInfo: {
-      id: parsedAutoData.SelectedModelInfo.Id,
-      title: parsedAutoData.SelectedModelInfo.Title,
-      availableInventorySlots: parsedAutoData.SelectedModelInfo.AvailableInventorySlots,
-      responsible: {
-        id: parsedAutoData.SelectedModelInfo.Responsible.Id,
-        title: parsedAutoData.SelectedModelInfo.Responsible.Title
-      },
-      potentialResponsibles: parsedAutoData.SelectedModelInfo.PotentialResponsibles.map(singleResponsible => ({
-        id: singleResponsible.Id,
-        title: singleResponsible.Title
-      })),
-      availableGaragePlaces: parsedAutoData.SelectedModelInfo.AvailableGaragePlaces,
-      permissions: parsedAutoData.SelectedModelInfo.Permissions.map(permission => ({
-        id: permission.Id,
-        title: permission.Title,
-        value: permission.Value
-      }))
-    }
+  const models = parsedAutoData.Models.map(model => ({id: shortId.generate(), title: model.Title}));
+
+  const selectedModel = models.find(
+    model => model.title.toLowerCase() === parsedAutoData.SelectedModelInfo.Title.toLowerCase());
+
+  const selectedModelId = selectedModel ? selectedModel.id : shortId.generate();
+
+  const selectedModelInfo = {
+    id: selectedModelId,
+    title: parsedAutoData.SelectedModelInfo.Title,
+    availableInventorySlots: parsedAutoData.SelectedModelInfo.AvailableInventorySlots,
+    responsible: {
+      id: shortId.generate(),
+      title: parsedAutoData.SelectedModelInfo.Responsible.Title
+    },
+    potentialResponsibles: parsedAutoData.SelectedModelInfo.PotentialResponsibles.map(singleResponsible => ({
+      id: shortId.generate(),
+      title: singleResponsible.Title
+    })),
+    availableGaragePlaces: parsedAutoData.SelectedModelInfo.AvailableGaragePlaces,
+    permissions: parsedAutoData.SelectedModelInfo.Permissions.map(permission => ({
+      id: shortId.generate(),
+      title: permission.Title,
+      value: permission.Value
+    }))
   }
 
-  return mappedAutoData;
+  return {
+    models,
+    selectedModelInfo
+  }
 }
 
 export {

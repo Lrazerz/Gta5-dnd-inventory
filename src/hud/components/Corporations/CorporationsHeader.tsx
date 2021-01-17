@@ -4,7 +4,7 @@ import classes from '../../../styles/hud/components/Corporations/CorporationsHea
 import {
   CorporationsTabsDict,
   CorporationsTabsEnum,
-  CorporationsTabsRussian
+  CorporationsDisplayedTabsRussian
 } from "../../models/corporations/enums";
 import boostButtonImg from '../../../assets/hud/images/components/Corporations/boostButton.svg';
 import CorporationsHeaderTab from "./CorporationsHeaderTab";
@@ -31,15 +31,15 @@ const CorporationsHeader: React.FC<Props> = React.memo((Props) => {
       }
     }
     dispatch(corporationsTabOpen(CorporationsTabsEnum[tabEng]));
-    mpTrigger_corporations_openTab(CorporationsTabsEnum[tabEng]);
+    mpTrigger_corporations_openTab(tabRus);
   }
 
   const openBoostHandler = () => {
     dispatch(corporationsTabOpen(CorporationsTabsEnum.boost));
-    mpTrigger_corporations_openTab(CorporationsTabsEnum.boost);
+    mpTrigger_corporations_openTab(CorporationsTabsDict.boost);
   }
 
-  const tabsBlock = CorporationsTabsRussian.map(tab => {
+  const tabsBlock = CorporationsDisplayedTabsRussian.map(tab => {
     let isActive: boolean = false;
     if(CorporationsTabsDict[CorporationsTabsEnum[Props.openedTab]]) {
       isActive = CorporationsTabsDict[CorporationsTabsEnum[Props.openedTab]].toLowerCase() === tab.toLowerCase();

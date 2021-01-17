@@ -38,12 +38,12 @@ const ModelInfo: React.FC<Props> = React.memo((Props) => {
 
   const selectResponsibleHandler = (listItem: ResponsibleForAutoInterface) => {
     dispatch(permissionsAutoChangeResponsibleAction(listItem.id));
-    mpTrigger_corporations_permissions_auto_changeResponsible(listItem.id);
+    mpTrigger_corporations_permissions_auto_changeResponsible(Props.info.title, listItem.title);
   }
 
   const changePermissionHandler = (permission: PermissionInterface) => {
     dispatch(permissionsAutoChangePermission(permission.id, !permission.value));
-    mpTrigger_corporations_permissions_auto_changePermission(permission.id, !permission.value);
+    mpTrigger_corporations_permissions_auto_changePermission(Props.info.title, permission.title, !permission.value);
   }
 
   const availableInventorySlotsInfo: JSX.Element =
@@ -75,7 +75,7 @@ const ModelInfo: React.FC<Props> = React.memo((Props) => {
       <div key={permission.id}>
       <div className={classes.PermissionWrapper}>
         <TitleAndSwitchRow title={permission.title} value={permission.value}
-                           onChange={() => changePermissionHandler(permission)} />
+                           onChange={() => changePermissionHandler({...permission})} />
       </div>
       <HorizontalLine styles={horizontalLineStyles}/>
       </div>

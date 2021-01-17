@@ -1,7 +1,11 @@
 //region -------------------- Phone triggers --------------------
 // mainScreen, 3 messages
 
-import {CorporationsPermissionsTabsEnum, CorporationsTabsEnum} from "../../../hud/models/corporations/enums";
+import {
+  CorporationsPermissionsTabsEnum,
+  CorporationsTabsDict,
+  CorporationsTabsEnum, CorporationsPermissionsTabsDict
+} from "../../../hud/models/corporations/enums";
 
 const mpTrigger_phone_openLastMessages = () => {
   console.log('mp trig phone openLastMessages');
@@ -196,72 +200,115 @@ const mpTrigger_interactions_closeInteractions = () => {
 
 //region -------------------- Corporations triggers --------------------
 
-const mpTrigger_corporations_openTab = (tabId: CorporationsTabsEnum) => {
-  console.log('open tab trigger', tabId);
+// ничего не добавлять
+const mpTrigger_corporations_openTab = (tabTitle: string) => {
+  console.log('mpTrigger_corporations_openTab', tabTitle);
   try {
     // @ts-ignore
-    mp.trigger('cef_cl_corporations_openTab', tabId);
+    mp.trigger('cef_cl_corporations_openTab', tabTitle);
   } catch (e) {}
 }
 
 // tab permissions
-const mpTrigger_corporations_permissions_selectRole = (id: string) => {
-  console.log('select role trigger')
+const mpTrigger_corporations_permissions_selectRole = (roleTitle: string) => {
+  console.log('mpTrigger_corporations_permissions_selectRole', CorporationsTabsDict.permissions, roleTitle);
   try {
+    const data = JSON.stringify({
+      OpenedTab: CorporationsTabsDict.permissions,
+      RoleTitle: roleTitle
+    })
     // @ts-ignore
-    mp.trigger('cef_cl_corporations_permissions_selectRole', id);
+    mp.trigger('cef_cl_corporations_permissions_selectRole', data);
   } catch (e) {}
 }
 
-const mpTrigger_corporations_permissions_removeRole = (id: string) => {
-  console.log('remove role trigger')
+const mpTrigger_corporations_permissions_removeRole = (roleTitle: string) => {
+  console.log('remove cef_cl_corporations_permissions_removeRole', CorporationsTabsDict.permissions, roleTitle);
   try {
+    const data = JSON.stringify({
+      OpenedTab: CorporationsTabsDict.permissions,
+      RoleTitle: roleTitle
+    })
     // @ts-ignore
-    mp.trigger('cef_cl_corporations_permissions_removeRole', id);
+    mp.trigger('cef_cl_corporations_permissions_removeRole', data);
   } catch (e) {}
 }
 
 const mpTrigger_corporations_permissions_changePermission =
-  (setId: string, permissionId: string, value: boolean) => {
-  console.log('change permission trigger', setId, permissionId, value)
+  (openedRoleTitle: string, setTitle: string, permissionTitle: string, value: boolean) => {
+  console.log('mpTrigger_corporations_permissions_changePermission',
+    CorporationsTabsDict.permissions, openedRoleTitle, setTitle, permissionTitle, value)
   try {
+    const data = JSON.stringify({
+      OpenedTab: CorporationsTabsDict.permissions,
+      OpenedRole: openedRoleTitle,
+      SetTitle: setTitle,
+      PermissionTitle: permissionTitle,
+      Value: value
+    })
     // @ts-ignore
-    mp.trigger('cef_cl_corporations_permissions_changePermission',
-      JSON.stringify({SetId: setId, PermissionId: permissionId, Value: value}));
+    mp.trigger('cef_cl_corporations_permissions_changePermission', data);
   } catch (e) {}
 }
 
 // 0 - Модули, 1 - Недвижимость, 2 - Предприятия, 3 - Техника, 4 - Имущество корпорации
-const mpTrigger_corporations_permissions_openTab = (tabId: CorporationsPermissionsTabsEnum) => {
+const mpTrigger_corporations_permissions_openTab = (tabTitle: string) => {
+  console.log('cef_cl_corporations_permissions_openTab', tabTitle);
   try {
+    const data = JSON.stringify({
+      OpenedTab: CorporationsTabsDict.permissions,
+      OpenedPermissionsTab: tabTitle
+    })
     // @ts-ignore
-    mp.trigger('cef_cl_corporations_permissions_openTab', tabId);
+    mp.trigger('cef_cl_corporations_permissions_openTab', data);
   } catch (e) {}
 }
 
+// openedTab, openedPermissionsTab
 // sub tab auto
-const mpTrigger_corporations_permissions_auto_selectModel = (autoId: string) => {
-  console.log('select model trigger', autoId)
+const mpTrigger_corporations_permissions_auto_selectModel = (modelTitle: string) => {
+  console.log('cef_cl_corporations_permissions_auto_selectModel',
+    CorporationsTabsDict.permissions, CorporationsPermissionsTabsDict.auto, modelTitle)
   try {
+    const data = JSON.stringify({
+      OpenedTab: CorporationsTabsDict.permissions,
+      OpenedPermissionsTab: CorporationsPermissionsTabsDict.auto,
+      Model: modelTitle
+    })
     // @ts-ignore
-    mp.trigger('cef_cl_corporations_permissions_auto_selectModel', autoId);
+    mp.trigger('cef_cl_corporations_permissions_auto_selectModel', data);
   } catch (e) {}
 }
 
-const mpTrigger_corporations_permissions_auto_changeResponsible = (responsibleId: string) => {
-  console.log('select responsible trigger', responsibleId)
+const mpTrigger_corporations_permissions_auto_changeResponsible = (selectedModel: string, responsibleTitle: string) => {
+  console.log('cef_cl_corporations_permissions_auto_changeResponsible', CorporationsTabsDict.permissions,
+    CorporationsPermissionsTabsDict.auto, selectedModel, responsibleTitle)
   try {
+    const data = JSON.stringify({
+      OpenedTab: CorporationsTabsDict.permissions,
+      OpenedPermissionsTab: CorporationsPermissionsTabsDict.auto,
+      OpenedModel: selectedModel,
+      Responsible: responsibleTitle
+    })
     // @ts-ignore
-    mp.trigger('cef_cl_corporations_permissions_auto_changeResponsible', responsibleId);
+    mp.trigger('cef_cl_corporations_permissions_auto_changeResponsible', data);
   } catch (e) {}
 }
 
-const mpTrigger_corporations_permissions_auto_changePermission = (permissionId: string, value: boolean) => {
-  console.log('select responsible trigger', permissionId, value);
+const mpTrigger_corporations_permissions_auto_changePermission = (selectedModel: string, permissionTitle: string,
+                                                                  value: boolean) => {
+  console.log('cef_cl_corporations_permissions_auto_changePermission', CorporationsTabsDict.permissions,
+    CorporationsPermissionsTabsDict.auto, selectedModel, permissionTitle, value);
   try {
+    const data = JSON.stringify({
+      OpenedTab: CorporationsTabsDict.permissions,
+      OpenedPermissionsTab: CorporationsPermissionsTabsDict.auto,
+      OpenedModel: selectedModel,
+      Permission: permissionTitle,
+      Value: value
+    })
     // @ts-ignore
-    mp.trigger('cef_cl_corporations_permissions_auto_changePermission',
-      JSON.stringify({Id: permissionId, Value: value}));
+    mp.trigger('cef_cl_corporations_permissions_auto_changePermission', data);
   } catch (e) {}
 }
 //endregion
