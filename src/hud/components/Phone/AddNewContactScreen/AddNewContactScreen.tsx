@@ -4,7 +4,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import {OpenedScreenEnum, PlayerAvatarsArray} from "../../../models/phone/enums";
 import {addNewContactAction, openPrevScreen, openScreen} from "../../../../redux/actions/hud/phone";
 import defaultAvatar from '../../../../assets/avatars/avatar1.svg';
-import {minContactLength} from "../../../../constants/hud/constants";
+import {minContactLength} from "../../../../constants/hud/phone/phoneConstants";
 import AddNewContactScreenStateless from "./AddNewContactScreenStateless";
 
 export interface ImportedImageInterface {

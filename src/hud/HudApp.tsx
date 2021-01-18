@@ -7,7 +7,7 @@ import {
   setPlayerBuffs, setPlayerIndicators,
   setPlayerRank, setTime
 } from "../utils/windowFuncs/hud/PlayerInfo/PlayerInfoInterceptors";
-import {closePhone, openPhone, phone_openIncomingCall} from "../utils/windowFuncs/hud/phone/windowFuncs";
+import {closePhone, openPhone, phone_openIncomingCall} from "../utils/windowFuncs/hud/phone/phoneInterceptors";
 import {setPhoneTime, setPlayerAvatarAction} from "../redux/actions/hud/phone";
 import {
   windowCloseInteractions,

@@ -1,3 +1,4 @@
+import shortId from 'shortid';
 import store from '../../../../redux/store';
 const dispatch = store.dispatch;
 import {
@@ -38,7 +39,7 @@ const openPhone = (jsonData) => {
   console.log('window.openPhone');
   const parsedData = JSON.parse(jsonData);
   const transformedLastMessages: LastMessageInterface[] = parsedData.LastMessages.map(lastMessage => ({
-    id: lastMessage.Id,
+    id: shortId.generate(),
     name: lastMessage.Name,
     imageName: lastMessage.ImageName,
     date: _transformDataFromString(lastMessage.Date),
@@ -68,7 +69,7 @@ const phone_openLastMessages = (jsonData) => {
   console.log('window.phone_openLastMessages');
   const parsedData = JSON.parse(jsonData).$values;
   const transformedLastMessages: LastMessageInterface[] = parsedData.map(lastMessage => ({
-    id: lastMessage.Id,
+    id: shortId.generate(),
     name: lastMessage.Name,
     imageName: lastMessage.ImageName,
     date: _transformDataFromString(lastMessage.Date),
@@ -142,7 +143,7 @@ const phone_openCalls = (jsonData) => {
 
   const transformedCallsData: CallsInterface[] = parsedData.map(call => {
     return {
-      id: call.Id,
+      id: shortId.generate(),
       name: call.Name,
       imageName: call.ImageName,
       status: call.Status,
@@ -160,7 +161,7 @@ const phone_openContacts = (jsonData) => {
 
   const transformedContactsData: ContactInterface[] = parsedData.map(incomingContact => {
     return {
-      id: incomingContact.Id,
+      id: incomingContact.PhoneNumber,
       name: incomingContact.Name,
       imageName: incomingContact.ImageName,
     }
@@ -175,7 +176,7 @@ const phone_openChats = (jsonData) => {
 
   const transformedChatsData: ChatsDemoInterface[] = parsedData.map(call => {
     return {
-      id: call.Id,
+      id: call.PhoneNumber,
       name: call.Name,
       imageName: call.ImageName,
       // count
@@ -198,7 +199,7 @@ const phone_openSingleChat = (jsonData) => {
 
   const transformedMessages: ChatMessageInterface[] = messages.map(incomingMessage => {
     return {
-      id: incomingMessage.Id,
+      id: shortId.generate(),
       direction: incomingMessage.Direction,
       date: _transformDataFromString(incomingMessage.Date),
       message: incomingMessage.Message,

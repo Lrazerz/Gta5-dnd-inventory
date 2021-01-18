@@ -16,7 +16,7 @@ import {
   removeSelectedChat,
   setLastOutcomingMessage
 } from "../../../../redux/actions/hud/phone";
-import {maxMessageTextLength, maxMessageTextRows, minMessageTextLength} from "../../../../constants/hud/constants";
+import {maxMessageTextLength, maxMessageTextRows, minMessageTextLength} from "../../../../constants/hud/phone/phoneConstants";
 
 const maxDisplayedRows = 6;
 
@@ -92,14 +92,19 @@ const SelectedChatScreen = React.memo(() => {
   }
 
   const setTextHandler = (e) => {
-    if(e.target.value.length === 0) {
+    let targetValue = e.target.value;
+    if(targetValue.length === 0) {
       setRowsCount(0);
       setAdditionalRowsCount(0);
       // @ts-ignore
       setMessageText("");
       return;
     }
-    const targetValue = e.target.value.slice(0, maxMessageTextLength);
+    targetValue = targetValue.replace('\n', ' ');
+    console.log(`before reaplce "${targetValue}"`);
+    targetValue = targetValue.replace(/\s\s+/, ' ');
+    console.log(`after reaplce "${targetValue}"`);
+    targetValue = targetValue.slice(0, maxMessageTextLength);
 
     let splittedByNewLineRows = targetValue.split('\n');
 
@@ -130,13 +135,14 @@ const SelectedChatScreen = React.memo(() => {
       return;
     }
     setRowsCount(maxDisplayedRows);
-    setMessageText(e.target.value);
+    setMessageText(targetValue);
   }
 
   const sendMessageHandler = () => {
     // @ts-ignore
     if(messageText && messageText.length >= minMessageTextLength) {
-      dispatch(setLastOutcomingMessage(selectedChat.id, messageText));
+      // @ts-ignore
+      dispatch(setLastOutcomingMessage(selectedChat.id, messageText.trim()));
     }
     // todo send message
   }

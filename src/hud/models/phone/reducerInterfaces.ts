@@ -1,4 +1,5 @@
 import {ThemesEnum} from "./enums";
+// id is almost always are phone number
 
 interface DateObjectInterface {
   minutes: string;

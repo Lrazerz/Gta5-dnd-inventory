@@ -4,7 +4,7 @@ import classes from '../../../../styles/hud/components/Phone/AddNewContactScreen
 import {ThemesEnum} from "../../../models/phone/enums";
 import LeadText from "../Text/LeadText";
 import phoneTheme from "../consts/phoneTheme";
-import {maxContactLength} from "../../../../constants/hud/constants";
+import {maxContactLength} from "../../../../constants/hud/phone/phoneConstants";
 import ScreenTitleWrapper from "../ScreenTitleWrapper";
 
 interface ImportedImageInterface {

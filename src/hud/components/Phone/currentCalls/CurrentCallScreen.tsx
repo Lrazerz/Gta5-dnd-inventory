@@ -60,8 +60,8 @@ const CurrentCallScreen = () => {
     dispatch(currentCallChangeOption(optionTitle, optionValue));
   }
 
-  const abortCallHandler = () => {
-    mpTrigger_phone_abortCall();
+  const abortCallHandler = (phoneNumber: string) => {
+    mpTrigger_phone_abortCall(phoneNumber);
     dispatch(abortCall());
   }
 
@@ -157,7 +157,7 @@ const CurrentCallScreen = () => {
           </div>
         </div>
         <div className={classes.DeclineButtonWrapper}>
-          <div className={classes.DeclineButton} onClick={abortCallHandler}>
+          <div className={classes.DeclineButton} onClick={() => abortCallHandler(phoneNumber)}>
             <img src={declineCallImg}/>
           </div>
         </div>

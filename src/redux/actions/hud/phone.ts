@@ -36,7 +36,7 @@ import {
   phone_openCurrentCall,
   phone_openSettings,
   phone_openSingleChat
-} from "../../../utils/windowFuncs/hud/phone/windowFuncs";
+} from "../../../utils/windowFuncs/hud/phone/phoneInterceptors";
 import {
   mpTrigger_phone_acceptCall, mpTrigger_phone_addNewContact,
   mpTrigger_phone_changeCurrentCallOption,
@@ -51,7 +51,7 @@ import {
   mpTrigger_phone_openSingleChat,
   mpTrigger_phone_removeSingleChat, mpTrigger_phone_sendMessage
 } from "../../../utils/mpTriggers/hud/hudMpTriggers";
-import {LastMessageInterface, SelectedChatInterface} from "../../../hud/models/phone/reducerInterfaces";
+import {LastMessageInterface, SelectedChatInterface, ThemesEnum} from "../../../hud/models/phone/reducerInterfaces";
 
 const phoneOpen = (lastMessages: LastMessageInterface[], settings) => {
   return {type: PHONE_OPEN, lastMessages, settings}
@@ -131,7 +131,8 @@ const setSetting = (settingTitle: string, settingValue: any) => {
 
 const setCosmeticSetting = (settingTitle: string, settingValue: any) => {
   return dispatch => {
-    mpTrigger_phone_changeSetting(settingTitle, settingValue);
+    const literalValue = settingValue === ThemesEnum.black ? 'dark' : 'light';
+    mpTrigger_phone_changeSetting(settingTitle, literalValue);
     dispatch(_setCosmeticSetting(settingTitle, settingValue));
   }
 }
@@ -338,7 +339,7 @@ const declineCall = (phoneNumber) => {
     // @ts-ignore
     window.phone_abortIncomingCall = undefined;
     // open curr call scr,
-    mpTrigger_phone_declineCall();
+    mpTrigger_phone_declineCall(phoneNumber);
     dispatch(openPrevScreen());
   }
 }

@@ -13,7 +13,7 @@ import CallContactsChatWrapper from "./CallContactsChatWrapper/CallContactsChatW
 import {
   phone_openIncomingCall,
   phone_openLastMessages
-} from "../../../utils/windowFuncs/hud/phone/windowFuncs";
+} from "../../../utils/windowFuncs/hud/phone/phoneInterceptors";
 import AddNewContactScreen from "./AddNewContactScreen/AddNewContactScreen";
 import SettingsChangeCosmeticsScreen from "./SettingsScreen/SettingsChangeCosmeticsScreen";
 import SettingsChangeRingtoneScreen from "./SettingsScreen/SettingsChangeRingtoneScreen";

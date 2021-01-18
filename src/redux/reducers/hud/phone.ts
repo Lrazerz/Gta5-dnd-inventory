@@ -64,7 +64,7 @@ const initialState = {
 
   lastMessages: [],
 
-  openedScreen: OpenedScreenEnum.phoneTyping,
+  openedScreen: OpenedScreenEnum.mainScreen,
   // to come back from curr call and inc call
   prevOpenedScreen: OpenedScreenEnum.mainScreen,
 
