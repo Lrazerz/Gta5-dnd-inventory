@@ -8,6 +8,7 @@ import HorizontalLine from "../../HorizontalLine";
 import {CommonPermissionsSetInterface} from "../../../../models/corporations/interfaces";
 import CommonPermissionsSet from "./CommonPermissionsSet";
 import {maxCommonPermissionLength} from "../../../../../constants/hud/corporations/corporationsConstants";
+import LoadingIndicator from "../../../common/LoadingIndicator/LoadingIndicator";
 
 interface Props {
 
@@ -76,6 +77,20 @@ const CommonPermissionsList: React.FC<Props> = React.memo(() => {
   // if (!permissionsSets) {
   //   return <div className={classes.CommonPermissionsList}/>
   // }
+
+  if(!permissionsSets) {
+    console.log('no perm sets');
+    return (
+      <div className={classes.CommonPermissionsList}>
+        <div className={classes.HeaderWrapper}>
+          <CommonPermissionsHeader/>
+        </div>
+        <div className={classes.LoadingWrapper}>
+          <LoadingIndicator />
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className={classes.CommonPermissionsList}>

@@ -119,7 +119,6 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case PERMISSIONS_ROLES_PERMISSIONS_SET: {
       const selectedRole = action.roles.find(el => el.id === action.selectedRoleId);
-      console.log('selectedRole', action.selectedRoleId);
       return {
         ...state,
         roles: action.roles,

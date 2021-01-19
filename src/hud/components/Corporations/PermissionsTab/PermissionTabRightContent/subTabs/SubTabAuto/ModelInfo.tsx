@@ -22,6 +22,7 @@ import {
   mpTrigger_corporations_permissions_auto_changePermission,
   mpTrigger_corporations_permissions_auto_changeResponsible
 } from "../../../../../../../utils/mpTriggers/hud/hudMpTriggers";
+import LoadingIndicator from "../../../../../common/LoadingIndicator/LoadingIndicator";
 
 interface Props {
   info: PermissionsAutoModelInterface;
@@ -32,8 +33,13 @@ const ModelInfo: React.FC<Props> = React.memo((Props) => {
   const dispatch = useDispatch();
 
   // id will be even if no data (pick model cause to add selected model id to redux)
+  console.log('Props infod', Props.info);
   if(!Props.info || !Props.info.availableInventorySlots) {
-    return <div></div>
+    return (
+      <div className={classes.ModelInfo}>
+        <LoadingIndicator />
+      </div>
+    )
   }
 
   const selectResponsibleHandler = (listItem: ResponsibleForAutoInterface) => {

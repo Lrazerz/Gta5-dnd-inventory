@@ -11,6 +11,7 @@ import {
 } from "../../../../../redux/actions/hud/corporations/tabs/permissions/permissions";
 import {SingleRoleInterface} from "../../../../models/corporations/interfaces";
 import {maxRoleLength} from "../../../../../constants/hud/corporations/corporationsConstants";
+import LoadingIndicator from "../../../common/LoadingIndicator/LoadingIndicator";
 
 const RolesList = React.memo(() => {
 
@@ -44,6 +45,26 @@ const RolesList = React.memo(() => {
     }
   }, [containerRef.current]);
 
+  const rolesListContentBlock: JSX.Element = roleHeight ? (<RolesListContent
+    roles={filteredRoles} selectedRole={selectedRole}
+    onSelectRole={permissionsSelectRoleAction}
+    onRemoveRole={permissionsRemoveRoleAction}
+    roleHeight={roleHeight}/>) : null;
+
+  if(!roles) {
+    return (
+      <div ref={containerRef} className={classes.RolesList}>
+        <div className={classes.RolesListHeader}>
+          <RolesListHeader />
+        </div>
+        <HorizontalLine />
+        <div className={classes.LoadingWrapper}>
+          <LoadingIndicator />;
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div ref={containerRef} className={classes.RolesList}>
       <div className={classes.RolesListHeader}>
@@ -55,11 +76,12 @@ const RolesList = React.memo(() => {
       </div>
       <HorizontalLine />
       <div className={classes.RolesListContent}>
-        {roleHeight ? (<RolesListContent
-          roles={filteredRoles} selectedRole={selectedRole}
-          onSelectRole={permissionsSelectRoleAction}
-          onRemoveRole={permissionsRemoveRoleAction}
-          roleHeight={roleHeight}/>) : null}
+        {/*{roleHeight ? (<RolesListContent*/}
+        {/*  roles={filteredRoles} selectedRole={selectedRole}*/}
+        {/*  onSelectRole={permissionsSelectRoleAction}*/}
+        {/*  onRemoveRole={permissionsRemoveRoleAction}*/}
+        {/*  roleHeight={roleHeight}/>) : null}*/}
+        {rolesListContentBlock}
       </div>
     </div>
   );

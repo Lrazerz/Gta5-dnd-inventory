@@ -1,7 +1,7 @@
 import {
   CORPORATIONS_CLOSE,
-  CORPORATIONS_TAB_OPEN,
-  CORPORATIONS_OPEN
+  CORPORATIONS_OPEN,
+  CORPORATIONS_TAB_OPEN
 } from "../../../actions/hud/corporations/corporationsTypes";
 import {CorporationsTabsEnum} from "../../../../hud/models/corporations/enums";
 
@@ -13,7 +13,7 @@ interface InitialStateInterface {
 
 const initialState: InitialStateInterface = {
   isOpened: false,
-  openedTab: CorporationsTabsEnum.permissions,
+  openedTab: CorporationsTabsEnum.permissions
 }
 
 export default (state = initialState, action) => {
