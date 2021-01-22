@@ -1,4 +1,5 @@
 import React from 'react';
+import {Provider} from 'react-redux';
 import ReactDOM from 'react-dom';
 import './src/styles/inventory/normalize.css';
 import './index.scss';
@@ -13,7 +14,10 @@ import './src/assets/inventory/fonts/Montserrat-Light.ttf';
 
 // import './src/assets/fonts/BebasNeue-Regular.ttf';
 import './src/assets/inventory/fonts/BebasNeue-Bold.otf';
+import store from "./src/redux/store";
 
 ReactDOM.render(
-  <App/>,
+  <Provider store={store}>
+    <App/>
+  </Provider>,
   document.getElementById('root'));

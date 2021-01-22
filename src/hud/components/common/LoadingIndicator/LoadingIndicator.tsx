@@ -1,4 +1,4 @@
-import React, {CSSProperties} from 'react';
+import React, {CSSProperties, useEffect, useState} from 'react';
 import classes from '../../../../styles/hud/components/common/LoadingIndicator.module.scss';
 import evionLogo from '../../../../assets/common/evionLogo.svg';
 import CorporationsText from "../../Corporations/CorporationsText";
@@ -13,9 +13,18 @@ interface Props {
 
 const LoadingIndicator: React.FC<Props> = React.memo((Props) => {
 
-  const animationDelay = Props.animationDelay || '0.1s';
-  const animationDuration = Props.animationDuration || '1s';
-  const animationIterationCount = Props.animationIterationCount || 'infinite';
+  // const [isVisible, setIsVisible] = useState(true);
+  //
+  // useEffect(() => {
+  //   const timeout = setTimeout(() => setIsVisible(false), 2200);
+  //   return () => {
+  //     clearTimeout(timeout);
+  //   }
+  // }, [])
+
+  const animationDelay = Props.animationDelay || '0.2s';
+  const animationDuration = Props.animationDuration || '2s';
+  const animationIterationCount = Props.animationIterationCount || '1';
 
   const loadingText = Props.loadingText || 'Загрузка данных';
 
@@ -31,6 +40,10 @@ const LoadingIndicator: React.FC<Props> = React.memo((Props) => {
     color: '#fff',
     marginTop: '1rem',
   }
+
+  // if(!isVisible) {
+  //   return null;
+  // }
 
   return (
     <div className={classes.LoadingIndicator}>

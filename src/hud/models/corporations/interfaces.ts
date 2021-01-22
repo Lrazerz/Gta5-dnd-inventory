@@ -36,7 +36,6 @@ interface PermissionsReducerInterface {
   commonPermissionsSets: CommonPermissionsSetInterface[];
 }
 
-
 interface SingleRoleInterface {
   title: string;
 }
