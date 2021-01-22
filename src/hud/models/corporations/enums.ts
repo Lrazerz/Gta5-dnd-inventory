@@ -1,3 +1,12 @@
+// common
+// to generate from config file
+enum RowFieldTypeEnum {
+  label,
+  editableLabel,
+  switch,
+  dropdown
+}
+
 // displayed tabs
 const _CorporationsDisplayedTabsDict = {
   permissions: 'Разрешения',
@@ -63,6 +72,7 @@ enum CorporationsPermissionsTabsEnum {
 }
 
 export {
+  RowFieldTypeEnum,
   CorporationsTabsDict,
   CorporationsTabsEnum,
   CorporationsDisplayedTabsRussian,

@@ -3,38 +3,25 @@ import classes from '../../../styles/hud/components/Corporations/CorporationsDro
 import CorporationsText from "./CorporationsText";
 import HorizontalLine from "./HorizontalLine";
 import {corporationsTheme} from "./consts/corporationsTheme";
-import CorporationsGraySquare from "./CorporationsGraySquare";
-import {permissionsAutoChangeResponsibleAction} from "../../../redux/actions/hud/corporations/tabs/permissions/tabs/auto";
-import {ResponsibleForAutoInterface} from "../../models/corporations/interfaces";
-
-interface SingleItemInterface {
-  id: string;
-  title: string;
-}
 
 interface Props {
-  selectedItem: SingleItemInterface;
-  list: SingleItemInterface[];
+  selectedItem: string;
+  list: string[];
   onSelect: any;
 }
 
 const CorporationsDropdown: React.FC<Props> = (Props) => {
-
   // to create horizontal padding
   const containerRef = useRef();
 
   const [isOpened, setIsOpened]: [boolean, any] = useState(false);
 
   useEffect(() => {
-    console.log('dropdown useeffect', containerRef.current);
     if(containerRef.current) {
-
       // @ts-ignore
       if(containerRef.current.childNodes[1]) {
         // @ts-ignore
         const widthNumber = +window.getComputedStyle(containerRef.current.childNodes[1]).width.match(/(\.|\d)+/)[0] * 1.3 + 'px';
-
-        console.log('set width number');
         // @ts-ignore
         containerRef.current.childNodes[1].style.width = widthNumber;
       }
@@ -51,7 +38,7 @@ const CorporationsDropdown: React.FC<Props> = (Props) => {
     color: corporationsTheme.bg_orange_picked2,
   }
 
-  const pickItemHandler = (listItem: ResponsibleForAutoInterface, e: any) => {
+  const pickItemHandler = (listItem: string, e: any) => {
     e.stopPropagation();
     setIsOpened(false);
     Props.onSelect(listItem);
@@ -79,9 +66,9 @@ const CorporationsDropdown: React.FC<Props> = (Props) => {
 
   listBlock.push(...Props.list.map(listItem => {
     return (
-      <div key={listItem.id} className={classes.ListItemWrapper} onClick={(e) => pickItemHandler(listItem, e)}>
+      <div key={listItem} className={classes.ListItemWrapper} onClick={(e) => pickItemHandler(listItem, e)}>
         <CorporationsText styles={listTextStyles}>
-          {listItem.title}
+          {listItem}
         </CorporationsText>
       </div>
     );
@@ -90,12 +77,12 @@ const CorporationsDropdown: React.FC<Props> = (Props) => {
   return (
     <div className={classes.SelectedItem} ref={containerRef} onClick={openDropdownHandler}>
       <CorporationsText styles={selectedTextStyles}>
-        {Props.selectedItem.title}
+        {Props.selectedItem}
       </CorporationsText>
       { isOpened && (<div className={classes.CorporationsDropdown}>
         <div className={classes.ListItemWrapper}>
           <CorporationsText styles={pickedItemTextStyles}>
-            {Props.selectedItem.title}
+            {Props.selectedItem}
           </CorporationsText>
         </div>
         {listBlock}

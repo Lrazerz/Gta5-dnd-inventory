@@ -78,7 +78,7 @@ const Corporations = React.memo(() => {
       // @ts-ignore
       window.corporations_openPermissions = (dataJSON: string) => {
         const parsedData = corporationsOpenPermissionsTab(dataJSON);
-        dispatch(permissionsSetRolesPermissions(parsedData.roles, parsedData.selectedRoleInfo.id,
+        dispatch(permissionsSetRolesPermissions(parsedData.roles, parsedData.selectedRoleInfo.title,
           parsedData.selectedRoleInfo.commonPermissionsSets));
       }
     }

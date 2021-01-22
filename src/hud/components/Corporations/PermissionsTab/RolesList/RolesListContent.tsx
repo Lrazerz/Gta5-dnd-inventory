@@ -38,16 +38,16 @@ const RolesListContent: React.FC<Props> = React.memo((Props) => {
 
   const selectRoleHandler = (role: SingleRoleInterface) => {
 
-    if(!(Props.selectedRole && Props.selectedRole.id === role.id)) {
+    if(!(Props.selectedRole && Props.selectedRole.title === role.title)) {
       // check if not selected
-      dispatch(permissionsSelectRoleAction(role.id));
+      dispatch(permissionsSelectRoleAction(role.title));
       mpTrigger_corporations_permissions_selectRole(role.title);
     }
   }
 
-  const removeRoleHandler = (roleId: string) => {
-    dispatch(permissionsRemoveRoleAction(roleId));
-    mpTrigger_corporations_permissions_removeRole(roleId);
+  const removeRoleHandler = (roleTitle: string) => {
+    dispatch(permissionsRemoveRoleAction(roleTitle));
+    mpTrigger_corporations_permissions_removeRole(roleTitle);
   }
 
   const singleRoleStyles: CSSProperties = {
@@ -67,7 +67,7 @@ const RolesListContent: React.FC<Props> = React.memo((Props) => {
   }
 
   const rolesListJSX: ReactElement[] = Props.roles.map(role => {
-    const isSelectedRole = Props.selectedRole && role.id === Props.selectedRole.id;
+    const isSelectedRole = Props.selectedRole && role.title === Props.selectedRole.title;
     // to not change global value
     const localRoleStyles: CSSProperties = {...singleRoleStyles};
     const localTitleStyles: CSSProperties = {...roleTitleStyles};
@@ -80,9 +80,9 @@ const RolesListContent: React.FC<Props> = React.memo((Props) => {
     const circlesColor = isSelectedRole ? corporationsTheme.text_white : corporationsTheme.text_gray;
 
     return (
-    <div key={role.id} style={{width: '100%'}} onClick={() => selectRoleHandler(role)}>
+    <div key={role.title} style={{width: '100%'}} onClick={() => selectRoleHandler(role)}>
       <div style={localRoleStyles} className={classes.SingleRole}>
-        {isSelectedRole ? <LeftVerticalLine/> : null}
+        {isSelectedRole && <LeftVerticalLine/>}
         <div className={classes.CirclesWrapper} >
           <SixCircles color={circlesColor}/>
         </div>

@@ -46,7 +46,6 @@ const Alerts: React.FC<Props> = React.memo(() => {
           if(newAlertsIdx === -1) {
             // console.log('Didnt find (element deprecated)');
             timeOuts.push(setTimeout(() => {
-              console.log('SET timeout function')
               removeAlertWithDisappearing(alertsWithDisappearing[i].alert.id);
             }, 2000));
 
@@ -76,7 +75,6 @@ const Alerts: React.FC<Props> = React.memo(() => {
 
   // disappear animation
   const removeAlertWithDisappearing = (id) => {
-    console.log('ReMOVE ALERTWITHDISS', id)
     setAlertsWithDisappearing(prevAlerts => prevAlerts.filter(alert => alert.alert.id !== id));
   }
 

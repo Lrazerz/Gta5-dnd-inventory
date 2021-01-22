@@ -1,8 +1,8 @@
 import {
+  PERMISSIONS_AUTO_CHANGE_OPTION,
   PERMISSIONS_AUTO_CHANGE_PERMISSION,
   PERMISSIONS_AUTO_SELECT_MODEL,
-  PERMISSIONS_AUTO_SET_DATA,
-  PERMISSIONS_AUTO_SET_RESPONSIBLE
+  PERMISSIONS_AUTO_SET_DATA
 } from "./autoTypes";
 import {
   PermissionsTabAutoInterface
@@ -12,23 +12,23 @@ const permissionsAutoSetDataAction = (data: PermissionsTabAutoInterface) => {
   return {type: PERMISSIONS_AUTO_SET_DATA, data}
 }
 
-const permissionsAutoSelectModelAction = (modelId) => {
-  return {type: PERMISSIONS_AUTO_SELECT_MODEL, id: modelId}
+const permissionsAutoSelectModelAction = (modelTitle) => {
+  return {type: PERMISSIONS_AUTO_SELECT_MODEL, title: modelTitle}
 }
 
-const permissionsAutoChangeResponsibleAction = (responsibleId) => {
-  return {type: PERMISSIONS_AUTO_SET_RESPONSIBLE, id: responsibleId}
+const permissionsAutoChangeOption = (optionTitle: string, optionValue: string | boolean) => {
+  return {type: PERMISSIONS_AUTO_CHANGE_OPTION, title: optionTitle, value: optionValue};
 }
 
-const permissionsAutoChangePermission = (permissionId, value) => {
-  return {type: PERMISSIONS_AUTO_CHANGE_PERMISSION, id: permissionId, value}
+const permissionsAutoChangePermission = (permissionTitle, value) => {
+  return {type: PERMISSIONS_AUTO_CHANGE_PERMISSION, title: permissionTitle, value}
 }
-
 
 export {
   permissionsAutoSetDataAction,
 
   permissionsAutoSelectModelAction,
-  permissionsAutoChangeResponsibleAction,
+
+  permissionsAutoChangeOption,
   permissionsAutoChangePermission
 }

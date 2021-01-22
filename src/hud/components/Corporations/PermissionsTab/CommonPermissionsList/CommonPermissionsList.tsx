@@ -79,7 +79,6 @@ const CommonPermissionsList: React.FC<Props> = React.memo(() => {
   // }
 
   if(!permissionsSets) {
-    console.log('no perm sets');
     return (
       <div className={classes.CommonPermissionsList}>
         <div className={classes.HeaderWrapper}>
@@ -106,8 +105,8 @@ const CommonPermissionsList: React.FC<Props> = React.memo(() => {
       </div>
       <div className={classes.PermissionsSetsWrapper}>
         {permissionsSets && filteredPermissionsSets && filteredPermissionsSets.map(permSet => (
-          <CommonPermissionsSet selectedRole={selectedRole} id={permSet.id} title={permSet.title} permissions={permSet.permissions}
-                                key={permSet.id}/>
+          <CommonPermissionsSet selectedRole={selectedRole} title={permSet.title} permissions={permSet.permissions}
+                                key={permSet.title}/>
         ))}
       </div>
     </div>

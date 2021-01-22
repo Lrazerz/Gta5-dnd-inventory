@@ -19,14 +19,13 @@ const SubTabAuto: React.FC<Props> = React.memo(() => {
       <div className={classes.SubTabAuto}>
         <LoadingIndicator/>
       </div>
-    )
+    );
   }
 
-  console.log('SUbTabAuto selectedModelInfo', selectedModelInfo);
   return (
     <div className={classes.SubTabAuto}>
       <div className={classes.ModelsListWrapper}>
-        <ModelsList models={models} selectedModelId={selectedModelInfo && selectedModelInfo.id}/>
+        <ModelsList models={models} selectedModelTitle={selectedModelInfo && selectedModelInfo.title}/>
       </div>
       <div className={classes.ModelInfoWrapper}>
         <ModelInfo info={selectedModelInfo} />

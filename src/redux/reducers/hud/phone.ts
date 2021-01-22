@@ -1,27 +1,39 @@
 import {
-  ABORT_CALL, ADD_NEW_CONTACT,
+  ABORT_CALL,
+  ADD_NEW_CONTACT,
   CURRENT_CALL_CHANGE_OPTION,
   OPEN_CALL,
   OPEN_INCOMING_CALL,
   OPEN_LAST_MESSAGES,
   OPEN_PREV_SCREEN,
-  OPEN_SCREEN, PHONE_CLOSE, PHONE_OPEN, REMOVE_SELECTED_CHAT, SET_ADD_NEW_CONTACT_NUMBER,
+  OPEN_SCREEN,
+  PHONE_CLOSE,
+  PHONE_OPEN,
+  REMOVE_SELECTED_CHAT,
+  SET_ADD_NEW_CONTACT_NUMBER,
   SET_CALLS,
   SET_CHATS_DEMO,
-  SET_CONTACTS, SET_COSMETIC_SETTING, SET_LAST_OUTCOMING_MESSAGE, SET_PLAYER_AVATAR, SET_RINGTONE,
+  SET_CONTACTS,
+  SET_COSMETIC_SETTING,
+  SET_LAST_OUTCOMING_MESSAGE,
+  SET_PLAYER_AVATAR,
+  SET_RINGTONE,
   SET_SELECTED_CHAT,
   SET_SETTING,
-  SET_SETTINGS, SET_TIME,
+  SET_SETTINGS,
+  SET_TIME,
 } from "../../actions/hud/phoneTypes";
 import {
   CallsInterface,
   ChatMessageInterface,
   ChatsDemoInterface,
   ContactInterface,
-  CurrentCallInterface, DateObjectInterface,
+  CurrentCallInterface,
+  DateObjectInterface,
   IncomingCallInterface,
   LastMessageInterface,
-  PhoneHudDataInterface, SelectedChatInterface,
+  PhoneHudDataInterface,
+  SelectedChatInterface,
   SettingsInterface
 } from "../../../hud/models/phone/reducerInterfaces";
 import {OpenedScreenEnum, ThemesEnum} from "../../../hud/models/phone/enums";
@@ -57,7 +69,7 @@ interface InitialStateInterface {
   //endregion
 }
 
-const initialState = {
+const initialState: InitialStateInterface = {
   isPhoneOpened: false,
   // to display in chats
   playerAvatar: "default-avatar",
@@ -84,8 +96,8 @@ const initialState = {
   settings: {
     isMuted: false,
     cosmetics: {
-      theme: "",
-      themeImage: "",
+      theme: ThemesEnum.white,
+      themeImage: "theme1",
     },
     ringtone: "",
   },

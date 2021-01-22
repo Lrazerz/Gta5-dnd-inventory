@@ -280,23 +280,25 @@ const mpTrigger_corporations_permissions_auto_selectModel = (modelTitle: string)
   } catch (e) {}
 }
 
-const mpTrigger_corporations_permissions_auto_changeResponsible = (selectedModel: string, responsibleTitle: string) => {
-  console.log('cef_cl_corporations_permissions_auto_changeResponsible', CorporationsTabsDict.permissions,
-    CorporationsPermissionsTabsDict.auto, selectedModel, responsibleTitle)
+const mpTrigger_corporations_permissions_auto_changeOption = (selectedModel: string, optionTitle: string,
+                                                              optionValue: string | boolean) => {
+  console.log('cef_cl_corporations_permissions_auto_changeOption', CorporationsTabsDict.permissions,
+    CorporationsPermissionsTabsDict.auto, selectedModel, optionTitle, optionValue)
   try {
     const data = JSON.stringify({
       OpenedTab: CorporationsTabsDict.permissions,
       OpenedPermissionsTab: CorporationsPermissionsTabsDict.auto,
       OpenedModel: selectedModel,
-      Responsible: responsibleTitle
+      OptionTitle: optionTitle,
+      OptionValue: optionValue
     })
     // @ts-ignore
-    mp.trigger('cef_cl_corporations_permissions_auto_changeResponsible', data);
+    mp.trigger('cef_cl_corporations_permissions_auto_changeOption', data);
   } catch (e) {}
 }
 
 const mpTrigger_corporations_permissions_auto_changePermission = (selectedModel: string, permissionTitle: string,
-                                                                  value: boolean) => {
+                                                                  value: string | boolean) => {
   console.log('cef_cl_corporations_permissions_auto_changePermission', CorporationsTabsDict.permissions,
     CorporationsPermissionsTabsDict.auto, selectedModel, permissionTitle, value);
   try {
@@ -348,6 +350,6 @@ export {
   mpTrigger_corporations_permissions_openTab,
 
   mpTrigger_corporations_permissions_auto_selectModel,
-  mpTrigger_corporations_permissions_auto_changeResponsible,
+  mpTrigger_corporations_permissions_auto_changeOption,
   mpTrigger_corporations_permissions_auto_changePermission
 }

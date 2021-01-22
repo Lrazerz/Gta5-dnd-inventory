@@ -1,9 +1,9 @@
-import shortId from 'shortid';
 import {
-  CommonPermissionsSetInterface, PermissionsAutoModelInterface,
+  CommonPermissionsSetInterface,
   PermissionsTabAutoInterface,
   SingleRoleInterface
 } from "../../../../hud/models/corporations/interfaces";
+import {RowFieldTypeEnum} from "../../../../hud/models/corporations/enums";
 
 let openCorporations: (data: {}) => Object;
 openCorporations = (data) => {
@@ -14,7 +14,7 @@ openCorporations = (data) => {
 let corporationsOpenPermissionsTab: (jsonData: string) => {
   roles: SingleRoleInterface[],
   selectedRoleInfo: {
-    id: string,
+    title: string,
     commonPermissionsSets: CommonPermissionsSetInterface[],
   }
 };
@@ -23,23 +23,20 @@ corporationsOpenPermissionsTab = (jsonData) => {
 
   const {Roles, SelectedRoleInfo, Modules} = JSON.parse(jsonData);
 
-  const roles: SingleRoleInterface[] = Roles.map(role => ({id: shortId.generate(), title: role.Title}));
+  const roles: SingleRoleInterface[] = Roles.map(role => ({title: role.Title}));
 
   // find selected role id
   const selectedRole = roles.find(role => role.title.toLowerCase() === SelectedRoleInfo.Title.toLowerCase());
   if(!selectedRole) {
     console.log('error', 'Selected role name doesnt exists in the roles list');
   }
-  const selectedRoleId = selectedRole ? selectedRole.id : shortId.generate();
 
   const selectedRoleInfo = {
-    id: selectedRoleId,
+    title: SelectedRoleInfo.Title,
     commonPermissionsSets: SelectedRoleInfo.CommonPermissionsSets.map(singlePermissionSet => ({
-      id: shortId.generate(),
       title: singlePermissionSet.Title,
       permissions: singlePermissionSet.Permissions.map(singlePermission => (
         {
-          id: shortId.generate(),
           title: singlePermission.Title,
           value: singlePermission.Value
         }
@@ -61,10 +58,8 @@ corporationsPermissionsOpenRole = (roleDataJson) => {
   const parsedData = JSON.parse(roleDataJson);
 
   const commonPermissionsSets = parsedData.CommonPermissionsSets.map(permissionSet => ({
-    id: shortId.generate(),
     title: permissionSet.Title,
     permissions: permissionSet.Permissions.map(permission => ({
-      id: shortId.generate(),
       title: permission.Title,
       value: permission.Value
     }))
@@ -85,10 +80,8 @@ corporationsRefreshPermissions = (permissionsDataJson) => {
 
   const commonPermissionsSets: CommonPermissionsSetInterface[] =
     parsedPermissionsData.CommonPermissionsSets.map(permissionsSet => ({
-      id: shortId.generate(),
       title: permissionsSet.Title,
       permissions: permissionsSet.Permissions.map(permission => ({
-        id: shortId.generate(),
         title: permission.Title,
         value: permission.Value
       }))
@@ -98,45 +91,63 @@ corporationsRefreshPermissions = (permissionsDataJson) => {
 }
 
 interface AcceptedAutoModelDataInterface {
-  Models: { Id: string, Title: string }[],
+  Models: { Title: string }[],
   SelectedModelInfo: {
-    Id: string;
     Title: string;
-    AvailableInventorySlots: number;
-    Responsible: { Id: string, Title: string };
-    PotentialResponsibles: { Id: string, Title: string }[];
-    AvailableGaragePlaces: number;
-    Permissions: { Id: string, Title: string, Value: boolean }[];
+    Options: { Type: string, Title: string, Value: string | boolean, PotentialValues?: string[]}[];
+    Permissions: { Title: string, Value: boolean }[];
   }
 }
 
 let corporationsPermissionsOpenAutoTab: (autoData: string) => PermissionsTabAutoInterface;
+// @ts-ignore
 corporationsPermissionsOpenAutoTab = (autoData) => {
+
+  const _getOptionType = (type) => {
+    let convertedType: RowFieldTypeEnum;
+
+    switch(type.toLowerCase()) {
+      case 'label': {
+        convertedType = RowFieldTypeEnum.label;
+        break;
+      }
+      case 'editablelabel': {
+        convertedType = RowFieldTypeEnum.editableLabel;
+        break;
+      }
+      case 'switch': {
+        convertedType = RowFieldTypeEnum.switch;
+        break;
+      }
+      case 'dropdown': {
+        convertedType = RowFieldTypeEnum.dropdown;
+        break;
+      }
+      default: {
+        convertedType = RowFieldTypeEnum.label;
+      }
+    }
+    return convertedType;
+  }
 
   const parsedAutoData: AcceptedAutoModelDataInterface = JSON.parse(autoData);
 
-  const models = parsedAutoData.Models.map(model => ({id: shortId.generate(), title: model.Title}));
+  const models = parsedAutoData.Models.map(model => ({title: model.Title}));
 
   const selectedModel = models.find(
     model => model.title.toLowerCase() === parsedAutoData.SelectedModelInfo.Title.toLowerCase());
 
-  const selectedModelId = selectedModel ? selectedModel.id : shortId.generate();
-
   const selectedModelInfo = {
-    id: selectedModelId,
     title: parsedAutoData.SelectedModelInfo.Title,
-    availableInventorySlots: parsedAutoData.SelectedModelInfo.AvailableInventorySlots,
-    responsible: {
-      id: shortId.generate(),
-      title: parsedAutoData.SelectedModelInfo.Responsible.Title
-    },
-    potentialResponsibles: parsedAutoData.SelectedModelInfo.PotentialResponsibles.map(singleResponsible => ({
-      id: shortId.generate(),
-      title: singleResponsible.Title
+    options: parsedAutoData.SelectedModelInfo.Options.map(option => ({
+      option: {
+        type: _getOptionType(option.Type),
+        title: option.Title,
+        value: option.Value,
+        potentialValues: option.PotentialValues
+      }
     })),
-    availableGaragePlaces: parsedAutoData.SelectedModelInfo.AvailableGaragePlaces,
     permissions: parsedAutoData.SelectedModelInfo.Permissions.map(permission => ({
-      id: shortId.generate(),
       title: permission.Title,
       value: permission.Value
     }))

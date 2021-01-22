@@ -1,22 +1,57 @@
-// permissions tab
+// common
+// to generate list from config file
+import {CorporationsPermissionsTabsEnum, RowFieldTypeEnum} from "./enums";
+
+// row field interfaces
+interface _RowLabelInterface {
+  type: RowFieldTypeEnum.label;
+  title: string;
+  value: string;
+}
+
+interface _RowEditableLabelInterface {
+  type: RowFieldTypeEnum.editableLabel;
+  title: string;
+  value: string;
+}
+
+interface _RowSwitchInterface {
+  type: RowFieldTypeEnum.switch;
+  title: string;
+  value: boolean;
+}
+
+interface RowDropdownInterface {
+  type: RowFieldTypeEnum.dropdown;
+  title: string;
+  value: string;
+  potentialValues: string[];
+}
+
+//region -------------------- Permissions Tab --------------------
+interface PermissionsReducerInterface {
+  openedTab: CorporationsPermissionsTabsEnum;
+  roles: SingleRoleInterface[];
+  selectedRole: SingleRoleInterface;
+  commonPermissionsSets: CommonPermissionsSetInterface[];
+}
+
+
 interface SingleRoleInterface {
-  id: string;
   title: string;
 }
 
 interface CommonPermissionsSetInterface {
-  id: string;
   title: string;
   permissions: PermissionInterface[];
 }
 
 interface PermissionInterface {
-  id: string;
   title: string;
   value: boolean;
 }
 
-// boost tab
+// boost sub tab
 interface BoostTabInterface {
 
 }
@@ -28,34 +63,32 @@ interface PermissionsTabAutoInterface {
 }
 
 interface SingleAutoModelTitleInterface {
-  id: string;
   title: string;
+}
+
+interface PermissionsAutoModelOptionInterface {
+  option: _RowLabelInterface | _RowEditableLabelInterface | _RowSwitchInterface | RowDropdownInterface;
 }
 
 interface PermissionsAutoModelInterface {
-  id: string;
   title: string;
-  availableInventorySlots: number;
-  responsible: ResponsibleForAutoInterface
-  potentialResponsibles: ResponsibleForAutoInterface[];
-  availableGaragePlaces: number;
+  options: PermissionsAutoModelOptionInterface[];
   permissions: PermissionInterface[];
 }
-
-interface ResponsibleForAutoInterface {
-  id: string;
-  title: string;
-}
+//endregion
 
 export {
+  RowDropdownInterface,
+
+  PermissionsReducerInterface,
+
   SingleRoleInterface,
 
   CommonPermissionsSetInterface,
   PermissionInterface,
 
   SingleAutoModelTitleInterface,
+  PermissionsAutoModelOptionInterface,
   PermissionsAutoModelInterface,
   PermissionsTabAutoInterface,
-
-  ResponsibleForAutoInterface
 }

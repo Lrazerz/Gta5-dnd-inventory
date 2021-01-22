@@ -54,6 +54,7 @@ const PermissionsTab: React.FC<Props> = React.memo(({dimensions}) => {
     if(!window.corporations_permissions_openAutoTab) {
       // @ts-ignore
       window.corporations_permissions_openAutoTab = (autoData: string) => {
+        console.log('OpenAutTab', JSON.parse(autoData));
         const parsedData = corporationsPermissionsOpenAutoTab(autoData);
         dispatch(permissionsAutoSetDataAction(parsedData));
       }

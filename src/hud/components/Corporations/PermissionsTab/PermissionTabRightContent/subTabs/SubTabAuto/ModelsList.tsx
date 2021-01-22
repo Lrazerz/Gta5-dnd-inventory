@@ -1,4 +1,4 @@
-import React, {ReactElement, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useDispatch} from 'react-redux';
 import classes
   from '../../../../../../../styles/hud/components/Corporations/PermissionsTab/PermissionTabRightContent/subTabs/SubTabAuto/ModelsList.module.scss';
@@ -12,7 +12,7 @@ import {maxModelLength} from "../../../../../../../constants/hud/corporations/co
 
 interface Props {
   models: SingleAutoModelTitleInterface[];
-  selectedModelId: string;
+  selectedModelTitle: string;
 }
 
 const ModelsList: React.FC<Props> = React.memo((Props) => {
@@ -23,8 +23,8 @@ const ModelsList: React.FC<Props> = React.memo((Props) => {
   const [filteredModels, setFilteredModels]: [SingleAutoModelTitleInterface[], any] = useState();
 
   const selectModelHandler = (model: SingleAutoModelTitleInterface) => {
-    if (Props.selectedModelId !== model.id) {
-      dispatch(permissionsAutoSelectModelAction(model.id));
+    if (Props.selectedModelTitle !== model.title) {
+      dispatch(permissionsAutoSelectModelAction(model.title));
       mpTrigger_corporations_permissions_auto_selectModel(model.title);
     }
   }
@@ -47,8 +47,8 @@ const ModelsList: React.FC<Props> = React.memo((Props) => {
 
   const modelsListBlock = filteredModels && filteredModels.map(model => {
     return (
-      <div key={model.id} onClick={() => selectModelHandler(model)}>
-        <ModelsListItem title={model.title} isActive={model.id === Props.selectedModelId}/>
+      <div key={model.title} onClick={() => selectModelHandler(model)}>
+        <ModelsListItem title={model.title} isActive={model.title === Props.selectedModelTitle}/>
         <HorizontalLine/>
       </div>
     )

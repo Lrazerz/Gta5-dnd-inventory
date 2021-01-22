@@ -11,7 +11,6 @@ import {mpTrigger_corporations_permissions_changePermission} from "../../../../.
 
 interface Props {
   selectedRole: SingleRoleInterface;
-  id: string;
   title: string;
   permissions: PermissionInterface[];
 }
@@ -21,7 +20,7 @@ const CommonPermissionsSet: React.FC<Props> = (Props) => {
   const dispatch = useDispatch();
 
   const changePermissionHandler = (permission: PermissionInterface) => {
-    dispatch(permissionsChangePermission(Props.id, permission.id, !permission.value));
+    dispatch(permissionsChangePermission(Props.title, permission.title, !permission.value));
     mpTrigger_corporations_permissions_changePermission(Props.selectedRole.title, Props.title, permission.title, !permission.value);
   }
 
@@ -33,7 +32,7 @@ const CommonPermissionsSet: React.FC<Props> = (Props) => {
 
   const permissionsBlock = Props.permissions.map(permission => {
     return (
-      <div className={classes.PermissionWithSwitch} key={permission.id}>
+      <div className={classes.PermissionWithSwitch} key={permission.title}>
         <TitleAndSwitchRow title={permission.title} value={permission.value}
                            onChange={() => changePermissionHandler({...permission})}/>
       </div>

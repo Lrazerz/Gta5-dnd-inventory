@@ -1,148 +1,115 @@
 import {
-  PermissionsTabAutoInterface,
-  ResponsibleForAutoInterface
+  PermissionsAutoModelOptionInterface,
+  PermissionsTabAutoInterface, RowDropdownInterface
 } from "../../../../../../../hud/models/corporations/interfaces";
 import {
+  PERMISSIONS_AUTO_CHANGE_OPTION,
   PERMISSIONS_AUTO_CHANGE_PERMISSION,
   PERMISSIONS_AUTO_SELECT_MODEL,
-  PERMISSIONS_AUTO_SET_DATA, PERMISSIONS_AUTO_SET_RESPONSIBLE
+  PERMISSIONS_AUTO_SET_DATA
 } from "../../../../../../actions/hud/corporations/tabs/permissions/tabs/autoTypes";
 import {
   PERMISSIONS_ROLE_REMOVE,
-  PERMISSIONS_ROLE_SELECT
+  PERMISSIONS_ROLE_SELECT, PERMISSIONS_TAB_OPEN
 } from "../../../../../../actions/hud/corporations/tabs/permissions/permissionsTypes";
+import {RowFieldTypeEnum} from "../../../../../../../hud/models/corporations/enums";
+import {CORPORATIONS_TAB_OPEN} from "../../../../../../actions/hud/corporations/corporationsTypes";
+// import {permissionsAutoFields} from "../../../../../../../constants/hud/corporations/permissions/auto";
 
 const initialState: PermissionsTabAutoInterface = {
   models: null,
   selectedModelInfo: null
 }
 
+//region filled initState
 // const initialState: PermissionsTabAutoInterface = {
 //   models: [
 //     {
-//       id: '0',
 //       title: 'ЮЮЮЮЮЮЮЮЮЮ' // 10
 //     },
 //     {
-//       id: '1',
 //       title: 'Пример модели 2'
 //     },
 //     {
-//       id: '2',
 //       title: 'Пример модели 3'
 //     },
 //     {
-//       id: '3',
 //       title: 'Пример модели 4'
 //     },
 //     {
-//       id: '4',
 //       title: 'Пример модели 5'
 //     },
 //     {
-//       id: '5',
-//       title: 'Пример модели 6'
+//       title: 'Пример модели 7'
 //     },
 //     {
-//       id: '6',
-//       title: 'Пример модели 6'
+//       title: 'Пример модели 8'
 //     },
 //     {
-//       id: '7',
-//       title: 'Пример модели 6'
+//       title: 'Пример модели 9'
 //     },
 //     {
-//       id: '8',
-//       title: 'Пример модели 6'
+//       title: 'Пример модели 10'
 //     },
 //     {
-//       id: '9',
-//       title: 'Пример модели 6'
+//       title: 'Пример модели 11'
 //     },
 //     {
-//       id: '10',
-//       title: 'Пример модели 6'
+//       title: 'Пример модели 12'
 //     },
 //     {
-//       id: '11',
-//       title: 'Пример модели 6'
+//       title: 'Пример модели 13'
 //     },
 //     {
-//       id: '12',
-//       title: 'Пример модели 6'
+//       title: 'Пример модели 14'
 //     },
 //     {
-//       id: '13',
-//       title: 'Пример модели 6'
+//       title: 'Пример модели 15'
 //     },
 //   ],
 //   selectedModelInfo: {
-//     id: '0',
-//     title: 'Пример модели 1',
-//     availableInventorySlots: 1,
-//     responsible: {
-//       id: '0',
-//       title: 'Hova)_Type'
-//     },
-//     potentialResponsibles: [
-//       {
-//         id: '1',
-//         title: 'Ho'
-//       },
-//       {
-//         id: '2',
-//         title: 'Raciman'
-//       },
-//       {
-//         id: '3',
-//         title: 'DigitalNoxDesigns'
-//       }
-//     ],
-//     availableGaragePlaces: 3,
+//     title: 'Пример модели 7',
+//     options: permissionsAutoFields,
 //     permissions: [
 //       {
-//         id: '0',
 //         title: 'Разрешение на спавн',
 //         value: true
 //       },
 //       {
-//         id: '1',
 //         title: 'Разрешение на тюнинг',
 //         value: false
 //       },
 //       {
-//         id: '2',
-//         title: 'Разрешение на тюнинг',
+//         title: 'Разрешение на тюнинг2',
 //         value: false
 //       },
 //       {
-//         id: '3',
-//         title: 'Разрешение на тюнинг',
+//         title: 'Разрешение на тюнинг3',
 //         value: false
 //       },
 //       {
-//         id: '4',
-//         title: 'Разрешение на тюнинг',
+//         title: 'Разрешение на тюнинг4',
 //         value: false
 //       },
 //       {
-//         id: '5',
-//         title: 'Разрешение на тюнинг',
+//         title: 'Разрешение на тюнинг5',
 //         value: false
 //       },
 //       {
-//         id: '6',
-//         title: 'Разрешение на тюнинг',
+//         title: 'Разрешение на тюнинг6',
 //         value: false
 //       }
-//     ]
+//     ],
 //   }
 // }
+//endregion
 
 export default (state = initialState, action) => {
   switch(action.type) {
+    case CORPORATIONS_TAB_OPEN:
     case PERMISSIONS_ROLE_SELECT:
-    case PERMISSIONS_ROLE_REMOVE: {
+    case PERMISSIONS_ROLE_REMOVE:
+    case PERMISSIONS_TAB_OPEN: {
         return initialState;
     }
     case PERMISSIONS_AUTO_SET_DATA: {
@@ -154,35 +121,70 @@ export default (state = initialState, action) => {
       return {
         ...state,
         selectedModelInfo: {
-          id: action.id
+          title: action.title
         }
       }
     }
-    case PERMISSIONS_AUTO_SET_RESPONSIBLE: {
-      const selectedResponsibleIdx = state.selectedModelInfo.potentialResponsibles
-        .findIndex(responsible => responsible.id === action.id);
-      const newResponsible: ResponsibleForAutoInterface =
-        state.selectedModelInfo.potentialResponsibles[selectedResponsibleIdx];
+    //cfg-file
+    // case PERMISSIONS_AUTO_SET_RESPONSIBLE: {
+    //   const selectedResponsibleIdx = state.selectedModelInfo.potentialResponsibles
+    //     .findIndex(responsible => responsible.id === action.id);
+    //   const newResponsible: ResponsibleForAutoInterface =
+    //     state.selectedModelInfo.potentialResponsibles[selectedResponsibleIdx];
+    //
+    //   const newPotentialResponsibles = [state.selectedModelInfo.responsible,
+    //     ...state.selectedModelInfo.potentialResponsibles.slice(0,selectedResponsibleIdx),
+    //     ...state.selectedModelInfo.potentialResponsibles.slice(selectedResponsibleIdx + 1)];
+    //
+    //   return {
+    //     ...state,
+    //     selectedModelInfo: {
+    //       ...state.selectedModelInfo,
+    //       responsible: newResponsible,
+    //       potentialResponsibles: newPotentialResponsibles
+    //     }
+    //   }
+    // }
+    case PERMISSIONS_AUTO_CHANGE_OPTION: {
+      let newOptions: PermissionsAutoModelOptionInterface[] = [...state.selectedModelInfo.options];
 
-      const newPotentialResponsibles = [state.selectedModelInfo.responsible,
-        ...state.selectedModelInfo.potentialResponsibles.slice(0,selectedResponsibleIdx),
-        ...state.selectedModelInfo.potentialResponsibles.slice(selectedResponsibleIdx + 1)];
+      // if dropdown - change potentialResponsibles too
+
+      // else - just value
+
+      const selectedOptionIdx = newOptions
+        .findIndex(({option}) => option.title.toLowerCase() === action.title.toLowerCase());
+
+      if(newOptions[selectedOptionIdx].option.type === RowFieldTypeEnum.dropdown) {
+        let dropdownOption: RowDropdownInterface = newOptions[selectedOptionIdx].option as RowDropdownInterface;
+
+        const potentialValueIdx = dropdownOption.potentialValues
+          .findIndex(potentialValue => potentialValue.toLowerCase() === action.value.toLowerCase());
+
+        dropdownOption.potentialValues = [
+          ...dropdownOption.potentialValues.slice(0, potentialValueIdx),
+          state.selectedModelInfo.options[selectedOptionIdx].option.value.toString(),
+          ...dropdownOption.potentialValues.slice(potentialValueIdx + 1)
+        ]
+
+        newOptions[selectedOptionIdx] = {option: dropdownOption};
+      }
+
+      newOptions[selectedOptionIdx].option.value = action.value;
 
       return {
         ...state,
         selectedModelInfo: {
           ...state.selectedModelInfo,
-          responsible: newResponsible,
-          potentialResponsibles: newPotentialResponsibles
+          options: newOptions,
         }
       }
     }
     case PERMISSIONS_AUTO_CHANGE_PERMISSION: {
       const newPermissions = [...state.selectedModelInfo.permissions];
       const selectedPermissionIdx = newPermissions
-        .findIndex(permission => permission.id === action.id);
+        .findIndex(permission => permission.title === action.title);
 
-      console.log('idx', selectedPermissionIdx, action.id);
       newPermissions[selectedPermissionIdx].value = action.value;
 
       return {
