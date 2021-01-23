@@ -65,6 +65,7 @@ const ModelInfo: React.FC<Props> = React.memo((Props) => {
 
   const permissionTitleTextStyles: CSSProperties = {
     width: '100%',
+    boxSizing: 'border-box',
     paddingTop: '5.96%',
     paddingLeft: '3.55%',
     fontSize: '0.8235rem',
@@ -136,7 +137,9 @@ const ModelInfo: React.FC<Props> = React.memo((Props) => {
       {/*  /!*<ModelInfoRow title={"Доступно мест в гараже"} rightElement={availableGarageSlotsInfo}/>*!/*/}
       {/*</div>*/}
       {/*<HorizontalLine styles={horizontalLineStyles}/>*/}
-      {optionsBlock}
+      <div className={classes.OptionsWrapper}>
+        {optionsBlock}
+      </div>
       <CorporationsText styles={permissionTitleTextStyles}>
         Разрешения
       </CorporationsText>

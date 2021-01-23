@@ -29,6 +29,8 @@ const corporationsTheme = {
   text_gray: '#7A8192',
 
   delimiter_gray: '#393D4D',
+
+  scrollbar_brightGrey: '#50535C',
 }
 export {
   corporationsTheme

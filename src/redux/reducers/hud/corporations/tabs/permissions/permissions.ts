@@ -21,7 +21,7 @@ const initialState: PermissionsReducerInterface = {
   commonPermissionsSets: null
 }
 
-// const initialState: InitialStateInterface = {
+// const initialState: PermissionsReducerInterface = {
 //   openedTab: CorporationsPermissionsTabsEnum.auto,
 //   roles: [
 //     {title: 'ЮЮЮЮЮЮЮЮЮЮЮ'},

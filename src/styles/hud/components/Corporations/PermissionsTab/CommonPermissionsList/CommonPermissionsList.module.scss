@@ -33,12 +33,15 @@
     padding: 0 7.95%;
 
     &::-webkit-scrollbar {
-      position: absolute;
-      width: 0.2rem;
+      width: 0.941rem;
+      //width: 0.5882rem;
     }
+
     &::-webkit-scrollbar-thumb {
-      background-color: #50535C;
-      border-radius: 0.3rem;
+      box-shadow: inset 0 0 0 0.2rem corporationsTheme.$scrollbar_brightGrey;
+      border: solid 0.3529412rem transparent;
+      //border-right: solid 0.3529412rem transparent;
+      background-color: transparent;
     }
   }
 }
