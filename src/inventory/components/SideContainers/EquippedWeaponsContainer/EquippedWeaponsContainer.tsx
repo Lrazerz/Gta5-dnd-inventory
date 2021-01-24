@@ -22,8 +22,11 @@ interface Props {
 const EquippedWeaponsContainer: React.FC<Props> =
   React.memo(function EquippedWeaponsInventoryContainer({onMouseOver: mouseOverHandler}) {
   const dispatch = useDispatch();
-  const {equippedItems: {cells: equippedCells},
-    draggedItem: {goingToDrop, hoveredSquare, item: draggedItem}} = useSelector((state) => state.inventory);
+
+  const equippedCells = useSelector(state => state.inventory.equippedItems.cells);
+  const draggedItemInfo = useSelector(state => state.inventory.draggedItem);
+
+  const {goingToDrop, hoveredSquare, item: draggedItem} = draggedItemInfo;
 
   const getCell: (number) => SingleCell = (id) => ({id, cell: equippedCells[id]});
 

@@ -9,7 +9,8 @@ import ScreenTitleWrapper from "../ScreenTitleWrapper";
 
 const SettingsChangeCosmeticsScreen = React.memo(() => {
 
-  const {theme,themeImage} = useSelector(({hud: {phone}}) => phone.settings.cosmetics);
+  const theme = useSelector(state => state.hud.phone.settings.cosmetics.theme);
+  const themeImage = useSelector(state => state.hud.phone.settings.cosmetics.themeImage);
 
   const dispatch = useDispatch();
 

@@ -1,4 +1,4 @@
-import ItemModel from "../models/Item";
+import ItemModel from "../models/ItemModel";
 import {xMax} from '../constants/boardDimensions';
 
 // change PosNumberLeftAngle, Enableds

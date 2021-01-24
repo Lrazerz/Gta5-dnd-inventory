@@ -15,9 +15,11 @@ interface Props {
 
 const BoardSquare: React.FC<Props> = React.memo(function BoardSquare({coords: [x, y], children, isHovered, isPartOfItem}) {
 
-  const {
-    draggedItem: {hoveredSquare, canDrop: canDropRedux, item: draggedItem, hoveredArea}
-  } = useSelector((state) => state.inventory);
+  const hoveredSquare = useSelector(state => state.inventory.draggedItem.hoveredSquare);
+  const canDropRedux = useSelector(state => state.inventory.draggedItem.canDrop);
+  const draggedItem = useSelector(state => state.inventory.draggedItem.item);
+  const hoveredArea = useSelector(state => state.inventory.draggedItem.hoveredArea);
+
   const draggedItemRef = useRef();
   draggedItemRef.current = draggedItem;
 

@@ -13,9 +13,8 @@ const MainScreen = React.memo(() => {
 
   const dispatch = useDispatch();
 
-  const {lastMessages, theme} = useSelector((state) => {
-    return {lastMessages: state.hud.phone.lastMessages, theme: state.hud.phone.theme}
-  });
+  const lastMessages = useSelector(state => state.hud.phone.lastMessages);
+  const theme = useSelector(state => state.hud.phone.theme);
 
   const openChatsHandler = () => {
     dispatch(openScreen(OpenedScreenEnum.chats));

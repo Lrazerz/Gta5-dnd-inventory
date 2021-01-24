@@ -11,12 +11,13 @@ const InventoryApp =  React.memo(function InventoryApp() {
   //region ------------------------------ Get state from redux, set references ------------------------------
   const dispatch = useDispatch();
 
-  const {
-    board: {boardSquareSize},
-    contextMenu,
-    draggedItem: {goingToDrop, item: draggedItem},
-    hoveredItem: {item: hoveredItem, hoveredArea: hoveredItemArea}
-  } = useSelector(state => state.inventory);
+  const boardSquareSize = useSelector(state => state.inventory.board.boardSquareSize);
+  const contextMenu = useSelector(state => state.inventory.contextMenu);
+  const draggedItemInfo = useSelector(state => state.inventory.draggedItem);
+  const hoveredItemInfo = useSelector(state => state.inventory.hoveredItem);
+
+  const {goingToDrop, item: draggedItem} = draggedItemInfo;
+  const {item: hoveredItem, hoveredArea: hoveredItemArea} = hoveredItemInfo;
 
   const goingToDropRef = useRef();
   const draggedItemRef = useRef();

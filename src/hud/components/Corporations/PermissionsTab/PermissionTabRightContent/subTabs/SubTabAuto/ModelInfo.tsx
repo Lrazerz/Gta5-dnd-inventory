@@ -26,6 +26,7 @@ import LoadingIndicator from "../../../../../common/LoadingIndicator/LoadingIndi
 
 interface Props {
   info: PermissionsAutoModelInterface;
+  selectedRoleTitle: string;
 }
 
 const ModelInfo: React.FC<Props> = React.memo((Props) => {
@@ -43,13 +44,13 @@ const ModelInfo: React.FC<Props> = React.memo((Props) => {
 
   const changeOptionHandler = (optionTitle: string, optionValue: string | boolean) => {
     dispatch(permissionsAutoChangeOption(optionTitle, optionValue));
-    mpTrigger_corporations_permissions_auto_changePermission(Props.info.title, optionTitle, optionValue);
+    mpTrigger_corporations_permissions_auto_changeOption(Props.selectedRoleTitle, Props.info.title, optionTitle, optionValue);
 
   }
 
   const changePermissionHandler = (permission: PermissionInterface) => {
     dispatch(permissionsAutoChangePermission(permission.title, !permission.value));
-    mpTrigger_corporations_permissions_auto_changePermission(Props.info.title, permission.title, !permission.value);
+    mpTrigger_corporations_permissions_auto_changePermission(Props.selectedRoleTitle, Props.info.title, permission.title, !permission.value);
   }
   //
   // const availableInventorySlotsInfo: JSX.Element =
@@ -74,7 +75,7 @@ const ModelInfo: React.FC<Props> = React.memo((Props) => {
   }
 
   const horizontalLineStyles: CSSProperties = {
-    backgroundColor: '#393D4D'
+    backgroundColor: corporationsTheme.delimiter_gray,
   }
 
   const optionsBlock: JSX.Element[] = Props.info.options.map(({option}) => {

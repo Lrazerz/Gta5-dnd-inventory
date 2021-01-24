@@ -8,12 +8,14 @@ import {corporationsTheme} from "../../../../consts/corporationsTheme";
 interface Props {
   title: string;
   isActive: boolean;
+  padding?: string;
 }
 
 const ModelsListItem: React.FC<Props> = React.memo((Props) => {
 
   const containerStyles: CSSProperties = {
     // backgroundColor: Props.isActive ? '#2C313A' : 'transparent'
+    padding: Props.padding || '12.25%',
   }
 
   if(Props.isActive) {

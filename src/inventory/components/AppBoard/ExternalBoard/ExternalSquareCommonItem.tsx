@@ -5,7 +5,7 @@ import CommonItem from "../CommonItem";
 import classes from '../../../../styles/inventory/board/SquareCommonItem.module.scss';
 import SecondaryText from "../../layout/SecondaryText";
 import {openContextMenu} from "../../../../redux/actions/inventory/contextMenu";
-import ItemModel from "../../../models/Item";
+import ItemModel from "../../../models/ItemModel";
 import {addHoveredItem} from "../../../../redux/actions/inventory/hoveredItem";
 
 interface Props {
@@ -18,11 +18,18 @@ const ExternalSquareCommonItem: React.FC<Props> = React.memo(function SquareComm
   const [imageWidth, setImageWidth] = useState();
   const [imageHeight, setImageHeight] = useState();
 
-  const {
-    board: {boardSquareSize},
-    draggedItem: {canDrop, hoveredSquare, item: draggedItem, xDown, yDown, goingToDrop, goingToStack},
-    hoveredItem: {item: hoveredItem, hoveredArea: hoveredItemArea}
-  } = useSelector(state => state.inventory);
+  const boardSquareSize = useSelector(state => state.inventory.board.boardSquareSize);
+
+  const canDrop = useSelector(state => state.inventory.draggedItem.canDrop);
+  const hoveredSquare = useSelector(state => state.inventory.draggedItem.hoveredSquare);
+  const draggedItem = useSelector(state => state.inventory.draggedItem.item);
+  const xDown = useSelector(state => state.inventory.draggedItem.xDown);
+  const yDown = useSelector(state => state.inventory.draggedItem.yDown);
+  const goingToDrop = useSelector(state => state.inventory.draggedItem.goingToDrop);
+  const goingToStack = useSelector(state => state.inventory.draggedItem.goingToStack);
+
+  const hoveredItem = useSelector(state => state.inventory.hoveredItem.item);
+  const hoveredItemArea = useSelector(state => state.inventory.hoveredItem.hoveredArea);
 
   // refs to pass to event handler
   const canDropRef = useRef();

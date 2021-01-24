@@ -21,12 +21,8 @@ const RolesList = React.memo(() => {
   const [roleHeight, setRoleHeight]: [number, any] = useState(0);
   const [filteredRoles, setFilteredRoles]: [SingleRoleInterface[], any] = useState();
 
-  const {roles, selectedRole} = useSelector(({hud}) => {
-    return {
-      roles: hud.corporations.tabs.permissions.permissions.roles,
-      selectedRole: hud.corporations.tabs.permissions.permissions.selectedRole
-    }
-  })
+  const roles = useSelector(state => state.hud.corporations.tabs.permissions.permissions.roles);
+  const selectedRole = useSelector(state => state.hud.corporations.tabs.permissions.permissions.selectedRole);
 
   useEffect(() => {
     if(searchText.length > 0) {

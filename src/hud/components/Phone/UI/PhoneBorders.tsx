@@ -12,8 +12,8 @@ const PhoneBorders: React.FC<Props> = React.memo(function PhoneBorders({themeFro
 
   const [importedThemeImg, setImportedThemeImg] = useState();
 
-  const {cosmeticsSettings, openedScreen} = useSelector(({hud: {phone}}) =>
-    ({cosmeticsSettings: phone.settings.cosmetics, openedScreen: phone.openedScreen}));
+  const cosmeticsSettings = useSelector(state => state.hud.phone.settings.cosmetics);
+  const openedScreen = useSelector(state => state.hud.phone.openedScreen);
 
   useEffect(() => {
     const loadThemeImage = async () => {

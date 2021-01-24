@@ -12,8 +12,11 @@ const EquippedClosingContainer: React.FC<Props> =
   React.memo(function EquippedClosingInventoryContainer({onMouseOver: mouseOverHandler}) {
 
   const dispatch = useDispatch();
-  const {equippedItems: {cells: equippedCells},
-    draggedItem: {goingToDrop, hoveredSquare, item: draggedItem}} = useSelector(state => state.inventory);
+
+  const equippedCells = useSelector(state => state.inventory.equippedItems.cells);
+  const goingToDrop = useSelector(state => state.inventory.draggedItem.goingToDrop);
+  const hoveredSquare = useSelector(state => state.inventory.draggedItem.hoveredSquare);
+  const draggedItem = useSelector(state => state.inventory.draggedItem.item);
 
   const headdressCells: SingleCell[] = [
     {id: 50, cell: equippedCells[50]},

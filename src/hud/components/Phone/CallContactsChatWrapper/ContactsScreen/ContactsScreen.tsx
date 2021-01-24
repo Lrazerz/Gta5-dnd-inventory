@@ -6,7 +6,8 @@ import {ThemesEnum} from "../../../../models/phone/enums";
 
 const ContactsScreen = React.memo(() => {
 
-  const {contacts, theme} = useSelector(({hud: {phone}}) => ({contacts: phone.contacts, theme: phone.settings.cosmetics.theme}));
+  const contacts = useSelector(state => state.hud.phone.contacts);
+  const theme = useSelector(state => state.hud.phone.settings.cosmetics.theme);
 
   const blurredBottomBlockStyles = {
     background: `linear-gradient(180deg, ${theme === ThemesEnum.black ? '#000, #011' : '#F5F6FC, #D6D6DC'})`,

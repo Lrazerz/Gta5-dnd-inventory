@@ -18,10 +18,11 @@ interface Props {
 const ClosingWeaponSquare: React.FC<Props> = React.memo(function ClosingWeaponSquare({children, coords}) {
   const dispatch = useDispatch();
 
-  const {
-    draggedItem: {item: draggedItem, hoveredSquare, canDrop},
-    hoveredItem: {item: hoveredItem},
-  } = useSelector((state) => state.inventory);
+  const draggedItem = useSelector(state => state.inventory.draggedItem.item);
+  const hoveredSquare = useSelector(state => state.inventory.draggedItem.hoveredSquare);
+  const canDrop = useSelector(state => state.inventory.draggedItem.canDrop);
+  const hoveredItem = useSelector(state => state.inventory.hoveredItem.item);
+
   const draggedItemRef = useRef();
   const hoveredSquareRef = useRef();
   draggedItemRef.current = draggedItem;

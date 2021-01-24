@@ -7,17 +7,17 @@ import SettingsChangeRingtoneScreenStateless from "./SettingsChangeRingtoneScree
 
 const SettingsChangeRingtoneScreen = React.memo(function SettingsChangeRingtoneScreen () {
 
-  const ringtoneFromRedux = useSelector(({hud: {phone}}) => phone.settings.ringtone);
   const [selectedRingtone, setSelectedRingtone]: [string, any] = useState();
   const [isDropDownOpened, setIsDropDownOpened] = useState(false);
+
+  const ringtoneFromRedux = useSelector(state => state.hud.phone.settings.ringtone);
+  const theme = useSelector(({hud: {phone}}) => phone.settings.cosmetics.theme);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setSelectedRingtone(ringtoneFromRedux);
   }, [ringtoneFromRedux]);
-
-  const {theme} = useSelector(({hud: {phone}}) => phone.settings.cosmetics);
-
-  const dispatch = useDispatch();
 
   const openSettingsScreen = () => {
     dispatch(openScreen(OpenedScreenEnum.settings));

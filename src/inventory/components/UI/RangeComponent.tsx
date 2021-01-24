@@ -5,7 +5,7 @@ import {closeContextMenu} from "../../../redux/actions/inventory/contextMenu";
 import {addDraggedItem, draggedItemRelease, stackItem} from "../../../redux/actions/inventory/draggedItem";
 import {equippedChangeCurrentCount, setEquippedItem} from "../../../redux/actions/inventory/equippedItems";
 import {addItem, boardChangeCurrentCountByItemId} from "../../../redux/actions/inventory/board";
-import ItemModel from "../../models/Item";
+import ItemModel from "../../models/ItemModel";
 import {addExternalBoardItem, externalBoardChangeCurrentCountByItemId} from "../../../redux/actions/inventory/externalBoard";
 import {mpTriggerDropExternalItem, mpTriggerDropItem} from "../../../utils/mpTriggers/inventory/mpTriggers";
 
@@ -26,12 +26,13 @@ const RangeComponent: React.FC<Props> = React.memo(({leftOffset, topOffset, cont
   const [reducedTopOffset, setReducedTopOffset] = useState();
   const dispatch = useDispatch();
 
-  const {
-    draggedItem: {canDrop, hoveredSquare, allHoveredSquares, item: draggedItem, xDown, yDown, goingToDrop, goingToStack,
-      hoveredArea: hoveredAreaOfScreen},
-    board: {board: boardCells, boardSquareSize},
-    externalBoard: {externalBoard: externalBoardCells},
-  } = useSelector(state => state.inventory);
+  const draggedItemInfo = useSelector(state => state.inventory.draggedItem);
+  const boardCells = useSelector(state => state.inventory.board.board);
+  const boardSquareSize = useSelector(state => state.inventory.board.boardSquareSize);
+  const externalBoardCells = useSelector(state => state.inventory.externalBoard.externalBoard);
+
+  const {canDrop, hoveredSquare, allHoveredSquares, item: draggedItem, xDown, yDown, goingToDrop, goingToStack,
+    hoveredArea: hoveredAreaOfScreen} = draggedItemInfo;
 
   // refs to pass to event handler
   const canDropRef = useRef();

@@ -24,13 +24,9 @@ const HudAppStateless: React.FC<Props> = React.memo(function HudApp({playerState
 
   const phoneWrapperRef = useRef();
 
-  const {isPhoneOpenedRedux, isInteractionsOpenedRedux, isCorporationsOpenedRedux} =
-    useSelector(({hud: {phone, interactions, corporations}}) =>
-      ({
-        isPhoneOpenedRedux: phone.isPhoneOpened,
-        isInteractionsOpenedRedux: interactions.isOpened,
-        isCorporationsOpenedRedux: corporations.corporations.isOpened
-      }));
+  const isPhoneOpenedRedux = useSelector(state => state.hud.phone.isPhoneOpened);
+  const isInteractionsOpenedRedux = useSelector(state => state.hud.interactions.isOpened);
+  const isCorporationsOpenedRedux = useSelector(state => state.hud.corporations.corporations.isOpened);
 
   //region -------------------- Set up and clean up dimensions --------------------
   useEffect(() => {

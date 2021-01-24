@@ -2,7 +2,7 @@ import React from 'react';
 import classes from '../../../styles/inventory/UI/ContextMenu.module.scss';
 import SecondaryText from "../layout/SecondaryText";
 import {getContextActionsForCell} from "../../../redux/actions/inventory/contextMenu";
-import ItemModel from "../../models/Item";
+import ItemModel from "../../models/ItemModel";
 
 interface Props {
   leftOffset: number;

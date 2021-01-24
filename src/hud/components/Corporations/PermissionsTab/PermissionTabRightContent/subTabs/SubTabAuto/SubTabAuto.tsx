@@ -12,7 +12,9 @@ interface Props {
 
 const SubTabAuto: React.FC<Props> = React.memo(() => {
 
-  const {models, selectedModelInfo} = useSelector(({hud}) => hud.corporations.tabs.permissions.tabs.auto);
+  const selectedRole = useSelector(state => state.hud.corporations.tabs.permissions.permissions.selectedRole);
+  const models = useSelector(state => state.hud.corporations.tabs.permissions.tabs.auto.models);
+  const selectedModelInfo = useSelector(state => state.hud.corporations.tabs.permissions.tabs.auto.selectedModelInfo);
 
   if(!models) {
     return (
@@ -25,10 +27,11 @@ const SubTabAuto: React.FC<Props> = React.memo(() => {
   return (
     <div className={classes.SubTabAuto}>
       <div className={classes.ModelsListWrapper}>
-        <ModelsList models={models} selectedModelTitle={selectedModelInfo && selectedModelInfo.title}/>
+        <ModelsList models={models} selectedModelTitle={selectedModelInfo && selectedModelInfo.title}
+        selectedRoleTitle={selectedRole && selectedRole.title}/>
       </div>
       <div className={classes.ModelInfoWrapper}>
-        <ModelInfo info={selectedModelInfo} />
+        <ModelInfo info={selectedModelInfo} selectedRoleTitle={selectedRole && selectedRole.title}/>
       </div>
     </div>
   );

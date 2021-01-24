@@ -14,17 +14,11 @@ interface Props {
 
 const PhoneHud: React.FC<Props> = React.memo(function PhoneHud({children}) {
 
-  const {
-    theme,
-    hudData: {
-      time,
-      network,
-      wifi,
-      battery
-    },
-    openedScreen
-  } = useSelector(({hud: {phone}}) => ({theme: phone.settings.cosmetics.theme, hudData: phone.hudData, openedScreen: phone.openedScreen}));
+  const theme = useSelector(state => state.hud.phone.settings.cosmetics.theme);
+  const hudData = useSelector(state => state.hud.phone.hudData);
+  const openedScreen = useSelector(state => state.hud.phone.openedScreen);
 
+  const { time, network, wifi, battery } = hudData;
   //надо брать тему и цвета time network, battery и wifi в зависимости от темы
   // можно батарею клип-пасом, тогда проще задавать цвета и значение
   // и вайфай также (будут добавляться новые полоски в зависимости от уровня сигнала

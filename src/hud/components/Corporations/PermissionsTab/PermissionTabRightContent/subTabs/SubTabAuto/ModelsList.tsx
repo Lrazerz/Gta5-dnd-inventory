@@ -13,6 +13,7 @@ import {maxModelLength} from "../../../../../../../constants/hud/corporations/co
 interface Props {
   models: SingleAutoModelTitleInterface[];
   selectedModelTitle: string;
+  selectedRoleTitle: string;
 }
 
 const ModelsList: React.FC<Props> = React.memo((Props) => {
@@ -25,7 +26,7 @@ const ModelsList: React.FC<Props> = React.memo((Props) => {
   const selectModelHandler = (model: SingleAutoModelTitleInterface) => {
     if (Props.selectedModelTitle !== model.title) {
       dispatch(permissionsAutoSelectModelAction(model.title));
-      mpTrigger_corporations_permissions_auto_selectModel(model.title);
+      mpTrigger_corporations_permissions_auto_selectModel(Props.selectedRoleTitle, model.title);
     }
   }
 

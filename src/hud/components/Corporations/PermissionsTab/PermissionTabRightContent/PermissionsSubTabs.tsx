@@ -5,15 +5,16 @@ import classes
 import PermissionsSubTabsHeader from "./PermissionsSubTabsHeader";
 import {CorporationsPermissionsTabsEnum} from "../../../../models/corporations/enums";
 import SubTabAuto from "./subTabs/SubTabAuto/SubTabAuto";
+import SubTabProperty from "./subTabs/SubTabProperty/SubTabProperty";
 
 interface Props {
 
 }
 
 const PermissionsSubTabs = React.memo((Props) => {
-
-  const openedTab: CorporationsPermissionsTabsEnum = useSelector(({hud}) =>
-    hud.corporations.tabs.permissions.permissions.openedTab);
+``
+  const openedTab = useSelector(state => state.hud.corporations.tabs.permissions.permissions.openedTab);
+  const selectedRole = useSelector(state => state.hud.corporations.tabs.permissions.permissions.selectedRole);
 
   let tabContent: ReactElement;
 
@@ -35,7 +36,7 @@ const PermissionsSubTabs = React.memo((Props) => {
       break;
     }
     case CorporationsPermissionsTabsEnum.property: {
-      // tabContent = ;
+      tabContent = <SubTabProperty />;
       break;
     }
   }
@@ -43,7 +44,7 @@ const PermissionsSubTabs = React.memo((Props) => {
   return (
     <div className={classes.PermissionsSubTabs}>
       <div className={classes.Header}>
-        <PermissionsSubTabsHeader openedTab={openedTab}/>
+        <PermissionsSubTabsHeader openedRoleTitle={selectedRole && selectedRole.title} openedTab={openedTab}/>
       </div>
       <div className={classes.TabContent}>
         {tabContent}

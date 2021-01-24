@@ -11,7 +11,10 @@ interface Props {
 
 const BoardInfo: React.FC<Props> = React.memo(function BoardInfo({cash}) {
   const dispatch = useDispatch();
-  const {goingToDrop, item: draggedItem} = useSelector(state => state.inventory.draggedItem);
+
+  const goingToDrop = useSelector(state => state.inventory.draggedItem.goingToDrop);
+  const draggedItem = useSelector(state => state.inventory.draggedItem.item);
+
   const goingToDropRef = useRef();
   const draggedItemRef = useRef();
   goingToDropRef.current = goingToDrop;

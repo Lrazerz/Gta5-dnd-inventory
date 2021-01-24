@@ -35,7 +35,7 @@ const InteractionsContainer = React.memo(() => {
 
   const crossRef = useRef();
 
-  const {interactions} = useSelector(({hud}) => hud.interactions);
+  const interactions = useSelector(state => state.hud.interactionsinteractions);
 
   //region -------------------- Set up dimensions --------------------
   // will be invoked from func which sort to header,base,footer

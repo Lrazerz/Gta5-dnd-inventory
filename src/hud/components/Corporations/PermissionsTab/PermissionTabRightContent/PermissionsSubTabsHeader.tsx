@@ -1,4 +1,4 @@
-import React, {ReactElement} from 'react';
+import React, {CSSProperties, ReactElement} from 'react';
 import {useDispatch} from 'react-redux';
 import classes
   from '../../../../../styles/hud/components/Corporations/PermissionsTab/PermissionTabRightContent/PermissionsSubTabsHeader.module.scss';
@@ -14,7 +14,8 @@ import {permissionsOpenTabAction} from "../../../../../redux/actions/hud/corpora
 import {mpTrigger_corporations_permissions_openTab} from "../../../../../utils/mpTriggers/hud/hudMpTriggers";
 
 interface Props {
-  openedTab: CorporationsPermissionsTabsEnum
+  openedRoleTitle: string;
+  openedTab: CorporationsPermissionsTabsEnum;
 }
 
 const PermissionsSubTabsHeader: React.FC<Props> = React.memo((Props) => {
@@ -33,7 +34,7 @@ const PermissionsSubTabsHeader: React.FC<Props> = React.memo((Props) => {
     const tab: CorporationsPermissionsTabsEnum = CorporationsPermissionsTabsEnum[tabEng];
 
     dispatch(permissionsOpenTabAction(tab));
-    mpTrigger_corporations_permissions_openTab(tabRussian);
+    mpTrigger_corporations_permissions_openTab(Props.openedRoleTitle, tabRussian);
   }
 
   const tabsBlock = PermissionsSubTabsRussian.map(tab => {

@@ -14,11 +14,12 @@ interface Props {
 const AppBoard: React.FC<Props> = React.memo(function AppBoard({onMouseOver: mouseOverHandler}) {
   const squares: ReactElement[] = [];
   const externalInventorySquares = [];
-  const {
-    board: {board: boardItems},
-    draggedItem: {allHoveredSquares, hoveredArea},
-    externalBoard: {externalBoard: externalBoardItems}
-  } = useSelector((state) => state.inventory);
+
+  const boardItems = useSelector(state => state.inventory.board.board);
+  const allHoveredSquares = useSelector(state => state.inventory.draggedItem.allHoveredSquares);
+  const hoveredArea = useSelector(state => state.inventory.draggedItem.hoveredArea);
+
+  const externalBoardItems = useSelector(state => state.inventory.externalBoard.externalBoard);
 
   //region ------------------------------ Render squares from player's inventory ------------------------------
   const renderSquare = (y: number, x: number) => {

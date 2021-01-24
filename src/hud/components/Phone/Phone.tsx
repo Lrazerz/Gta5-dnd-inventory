@@ -21,9 +21,8 @@ import SettingsChangeRingtoneScreen from "./SettingsScreen/SettingsChangeRington
 
 const Phone = React.memo(() => {
 
-  const {openedScreen, themeImage} = useSelector(({hud: {phone}}) => {
-    return {openedScreen: phone.openedScreen, themeImage: phone.settings.cosmetics.themeImage};
-  });
+  const openedScreen = useSelector(state => state.hud.phone.openedScreen);
+  const themeImage = useSelector(state => state.hud.phone.settings.cosmetics.themeImage);
 
   //region -------------------- Window funcs --------------------
   // @ts-ignore

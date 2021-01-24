@@ -14,12 +14,19 @@ interface Props {
 
 const SquareEquippedItem: React.FC<Props> = React.memo(function SquareEquippedItem ({item}) {
 
-  const {
-    board: {boardSquareSize},
-    draggedItem: {canDrop, hoveredSquare, item: draggedItem, goingToDrop, goingToStack},
-    hoveredItem: {item: hoveredItem, hoveredArea: hoveredItemArea}
-  } = useSelector(state => state.inventory);
   const dispatch = useDispatch();
+
+  const boardSquareSize = useSelector(state => state.inventory.board.boardSquareSize);
+
+  const canDrop = useSelector(state => state.inventory.draggedItem.canDrop);
+  const hoveredSquare = useSelector(state => state.inventory.draggedItem.hoveredSquare);
+  const draggedItem = useSelector(state => state.inventory.draggedItem.item);
+  const goingToDrop = useSelector(state => state.inventory.draggedItem.goingToDrop);
+  const goingToStack = useSelector(state => state.inventory.draggedItem.goingToStack);
+
+  const hoveredItem = useSelector(state => state.inventory.hoveredItem.item);
+  const hoveredItemArea = useSelector(state => state.inventory.hoveredItem.hoveredArea);
+
 
   const goingToDropRef = useRef();
   const draggedItemRef = useRef();

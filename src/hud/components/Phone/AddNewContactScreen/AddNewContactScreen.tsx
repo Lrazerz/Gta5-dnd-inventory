@@ -15,8 +15,8 @@ export interface ImportedImageInterface {
 const AddNewContactScreen = () => {
   const [isDropDownOpened, setIsDropDownOpened]: [boolean, any] = useState(false);
 
-  const {theme, phoneNumber} = useSelector(({hud: {phone}}) =>
-    ({theme:phone.settings.cosmetics.theme, phoneNumber: phone.addNewContactPhoneNumber}));
+  const theme = useSelector(state => state.hud.phone.settings.cosmetics.theme);
+  const phoneNumber = useSelector(state => state.hud.phone.addNewContactPhoneNumber);
 
   const [selectedImage, setSelectedImage]: [ImportedImageInterface, any] =
     useState({title: 'avatar1', image:defaultAvatar});

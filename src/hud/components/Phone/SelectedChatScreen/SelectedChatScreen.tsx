@@ -43,8 +43,8 @@ const SelectedChatScreen = React.memo(() => {
   const scrollWrapperRef = useRef();
   const textAreaRef = useRef();
 
-  const {selectedChat, theme} = useSelector(({hud: {phone}}) =>
-    ({selectedChat: phone.selectedChat, theme: phone.settings.cosmetics.theme}));
+  const selectedChat = useSelector(state => state.hud.phone.selectedChat);
+  const theme = useSelector(state => state.hud.phone.settings.cosmetics.theme);
 
   useEffect(() => {
     setFocusOnTextArea();

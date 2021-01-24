@@ -9,15 +9,10 @@ const ChatMessagesList = React.memo(() => {
   const [importedPlayerAvatarImg, setImportedPlayerAvatarImg] = useState();
   const [importedInterlocutorAvatarImg, setImportedInterlocutorAvatarImg] = useState();
 
-  const {playerAvatar, interlocutorAvatar, messages,theme} = useSelector(({hud: {phone}}) =>
-    (
-      {
-        playerAvatar: phone.playerAvatar,
-        interlocutorAvatar: phone.selectedChat.avatarName,
-        theme: phone.settings.cosmetics.theme,
-        messages: phone.selectedChat.messages,
-      }
-    ));
+  const playerAvatar = useSelector(state => state.hud.phone.playerAvatar);
+  const interlocutorAvatar = useSelector(state => state.hud.phone.selectedChat.avatarName);
+  const theme = useSelector(state => state.hud.phone.settings.cosmetics.theme);
+  const messages = useSelector(state => state.hud.phone.selectedChat.messages);
 
   useEffect(() => {
     const loadPlayerAvatarImage = async () => {
