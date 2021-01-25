@@ -1,9 +1,11 @@
 import React, {CSSProperties, Dispatch, ReactElement} from 'react';
+import {useDispatch} from 'react-redux';
 import classes from '../../../../styles/hud/components/Phone/CallContactsChatWrapper/Tabs.module.scss';
 import LeadText from "../Text/LeadText";
-import { useSwipeable } from "react-swipeable";
 import {OpenedScreenEnum} from "../../../../redux/reducers/hud/phone";
+import leftArrowImg from "../../../../assets/hud/images/components/Phone/components/left-arrow.svg";
 import {translateToRussianOpenedScreen} from "../utils/translateToRussianOpenedScreen";
+import {openScreen} from "../../../../redux/actions/hud/phone";
 
 interface Props {
   // value - Вызовы/Последние/...
@@ -13,6 +15,7 @@ interface Props {
 
 const Tabs: React.FC<Props> = React.memo(({openedScreen, onChange}) => {
 
+  const dispatch = useDispatch();
 
   //region ------------------------------ Set active tab border ------------------------------
   const borderStyle = '0.15rem solid #6328E9';
@@ -34,6 +37,10 @@ const Tabs: React.FC<Props> = React.memo(({openedScreen, onChange}) => {
   const tabClickHandler = (tabIdx) => {
     // @ts-ignore
     onChange(tabIdx);
+  }
+
+  const backButtonClickHandler = () => {
+    dispatch(openScreen(OpenedScreenEnum.mainScreen));
   }
 
   const tabTextStyles: CSSProperties = {
@@ -93,6 +100,9 @@ const Tabs: React.FC<Props> = React.memo(({openedScreen, onChange}) => {
 
   return (
     <div className={classes.Tabs}>
+      <div className={classes.BackButtonWrapper} onClick={backButtonClickHandler}>
+        <img src={leftArrowImg} className={classes.BackButtonImg}/>
+      </div>
       {displayedBlock}
       <div className={classes.TabsBorder}/>
     </div>

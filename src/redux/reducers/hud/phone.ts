@@ -172,7 +172,7 @@ export default (state = initialState, action) => {
       const {imageName,...newContact} = {...action.newContact}
       return {
         ...state,
-        contacts: [newContact,...state.contacts]
+        contacts: [action.newContact,...state.contacts]
       }
     }
     case OPEN_LAST_MESSAGES: {

@@ -51,7 +51,7 @@ const ChatMessagesList = React.memo(() => {
     loadInterlocutorAvatarImage();
   }, [playerAvatar, interlocutorAvatar]);
 
-  const messagesBlock = messages.map((message,i) => {
+  const messagesBlock = messages && messages.map((message,i) => {
     // if(i === messages.length - 1) {
     //   console.log('that el');
     //   return (

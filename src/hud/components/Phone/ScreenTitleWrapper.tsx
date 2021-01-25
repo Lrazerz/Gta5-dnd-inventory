@@ -1,7 +1,7 @@
 import React, {CSSProperties} from 'react';
 import classes from '../../../styles/hud/components/Phone/SettingsScreen/ScreenTitleWrapper.module.scss';
 import {ThemesEnum} from "../../models/phone/enums";
-import leftArrowImg from "../../../assets/hud/images/components/Phone/components/SettingsList/left-arrow.svg";
+import leftArrowImg from "../../../assets/hud/images/components/Phone/components/left-arrow.svg";
 import LeadText from "./Text/LeadText";
 
 interface Props {

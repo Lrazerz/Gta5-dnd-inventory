@@ -4,14 +4,13 @@ import {useSwipeable} from "react-swipeable";
 import classes from '../../../../styles/hud/components/Phone/SelectedChatScreen/SelectedChatScreen.module.scss';
 import {OpenedScreenEnum, ThemesEnum} from "../../../models/phone/enums";
 import LeadText from "../Text/LeadText";
-import backButton from '../../../../assets/hud/images/components/Phone/components/SelectedChatScreen/back.svg';
+import backButton from '../../../../assets/hud/images/components/Phone/components/left-arrow.svg';
 import removeChat from '../../../../assets/hud/images/components/Phone/components/SelectedChatScreen/remove-chat.svg';
 import ChatMessagesList from "./ChatMessagesList";
 
 import sendMessageImg from '../../../../assets/hud/images/components/Phone/components/SelectedChatScreen/send-message.svg';
 import phoneTheme from "../consts/phoneTheme";
 import {
-  openPrevScreen,
   openScreen,
   removeSelectedChat,
   setLastOutcomingMessage
@@ -23,17 +22,6 @@ const maxDisplayedRows = 6;
 const SelectedChatScreen = React.memo(() => {
 
   const dispatch = useDispatch();
-
-  // initial scroll to bottom
-  // const chatListWrapperScroll = useRef();
-  // useEffect(() => {
-  //   if(chatListWrapperScroll.current) {
-  //     // @ts-ignore
-  //     // chatListWrapperScroll.current.scrollTop = chatListWrapperScroll.current.scrollHeight - chatListWrapperScroll.current.clientHeight;
-  //     // chatListWrapperScroll.current.scrollIntoView(true);
-  //   }
-  // }, [chatListWrapperScroll.current]);
-
 
   const [messageText, setMessageText] = useState();
   // rows count of the textarea
