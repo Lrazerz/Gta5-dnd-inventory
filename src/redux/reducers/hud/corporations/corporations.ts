@@ -1,6 +1,6 @@
 import {
   CORPORATIONS_CLOSE,
-  CORPORATIONS_OPEN,
+  CORPORATIONS_OPEN, CORPORATIONS_SET_LOADING,
   CORPORATIONS_TAB_OPEN
 } from "../../../actions/hud/corporations/corporationsTypes";
 import {CorporationsTabsEnum} from "../../../../hud/models/corporations/enums";

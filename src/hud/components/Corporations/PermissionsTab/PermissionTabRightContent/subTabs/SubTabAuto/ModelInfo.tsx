@@ -17,7 +17,7 @@ import {
 import {
   mpTrigger_corporations_permissions_auto_changePermission,
   mpTrigger_corporations_permissions_auto_changeOption
-} from "../../../../../../../utils/mpTriggers/hud/hudMpTriggers";
+} from "../../../../../../../utils/mpTriggers/hud/corporations/tabs/permissions/permissionsTriggers";
 import CorporationsPermissionsRow from "../common/CorporationsPermissionsRow";
 import {RowFieldTypeEnum} from "../../../../../../models/corporations/enums";
 import CorporationsGraySquare from "../../../../CorporationsGraySquare";

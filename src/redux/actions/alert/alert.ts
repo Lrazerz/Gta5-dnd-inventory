@@ -12,6 +12,7 @@ const _removeAlert = (alertId: string) => {
 }
 
 const setAlert = (message: string, alertType: AlertTypesEnum = AlertTypesEnum.success, timeout = 5000) => {
+  debugger;
   return dispatch => {
     const id = shortId.generate();
     dispatch(_setAlert({id, message, type: alertType}));

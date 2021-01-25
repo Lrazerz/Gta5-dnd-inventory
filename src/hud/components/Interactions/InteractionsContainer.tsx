@@ -5,7 +5,7 @@ import {SingleInteractionInterface} from "../../models/InteractionInterfaces";
 import {
   mpTrigger_interactions_closeInteractions,
   mpTrigger_interactions_openInteraction
-} from "../../../utils/mpTriggers/hud/hudMpTriggers";
+} from "../../../utils/mpTriggers/hud/interactions/interactionsTriggers";
 
 interface SortedInteractionsInterface {
   headerInteractions: SingleInteractionInterface[] | null;

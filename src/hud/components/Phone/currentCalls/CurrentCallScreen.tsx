@@ -20,7 +20,7 @@ import keyboardOffImg from '../../../../assets/hud/images/components/Phone/compo
 import recordOnImg from '../../../../assets/hud/images/components/Phone/components/currentCalls/options/record-on.svg';
 import recordOffImg from '../../../../assets/hud/images/components/Phone/components/currentCalls/options/record-off.svg';
 import {abortCall, currentCallChangeOption} from "../../../../redux/actions/hud/phone";
-import {mpTrigger_phone_abortCall} from "../../../../utils/mpTriggers/hud/hudMpTriggers";
+import {mpTrigger_phone_abortCall} from "../../../../utils/mpTriggers/hud/phone/phoneTriggers";
 
 const CurrentCallScreen = () => {
 

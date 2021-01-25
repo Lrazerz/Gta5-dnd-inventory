@@ -23,8 +23,9 @@ const PropertyOfficeTab: React.FC<Props> = React.memo(() => {
   const selectedRole: SingleRoleInterface = useSelector(state => state.hud.corporations.tabs.permissions.permissions.selectedRole);
 
   const changeOptionHandler = (title, value) => {
+    const selectedRoleTitle = selectedRole ? selectedRole.title : null;
     dispatch(permissionsPropertyOfficeChangeOption(title, value));
-    mpTrigger_permissions_property_office_changeOption(selectedRole.title, title, value);
+    mpTrigger_permissions_property_office_changeOption(selectedRoleTitle, title, value);
   }
 
   const horizontalLineStyles: CSSProperties = {

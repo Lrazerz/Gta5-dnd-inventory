@@ -18,7 +18,7 @@ import {
 import {
   mpTrigger_corporations_permissions_removeRole,
   mpTrigger_corporations_permissions_selectRole
-} from "../../../../../utils/mpTriggers/hud/hudMpTriggers";
+} from "../../../../../utils/mpTriggers/hud/corporations/tabs/permissions/permissionsTriggers";
 
 interface Props {
   roles: SingleRoleInterface[];

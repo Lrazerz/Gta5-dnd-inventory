@@ -7,7 +7,8 @@ import {PermissionInterface, SingleRoleInterface} from "../../../../models/corpo
 import permissions from "../../../../../redux/reducers/hud/corporations/tabs/permissions/permissions";
 import TitleAndSwitchRow from "../../TitleAndSwitchRow";
 import {permissionsChangePermission} from "../../../../../redux/actions/hud/corporations/tabs/permissions/permissions";
-import {mpTrigger_corporations_permissions_changePermission} from "../../../../../utils/mpTriggers/hud/hudMpTriggers";
+import {mpTrigger_corporations_permissions_changePermission}
+from "../../../../../utils/mpTriggers/hud/corporations/tabs/permissions/permissionsTriggers";
 
 interface Props {
   selectedRole: SingleRoleInterface;

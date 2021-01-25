@@ -20,13 +20,10 @@ const CommonPermissionsList: React.FC<Props> = React.memo(() => {
   const [filteredPermissionsSets, setFilteredPermissionsSets]:
     [CommonPermissionsSetInterface[], any] = useState();
 
-  const {permSets: permissionsSetsRedux, selectedRole} =
-    useSelector(({hud}) => {
-      return {
-        permSets: hud.corporations.tabs.permissions.permissions.commonPermissionsSets,
-        selectedRole: hud.corporations.tabs.permissions.permissions.selectedRole
-      }
-    });
+  const permissionsSetsRedux = useSelector(state => state.hud.corporations.tabs.permissions.permissions.commonPermissionsSets);
+  const selectedRole = useSelector(state => state.hud.corporations.tabs.permissions.permissions.selectedRole);
+
+  const isLoadingRedux = useSelector(state => state.hud.corporations.corporations.isLoading);
 
   const permissionsSets: CommonPermissionsSetInterface[] = permissionsSetsRedux;
 
@@ -78,18 +75,33 @@ const CommonPermissionsList: React.FC<Props> = React.memo(() => {
   //   return <div className={classes.CommonPermissionsList}/>
   // }
 
-  if(!permissionsSets) {
-    return (
-      <div className={classes.CommonPermissionsList}>
-        <div className={classes.HeaderWrapper}>
-          <CommonPermissionsHeader/>
+  // loading-changed
+  // if(!permissionsSets) {
+  //   return (
+  //     <div className={classes.CommonPermissionsList}>
+  //       <div className={classes.HeaderWrapper}>
+  //         <CommonPermissionsHeader/>
+  //       </div>
+  //       <div className={classes.LoadingWrapper}>
+  //         <LoadingIndicator />
+  //       </div>
+  //     </div>
+  //   )
+  // }
+
+  if(isLoadingRedux) {
+      return (
+        <div className={classes.CommonPermissionsList}>
+          <div className={classes.HeaderWrapper}>
+            <CommonPermissionsHeader/>
+          </div>
+          <div className={classes.LoadingWrapper}>
+            <LoadingIndicator />
+          </div>
         </div>
-        <div className={classes.LoadingWrapper}>
-          <LoadingIndicator />
-        </div>
-      </div>
-    )
+      )
   }
+
 
   return (
     <div className={classes.CommonPermissionsList}>

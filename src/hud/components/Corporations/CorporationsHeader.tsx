@@ -6,10 +6,9 @@ import {
   CorporationsTabsEnum,
   CorporationsDisplayedTabsRussian
 } from "../../models/corporations/enums";
-import boostButtonImg from '../../../assets/hud/images/components/Corporations/boostButton.svg';
 import CorporationsHeaderTab from "./CorporationsHeaderTab";
 import {corporationsTabOpen} from "../../../redux/actions/hud/corporations/corporations";
-import {mpTrigger_corporations_openTab} from "../../../utils/mpTriggers/hud/hudMpTriggers";
+import {mpTrigger_corporations_openTab} from "../../../utils/mpTriggers/hud/corporations/corporationsTriggers";
 import CorporationsText from "./CorporationsText";
 
 interface Props {

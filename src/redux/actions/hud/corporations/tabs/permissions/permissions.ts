@@ -16,7 +16,9 @@ const permissionsSetRolesPermissions = (roles: SingleRoleInterface[], selectedRo
 }
 
 const permissionsSelectRoleAction = (selectedRoleTitle: string) => {
-  return {type: PERMISSIONS_ROLE_SELECT, title: selectedRoleTitle};
+  return dispatch => {
+    dispatch({type: PERMISSIONS_ROLE_SELECT, title: selectedRoleTitle});
+  }
 }
 
 // from server
@@ -38,7 +40,9 @@ const permissionsChangePermission = (setTitle: string, permissionTitle: string, 
 }
 
 const permissionsRefreshPermissions = (permissionsSets: CommonPermissionsSetInterface[]) => {
-  return {type: PERMISSIONS_PERMISSIONS_SET, permissionsSets}
+  return dispatch => {
+    dispatch({type: PERMISSIONS_PERMISSIONS_SET, permissionsSets});
+  }
 }
 
 export {

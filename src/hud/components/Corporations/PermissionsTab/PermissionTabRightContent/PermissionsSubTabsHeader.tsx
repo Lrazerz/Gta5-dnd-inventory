@@ -11,7 +11,8 @@ import PermissionsSubTabHeader from "./PermissionsSubTabHeader";
 
 import {corporationsTheme} from "../../consts/corporationsTheme";
 import {permissionsOpenTabAction} from "../../../../../redux/actions/hud/corporations/tabs/permissions/permissions";
-import {mpTrigger_corporations_permissions_openTab} from "../../../../../utils/mpTriggers/hud/hudMpTriggers";
+import {mpTrigger_corporations_permissions_openTab}
+from "../../../../../utils/mpTriggers/hud/corporations/tabs/permissions/permissionsTriggers";
 
 interface Props {
   openedRoleTitle: string;

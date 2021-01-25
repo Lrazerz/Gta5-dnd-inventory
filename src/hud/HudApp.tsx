@@ -12,9 +12,9 @@ import {setPhoneTime, setPlayerAvatarAction} from "../redux/actions/hud/phone";
 import {
   windowCloseInteractions,
   windowOpenInteractions,
-} from "../utils/windowFuncs/hud/Interactions/interactionWindowFuncs";
+} from "../utils/windowFuncs/hud/Interactions/interactionsInterceptors";
 import {SingleInteractionInterface} from "./models/InteractionInterfaces";
-import {mpTrigger_interactions_closeInteractions} from "../utils/mpTriggers/hud/hudMpTriggers";
+import {mpTrigger_interactions_closeInteractions} from "../utils/mpTriggers/hud/interactions/interactionsTriggers";
 import HudAppStateless from "./HudAppStateless";
 import {DefaultHudDataInterface} from "../App";
 import {openCorporations} from "../utils/windowFuncs/hud/Corporations/CorporationsInterceptors";

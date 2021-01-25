@@ -1,4 +1,4 @@
-import {CORPORATIONS_CLOSE, CORPORATIONS_OPEN, CORPORATIONS_TAB_OPEN} from "./corporationsTypes";
+import {CORPORATIONS_CLOSE, CORPORATIONS_OPEN, CORPORATIONS_TAB_OPEN, CORPORATIONS_SET_LOADING} from "./corporationsTypes";
 import {CorporationsTabsEnum} from "../../../../hud/models/corporations/enums";
 
 // todo maybe main screen data too

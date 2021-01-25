@@ -7,7 +7,8 @@ import HorizontalLine from "../../../../HorizontalLine";
 import {SingleAutoModelTitleInterface} from "../../../../../../models/corporations/interfaces";
 import ModelsListItem from "./ModelsListItem";
 import {permissionsAutoSelectModelAction} from "../../../../../../../redux/actions/hud/corporations/tabs/permissions/tabs/auto";
-import {mpTrigger_corporations_permissions_auto_selectModel} from "../../../../../../../utils/mpTriggers/hud/hudMpTriggers";
+import {mpTrigger_corporations_permissions_auto_selectModel}
+from "../../../../../../../utils/mpTriggers/hud/corporations/tabs/permissions/permissionsTriggers";
 import {maxModelLength} from "../../../../../../../constants/hud/corporations/corporationsConstants";
 
 interface Props {

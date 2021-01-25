@@ -96,6 +96,7 @@ const SettingsChangeCosmeticsScreenList: React.FC<Props> = ({theme, themeImage})
 
   const setSelectedImageHandler = (e: any, image: ThemeImageInterface) => {
     e.stopPropagation();
+    console.log('SettingsChangeCosmeticsScreenList', image)
     dispatch(setCosmeticSetting('themeImage', image.title));
     setSelectedImage(image);
     closeDropDownHandler();

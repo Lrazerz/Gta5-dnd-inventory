@@ -11,16 +11,16 @@ const alertWindowFunc = (jsonData: string) => {
 
   let alertType;
 
-  switch (parsedData.Type) {
-    case "Success": {
+  switch (parsedData.Type.toLowerCase()) {
+    case "success": {
       alertType = AlertTypesEnum.success;
       break;
     }
-    case "Warning": {
+    case "warning": {
       alertType = AlertTypesEnum.warning;
       break;
     }
-    case "Error": {
+    case "error": {
       alertType = AlertTypesEnum.error;
       break;
     }

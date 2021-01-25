@@ -8,6 +8,12 @@ import {
   RowDropdownInterface
 } from "../../../../../../../../../hud/models/corporations/interfaces";
 import {RowFieldTypeEnum} from "../../../../../../../../../hud/models/corporations/enums";
+import {CORPORATIONS_TAB_OPEN} from "../../../../../../../../actions/hud/corporations/corporationsTypes";
+import {
+  PERMISSIONS_ROLE_REMOVE,
+  PERMISSIONS_ROLE_SELECT, PERMISSIONS_TAB_OPEN
+} from "../../../../../../../../actions/hud/corporations/tabs/permissions/permissionsTypes";
+import {PERMISSIONS_PROPERTY_OPEN_TAB} from "../../../../../../../../actions/hud/corporations/tabs/permissions/tabs/property/propertyTypes";
 
 const initialState: PermissionsPropertyOfficeInitialStateInterface = {
   options: null,
@@ -15,6 +21,13 @@ const initialState: PermissionsPropertyOfficeInitialStateInterface = {
 
 export default (state = initialState, action) => {
   switch(action.type) {
+    case CORPORATIONS_TAB_OPEN:
+    case PERMISSIONS_ROLE_SELECT:
+    case PERMISSIONS_ROLE_REMOVE:
+    case PERMISSIONS_TAB_OPEN:
+    case PERMISSIONS_PROPERTY_OPEN_TAB: {
+      return initialState;
+    }
     case PERMISSIONS_PROPERTY_OFFICE_SET_OPTIONS: {
       return {
         ...state,

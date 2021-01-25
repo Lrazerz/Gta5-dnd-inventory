@@ -50,7 +50,7 @@ import {
   mpTrigger_phone_openSettings,
   mpTrigger_phone_openSingleChat,
   mpTrigger_phone_removeSingleChat, mpTrigger_phone_sendMessage
-} from "../../../utils/mpTriggers/hud/hudMpTriggers";
+} from "../../../utils/mpTriggers/hud/phone/phoneTriggers";
 import {LastMessageInterface, SelectedChatInterface, ThemesEnum} from "../../../hud/models/phone/reducerInterfaces";
 
 const phoneOpen = (lastMessages: LastMessageInterface[], settings) => {
@@ -131,8 +131,7 @@ const setSetting = (settingTitle: string, settingValue: any) => {
 
 const setCosmeticSetting = (settingTitle: string, settingValue: any) => {
   return dispatch => {
-    const literalValue = settingValue === ThemesEnum.black ? 'dark' : 'light';
-    mpTrigger_phone_changeSetting(settingTitle, literalValue);
+    mpTrigger_phone_changeSetting(settingTitle, settingValue);
     dispatch(_setCosmeticSetting(settingTitle, settingValue));
   }
 }
