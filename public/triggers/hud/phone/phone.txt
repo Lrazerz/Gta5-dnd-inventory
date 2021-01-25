@@ -1,0 +1,126 @@
+// не присылать phone_openIncomingCall(), если не было ответа на предыдущий
+
+
+openPhone('{"LastMessages":[{ "Name":"Дядя Бобби Д.","ImageName": "avatar2","Date": "05.02.2020@11:06","Message": "В отличии от lorem ipsum, текст рыба на русском языке наполнит любой макет непонятным смыслом и придаст тексту текстк текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст"}, { "Name":"Дядя Бобби Д.","ImageName":"avatar2","Date": "15.02.2020@11:29","Message":"В отличии от lorem ipsum, текст рыба на русском языке наполнит любой макет непонятным смыслом и придаст тексту текстк текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст"}, { "Name": "Дядя Бобби Д.", "ImageName": "avatar2", "Date": "25.08.2020@14:16", "Message": "В отличии от lorem ipsum, текст рыба на русском языке наполнит любой макет непонятным смыслом и придаст тексту текстк текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст"}],"Settings":{"IsMuted":true,"Cosmetics":{"Theme":"light","ThemeImage":"theme2"},"Ringtone":"ringtone1"}}');
+
+closePhone()
+
+Открытие экранов телефона:
+
+// вызывается при открытии главного экрана чтобы показать последние непрочитанные сообшения
+
+1. mp.trigger('cef_cl_phone_openLastMessages')
+
+
+phone_openLastMessages('{"$type": "asd", "$values": [{ "Name":"Дядя Бобби Д.","ImageName": "avatar2","Date": "05.02.2020@11:06","Message": "В отличии от lorem ipsum, текст рыба на русском языке наполнит любой макет непонятным смыслом и придаст тексту текстк текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст"}, { "Name":"Дядя Бобби Д.","ImageName":"avatar2","Date": "15.02.2020@11:29","Message":"В отличии от lorem ipsum, текст рыба на русском языке наполнит любой макет непонятным смыслом и придаст тексту текстк текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст"}, { "Name": "Дядя Бобби Д.", "ImageName": "avatar2", "Date": "25.08.2020@14:16", "Message": "В отличии от lorem ipsum, текст рыба на русском языке наполнит любой макет непонятным смыслом и придаст тексту текстк текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст"}]}')
+
+
+2. mp.trigger('cef_cl_phone_openSettings');
+
+
+phone_openSettings('{"IsMuted":true,"Cosmetics":{"Theme":"light","ThemeImage":"theme2"},"Ringtone":"ringtone1"}')
+
+
+mp.trigger('cef_cl_phone_changeSetting', JSON);
+JSON: '{ "SettingTitle": "IsMuted" | "Theme"| "ThemeImage" | "Ringtone", "SettingValue": boolean | number | ('light' | 'dark') | string }'
+
+
+// обновить информацию - phone_openSettings()
+
+
+3. mp.trigger('cef_cl_phone_openCalls')
+
+
+phone_openCalls('{"$type":"...","$values":[{ "Name":"Jimmy Jonson","ImageName":"avatar2","Status":"Входящий","Date":"22.01.2020@17:52","PhoneNumber":"+88005553535"},{ "Name":"Jimmy Jonson","ImageName":"avatar2","Status":"Пропущенный","Date":"22.01.2020@17:52","PhoneNumber":"+88005553535"},{ "Name":"Jimmy Jonson","ImageName":"avatar2","Status":"Входящий","Date":"22.01.2020@17:52","PhoneNumber":"+88005553535"},{ "Name":"Jimmy Jonson","ImageName":"avatar2","Status":"Входящий","Date":"22.01.2020@17:52","PhoneNumber":"+88005553535"},{ "Name":"Jimmy Jonson","ImageName":"avatar2","Status":"Входящий","Date":"22.01.2020@17:52","PhoneNumber":"+88005553535"},{ "Name":"Jimmy Jonson","ImageName":"avatar2","Status":"Входящий","Date":"22.01.2020@17:52","PhoneNumber":"+88005553535"},{ "Name":"Jimmy Jonson","ImageName":"avatar2","Status":"Входящий","Date":"22.01.2020@17:52","PhoneNumber":"+88005553535"},{ "Name":"Jimmy Jonson","ImageName":"avatar2","Status":"Входящий","Date":"22.01.2020@17:52","PhoneNumber":"+88005553535"},{ "Name":"Jimmy Jonson","ImageName":"avatar2","Status":"Входящий","Date":"22.01.2020@17:52","PhoneNumber":"+88005553535"},{ "Name":"Jimmy Jonson","ImageName":"avatar2","Status":"Входящий","Date":"22.01.2020@17:52","PhoneNumber":"+88005553535"},{ "Name":"Jimmy Jonson","ImageName":"avatar2","Status":"Входящий","Date":"22.01.2020@17:52","PhoneNumber":"+88005553535"},{ "Name":"Jimmy Jonson","ImageName":"avatar2","Status":"Входящий","Date":"22.01.2020@17:52","PhoneNumber":"+88005553535"},{ "Name":"Jimmy Jonson","ImageName":"avatar2","Status":"Входящий","Date":"22.01.2020@17:52","PhoneNumber":"+88005553535"}]}')
+
+
+4. mp.trigger('cef_cl_phone_openContacts')
+
+
+phone_openContacts('{"$type":"...","$values":[{ "PhoneNumber": "+88005553531", "Name":"Jimmy Jonson","ImageName":"avatar2"},{ "PhoneNumber": "+88005553532", "Name":"Jimmy Jonson","ImageName":"avatar2"},{ "PhoneNumber": "+88005553533", "Name":"Jimmy Jonson","ImageName":"avatar2"},{ "PhoneNumber": "+88005553534", "Name":"Jimmy Jonson","ImageName":"avatar2"},{  "PhoneNumber": "+88005553535", "Name":"Jimmy Jonson","ImageName":"avatar2"},{ "PhoneNumber": "+88005553536", "Name":"Jimmy Jonson","ImageName":"avatar2"},{ "PhoneNumber": "+88005553537", "Name":"Jimmy Jonson","ImageName":"avatar2"},{  "PhoneNumber": "+88005553538", "Name":"Jimmy Jonson","ImageName":"avatar2"},{ "PhoneNumber": "+88005553539", "Name":"Jimmy Jonson","ImageName":"avatar2"},{ "PhoneNumber": "+88005553540", "Name":"Jimmy Jonson","ImageName":"avatar2"},{ "PhoneNumber": "+88005553541", "Name":"Jimmy Jonson","ImageName":"avatar2"},{  "PhoneNumber": "+88005553542", "Name":"Jimmy Jonson","ImageName":"avatar2"},{ "PhoneNumber": "+88005553543", "Name":"Jimmy Jonson","ImageName":"avatar2"}]}')
+
+
+// from add new contact screen
+mp.trigger('cef_cl_phone_addNewContact', JSON)
+
+JSON: '{"Name": string, "ImageName": string, "PhoneNumber": string}'  // "PhoneNumber": +88005553532, ImageName: "avatar1"
+
+
+5. mp.trigger('cef_cl_phone_openChats')
+
+
+phone_openChats('{"$type":"...","$values":[{ "PhoneNumber": "+88005553531", "Name":"Jimmy Jonson","ImageName":"avatar2","UnreadMessages":1,"LastMessage":"В отличии от lorem ipsum, текст рыба на русском языке наполнит любой макет непонятным смыслом и придаст тексту","LastMessageDate":"22.01.2020@17:52"},{  "PhoneNumber": "+88005553532", "Name":"Jimmy Jonson","ImageName":"avatar2","UnreadMessages":5,"LastMessage":"В отличии от lorem ipsum, текст рыба на русском языке наполнит любой макет непонятным смыслом и придаст тексту","LastMessageDate":"22.01.2020@17:52"},{ "PhoneNumber": "+88005553533", "Name":"Jimmy Jonson","ImageName":"avatar2","UnreadMessages":13,"LastMessage":"asd","LastMessageDate":"22.01.2020@17:52"},{ "PhoneNumber": "+88005553534", "Name":"Jimmy Jonson","ImageName":"avatar2","UnreadMessages":0,"LastMessage":"asd","LastMessageDate":"22.01.2020@17:52"},{ "PhoneNumber": "+88005553535", "Name":"Jimmy Jonson","ImageName":"avatar2","UnreadMessages":0,"LastMessage":"asd","LastMessageDate":"22.01.2020@17:52"},{ "PhoneNumber": "+88005553536", "Name":"Jimmy Jonson","ImageName":"avatar2","UnreadMessages":0,"LastMessage":"asd","LastMessageDate":"22.01.2020@17:52"},{ "PhoneNumber": "+88005553537", "Name":"Jimmy Jonson","ImageName":"avatar2","UnreadMessages":0,"LastMessage":"asd","LastMessageDate":"22.01.2020@17:52"},{ "PhoneNumber": "+88005553538", "Name":"Jimmy Jonson","ImageName":"avatar2","UnreadMessages":0,"LastMessage":"asd","LastMessageDate":"22.01.2020@17:52"},{ "PhoneNumber": "+88005553539", "Name":"Jimmy Jonson","ImageName":"avatar2","UnreadMessages":0,"LastMessage":"asd","LastMessageDate":"22.01.2020@17:52"},{ "PhoneNumber": "+88005553540", "Name":"Jimmy Jonson","ImageName":"avatar2","UnreadMessages":0,"LastMessage":"asd","LastMessageDate":"22.01.2020@17:52"},{ "PhoneNumber": "+88005553541", "Name":"Jimmy Jonson","ImageName":"avatar2","UnreadMessages":0,"LastMessage":"asd","LastMessageDate":"22.01.2020@17:52"},{ "PhoneNumber": "+88005553542", "Name":"Jimmy Jonson","ImageName":"avatar2","UnreadMessages":0,"LastMessage":"asd","LastMessageDate":"22.01.2020@17:52"},{ "PhoneNumber": "+88005553543", "Name":"Jimmy Jonson","ImageName":"avatar2","UnreadMessages":0,"LastMessage":"asd","LastMessageDate":"22.01.2020@17:52"}]}')
+
+
+6. mp.trigger('cef_cl_phone_openChat', phoneNumber);
+
+phoneNumber: string // +88005553532
+
+
+phone_openChat('{"Name":"Jimmy Jonson","AvatarName":"avatar2","Messages":[{ "Direction":"in","Date":"22.01.2020@05:42","Message":"В отличии от lorem ipsum, текст рыба на русском языке наполнит любой макет непонятным смыслом и придаст текстуВ отличии от lorem ipsum, текст рыба на русском языке наполнит любой макет непонятным смыслом и придаст тексту"},{ "Direction":"out","Date":"22.01.2020@05:42","Message":"В отличии от lorem ipsum, текст рыба на русском языке наполнит любой макет непонятным смыслом и придаст текстуВ отличии от lorem ipsum, текст рыба на русском языке наполнит любой макет непонятным смыслом и придаст тексту"},{ "Direction":"in","Date":"22.01.2020@05:42","Message":"В отличии от lorem ipsum, текст рыба на русском языке наполнит любой макет непонятным смыслом и придаст текстуВ отличии от lorem ipsum, текст рыба на русском языке наполнит любой макет непонятным смыслом и придаст тексту"},{ "Direction":"in","Date":"22.01.2020@05:42","Message":"В отличии от lorem ipsum, текст рыба на русском языке наполнит любой макет непонятным смыслом и придаст текстуВ отличии от lorem ipsum, текст рыба на русском языке наполнит любой макет непонятным смыслом и придаст тексту"},{ "Direction":"out","Date":"22.01.2020@05:42","Message":"В отличии от lorem ipsum, текст рыба на русском языке наполнит любой макет непонятным смыслом и придаст текстуВ отличии от lorem ipsum, текст рыба на русском языке наполнит любой макет непонятным смыслом и придаст тексту"},{ "Direction":"in","Date":"22.01.2020@05:42","Message":"В отличии от lorem ipsum, текст рыба на русском языке наполнит любой макет непонятным смыслом и придаст текстуВ отличии от lorem ipsum, текст рыба на русском языке наполнит любой макет непонятным смыслом и придаст тексту"},{ "Direction":"in","Date":"22.01.2020@05:42","Message":"В отличии от lorem ipsum, текст рыба на русском языке наполнит любой макет непонятным смыслом и придаст текстуВ отличии от lorem ipsum, текст рыба на русском языке наполнит любой макет непонятным смыслом и придаст тексту"},{ "Direction":"out","Date":"22.01.2020@05:42","Message":"В отличии от lorem ipsum, текст рыба на русском языке наполнит любой макет непонятным смыслом и придаст текстуВ отличии от lorem ipsum, текст рыба на русском языке наполнит любой макет непонятным смыслом и придаст тексту"},{ "Direction":"in","Date":"22.01.2020@05:42","Message":"В отличии от lorem ipsum, текст рыба на русском языке наполнит любой макет непонятным смыслом и придаст текстуВ отличии от lorem ipsum, текст рыба на русском языке наполнит любой макет непонятным смыслом и придаст тексту"},{ "Direction":"in","Date":"22.01.2020@05:42","Message":"В отличии от lorem ipsum, текст рыба на русском языке наполнит любой макет непонятным смыслом и придаст текстуВ отличии от lorem ipsum, текст рыба на русском языке наполнит любой макет непонятным смыслом и придаст тексту"},{ "Direction":"in","Date":"22.01.2020@05:42","Message":"В отличии от lorem ipsum, текст рыба на русском языке наполнит любой макет непонятным смыслом и придаст текстуВ отличии от lorem ipsum, текст рыба на русском языке наполнит любой макет непонятным смыслом и придаст тексту"},{ "Direction":"in","Date":"22.01.2020@05:42","Message":"В отличии от lorem ipsum, текст рыба на русском языке наполнит любой макет непонятным смыслом и придаст текстуВ отличии от lorem ipsum, текст рыба на русском языке наполнит любой макет непонятным смыслом и придаст тексту"}]}')
+
+
+mp.trigger('cef_cl_phone_sendMessage', JSON)
+JSON: '{"PhoneNumber": string, "Message": string}'  // +88005553532
+
+
+mp.trigger('cef_cl_phone_removeChat', phoneNumber);
+
+phoneNumber: string // +88005553532
+
+
+
+Звонки:
+
+1) Входящий:
+
+phone_openIncomingCall('{"Name":"Garryaksdalsdkasldklkasfjasdfsdfsdfds","ImageName":"avatar2","PhoneNumber":"88005553535"}');
+
+1. mp.trigger('cef_cl_phone_acceptCall', PhoneNumber)
+
+PhoneNumber: string // +88005553532
+
+
+// отдельный экран с возможностью изменять опции (Динамик, без звука, запись)
+phone_openCurrentCall('{"Name":"Jerry sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss","ImageName":"avatar1","PhoneNumber":"+70239239210","IsMuted":false,"Speaker":true,"IsRecording":true}')
+
+
+mp.trigger('cef_cl_phone_changeCurrentCallOption', JSON);
+JSON: '{"OptionTitle": "IsMuted"|"Speaker"|"IsRecording", "OptionValue": boolean}
+
+// обновить данные - phone_openCurrentCall
+
+
+2. mp.trigger('cef_cl_phone_declineCall', PhoneNumber)
+
+PhoneNumber: string // +88005553532
+
+// если игрок, который звонил, отменил звонок
+3. phone_abortCall() 
+
+
+2) Исходящий)
+
+mp.trigger('cef_cl_phone_openOutComingCall', PhoneNumber);
+
+PhoneNumber: string // +88005553532
+
+
+// игрок отменил звонок
+1. mp.trigger('cef_cl_phone_abortCall', PhoneNumber);
+
+PhoneNumber: string // +88005553532
+
+
+// игрок, которому звонил, принял звонок
+2. phone_openCurrentCall('{"Name":"Jerry sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss","ImageName":"avatar1","PhoneNumber":"+70239239210","IsMuted":false,"Speaker":true,"IsRecording":true}')
+
+
+mp.trigger('cef_cl_phone_changeCurrentCallOption', JSON);
+JSON: '{"OptionTitle": "IsMuted"|"Speaker"|"IsRecording", "OptionValue": boolean}
+
+// обновить данные - phone_openCurrentCall
+
+
+// если игрок, которому звонил, отменил звонок
+3. phone_abortCall()

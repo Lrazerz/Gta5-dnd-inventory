@@ -1,0 +1,7 @@
+window.setAlert(JSON)
+
+JSON: '{
+  "Type": "Success" | "Warning" | "Error",
+  "Message": string,
+  "Duration": number // миллисекунды, желательно 3000+ чтобы идеально отрабатывала анимация появления
+}'

@@ -1,0 +1,19 @@
+--------------------------------------------------- Window functions ---------------------------------------------------
+
+openInteractions('{"$values":[{"Name": "Показать паспорт", "Enabled": true},{"Name": "Передать деньги", "Enabled": true},{"Name": "Оказать мед. помощь", "Enabled": true},{"Name": "Пожать руку", "Enabled": true},{"Name": "Обмен", "Enabled": true},{"Name": "Досмотреть", "Enabled": true}]}')
+
+openInteractions('{"$values":[{"Name": "Показать паспорт", "Enabled": true},{"Name": "Передать деньги", "Enabled": true},{"Name": "Оказать мед. помощь", "Enabled": true},{"Name": "Пожать руку", "Enabled": true},{"Name": "Обмен", "Enabled": true},{"Name": "Досмотреть", "Enabled": true},{"Name": "Досмотреть", "Enabled": true},{"Name": "Досмотреть", "Enabled": true},{"Name": "Досмотреть", "Enabled": true},{"Name": "Досмотреть", "Enabled": true},{"Name": "Досмотреть", "Enabled": true}]}')
+
+closeInteractions()
+
+--------------------------------------------------- Triggers ------------------------------------------------------
+
+// нажатие на крестик либо на зону вне интеракций
+mp.trigger('cef_cl_closeInteractions');
+
+mp.trigger('cef_cl_openInteraction', 'Досмотреть');
+
+
+
+
+

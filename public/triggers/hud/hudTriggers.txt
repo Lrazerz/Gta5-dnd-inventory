@@ -1,0 +1,24 @@
+openHud('{"PlayerAvatar":"avatar1","PlayerRank":"level1","PlayerStateIndicators":{"First":10, "Second":20, "Third":40}, "Network":50, "Time":"15:03", "Buffs":[{"Title": "buff1", "TimeLeft": 4},{"Title":"buff2", "TimeLeft": 48},{"Title":"buff2", "TimeLeft": 122}]}')
+
+setPlayerRank("level3")
+
+setPlayerAvatar("avatar2")
+
+setPlayerIndicators('{"First": 10, "Second": 12, "Third": 59}')
+
+setPlayerBuffs('{"$values": [{"Title": "buff1", "TimeLeft": "132"}, {"Title": "buff2", "TimeLeft": "12"}, {"Title": "buff1", "TimeLeft": "1"}]}')
+
+setTime("05:02")
+
+setNetwork(87)
+
+----------------------------------- Vehicle -----------------------------------
+// after openHud
+
+openCar('{"IsCarRunning": true, "IsDoorsOpen": false, "Speed": 120, "Fuel": 50}')
+
+closeCar()
+
+setSpeed(20)
+
+setFuel(72)

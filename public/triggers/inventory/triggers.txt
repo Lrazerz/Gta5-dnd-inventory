@@ -1,0 +1,12 @@
+mp.trigger: ()
+
+Move:
+('cef_cl_moveItem',params[]) (params - item v json)
+
+Drop:
+('cef_cl_dropItem',json); - json - не измененный айтем в json'e
+
+Stack:
+mp.trigger('cef_cl_stackItem',json1,json2);
+
+Split:

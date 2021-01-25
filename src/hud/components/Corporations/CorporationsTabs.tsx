@@ -2,6 +2,7 @@ import React, {CSSProperties} from 'react';
 import classes from '../../../styles/hud/components/Corporations/CorporationsTabs.module.scss';
 import {CorporationsTabsEnum} from "../../models/corporations/enums";
 import CorporationsHeader from "./CorporationsHeader";
+import TreasuryTab from "./TreasuryTab/TreasuryTab";
 
 interface Props {
   dimensions: {
@@ -25,10 +26,45 @@ const CorporationsTabs: React.FC<Props> = React.memo((Props) => {
     left: Props.dimensions.leftGap,
   }
 
+  let tabBlock: JSX.Element;
+
+  switch(Props.openedTab) {
+    case CorporationsTabsEnum.staff: {
+      tabBlock = <></>;
+      break;
+    }
+    case CorporationsTabsEnum.treasury: {
+      tabBlock = <TreasuryTab/>;
+      break;
+    }
+    case CorporationsTabsEnum.property: {
+      tabBlock = <></>;
+      break;
+    }
+    case CorporationsTabsEnum.territory: {
+      tabBlock = <></>;
+      break;
+    }
+    case CorporationsTabsEnum.logs: {
+      tabBlock = <></>;
+      break;
+    }
+    case CorporationsTabsEnum.tasks: {
+      tabBlock = <></>;
+      break;
+    }
+    default: {
+      tabBlock = null;
+    }
+  }
+
   return (
     <div style={containerStyles} className={classes.CorporationsTabs}>
       <div className={classes.HeaderWrapper}>
         <CorporationsHeader openedTab={Props.openedTab}/>
+      </div>
+      <div className={classes.TabContentWrapper}>
+        {tabBlock}
       </div>
     </div>
   );

@@ -1,0 +1,31 @@
+mp.trigger('cef_cl_permissions_property_openTab', JSON)
+
+JSON: '{
+	"OpenedRole": "DigitalNoxDesign",
+	"OpenedTab": "Разрешения",
+	"OpenedPermissionsTab": "Имущество корпорации",
+	"OpenedPropertyTab": string // "Базы", "Офис"
+}'
+
+// office tab
+permissions_property_openOffice(JSON)
+
+JSON: '{
+	"Options": [ { "Type": "Label", "Title": "Слотов доступно в инвентаре", "Value": "1" }, { "Type": "Dropdown", "Title": "Ответственный", "Value": "Hova)_Type", "PotentialValues": [ "Hova)_Type1", "Raciman", "DigitalNoxDesign" ] } ]
+}'
+
+// такие же Type как и в "corporations_permissions_openAutoTab()"
+Type: "Label" | "EditableLabel" | "Switch" | "Dropdown"
+// пока что работают только Label и Dropdown
+
+
+mp.trigger('cef_cl_permissions_property_office_changeOption', JSON)
+
+JSON: '{
+	"OpenedRole": string // "DigitalNoxDesign",
+	"OpenedTab": "Разрешения",
+	"OpenedPermissionsTab": "Имущество корпорации",
+	"OpenedModel": string, // "Пример модели 1", ...
+	"OptionTitle": string // "Ответственный", ...
+	"OptionValue": string | boolean // "Hova)_Type_1"
+}'
