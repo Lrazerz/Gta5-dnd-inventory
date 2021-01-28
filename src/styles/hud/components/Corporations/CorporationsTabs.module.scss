@@ -1,3 +1,5 @@
+@use "../../../../hud/components/Corporations/consts/corporationsTheme";
+
 .CorporationsTabs {
   position: absolute;
   display: flex;
@@ -9,6 +11,6 @@
   }
   .TabContentWrapper {
     flex-grow: 1;
-    background-color: red;
+    background-color: corporationsTheme.$bg_darkGrey2;
   }
 }

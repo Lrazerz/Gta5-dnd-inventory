@@ -1,7 +1,8 @@
+@use '../../../../hud/components/Corporations/consts/corporationsTheme';
+
 .HorizontalLine {
   width: 100%;
-  //background-color: #252932;
-  background-color: #30343F;
+  background-color: corporationsTheme.$delimiter_darkGray;
   height: 1px;
 
   @media (min-width: 2500px) {

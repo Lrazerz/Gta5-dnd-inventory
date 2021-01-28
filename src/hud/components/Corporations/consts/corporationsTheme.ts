@@ -26,11 +26,22 @@ const corporationsTheme = {
   text_white: '#fff',
   text_white2: '#BBCCDC',
   text_white3: '#C4C4C4',
-  text_gray: '#7A8192',
+  text_gray: '#7a8192',
+  text_gray2: '#9699a5',
 
   delimiter_gray: '#393D4D',
+  delimiter_darkGray: '#30343F',
 
   scrollbar_brightGrey: '#50535C',
+
+  // treasury
+  button_lightBlue: '#4277FD',
+  button_Blue: '#2051CF',
+
+  button_brightGray: '#3F424F',
+
+  bg_eggplant: '#2B2229',
+
 }
 export {
   corporationsTheme

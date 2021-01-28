@@ -1,0 +1,23 @@
+.HalfGearWithMoney {
+  width: 100%;
+  height: 100%;
+  background: url("../../../../../assets/hud/images/components/Corporations/tabs/treasury/halfgear.svg");
+  background-size: cover;
+  box-sizing: border-box;
+  padding-top: 19.19%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+
+  .DollarSignWrapper {
+    margin-top: 2.36%;
+    height: 0;
+    width: 9.43%;
+    padding-bottom: 9.43%;
+    background-image: url("../../../../../assets/hud/images/components/Corporations/tabs/treasury/dollar-bordered.svg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+}

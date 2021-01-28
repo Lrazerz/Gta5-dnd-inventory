@@ -5,6 +5,9 @@ import {CorporationsTabsEnum} from "../../models/corporations/enums";
 import PermissionsTab from "./PermissionsTab/PermissionsTab";
 import {corporationsOpenPermissionsTab} from "../../../utils/windowFuncs/hud/Corporations/CorporationsInterceptors";
 import {permissionsSetRolesPermissions} from "../../../redux/actions/hud/corporations/tabs/permissions/permissions";
+import {TreasuryInitialStateInterface} from "../../models/corporations/tabs/treasury/treasuryInterfaces";
+import {corporations_openTreasury} from "../../../utils/windowFuncs/hud/Corporations/tabs/treasury/treasuryInterceptors";
+import {corporationsTreasuryOpenAction} from "../../../redux/actions/hud/corporations/tabs/treasury/treasury";
 
 export interface CorporationsDimensionsInterface {
   width: number;
@@ -80,6 +83,14 @@ const Corporations = React.memo(() => {
         const parsedData = corporationsOpenPermissionsTab(dataJSON);
         dispatch(permissionsSetRolesPermissions(parsedData.roles, parsedData.selectedRoleInfo.title,
           parsedData.selectedRoleInfo.commonPermissionsSets));
+      }
+    }
+    // @ts-ignore
+    if(!window.corporations_openTreasury) {
+      // @ts-ignore
+      window.corporations_openTreasury = (jsonData: string) => {
+        const parsedData: TreasuryInitialStateInterface = corporations_openTreasury(jsonData);
+        dispatch(corporationsTreasuryOpenAction(parsedData));
       }
     }
   }, []);

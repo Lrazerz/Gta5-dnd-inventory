@@ -1,0 +1,57 @@
+@use '../../../../../hud/components/Corporations/consts/corporationsTheme';
+
+.TreasuryWithdrawMenu {
+  width: 100%;
+  height: 100%;
+  background-color: corporationsTheme.$delimiter_darkGray;
+  border-radius: 0.5882rem;
+  box-sizing: border-box;
+  padding: 0 7.07%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+
+  .TodayAvailableWithdrawContainer {
+    margin-top: 7.5%;
+    width: 100%;
+    height: 9.52%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .HorizontalLineWrapper {
+      width: 8.33%;
+    }
+
+    .TextAndDollarSignWrapper {
+      height: 100%;
+      width: 70%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .DollarSign {
+        height: 0;
+        width: 8.33%;
+        padding-bottom: 8.33%;
+        background-image: url("../../../../../assets/hud/images/components/Corporations/tabs/treasury/dollar-bordered.svg");
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+      }
+    }
+  }
+
+  .TreasuryBorderedInputWrapper {
+    margin-top: 5.2%;
+    width: 100%;
+    height: 16.67%;
+  }
+
+  .WithdrawButtonWrapper {
+    margin-top: 6.04%;
+    width: 45%;
+    height: 15.3%;
+  }
+}
