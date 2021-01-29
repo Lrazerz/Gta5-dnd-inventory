@@ -12,6 +12,10 @@
   padding-left: 0.8rem;
   //background-color: red;
 
+  &:hover {
+    border: 0.0588rem solid corporationsTheme.$bg_gray;
+  }
+
   .Legend {
     padding: 0 0.65rem;
   }

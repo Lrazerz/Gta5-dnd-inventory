@@ -23,7 +23,7 @@ const CommonPermissionsList: React.FC<Props> = React.memo(() => {
   const permissionsSetsRedux = useSelector(state => state.hud.corporations.tabs.permissions.permissions.commonPermissionsSets);
   const selectedRole = useSelector(state => state.hud.corporations.tabs.permissions.permissions.selectedRole);
 
-  const isLoadingRedux = useSelector(state => state.hud.corporations.corporations.isLoading);
+  // const isLoadingRedux = useSelector(state => state.hud.corporations.corporations.isLoading);
 
   const permissionsSets: CommonPermissionsSetInterface[] = permissionsSetsRedux;
 
@@ -89,7 +89,7 @@ const CommonPermissionsList: React.FC<Props> = React.memo(() => {
   //   )
   // }
 
-  if(isLoadingRedux) {
+  if(!permissionsSetsRedux) {
       return (
         <div className={classes.CommonPermissionsList}>
           <div className={classes.HeaderWrapper}>

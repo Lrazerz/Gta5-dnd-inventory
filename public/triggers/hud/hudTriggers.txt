@@ -1,3 +1,5 @@
+-------------------------------------------------------------------------------
+
 openHud('{"PlayerAvatar":"avatar1","PlayerRank":"level1","PlayerStateIndicators":{"First":10, "Second":20, "Third":40}, "Network":50, "Time":"15:03", "Buffs":[{"Title": "buff1", "TimeLeft": 4},{"Title":"buff2", "TimeLeft": 48},{"Title":"buff2", "TimeLeft": 122}]}')
 
 setPlayerRank("level3")
@@ -22,3 +24,104 @@ closeCar()
 setSpeed(20)
 
 setFuel(72)
+
+--------------------------------------------------------------------------------
+
+  ----------------------------------- Phone (old)-----------------------------------
+// after openHud
+
+// 1-3 last messages
+openPhone('{"LastMessages":[{"Id":"1", "Name":"Дядя Бобби Д.","ImageName": "avatar2","Date": "05.02.2020@11:06","Message": "В отличии от lorem ipsum, текст рыба на русском языке наполнит любой макет непонятным смыслом и придаст тексту текстк текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст"}, {"Id": "2","Name":"Дядя Бобби Д.","ImageName":"avatar2","Date": "15.02.2020@11:29","Message":"В отличии от lorem ipsum, текст рыба на русском языке наполнит любой макет непонятным смыслом и придаст тексту текстк текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст"}, { "Id": "3", "Name": "Дядя Бобби Д.", "ImageName": "avatar2", "Date": "25.08.2020@14:16", "Message": "В отличии от lorem ipsum, текст рыба на русском языке наполнит любой макет непонятным смыслом и придаст тексту текстк текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст"}],"Settings":{"IsMuted":true,"Cosmetics":{"Theme":"light","ThemeImage":"theme2"},"Ringtone":"ringtone1"}}');
+
+closePhone();
+
+// calls
+phone_openIncomingCall('{"Name":"Garryaksdalsdkasldklkasfjasdfsdfsdfds","ImageName":"avatar2","PhoneNumber":"88005553535"}')
+
+phone_abortCall()
+
+// if call was accepted or just outcoming call data
+phone_openCurrentCall('{"Name":"Jerry sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss","ImageName":"avatar1","PhoneNumber":"+70239239210","IsMuted":false,"Speaker":true,"IsRecording":true}')
+
+// On main screen
+phone_openLastMessages('{"$type": "asd", "$values": [{"Id":"1", "Name":"Дядя Бобби Д.","ImageName": "avatar2","Date": "05.02.2020@11:06","Message": "В отличии от lorem ipsum, текст рыба на русском языке наполнит любой макет непонятным смыслом и придаст тексту текстк текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст"}, {"Id": "2","Name":"Дядя Бобби Д.","ImageName":"avatar2","Date": "15.02.2020@11:29","Message":"В отличии от lorem ipsum, текст рыба на русском языке наполнит любой макет непонятным смыслом и придаст тексту текстк текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст"}, { "Id": "3", "Name": "Дядя Бобби Д.", "ImageName": "avatar2", "Date": "25.08.2020@14:16", "Message": "В отличии от lorem ipsum, текст рыба на русском языке наполнит любой макет непонятным смыслом и придаст тексту текстк текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст"}]}')
+
+// Different screens
+
+phone_openSettings('{"IsMuted":true,"Cosmetics":{"Theme":"light","ThemeImage":"theme2"},"Ringtone":"ringtone1"}')
+
+phone_openCalls('{"$type":"...","$values":[{"Id": "1","Name":"Jimmy Jonson","ImageName":"avatar2","Status":"Входящий","Date":"22.01.2020@17:52","PhoneNumber":"+88005553535"},{"Id": "2","Name":"Jimmy Jonson","ImageName":"avatar2","Status":"Пропущенный","Date":"22.01.2020@17:52","PhoneNumber":"+88005553535"},{"Id": "3","Name":"Jimmy Jonson","ImageName":"avatar2","Status":"Входящий","Date":"22.01.2020@17:52","PhoneNumber":"+88005553535"},{"Id": "4","Name":"Jimmy Jonson","ImageName":"avatar2","Status":"Входящий","Date":"22.01.2020@17:52","PhoneNumber":"+88005553535"},{"Id": "5","Name":"Jimmy Jonson","ImageName":"avatar2","Status":"Входящий","Date":"22.01.2020@17:52","PhoneNumber":"+88005553535"},{"Id": "6","Name":"Jimmy Jonson","ImageName":"avatar2","Status":"Входящий","Date":"22.01.2020@17:52","PhoneNumber":"+88005553535"},{"Id": "7","Name":"Jimmy Jonson","ImageName":"avatar2","Status":"Входящий","Date":"22.01.2020@17:52","PhoneNumber":"+88005553535"},{"Id": "8","Name":"Jimmy Jonson","ImageName":"avatar2","Status":"Входящий","Date":"22.01.2020@17:52","PhoneNumber":"+88005553535"},{"Id": "9","Name":"Jimmy Jonson","ImageName":"avatar2","Status":"Входящий","Date":"22.01.2020@17:52","PhoneNumber":"+88005553535"},{"Id": "10","Name":"Jimmy Jonson","ImageName":"avatar2","Status":"Входящий","Date":"22.01.2020@17:52","PhoneNumber":"+88005553535"},{"Id": "11","Name":"Jimmy Jonson","ImageName":"avatar2","Status":"Входящий","Date":"22.01.2020@17:52","PhoneNumber":"+88005553535"},{"Id": "12","Name":"Jimmy Jonson","ImageName":"avatar2","Status":"Входящий","Date":"22.01.2020@17:52","PhoneNumber":"+88005553535"},{"Id": "13","Name":"Jimmy Jonson","ImageName":"avatar2","Status":"Входящий","Date":"22.01.2020@17:52","PhoneNumber":"+88005553535"}]}')
+
+phone_openContacts('{"$type":"...","$values":[{"Id": "1","Name":"Jimmy Jonson","ImageName":"avatar2"},{"Id": "2","Name":"Jimmy Jonson","ImageName":"avatar2"},{"Id": "3","Name":"Jimmy Jonson","ImageName":"avatar2"},{"Id": "4","Name":"Jimmy Jonson","ImageName":"avatar2"},{"Id": "5","Name":"Jimmy Jonson","ImageName":"avatar2"},{"Id": "6","Name":"Jimmy Jonson","ImageName":"avatar2"},{"Id": "7","Name":"Jimmy Jonson","ImageName":"avatar2"},{"Id": "8","Name":"Jimmy Jonson","ImageName":"avatar2"},{"Id": "9","Name":"Jimmy Jonson","ImageName":"avatar2"},{"Id": "10","Name":"Jimmy Jonson","ImageName":"avatar2"},{"Id": "11","Name":"Jimmy Jonson","ImageName":"avatar2"},{"Id": "12","Name":"Jimmy Jonson","ImageName":"avatar2"},{"Id": "13","Name":"Jimmy Jonson","ImageName":"avatar2"}]}')
+
+
+phone_openChats('{"$type":"...","$values":[{"Id": "1","Name":"Jimmy Jonson","ImageName":"avatar2","UnreadMessages":1,"LastMessage":"В отличии от lorem ipsum, текст рыба на русском языке наполнит любой макет непонятным смыслом и придаст тексту","LastMessageDate":"22.01.2020@17:52"},{"Id": "2","Name":"Jimmy Jonson","ImageName":"avatar2","UnreadMessages":5,"LastMessage":"В отличии от lorem ipsum, текст рыба на русском языке наполнит любой макет непонятным смыслом и придаст тексту","LastMessageDate":"22.01.2020@17:52"},{"Id": "3","Name":"Jimmy Jonson","ImageName":"avatar2","UnreadMessages":13,"LastMessage":"asd","LastMessageDate":"22.01.2020@17:52"},{"Id": "4","Name":"Jimmy Jonson","ImageName":"avatar2","UnreadMessages":0,"LastMessage":"asd","LastMessageDate":"22.01.2020@17:52"},{"Id": "5","Name":"Jimmy Jonson","ImageName":"avatar2","UnreadMessages":0,"LastMessage":"asd","LastMessageDate":"22.01.2020@17:52"},{"Id": "6","Name":"Jimmy Jonson","ImageName":"avatar2","UnreadMessages":0,"LastMessage":"asd","LastMessageDate":"22.01.2020@17:52"},{"Id": "7","Name":"Jimmy Jonson","ImageName":"avatar2","UnreadMessages":0,"LastMessage":"asd","LastMessageDate":"22.01.2020@17:52"},{"Id": "8","Name":"Jimmy Jonson","ImageName":"avatar2","UnreadMessages":0,"LastMessage":"asd","LastMessageDate":"22.01.2020@17:52"},{"Id": "9","Name":"Jimmy Jonson","ImageName":"avatar2","UnreadMessages":0,"LastMessage":"asd","LastMessageDate":"22.01.2020@17:52"},{"Id": "10","Name":"Jimmy Jonson","ImageName":"avatar2","UnreadMessages":0,"LastMessage":"asd","LastMessageDate":"22.01.2020@17:52"},{"Id": "11","Name":"Jimmy Jonson","ImageName":"avatar2","UnreadMessages":0,"LastMessage":"asd","LastMessageDate":"22.01.2020@17:52"},{"Id": "12","Name":"Jimmy Jonson","ImageName":"avatar2","UnreadMessages":0,"LastMessage":"asd","LastMessageDate":"22.01.2020@17:52"},{"Id": "13","Name":"Jimmy Jonson","ImageName":"avatar2","UnreadMessages":0,"LastMessage":"asd","LastMessageDate":"22.01.2020@17:52"}]}')
+
+phone_openChat('{"Name":"Jimmy Jonson","AvatarName":"avatar2","Messages":[{"Id":"100","Direction":"in","Date":"22.01.2020@05:42","Message":"В отличии от lorem ipsum, текст рыба на русском языке наполнит любой макет непонятным смыслом и придаст текстуВ отличии от lorem ipsum, текст рыба на русском языке наполнит любой макет непонятным смыслом и придаст тексту"},{"Id":"200","Direction":"out","Date":"22.01.2020@05:42","Message":"В отличии от lorem ipsum, текст рыба на русском языке наполнит любой макет непонятным смыслом и придаст текстуВ отличии от lorem ipsum, текст рыба на русском языке наполнит любой макет непонятным смыслом и придаст тексту"},{"Id":"300","Direction":"in","Date":"22.01.2020@05:42","Message":"В отличии от lorem ipsum, текст рыба на русском языке наполнит любой макет непонятным смыслом и придаст текстуВ отличии от lorem ipsum, текст рыба на русском языке наполнит любой макет непонятным смыслом и придаст тексту"},{"Id":"400","Direction":"in","Date":"22.01.2020@05:42","Message":"В отличии от lorem ipsum, текст рыба на русском языке наполнит любой макет непонятным смыслом и придаст текстуВ отличии от lorem ipsum, текст рыба на русском языке наполнит любой макет непонятным смыслом и придаст тексту"},{"Id":"500","Direction":"out","Date":"22.01.2020@05:42","Message":"В отличии от lorem ipsum, текст рыба на русском языке наполнит любой макет непонятным смыслом и придаст текстуВ отличии от lorem ipsum, текст рыба на русском языке наполнит любой макет непонятным смыслом и придаст тексту"},{"Id":"600","Direction":"in","Date":"22.01.2020@05:42","Message":"В отличии от lorem ipsum, текст рыба на русском языке наполнит любой макет непонятным смыслом и придаст текстуВ отличии от lorem ipsum, текст рыба на русском языке наполнит любой макет непонятным смыслом и придаст тексту"},{"Id":"700","Direction":"in","Date":"22.01.2020@05:42","Message":"В отличии от lorem ipsum, текст рыба на русском языке наполнит любой макет непонятным смыслом и придаст текстуВ отличии от lorem ipsum, текст рыба на русском языке наполнит любой макет непонятным смыслом и придаст тексту"},{"Id":"800","Direction":"out","Date":"22.01.2020@05:42","Message":"В отличии от lorem ipsum, текст рыба на русском языке наполнит любой макет непонятным смыслом и придаст текстуВ отличии от lorem ipsum, текст рыба на русском языке наполнит любой макет непонятным смыслом и придаст тексту"},{"Id":"900","Direction":"in","Date":"22.01.2020@05:42","Message":"В отличии от lorem ipsum, текст рыба на русском языке наполнит любой макет непонятным смыслом и придаст текстуВ отличии от lorem ipsum, текст рыба на русском языке наполнит любой макет непонятным смыслом и придаст тексту"},{"Id":"1000","Direction":"in","Date":"22.01.2020@05:42","Message":"В отличии от lorem ipsum, текст рыба на русском языке наполнит любой макет непонятным смыслом и придаст текстуВ отличии от lorem ipsum, текст рыба на русском языке наполнит любой макет непонятным смыслом и придаст тексту"},{"Id":"1100","Direction":"in","Date":"22.01.2020@05:42","Message":"В отличии от lorem ipsum, текст рыба на русском языке наполнит любой макет непонятным смыслом и придаст текстуВ отличии от lorem ipsum, текст рыба на русском языке наполнит любой макет непонятным смыслом и придаст тексту"},{"Id":"1200","Direction":"in","Date":"22.01.2020@05:42","Message":"В отличии от lorem ipsum, текст рыба на русском языке наполнит любой макет непонятным смыслом и придаст текстуВ отличии от lorem ipsum, текст рыба на русском языке наполнит любой макет непонятным смыслом и придаст тексту"}]}')
+
+																		Phone Triggers
+
+// from main screen
+cef_cl_phone_openLastMessages
+
+// wait for window.phone_openLastMessages
+
+
+// after window.phone_openIncomingCall
+
+cef_cl_phone_acceptCall
+cef_cl_phone_declineCall
+
+
+// user make call
+mp.trigger('cef_cl_phone_openOutComingCall', phoneNumber); // phoneNumber: string ("+88...")
+
+
+// user abort call
+cef_cl_phone_abortCall 
+
+
+// change option on current call screen
+mp.trigger('cef_cl_phone_changeCurrentCallOption', JSON);
+JSON: '{OptionTitle: "IsMuted"|"Speaker"|"IsRecording", OptionValue: boolean}
+
+// wait for window.phone_openCurrentCall
+
+
+cef_cl_phone_openSettings
+
+// wait for phone_openSettings
+
+
+// if theme: 0 = light, 1 = dark
+mp.trigger('cef_cl_phone_changeSetting', JSON);
+JSON: '{SettingTitle: "IsMuted" | "Theme"| "ThemeImage", SettingValue: [IsMuted: boolean | Theme: number | ThemeImage: string]}'
+
+
+cef_cl_phone_openCalls
+
+// wait for window.phone_openCalls
+
+
+cef_cl_phone_openContacts
+
+// wait for window.phone_openContacts
+
+
+cef_cl_phone_openChats
+
+// wait for window.phone_openChats
+
+
+mp.trigger('cef_cl_phone_openChat', id); // id: string
+
+mp.trigger('cef_cl_phone_sendMessage', JSON)
+JSON: '{ChatId: string, Message: string}'
+
+// wait for window.phone_openSingleChat
+
+mp.trigger('cef_cl_phone_removeChat', id);
+
+
+mp.trigger('cef_cl_phone_addNewContact', JSON)
+JSON: '{Name: string, ImageName: string, PhoneNumber: string}'

@@ -1,0 +1,47 @@
+corporations_permissions_openAutoTab('{ "Models": [ { "Title": "Пример модели 1" }, { "Title": "Пример модели 2" }, { "Title": "Пример модели 3" }, { "Title": "Пример модели 4" }, { "Title": "Пример модели 5" }, { "Title": "Пример модели 6" } ], "SelectedModelInfo": { "Title": "Пример модели 1", "Options": [ { "Type": "Label", "Title": "Слотов доступно в инвентаре", "Value": "1" }, { "Type": "Dropdown", "Title": "Ответственный", "Value": "Hova)_Type", "PotentialValues": [ "Hova)_Type1", "Raciman", "DigitalNoxDesign" ] } ], "Permissions": [ { "Title": "Разрешение на спавн", "Value": true }, { "Title": "Разрешение на тюнинг", "Value": false }, { "Title": "Разрешение на тюнинг", "Value": false }, { "Title": "Разрешение на тюнинг", "Value": false }, { "Title": "Разрешение на тюнинг", "Value": false }, { "Title": "Разрешение на тюнинг", "Value": false }, { "Title": "Разрешение на тюнинг", "Value": false } ] } }')
+
+
+Type: "Label" | "EditableLabel" | "Switch" | "Dropdown"
+// пока что работают только Label и Dropdown
+
+
+mp.trigger('cef_cl_corporations_permissions_auto_selectModel', JSON);
+
+JSON: '{
+	"OpenedRole": string // "DigitalNoxDesign",
+	"OpenedTab": string // "Разрешения",
+	"OpenedPermissionsTab": string // "Техника",
+	"ModelName": string // "Пример модели 1", ...
+}'
+
+
+// после этого обновить информацию - corporations_permissions_openAutoTab
+
+
+mp.trigger('cef_cl_corporations_permissions_auto_changeOption', JSON)
+
+JSON: '{
+	"OpenedRole": string // "DigitalNoxDesign",
+	"OpenedTab": string // "Разрешения",
+	"OpenedPermissionsTab": string // "Техника",
+	"OpenedModel": string, // "Пример модели 1", ...
+	"OptionTitle": string // "Ответственный", ...
+	"OptionValue": string | boolean // "Hova)_Type_1"
+}'
+
+
+// после этого обновить информацию - openAutoTab
+
+
+mp.trigger('cef_cl_corporations_permissions_auto_changePermission', JSON);
+
+JSON: '{
+	"OpenedTab": string // "Разрешения",
+	"OpenedPermissionsTab": string // "Техника",
+	"OpenedModel": string, // "Пример модели 1", ...
+	"Permission": string, // "Разрешение на спавн",...
+	"Value": boolean
+}'
+
+
+// после этого обновить информацию - openAutoTab

@@ -9,15 +9,15 @@
 }
 
 .Success {
-  background-color: rgba(alertsTheme.$success, 0.4);
+  background-color: rgba(alertsTheme.$success, 0.5);
 }
 
 .Warning {
-  background-color: rgba(alertsTheme.$warning, 0.4);
+  background-color: rgba(alertsTheme.$warning, 0.5);
 }
 
 .Error {
-  background-color: rgba(alertsTheme.$error, 0.4);
+  background-color: rgba(alertsTheme.$error, 0.5);
 }
 
 @keyframes slidein {

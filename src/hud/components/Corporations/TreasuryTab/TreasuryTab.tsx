@@ -10,18 +10,23 @@ import {
 } from "../../../models/corporations/tabs/treasury/treasuryInterfaces";
 import FieldSetAndLegendNumber from "./FieldSetAndLegendNumber";
 import FieldSetAndLegendString from "./FieldSetAndLegendString";
-import {treasuryMinAmountToTransfer} from "../../../../constants/hud/corporations/treasury/treasuryConstants";
-import {maxNicknameLength, minNicknameLength, nicknameRegex} from "../../../../constants/commonConstants";
 import {
-  mpTrigger_corporations_treasury_changeAvailableAmount, mpTrigger_corporations_treasury_transfer
-} from "../../../../utils/mpTriggers/hud/corporations/tabs/treasury/treasuryTriggers";
+  treasuryMinAmountToTransfer,
+  treasuryMinAmountToWithdrawSet
+} from "../../../../constants/hud/corporations/treasury/treasuryConstants";
+import {maxNicknameLength, minNicknameLength, nicknameRegex} from "../../../../constants/commonConstants";
+import {mpTrigger_corporations_treasury_transfer}
+from "../../../../utils/mpTriggers/hud/corporations/tabs/treasury/treasuryTriggers";
 import {corporationsTreasuryChangeAvailableAmount} from "../../../../redux/actions/hud/corporations/tabs/treasury/treasury";
 import LoadingIndicator from "../../common/LoadingIndicator/LoadingIndicator";
 import TreasuryWithdrawMenu from "./TreasuryWithdrawMenu";
+import TreasuryPutMenu from "./TreasuryPutMenu";
 
 interface Props {
 
 }
+
+type AvailableAmountTodayType = number | '';
 
 const TreasuryTab: React.FC<Props> = React.memo(() => {
 
@@ -31,7 +36,8 @@ const TreasuryTab: React.FC<Props> = React.memo(() => {
 
   //region Input states
   // to change before send to redux & server
-  const [availableAmountToday, setAvailableAmountToday]: [number, (number) => void] = useState(treasuryTabRedux.withdrawAvailableToday);
+  const [availableAmountToday, setAvailableAmountToday]: [AvailableAmountTodayType, (AvailableAmountTodayType) => void] =
+    useState(treasuryTabRedux.withdrawAvailableToday);
   const [nicknameToTransfer, setNicknameToTransfer]: [string, (string) => void] = useState('');
   const [amountToTransfer, setAmountToTransfer]: [number, (number) => void] = useState(1);
   //endregion
@@ -46,7 +52,11 @@ const TreasuryTab: React.FC<Props> = React.memo(() => {
 
   // maybe on enter press
   const changeAvailableAmountTodayHandler = (amount: string) => {
-    setAvailableAmountToday(amount)
+    if(!amount) {
+      setAvailableAmountToday('');
+      return;
+    }
+    setAvailableAmountToday(+amount)
   }
 
   const changeNicknameToTransferHandler = (nickname: string) => {
@@ -54,26 +64,50 @@ const TreasuryTab: React.FC<Props> = React.memo(() => {
   }
 
   const changeAmountToTransferHandler = (amount: string) => {
-    setAmountToTransfer(amount);
+    if(!amount) {
+      setAmountToTransfer('');
+      return;
+    }
+    setAmountToTransfer(+amount);
   }
 
-  //
+  //region -------------------- Blurred full-screen tabs --------------------
   const openWithdrawMenuHandler = () => {
     setIsWithdrawMenuOpened(true);
+  }
+
+  const openPutMenuHandler = () => {
+    setIsPutMenuOpened(true);
   }
 
   const closeWithdrawMenuHandler = () => {
     setIsWithdrawMenuOpened(false);
   }
 
+  const closePutMenuHandler = () => {
+    setIsPutMenuOpened(false);
+  }
+  //endregion
+
   // handle change available amount
 
   const changeAvailableAmount = () => {
-    if(+availableAmountToday === treasuryTabRedux.withdrawAvailableToday) {
+    if(typeof availableAmountToday === 'string') {
+      setAvailableAmountToday(treasuryMinAmountToWithdrawSet);
+      return;
+    }
+    if(availableAmountToday === treasuryTabRedux.withdrawAvailableToday) {
+      return;
+    }
+    if(availableAmountToday < treasuryMinAmountToWithdrawSet) {
+      setAvailableAmountToday(treasuryMinAmountToWithdrawSet);
+      return;
+    }
+    if(availableAmountToday > treasuryTabRedux.treasuryAmount) {
+      setAvailableAmountToday(treasuryTabRedux.treasuryAmount);
       return;
     }
     dispatch(corporationsTreasuryChangeAvailableAmount(+availableAmountToday));
-    mpTrigger_corporations_treasury_changeAvailableAmount(availableAmountToday);
   }
 
   const keyDownHandler = (e) => {
@@ -82,9 +116,18 @@ const TreasuryTab: React.FC<Props> = React.memo(() => {
     }
   }
 
+  const amountToTransferBlurHandler = () => {
+    if(typeof amountToTransfer === 'string') {
+      setAmountToTransfer(treasuryMinAmountToTransfer);
+    }
+  }
+
   const transferHandler = () => {
     if(!nicknameRegex.test(nicknameToTransfer)) {
-      console.log('bad nickname');
+      return;
+    }
+    if(amountToTransfer < treasuryMinAmountToTransfer) {
+      setAmountToTransfer(treasuryMinAmountToTransfer);
       return;
     }
     mpTrigger_corporations_treasury_transfer(nicknameToTransfer, amountToTransfer);
@@ -127,7 +170,7 @@ const TreasuryTab: React.FC<Props> = React.memo(() => {
           </TreasuryButton>
         </div>
         <div className={classes.PutButtonWrapper}>
-          <TreasuryButton onClick={() => console.log('todo')} color={corporationsTheme.button_Blue}>
+          <TreasuryButton onClick={openPutMenuHandler} color={corporationsTheme.button_Blue}>
             Положить в казну
           </TreasuryButton>
         </div>
@@ -135,7 +178,7 @@ const TreasuryTab: React.FC<Props> = React.memo(() => {
       <div className={classes.WithdrawTodayWrapper} onBlur={changeAvailableAmount} onKeyDown={keyDownHandler}>
         <FieldSetAndLegendNumber legend={'Сегодня можно снять'}
                                     contentNumber={availableAmountToday}
-                                 min={0} max={treasuryTabRedux.treasuryAmount}
+                                 max={treasuryTabRedux.treasuryAmount}
         onChange={changeAvailableAmountTodayHandler} rightContent={todayAmountDollarBlock}/>
       </div>
       <CorporationsText styles={titleTextStyles}>
@@ -146,10 +189,9 @@ const TreasuryTab: React.FC<Props> = React.memo(() => {
           <FieldSetAndLegendString legend={'Введите ник'} contentString={nicknameToTransfer}
             onChange={changeNicknameToTransferHandler} minLength={minNicknameLength} maxLength={maxNicknameLength}/>
         </div>
-        <div className={classes.InputWrapper}>
+        <div className={classes.InputWrapper} onBlur={amountToTransferBlurHandler}>
           <FieldSetAndLegendNumber legend={'Сумма перевода'} contentNumber={amountToTransfer}
-                                   onChange={changeAmountToTransferHandler}
-          min={treasuryMinAmountToTransfer} max={treasuryTabRedux.withdrawAvailableToday}
+                                   onChange={changeAmountToTransferHandler} max={treasuryTabRedux.withdrawAvailableToday}
           rightContent={transferSimDollarBlock}/>
         </div>
       </div>
@@ -160,9 +202,19 @@ const TreasuryTab: React.FC<Props> = React.memo(() => {
       </div>
       {isWithdrawMenuOpened &&
         (
-          <div className={classes.WithdrawMenuTabWrapper} onClick={closeWithdrawMenuHandler}>
+          <div className={classes.BlurredMenuTabWrapper} onClick={closeWithdrawMenuHandler}>
             <div className={classes.WithdrawMenuWrapper}>
               <TreasuryWithdrawMenu />
+            </div>
+          </div>
+        )
+      }
+      {
+        isPutMenuOpened &&
+        (
+          <div className={classes.BlurredMenuTabWrapper} onClick={closePutMenuHandler}>
+            <div className={classes.WithdrawMenuWrapper}>
+              <TreasuryPutMenu />
             </div>
           </div>
         )

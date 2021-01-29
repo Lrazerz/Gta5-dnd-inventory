@@ -1,0 +1,53 @@
+corporations_openTreasury(JSON)
+
+JSON: '{
+	"Amount": 923421,
+	"WithdrawAvailableToday": 800000
+	"PutAvailableToday": 20000
+}'
+
+
+// изменить "Сегодня можно снять"
+mp.trigger('cef_cl_corporations_treasury_changeAvailableAmount', JSON)
+
+JSON: '{
+  OpenedTab: "Казна",
+  Amount: number
+}'
+
+Обновить данные - corporations_openTreasury
+
+
+// "Получить из казны"
+mp.trigger('cef_cl_corporations_treasury_withdraw', JSON)
+
+JSON: '{
+  OpenedTab: "Казна",
+  Amount: number
+}'
+
+Обновить данные - corporations_openTreasury
+
+
+// "Положить в казну"
+mp.trigger('cef_cl_corporations_treasury_put', JSON)
+
+JSON: '{
+  OpenedTab: "Казна",
+  Amount: number
+}'
+
+Обновить данные - corporations_openTreasury
+
+
+// "Перевести"
+mp.trigger('cef_cl_corporations_treasury_transfer', JSON)
+
+JSON: '{
+  OpenedTab: "Казна",
+  Nickname: string,
+  Amount: number
+}'
+
+Обновить данные - corporations_openTreasury
+

@@ -1,4 +1,4 @@
-import {CorporationsTabsDict, CorporationsTabsEnum} from "../../../../../../hud/models/corporations/enums";
+import {CorporationsTabsDict} from "../../../../../../hud/models/corporations/enums";
 
 
 const mpTrigger_corporations_treasury_changeAvailableAmount = (amount: number) => {
