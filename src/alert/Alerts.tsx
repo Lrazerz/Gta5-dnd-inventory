@@ -1,11 +1,8 @@
-import React, {CSSProperties, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useSelector} from 'react-redux';
 import classes from '../styles/alert/Alerts.module.scss';
 import {SingleAlertInterface} from "../models/alert/interfaces";
-import {AlertTypesEnum} from "../models/alert/enums";
-import AlertsText from "./AlertsText";
 import SingleAlert from "./SingleAlert";
-import {makeLogger} from "ts-loader/dist/logger";
 
 interface AlertWithDisappearingInterface {
   alert: SingleAlertInterface;
@@ -77,16 +74,6 @@ const Alerts: React.FC<Props> = React.memo(() => {
   const removeAlertWithDisappearing = (id) => {
     setAlertsWithDisappearing(prevAlerts => prevAlerts.filter(alert => alert.alert.id !== id));
   }
-
-  // const alertsBlock: JSX.Element[] = [
-  //   'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin nibh justo',
-  //   'ullamcorper non nisl id, fringilla vehicula dolor. Vestibulum nulla purus, fermentum eget',
-  //   'accumsan at, varius ut libero. Praesent bibendum nibh'
-  // ].map(alertMessage => (
-  //   <div className={classes.SingleAlert}>
-  //     {alertMessage}
-  //   </div>
-  // ))
 
   const alertsBlock: JSX.Element[] = alertsWithDisappearing.length > 0 && alertsWithDisappearing.map(alertWithDisappearing => {
 

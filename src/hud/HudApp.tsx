@@ -97,23 +97,6 @@ const HudApp: React.FC<Props> = React.memo(function HudApp({data}) {
 
   //region -------------------- Set up and clean up window functions --------------------
   useEffect(() => {
-    // // todo remove
-    // const timeout = setTimeout(() => {
-    //   dispatch(setAlert('New ipsum dolor sit amet, consectetur adipiscing elit. Proin nibh justo',
-    //     AlertTypesEnum.error, 3000));
-    // }, 2000)
-    // const timeout2 = setTimeout(() => {
-    //   dispatch(setAlert('New non nisl id, fringilla vehicula dolor. Vestibulum nulla purus, fermentum egetullamcorper non nisl id, fringilla vehicula dolor. Vestibulum nulla purus, fermentum eget',
-    //     AlertTypesEnum.success, 1000))
-    // }, 3000)
-    // dispatch(setAlert('New ipsum dolor sit amet, consectetur adipiscing elit. Proin nibh justo',
-    //   AlertTypesEnum.warning, 3000));
-    // // @ts-ignore
-    // if(!window.phone_openIncomingCall) {
-    //   // @ts-ignore
-    //   window.phone_openIncomingCall = phone_openIncomingCall;
-    // }
-
     //region ------------------------------ PlayerInfo window interceptors ------------------------------
     //@ts-ignore
     if(!window.setPlayerRank) {

@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import InventoryApp from "./inventory/InventoryApp";
 import store from './redux/store';
 import HudApp from "./hud/HudApp";
@@ -45,6 +45,8 @@ const defaultHudData: DefaultHudDataInterface = {
 const App = React.memo(function App() {
 
   const dispatch = useDispatch();
+
+  const isCorporationsOpened = useSelector(state => state.hud.corporations.corporations.isOpened);
 
   const alertsContainerRef = useRef();
 
