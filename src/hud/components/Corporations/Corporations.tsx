@@ -8,6 +8,15 @@ import {permissionsSetRolesPermissions} from "../../../redux/actions/hud/corpora
 import {TreasuryInitialStateInterface} from "../../models/corporations/tabs/treasury/treasuryInterfaces";
 import {corporations_openTreasury} from "../../../utils/windowFuncs/hud/Corporations/tabs/treasury/treasuryInterceptors";
 import {corporationsTreasuryOpenAction} from "../../../redux/actions/hud/corporations/tabs/treasury/treasury";
+import {
+  corporationsLogsOpenAction,
+  corporationsLogsOpenPageAction
+} from "../../../redux/actions/hud/corporations/tabs/logs/logs";
+import {
+  corporations_logs_openPage,
+  corporations_openLogs
+} from "../../../utils/windowFuncs/hud/Corporations/tabs/logs/logsInterceptors";
+import {LogsInitialStateInterface} from "../../models/corporations/tabs/logs/logsInterfaces";
 
 export interface CorporationsDimensionsInterface {
   width: number;
@@ -91,6 +100,22 @@ const Corporations = React.memo(() => {
       window.corporations_openTreasury = (jsonData: string) => {
         const parsedData: TreasuryInitialStateInterface = corporations_openTreasury(jsonData);
         dispatch(corporationsTreasuryOpenAction(parsedData));
+      }
+    }
+    // @ts-ignore
+    if(!window.corporations_openLogs) {
+      // @ts-ignore
+      window.corporations_openLogs = (jsonData: string) => {
+        const parsedData: LogsInitialStateInterface = corporations_openLogs(jsonData);
+        dispatch(corporationsLogsOpenAction(parsedData));
+      }
+    }
+    // @ts-ignore
+    if(!window.corporations_logs_openPage) {
+      // @ts-ignore
+      window.corporations_logs_openPage = (jsonData: string) => {
+        const parsedData: LogsInitialStateInterface = corporations_logs_openPage(jsonData);
+        dispatch(corporationsLogsOpenPageAction(parsedData));
       }
     }
   }, []);

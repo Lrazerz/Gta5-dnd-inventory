@@ -63,10 +63,12 @@ const RolesListContent: React.FC<Props> = React.memo((Props) => {
     fontSize: '0.8rem',
     lineHeight: '0.9rem',
     whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
     color: corporationsTheme.text_gray,
   }
 
-  const rolesListJSX: ReactElement[] = Props.roles.map(role => {
+  const rolesListJSX: ReactElement[] = Props.roles.map((role, i) => {
     const isSelectedRole = Props.selectedRole && role.title === Props.selectedRole.title;
     // to not change global value
     const localRoleStyles: CSSProperties = {...singleRoleStyles};
@@ -83,12 +85,12 @@ const RolesListContent: React.FC<Props> = React.memo((Props) => {
     <div key={role.title} style={{width: '100%'}} onClick={() => selectRoleHandler(role)}>
       <div style={localRoleStyles} className={classes.SingleRole}>
         {isSelectedRole && <LeftVerticalLine/>}
-        <div className={classes.CirclesWrapper} >
+        <div className={classes.CirclesWrapper}>
           <SixCircles color={circlesColor}/>
         </div>
         <div className={classes.RoleTitleWrapper}>
           <CorporationsText styles={localTitleStyles}>
-            {role.title}
+            {(i+1).toString() + '. ' + role.title}
           </CorporationsText>
         </div>
         {/*<img className={classes.AddNewRoleImageWrapper} src={newRoleImg}/>*/}

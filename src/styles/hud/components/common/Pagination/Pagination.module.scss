@@ -1,0 +1,41 @@
+@use '../../../../../hud/components/Corporations/consts/corporationsTheme';
+
+.Pagination {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+
+  .SingleButtonWrapper {
+    margin-left: 1.75%;
+    height: 100%;
+    width: 9.55%;
+    //background-color: green;
+
+    &:first-of-type {
+      margin-left: 0;
+    }
+
+    // for all buttons except ellipsis
+    .SingleButton {
+      width: 100%;
+      height: 100%;
+      border-radius: 0.2941rem;
+      background-color: corporationsTheme.$border_brightGray;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      &:hover {
+        filter: contrast(70%);
+      }
+    }
+
+    .EllipsisButton {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+}

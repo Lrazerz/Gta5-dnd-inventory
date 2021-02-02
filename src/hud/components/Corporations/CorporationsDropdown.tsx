@@ -8,6 +8,9 @@ interface Props {
   selectedItem: string;
   list: string[];
   onSelect: any;
+  styles?: CSSProperties;
+  // if disabled - can't be opened
+  isDisabled?: boolean;
 }
 
 const CorporationsDropdown: React.FC<Props> = (Props) => {
@@ -29,6 +32,9 @@ const CorporationsDropdown: React.FC<Props> = (Props) => {
   }, [containerRef.current, isOpened])
 
   const openDropdownHandler = () => {
+    if(Props.isDisabled) {
+      return;
+    }
     setIsOpened(true);
   }
 
@@ -36,6 +42,11 @@ const CorporationsDropdown: React.FC<Props> = (Props) => {
     fontSize: '0.7058rem',
     lineHeight: '0.8824rem',
     color: corporationsTheme.bg_orange_picked2,
+  }
+
+  const pickedItemClickHandler = (e) => {
+    e.stopPropagation();
+    setIsOpened(false);
   }
 
   const pickItemHandler = (listItem: string, e: any) => {
@@ -75,12 +86,12 @@ const CorporationsDropdown: React.FC<Props> = (Props) => {
   }));
 
   return (
-    <div className={classes.SelectedItem} ref={containerRef} onClick={openDropdownHandler}>
+    <div style={Props.styles} className={classes.SelectedItem} ref={containerRef} onClick={openDropdownHandler}>
       <CorporationsText styles={selectedTextStyles}>
         {Props.selectedItem}
       </CorporationsText>
       { isOpened && (<div className={classes.CorporationsDropdown}>
-        <div className={classes.ListItemWrapper}>
+        <div className={classes.ListItemWrapper} onClick={pickedItemClickHandler}>
           <CorporationsText styles={pickedItemTextStyles}>
             {Props.selectedItem}
           </CorporationsText>

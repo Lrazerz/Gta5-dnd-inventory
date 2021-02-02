@@ -1,0 +1,56 @@
+corporations_openLogs(JSON)
+
+JSON: '{
+	"CurrentPage": number,
+	"PagesCount": number, // кол-во всех страничек
+	"Logs": [
+		{
+			"Executor": string, // "DigitalNox Design"
+			"Action": string, // "создаёт"
+			"Type": string, // "новую роль"
+			"Description": string, // "Администратор"
+		}
+	]
+}'
+
+
+// поиск
+mp.trigger('cef_cl_corporations_logs_setFilter', JSON);
+
+JSON: '{
+	OpenedTab: "Логи",
+	SearchBy: "ExecutorName" | "Action" | "Type" | "Description",
+	searchText: string
+}'
+
+
+mp.trigger('cef_cl_corporations_logs_changePage', JSON);
+
+JSON: '{
+	OpenedTab: CorporationsTabsDict.logs,
+	PageNumber: pageNumber,
+	LastLog: {
+		Executor: string, // "DigitalNox Design"
+		Action: string, // "создаёт"
+		Type: string, // "новую роль"
+		Description: string // "Администратор"
+	}
+}'
+
+
+// такие же параметры как в openLogs, но здесь я проверяю CurrentPage на соответствие текущей открытой странице на экране
+
+corporations_logs_openPage(JSON)
+
+JSON: '{
+	"CurrentPage": number,
+	"PagesCount": number, // кол-во всех страничек
+	"Logs": [
+		{
+			"Executor": string, // "DigitalNox Design"
+			"Action": string, // "создаёт"
+			"Type": string, // "новую роль"
+			"Description": string, // "Администратор"
+		}
+	]
+}'

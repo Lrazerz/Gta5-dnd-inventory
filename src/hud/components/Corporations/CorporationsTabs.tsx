@@ -3,6 +3,7 @@ import classes from '../../../styles/hud/components/Corporations/CorporationsTab
 import {CorporationsTabsEnum} from "../../models/corporations/enums";
 import CorporationsHeader from "./CorporationsHeader";
 import TreasuryTab from "./TreasuryTab/TreasuryTab";
+import LogsTab from "./LogsTab/LogsTab";
 
 interface Props {
   dimensions: {
@@ -46,7 +47,7 @@ const CorporationsTabs: React.FC<Props> = React.memo((Props) => {
       break;
     }
     case CorporationsTabsEnum.logs: {
-      tabBlock = <></>;
+      tabBlock = <LogsTab />;
       break;
     }
     case CorporationsTabsEnum.tasks: {

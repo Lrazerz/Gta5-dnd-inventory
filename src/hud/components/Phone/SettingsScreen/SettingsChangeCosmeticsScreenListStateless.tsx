@@ -92,7 +92,6 @@ const SettingsChangeCosmeticsScreenListStateless: React.FC<Props> = (
       </div>
       <div className={classes.HorizontalLine} style={horizontalLineStyles}/>
       <div style={singleSettingStyles} className={classes.ThemeImageSetting} onClick={onOpenDropDown}>
-
         <div style={blurScreenStyles}/>
         <div className={classes.SettingImageWrapper}>
           <img className={classes.Image} src={themeImageImg}/>
