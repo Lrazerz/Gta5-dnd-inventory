@@ -1,0 +1,13 @@
+.OpenCloseArrowButton {
+  width: 100%;
+  height: 100%;
+  background-color: #D7D9DF;
+}
+
+.Open {
+  clip-path: polygon(0% 12.5%, 14.28% 0%, 50% 62.5%, 85.72% 0%, 100% 12.5%, 50% 100%, 0% 12.5%);
+}
+
+.Close {
+  clip-path: polygon(0% 87.5%, 50% 0%, 100% 87.5%, 85.72% 100%, 50% 37.5%, 14.28% 100%, 0% 12.5%);
+}

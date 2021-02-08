@@ -16,6 +16,16 @@ const tasksArchiveTasksOpenAction = (archiveTasksData: TasksArchiveTasksInitialS
   return {type: TASKS_ARCHIVE_TASKS_OPEN, archiveTasksData}
 }
 
+const tasksArchiveTasksOpenPageAction = (archiveTasksData: TasksArchiveTasksInitialStateInterface) => {
+  return (dispatch, getState) => {
+    const currentPage = getState().hud.corporations.tabs.tasks.tabs.archive.currentPage;
+    if(currentPage !== archiveTasksData.currentPage) {
+      return;
+    }
+    dispatch({type: TASKS_ARCHIVE_TASKS_OPEN, archiveTasksData});
+  }
+}
+
 const tasksArchiveTasksChangePageAction = (pageNumber: number, lastTask: TasksDoneTaskInterface) => {
   return dispatch => {
     dispatch({type: TASKS_ARCHIVE_TASKS_CHANGE_PAGE, pageNumber});
@@ -32,6 +42,7 @@ const tasksArchiveTasksRemoveTaskAction = (taskId: string) => {
 
 export {
   tasksArchiveTasksOpenAction,
-  // tasksNewTaskAddTaskAction,
-  // tasksNewTaskGoBackAction
+  tasksArchiveTasksOpenPageAction,
+  tasksArchiveTasksChangePageAction,
+  tasksArchiveTasksRemoveTaskAction
 }

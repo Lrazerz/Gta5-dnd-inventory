@@ -1,31 +1,40 @@
 import React, {CSSProperties} from 'react';
 import classes from '../../../styles/hud/components/Corporations/CorporationsButton.module.scss';
-import newRoleImg from '../../../assets/hud/images/components/Corporations/newRole.svg';
 import CorporationsText from "./CorporationsText";
 
 interface Props {
   onClick: () => any;
   title: string;
-  styles?: CSSProperties;
   imageUrl: string;
+  styles?: CSSProperties;
+  imageWidth?: string;
+  titleTextStyles?: CSSProperties;
 }
 
 const CorporationsButton: React.FC<Props> =
-  ({onClick, title, styles, imageUrl}) => {
+  ({onClick, title, styles, imageUrl, imageWidth, titleTextStyles}) => {
 
-  const titleTextStyles: CSSProperties = {
+  const titleTextStylesLocal: CSSProperties = {
     lineHeight: '0.95rem',
     fontSize: '0.8rem',
-    whiteSpace: 'nowrap'
+    whiteSpace: 'nowrap',
+    marginLeft: '9.33%'
+  }
+
+  const imageStyles: CSSProperties = {
+    width: imageWidth || '15%',
+    paddingBottom: imageWidth || '15%',
+    backgroundImage: `url(${imageUrl})`,
+    backgroundSize: 'contain',
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat'
   }
 
   return (
     <div style={styles} className={classes.CorporationsButton} onClick={onClick}>
-      <div className={classes.ImageWrapper}>
-        <img src={newRoleImg} className={classes.Image} width="100%" height="100%"/>
-      </div>
+        <div style={imageStyles} />
       <div className={classes.TitleTextWrapper}>
-        <CorporationsText styles={titleTextStyles}>
+        <CorporationsText styles={{...titleTextStylesLocal, ...titleTextStyles}}>
           {title}
         </CorporationsText>
       </div>

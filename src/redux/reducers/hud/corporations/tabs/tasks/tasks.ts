@@ -14,5 +14,8 @@ export default (state = initialState, action) => {
         openedTab: action.tab
       }
     }
+    default: {
+      return state;
+    }
   }
 }

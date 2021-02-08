@@ -4,6 +4,7 @@ import {CorporationsTabsEnum} from "../../models/corporations/enums";
 import CorporationsHeader from "./CorporationsHeader";
 import TreasuryTab from "./TreasuryTab/TreasuryTab";
 import LogsTab from "./LogsTab/LogsTab";
+import TasksTab from "./TasksTab/TasksTab";
 
 interface Props {
   dimensions: {
@@ -51,7 +52,7 @@ const CorporationsTabs: React.FC<Props> = React.memo((Props) => {
       break;
     }
     case CorporationsTabsEnum.tasks: {
-      tabBlock = <></>;
+      tabBlock = <TasksTab />;
       break;
     }
     default: {

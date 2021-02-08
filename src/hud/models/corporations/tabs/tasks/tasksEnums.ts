@@ -27,6 +27,7 @@ export {
   CorporationsTasksTabsEnumEng,
   CorporationsTasksTabsEnumRus,
 
+  CorporationsTasksTabsDict,
   // to server
   translateTasksTabToServer
 }

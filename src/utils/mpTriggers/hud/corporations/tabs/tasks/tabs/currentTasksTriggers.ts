@@ -5,6 +5,7 @@ import {
 } from "../../../../../../../hud/models/corporations/tabs/tasks/tasksEnums";
 import {TasksSingleTaskInterface} from "../../../../../../../hud/models/corporations/tabs/tasks/tabs/currentTasksInterfaces";
 import {translateTasksExecutorTypeToServer} from "../../../../../../../hud/models/corporations/tabs/tasks/tabs/currentTasksEnums";
+import {transformDateFromObject} from "../../../../../../common/date";
 
 
 const mpTrigger_tasks_currentTasks_changePage = (pageNumber: number, lastTask: TasksSingleTaskInterface) => {
@@ -18,6 +19,7 @@ const mpTrigger_tasks_currentTasks_changePage = (pageNumber: number, lastTask: T
       LastTask: {
         "Id": lastTask.id,
         "Title": lastTask.title,
+        "Date": transformDateFromObject(lastTask.date),
         "Sum": lastTask.sum,
         "ExecutorType": translateTasksExecutorTypeToServer(lastTask.executorType),
         "Executor": lastTask.executor,
@@ -32,7 +34,7 @@ const mpTrigger_tasks_currentTasks_changePage = (pageNumber: number, lastTask: T
 
 const mpTrigger_tasks_currentTasks_completeTask = (taskId: string, isSuccessful: boolean) => {
   console.log('cef_cl_tasks_currentTasks_completeTask', CorporationsTabsDict.tasks,
-    translateTasksTabToServer(CorporationsTasksTabsEnumEng.currentTasks), taskId);
+    translateTasksTabToServer(CorporationsTasksTabsEnumEng.currentTasks), taskId, isSuccessful);
   try {
     const data = JSON.stringify({
       OpenedTab: CorporationsTabsDict.tasks,

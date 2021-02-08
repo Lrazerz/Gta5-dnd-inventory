@@ -1,0 +1,33 @@
+@use '../../../../../../hud/components/Corporations/consts/corporationsTheme';
+
+.TasksList {
+  width: 100%;
+  height: 100%;
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    position: absolute;
+    width: 0.941rem;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    box-shadow: inset 0 0 0 0.2rem corporationsTheme.$scrollbar_brightGrey;
+    border: solid 0.3529412rem transparent;
+    background-color: transparent;
+  }
+
+  .SingleTaskWrapper {
+    //height: 9.59%;
+    //width: 100%;
+    margin-top: 0.31%;
+
+    &:first-of-type {
+      margin-top: 0;
+    }
+  }
+}

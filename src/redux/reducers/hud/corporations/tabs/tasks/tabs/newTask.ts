@@ -28,5 +28,8 @@ export default (state = initialState, action) => {
         ...action.newTaskData
       }
     }
+    default: {
+      return state;
+    }
   }
 }

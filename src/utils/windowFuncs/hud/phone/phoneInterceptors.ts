@@ -21,18 +21,7 @@ import {
   setSelectedChat,
   setSettings
 } from "../../../../redux/actions/hud/phone";
-
-let _transformDataFromString: (string) => DateObjectInterface;
-_transformDataFromString = (dateString) => {
-  const dateArr = dateString.match(/\d+/g);
-  return {
-    minutes: dateArr[4],
-    hours: dateArr[3],
-    day: dateArr[0],
-    month: dateArr[1],
-    year: dateArr[2],
-  }
-}
+import {transformDateFromString} from "../../../common/date";
 
 // lastmessages as params
 const openPhone = (jsonData) => {
@@ -42,7 +31,7 @@ const openPhone = (jsonData) => {
     id: shortId.generate(),
     name: lastMessage.Name,
     imageName: lastMessage.ImageName,
-    date: _transformDataFromString(lastMessage.Date),
+    date: transformDateFromString(lastMessage.Date),
     message: lastMessage.Message,
   }));
 
@@ -72,7 +61,7 @@ const phone_openLastMessages = (jsonData) => {
     id: shortId.generate(),
     name: lastMessage.Name,
     imageName: lastMessage.ImageName,
-    date: _transformDataFromString(lastMessage.Date),
+    date: transformDateFromString(lastMessage.Date),
     message: lastMessage.Message,
   }));
   // @ts-ignore
@@ -147,7 +136,7 @@ const phone_openCalls = (jsonData) => {
       name: call.Name,
       imageName: call.ImageName,
       status: call.Status,
-      date: _transformDataFromString(call.Date),
+      date: transformDateFromString(call.Date),
       phoneNumber: call.PhoneNumber,
     }
   });
@@ -182,7 +171,7 @@ const phone_openChats = (jsonData) => {
       // count
       unreadMessages: call.UnreadMessages,
       lastMessage: call.LastMessage,
-      lastMessageDate: _transformDataFromString(call.LastMessageDate),
+      lastMessageDate: transformDateFromString(call.LastMessageDate),
     }
   });
 
@@ -201,7 +190,7 @@ const phone_openSingleChat = (jsonData) => {
     return {
       id: shortId.generate(),
       direction: incomingMessage.Direction,
-      date: _transformDataFromString(incomingMessage.Date),
+      date: transformDateFromString(incomingMessage.Date),
       message: incomingMessage.Message,
     };
   });

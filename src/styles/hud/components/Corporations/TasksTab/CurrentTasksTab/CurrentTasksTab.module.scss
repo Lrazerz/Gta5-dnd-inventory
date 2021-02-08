@@ -1,0 +1,66 @@
+.TasksTabWrapper {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 3.9% 0 4% 0;
+
+  .TasksTab {
+    height: 100%;
+    width: 70.4%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    //background-color: yellowgreen;
+
+    .TitleAndSearchWrapper {
+      width: 100%;
+      min-height: 3.9%;
+      max-height: 3.9%;
+    }
+
+    .ActionButtonsContainer {
+      margin-top: 3.46%;
+      width: 100%;
+      min-height: 5.26%;
+      max-height: 5.26%;
+      display: flex;
+      align-items: center;
+      //background-color: red;
+
+      .ActionButton {
+        height: 100%;
+        width: 17.73%;
+        margin-left: 2.1%;
+
+        &:first-of-type {
+          margin-left: 0;
+        }
+      }
+    }
+
+    .TasksListContainer {
+      margin-top: 2.52%;
+      width: 100%;
+      min-height: 84.86%;
+      max-height: 84.86%;
+
+      .TasksListWrapper {
+        height: 92.33%;
+        width: 100%;
+      }
+
+      .PaginationContainer {
+        width: 100%;
+        height: 7.67%;
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+
+        .PaginationWrapper {
+          width: 49.9%;
+          height: 70%;
+        }
+      }
+    }
+  }
+}

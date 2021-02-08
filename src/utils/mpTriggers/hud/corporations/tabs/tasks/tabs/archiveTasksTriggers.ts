@@ -5,10 +5,11 @@ import {
   translateTasksTabToServer
 } from "../../../../../../../hud/models/corporations/tabs/tasks/tasksEnums";
 import {translateTasksExecutorTypeToServer} from "../../../../../../../hud/models/corporations/tabs/tasks/tabs/currentTasksEnums";
+import {transformDateFromObject} from "../../../../../../common/date";
 
 const mpTrigger_tasks_archiveTasks_changePage = (pageNumber: number, lastTask: TasksDoneTaskInterface) => {
   console.log('cef_cl_tasks_archiveTasks_changePage', CorporationsTabsDict.tasks,
-    translateTasksTabToServer(CorporationsTasksTabsEnumEng.currentTasks), pageNumber, lastTask);
+    translateTasksTabToServer(CorporationsTasksTabsEnumEng.archiveTasks), pageNumber, lastTask);
   try {
     const data = JSON.stringify({
       OpenedTab: CorporationsTabsDict.tasks,
@@ -17,7 +18,8 @@ const mpTrigger_tasks_archiveTasks_changePage = (pageNumber: number, lastTask: T
       LastTask: {
         Id: lastTask.id,
         Title: lastTask.title,
-        Sum: lastTask,
+        Date: transformDateFromObject(lastTask.date),
+        Sum: lastTask.sum,
         ExecutorType: translateTasksExecutorTypeToServer(lastTask.executorType),
         Executor: lastTask.executor,
         Description: lastTask.description,

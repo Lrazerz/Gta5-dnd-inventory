@@ -1,10 +1,12 @@
 // new task without appointer, isDone
 import {TasksExecutorTypeEnum} from "./currentTasksEnums";
+import {DateObjectInterface} from "../../../../phone/reducerInterfaces";
 
 // current or done task
 interface TasksSingleTaskInterface {
   id: string;
   title: string;
+  date: DateObjectInterface;
   sum: number;
   executorType: TasksExecutorTypeEnum;
   executor: string;

@@ -17,6 +17,12 @@ import {
   corporations_openLogs
 } from "../../../utils/windowFuncs/hud/Corporations/tabs/logs/logsInterceptors";
 import {LogsInitialStateInterface} from "../../models/corporations/tabs/logs/logsInterfaces";
+import {window_corporations_tasks_openCurrentTasks} from "../../../utils/windowFuncs/hud/Corporations/tabs/tasks/tabs/currentTasksInterceptors";
+import {TasksCurrentTasksInitialStateInterface} from "../../models/corporations/tabs/tasks/tabs/currentTasksInterfaces";
+import {tasksCurrentTasksOpenAction} from "../../../redux/actions/hud/corporations/tabs/tasks/tabs/currentTasks";
+import {tasksArchiveTasksOpenAction} from "../../../redux/actions/hud/corporations/tabs/tasks/tabs/archiveTasks";
+import {TasksArchiveTasksInitialStateInterface} from "../../models/corporations/tabs/tasks/tabs/archiveTasksInterfaces";
+import {window_corporations_tasks_OpenArchiveTasks} from "../../../utils/windowFuncs/hud/Corporations/tabs/tasks/tabs/archiveTasksInterceptors";
 
 export interface CorporationsDimensionsInterface {
   width: number;
@@ -111,12 +117,22 @@ const Corporations = React.memo(() => {
       }
     }
     // @ts-ignore
-    if(!window.corporations_logs_openPage) {
+    if(!window.corporations_tasks_openCurrentTasks) {
       // @ts-ignore
-      window.corporations_logs_openPage = (jsonData: string) => {
-        const parsedData: LogsInitialStateInterface = corporations_logs_openPage(jsonData);
-        dispatch(corporationsLogsOpenPageAction(parsedData));
+      window.corporations_tasks_openCurrentTasks = (jsonData: string) => {
+        const parsedData: TasksCurrentTasksInitialStateInterface = window_corporations_tasks_openCurrentTasks(jsonData);
+        dispatch(tasksCurrentTasksOpenAction(parsedData));
       }
+    }
+    return () => {
+      // @ts-ignore
+      window.corporations_openPermissions = null;
+      // @ts-ignore
+      window.corporations_openTreasury = null;
+      // @ts-ignore
+      window.corporations_openLogs = null;
+      // @ts-ignore
+      window.corporations_tasks_openCurrentTasks = null;
     }
   }, []);
 

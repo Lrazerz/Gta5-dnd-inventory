@@ -17,6 +17,16 @@ const tasksCurrentTasksOpenAction = (currentTasksData: TasksCurrentTasksInitialS
   return {type: TASKS_CURRENT_TASKS_OPEN, currentTasksData}
 }
 
+const tasksCurrentTasksOpenPageAction = (currentTasksData: TasksCurrentTasksInitialStateInterface) => {
+  return (dispatch, getState) => {
+    const currentPage = getState().hud.corporations.tabs.tasks.tabs.current.currentPage;
+    if(currentPage !== currentTasksData.currentPage) {
+      return;
+    }
+    dispatch({type: TASKS_CURRENT_TASKS_OPEN, currentTasksData});
+  }
+}
+
 const tasksCurrentTasksChangePageAction = (pageNumber: number, lastTask: TasksSingleTaskInterface) => {
   return dispatch => {
     dispatch({type: TASKS_CURRENT_TASKS_CHANGE_PAGE, pageNumber});
@@ -44,6 +54,7 @@ const tasksCurrentTasksRemoveAction = (taskId) => {
 
 export {
   tasksCurrentTasksOpenAction,
+  tasksCurrentTasksOpenPageAction,
   tasksCurrentTasksChangePageAction,
   tasksCurrentTasksCompleteAction,
   tasksCurrentTasksRemoveAction

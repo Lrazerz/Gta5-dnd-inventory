@@ -6,6 +6,8 @@ import {
 } from "../../../../../../actions/hud/corporations/tabs/tasks/tabs/currentTasksTypes";
 import {CORPORATIONS_TASKS_OPEN_TAB} from "../../../../../../actions/hud/corporations/tabs/tasks/tasksTypes";
 import {CorporationsTasksTabsEnumEng} from "../../../../../../../hud/models/corporations/tabs/tasks/tasksEnums";
+import {CORPORATIONS_TAB_OPEN} from "../../../../../../actions/hud/corporations/corporationsTypes";
+import {CorporationsTabsEnum} from "../../../../../../../hud/models/corporations/enums";
 
 const initialState: TasksCurrentTasksInitialStateInterface = {
   tasks: [],
@@ -16,6 +18,14 @@ const initialState: TasksCurrentTasksInitialStateInterface = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case CORPORATIONS_TAB_OPEN: {
+      if(action.openedTab === CorporationsTabsEnum.tasks) {
+        return {
+          ...initialState,
+          isLoading: true
+        }
+      }
+    }
     case CORPORATIONS_TASKS_OPEN_TAB: {
       if(action.tab === CorporationsTasksTabsEnumEng.currentTasks) {
         return {
