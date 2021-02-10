@@ -7,12 +7,13 @@ JSON: '{
 		{
 	      "Id": string,
 	      "Title": string,
+	      "Date": string, // 25.08.2021@14:16
 	      "Sum": number,
 	      "ExecutorType": "Nickname" | "Role",
 	      "Executor": string,
 	      "Description": string,
 	      "Appointer": string,
-	      "IsSuccessful": boolean
+	      "IsSuccessful": boolean,
 	    }
     ]
 }'
@@ -25,9 +26,10 @@ JSON: '{
 	"OpenedSubTab": "Архив задач",
 	"PageNumber": number,
 	"LastTask": {
-		"Id": lastTask.id,
-		"Title": lastTask.title,
-		"Sum": lastTask,
+		"Id": string,
+		"Title": string,
+	    "Date": string, // 25.08.2021@14:16
+		"Sum": number,
 		"ExecutorType": "Nickname" | "Role",
 		"Executor": string,
 		"Description": string,
@@ -47,6 +49,7 @@ JSON: '{
 		{
 	      "Id": string,
 	      "Title": string,
+	      "Date": string, // 25.08.2021@14:16
 	      "Sum": number,
 	      "ExecutorType": "Nickname" | "Role",
 	      "Executor": string,

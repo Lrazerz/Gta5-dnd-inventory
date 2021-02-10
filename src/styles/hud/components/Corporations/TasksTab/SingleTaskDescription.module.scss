@@ -41,6 +41,10 @@
         justify-content: flex-start;
         align-items: center;
 
+        &:hover {
+          filter: contrast(130%);
+        }
+
         .OpenCloseArrowButtonContainer {
           width: 12.18%;
           height: 35.56%;

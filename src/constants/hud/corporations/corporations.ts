@@ -7,8 +7,17 @@ const commonTitleRegexWithoutLength = `^(\\w|_|[а-я]|[А-Я])*$`;
 
 const commonTitleRegexWithSpaces = `^(\\w|_|[а-я]|[А-Я]|\\s)*$`;
 
+enum CorporationsTooltipTypeEnum {
+  success,
+  neutral,
+  warning,
+  error
+}
+
 export {
   getCommonTitleRegex,
   commonTitleRegexWithoutLength,
-  commonTitleRegexWithSpaces
+  commonTitleRegexWithSpaces,
+
+  CorporationsTooltipTypeEnum
 }

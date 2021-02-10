@@ -26,7 +26,7 @@ const RolesList = React.memo(() => {
 
   useEffect(() => {
     if(searchText.length > 0) {
-      setFilteredRoles(roles.filter(role => role.title.toLowerCase().includes(searchText.toLowerCase())));
+      setFilteredRoles(roles.filter(role => role.title.trim().toLowerCase().includes(searchText.trim().toLowerCase())));
     } else {
       setFilteredRoles(roles);
     }

@@ -26,6 +26,15 @@
       .TaskTitleWrapper {
         width: 47.12%;
         height: 100%;
+        position: relative;
+
+        .RoleSumTooltipWrapper {
+          position: absolute;
+          height: 60%;
+          width: 100%;
+          top: 100%;
+          left: 0;
+        }
       }
     }
 

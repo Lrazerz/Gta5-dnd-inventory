@@ -80,13 +80,21 @@ const SingleTask: React.FC<Props> = React.memo((Props) => {
     ...commonTextStyles,
     fontWeight: 700,
     color: '#696F7F',
-    marginLeft: '3.46%'
+    marginLeft: '3.46%',
+    whiteSpace: 'nowrap',
+    maxWidth: '13%',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis'
   }
 
   const titleTextStyles: CSSProperties = {
     ...commonTextStyles,
     fontWeight: 700,
-    color: '#fff'
+    color: '#fff',
+    whiteSpace: 'nowrap',
+    maxWidth: '100%',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis'
   }
 
   const dateTextStyles: CSSProperties = {
@@ -97,7 +105,7 @@ const SingleTask: React.FC<Props> = React.memo((Props) => {
   const appointerDefinitionTextStyles: CSSProperties = {
     ...commonTextStyles,
     color: '#7A8192',
-    marginLeft: '4.83%'
+    marginLeft: '4.83%',
   }
 
   const executorDefinitionTextStyles: CSSProperties = {
@@ -107,10 +115,18 @@ const SingleTask: React.FC<Props> = React.memo((Props) => {
 
   const appointerTextStyles: CSSProperties = {
     ...commonTextStyles,
+    whiteSpace: 'nowrap',
+    maxWidth: '19%',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis'
   }
 
   const executorTextStyles: CSSProperties = {
     ...commonTextStyles,
+    whiteSpace: 'nowrap',
+    maxWidth: '19%',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis'
   }
 
   // only when isArchive
@@ -169,7 +185,9 @@ const SingleTask: React.FC<Props> = React.memo((Props) => {
           </div>
           {
             isDescriptionOpened && (
-              <div style={removeTaskButtonStyles} onClick={removeTaskHandler}/>
+              <div className={classes.RemoveButton}>
+                <div style={removeTaskButtonStyles} onClick={removeTaskHandler}/>
+              </div>
             )
           }
         </div>

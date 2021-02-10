@@ -5,7 +5,7 @@ JSON: '{
 		{
 			"Id": string,
 			"Title": string, // "Угон машин"
-			"Date": string // "25.08.2021@14:16"
+			"Date": string, // "25.08.2021@14:16"
 			"Sum": number, // 800
 			"ExecutorType": "Nickname" | "Role",
 			"Executor": string, // "Moderator"
@@ -26,6 +26,7 @@ JSON: '{
   "LastTask": {
 		"Id": string,
 		"Title": string, // "Угон машин"
+		"Date": string, // "25.08.2021@14:16"
 		"Sum": number, // 800
 		"ExecutorType": "Nickname" | "Role",
 		"Executor": string // "Moderator"
@@ -43,6 +44,7 @@ JSON: '{
 		{
 			"Id": string,
 			"Title": string, // "Угон машин"
+			"Date": string, // "25.08.2021@14:16"
 			"Sum": number, // 800
 			"ExecutorType": "Nickname" | "Role",
 			"Executor": string // "Moderator"

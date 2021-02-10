@@ -106,12 +106,17 @@ const initialState: initialStateInterface = {
 const reactReducer = (state, action) => {
   switch (action.type) {
     case CHANGE_VALUE: {
+      let newDropdownState = state.isDropDownOpened;
+      if(action.field === StateFieldsEnum.executor) {
+        newDropdownState = true;
+      }
       return {
         ...state,
         inputValues: {
           ...state.inputValues,
           [action.field]: action.value
-        }
+        },
+        isExecutorsDropdownOpened: newDropdownState
       }
     }
     case CHANGE_IS_VALID: {
@@ -182,12 +187,11 @@ const NewTaskTab: React.FC<Props> = React.memo(() => {
 
   useEffect(() => {
     if(reactState.inputValues[StateFieldsEnum.executor] === '') {
-      reactDispatch(changeExecutorDropdownIsOpened(true));
       setFilteredPotentialExecutors(potentialExecutors);
     } else {
       setFilteredPotentialExecutors(potentialExecutors.filter(executor =>
-        executor.executor.toLowerCase()
-          .includes(reactState.inputValues[StateFieldsEnum.executor].toLowerCase())));
+        executor.executor.trim().toLowerCase()
+          .includes(reactState.inputValues[StateFieldsEnum.executor].trim().toLowerCase())));
     }
   }, [potentialExecutors, reactState.inputValues[StateFieldsEnum.executor]])
 

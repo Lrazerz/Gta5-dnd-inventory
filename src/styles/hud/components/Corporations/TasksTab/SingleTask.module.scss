@@ -1,12 +1,17 @@
+@use '../../../../../constants/hud/corporations/corporationsTheme';
 // with description
 .CurrentTasksSingleTaskWrapper {
   width: 100%;
+  background-color: #323540;
+
+  &:hover {
+    background-color: rgba(50, 53, 64, 0.7);
+  }
 
   .CurrentTasksSingleTask {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #323540;
 
     .TaskRowWrapper {
       width: 94.7%;
@@ -22,6 +27,7 @@
         justify-content: space-between;
         align-items: flex-start;
         height: 2.0588rem;
+        max-width: 25%;
       }
     }
 
@@ -29,6 +35,14 @@
       display: flex;
       justify-content: flex-start;
       align-items: center;
+
+      .RemoveButton {
+        display: inline;
+
+        &:hover {
+          filter: contrast(130%);
+        }
+      }
     }
   }
 

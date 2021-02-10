@@ -26,7 +26,7 @@ corporationsOpenPermissionsTab = (jsonData) => {
   const roles: SingleRoleInterface[] = Roles.map(role => ({title: role.Title}));
 
   // find selected role id
-  const selectedRole = roles.find(role => role.title.toLowerCase() === SelectedRoleInfo.Title.toLowerCase());
+  const selectedRole = roles.find(role => role.title.trim().toLowerCase() === SelectedRoleInfo.Title.trim().toLowerCase());
   if(!selectedRole) {
     console.warn('[forb] Selected role name doesnt exists in the roles list');
   }
@@ -133,9 +133,6 @@ corporationsPermissionsOpenAutoTab = (autoData) => {
   const parsedAutoData: AcceptedAutoModelDataInterface = JSON.parse(autoData);
 
   const models = parsedAutoData.Models.map(model => ({title: model.Title}));
-
-  const selectedModel = models.find(
-    model => model.title.toLowerCase() === parsedAutoData.SelectedModelInfo.Title.toLowerCase());
 
   const selectedModelInfo = {
     title: parsedAutoData.SelectedModelInfo.Title,

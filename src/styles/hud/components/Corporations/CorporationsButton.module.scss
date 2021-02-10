@@ -10,4 +10,7 @@
   border-radius: 3rem;
   background-color: rgba(corporationsTheme.$text_white, 0.05);
 
+  &:hover {
+    background-color: rgba(corporationsTheme.$text_white, 0.1);
+  }
 }

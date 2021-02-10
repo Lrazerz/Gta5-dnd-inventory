@@ -33,7 +33,7 @@ const CommonPermissionsList: React.FC<Props> = React.memo(() => {
       const resultFilteredSets = [];
 
       for (let i = 0; i < permissionsSets.length; i++) {
-        if (permissionsSets[i].title.toLowerCase().includes(searchText.toLowerCase())) {
+        if (permissionsSets[i].title.trim().toLowerCase().includes(searchText.trim().toLowerCase())) {
           resultFilteredSets.push(permissionsSets[i]);
         } else {
           for (let j = 0; j < permissionsSets[i].permissions.length; j++) {

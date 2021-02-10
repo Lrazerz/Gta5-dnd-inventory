@@ -32,7 +32,6 @@ const SingleTaskDescription: React.FC<Props> = React.memo((Props) => {
     Props.onComplete(false);
   }
 
-
   const horizontalLineStyles: CSSProperties = {
     backgroundColor: '#424655'
   }

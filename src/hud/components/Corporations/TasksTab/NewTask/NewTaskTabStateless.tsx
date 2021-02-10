@@ -10,6 +10,8 @@ import FieldSetAndLegendTextArea from "../../FieldSetAndLegendTextArea";
 import TreasuryButton from "../../TreasuryTab/TreasuryButton";
 import ExecutorsDropdown from "./ExecutorsDropdown";
 import {TasksPotentialExecutorInterface} from "../../../../models/corporations/tabs/tasks/tabs/newTaskInterfaces";
+import CorporationsTooltip from "../../CorporationsTooltip";
+import {CorporationsTooltipTypeEnum} from "../../../../../constants/hud/corporations/corporations";
 
 interface Props {
   onContainerClick: () => void;
@@ -75,6 +77,14 @@ const NewTaskTabStateless: React.FC<Props> = React.memo((Props) => {
             <FieldSetAndLegendNumber legend={'Сумма'} contentNumber={Props.taskSum}
                                      onChange={Props.onTaskSumChange} placeholder={'Сумма...'}
                                      rightContent={dollarSignBlock}/>
+            {
+              Props.taskExecutorType === TasksExecutorTypeEnum.role &&
+              (
+                <div className={classes.RoleSumTooltipWrapper}>
+                  <CorporationsTooltip type={CorporationsTooltipTypeEnum.neutral} message={'Сумма будет перечислена вам'}/>
+                </div>
+              )
+            }
           </div>
         </div>
         <div className={classes.ExecutorWrapper} onFocus={Props.onTaskExecutorFocus}

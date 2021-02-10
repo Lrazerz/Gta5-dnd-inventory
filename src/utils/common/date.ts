@@ -15,7 +15,7 @@ transformDateFromString = (dateString: string) => {
 
 let transformDateFromObject: (DateObjectInterface) => string;
 transformDateFromObject = (dateObj: DateObjectInterface) => {
-  return `${dateObj.day}.${dateObj.month}.${dateObj.year}.${dateObj.hours}.${dateObj.minutes}`;
+  return `${dateObj.day}.${dateObj.month}.${dateObj.year}@${dateObj.hours}.${dateObj.minutes}`;
 }
 
 export {
