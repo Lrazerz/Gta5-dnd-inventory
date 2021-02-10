@@ -504,7 +504,7 @@ const rotateItemOnBoard = (item, hoveredItemArea) => {
         dispatch(addHoveredItem(newItem, 1));
         mpTriggerRotateBoardItem(newItem);
       } else {
-        console.log('cant rotate');
+        console.warn('[forb] can not rotate');
         dispatch(setAlert("Can't rotate", AlertTypesEnum.warning));
       }
     }
@@ -533,7 +533,7 @@ const rotateItemOnBoard = (item, hoveredItemArea) => {
         dispatch(addHoveredItem(newItem, 2));
         mpTriggerRotateExternalItem(newItem);
       } else {
-        console.log('cant rotate')
+        console.warn('[forb] cant rotate')
       }
     }
     //endregion
@@ -632,7 +632,7 @@ _moveToEquippedItems = (dispatch, getState, draggedItem, draggedItemArea, hovere
         dispatch(addItemBySquares(squares, {...draggedItem, mainCell: newMainCellOnBoard,
           isWeaponEquipped: true}));
       } else {
-        console.log('no space')
+        console.warn('[forb] no space for item')
       }
     }
     //endregion

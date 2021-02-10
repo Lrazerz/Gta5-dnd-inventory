@@ -1,0 +1,6 @@
+mp.trigger('cef_cl_corporations_tasks_openTab', JSON)
+
+JSON: '{
+	"OpenedTab": "Задачи",
+	"OpenedSubTab": "Текущие задачи" | "Новая задача" | "Архив задач"
+}'

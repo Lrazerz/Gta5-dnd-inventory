@@ -4,7 +4,11 @@ import {useSelector, useDispatch} from 'react-redux';
 import {OpenedScreenEnum, PlayerAvatarsArray} from "../../../models/phone/enums";
 import {addNewContactAction, openPrevScreen, openScreen} from "../../../../redux/actions/hud/phone";
 import defaultAvatar from '../../../../assets/avatars/avatar1.svg';
-import {minContactLength} from "../../../../constants/hud/phone/phoneConstants";
+import {
+  minContactLength,
+  phoneLengthWithoutPlus,
+  phoneNumberWithPlusRegex
+} from "../../../../constants/hud/phone/phone";
 import AddNewContactScreenStateless from "./AddNewContactScreenStateless";
 
 export interface ImportedImageInterface {
@@ -78,10 +82,20 @@ const AddNewContactScreen = () => {
 
   const addContactClickHandler = (e) => {
     e.stopPropagation();
-    const numberRegex = /^\+\d+$/;
-    if(!numberRegex.test(phoneText)) return;
-    if(phoneText.length !== 12) return;
-    if(nameText.length < minContactLength) return;
+    if(!phoneNumberWithPlusRegex.test(phoneText)) {
+      console.warn('[forb] phone text does not match regex')
+      return;
+    }
+
+    if(phoneText.length !== (phoneLengthWithoutPlus + 1)) {
+
+      return;
+    }
+
+    if(nameText.length < minContactLength) {
+      console.warn('[forb] name length < min length')
+      return;
+    }
     // get imageName
     dispatch(addNewContactAction({id: '9999', name: nameText, imageName: selectedImage.title, phoneNumber: phoneText}));
     dispatch(openPrevScreen());

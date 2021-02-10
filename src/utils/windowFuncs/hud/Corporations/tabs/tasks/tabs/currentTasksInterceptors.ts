@@ -3,7 +3,7 @@ import {
   TasksExecutorTypeEnumServer,
   translateTasksExecutorTypeFromServer,
 } from "../../../../../../../hud/models/corporations/tabs/tasks/tabs/currentTasksEnums";
-import {currentTasksPageSize} from "../../../../../../../constants/hud/corporations/tabs/tasks";
+import {currentTasksPageSize} from "../../../../../../../constants/hud/corporations/tasks/tasks";
 import {transformDateFromString} from "../../../../../../common/date";
 
 let window_corporations_tasks_openCurrentTasks: (jsonData: string) => TasksCurrentTasksInitialStateInterface;

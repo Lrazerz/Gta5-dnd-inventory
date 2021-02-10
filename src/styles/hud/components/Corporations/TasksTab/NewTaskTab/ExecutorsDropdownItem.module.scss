@@ -1,0 +1,17 @@
+@use '../../../../../../constants/hud/corporations/corporationsTheme';
+
+.ExecutorsDropdownItem {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: #363B49;
+  box-sizing: border-box;
+  //border: 1px solid green;
+  padding-left: 1.45rem;
+
+  &:hover {
+    background-color: rgba(corporationsTheme.$text_white3, 0.15);
+  }
+}

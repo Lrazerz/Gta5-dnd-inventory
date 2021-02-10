@@ -1,0 +1,82 @@
+corporations_tasks_openCurrentTasks(JSON)
+
+JSON: '{
+	"Tasks": [
+		{
+			"Id": string,
+			"Title": string, // "Угон машин"
+			"Date": string // "25.08.2021@14:16"
+			"Sum": number, // 800
+			"ExecutorType": "Nickname" | "Role",
+			"Executor": string, // "Moderator"
+			"Description": string, // "С другой стороны..."
+			"Appointer": string // "Admin"
+		}
+	],
+	"CurrentPage": number,
+	"PagesCount": number
+}'
+
+mp.trigger('cef_cl_tasks_currentTasks_changePage', JSON)
+
+JSON: '{
+  "OpenedTab": "Задачи",
+  "OpenedSubTab": "Текущие задачи",
+  "PageNumber": number,
+  "LastTask": {
+		"Id": string,
+		"Title": string, // "Угон машин"
+		"Sum": number, // 800
+		"ExecutorType": "Nickname" | "Role",
+		"Executor": string // "Moderator"
+		"Description": string, // "С другой стороны..."
+		"Appointer": string // "Admin"
+	}
+}'
+
+
+corporations_tasks_currentTasks_openPage(JSON)
+
+// такой же как и в corporations_tasks_openCurrentTasks
+JSON: '{
+	"Tasks": [
+		{
+			"Id": string,
+			"Title": string, // "Угон машин"
+			"Sum": number, // 800
+			"ExecutorType": "Nickname" | "Role",
+			"Executor": string // "Moderator"
+			"Description": string, // "С другой стороны..."
+			"Appointer": string // "Admin"
+		}
+	],
+	"CurrentPage": number,
+	"PagesCount": number
+}'
+
+
+
+// "Задание выполнено" / "Задание провалено"
+mp.trigger('cef_cl_tasks_currentTasks_completeTask', JSON);
+
+JSON: '{
+  "OpenedTab": "Задачи",
+  "OpenedSubTab": "Текущие задачи",
+  "TaskId": string, // "1"
+  "IsSuccessful": boolean
+}'
+
+
+обновить - corporations_tasks_currentTasks_openPage
+
+
+mp.trigger('cef_cl_tasks_currentTasks_removeTask', JSON);
+
+JSON: '{
+  "OpenedTab": "Задачи",
+  "OpenedSubTab": "Текущие задачи",
+  "TaskId": string, // "1"
+}'
+
+
+обновить - corporations_tasks_currentTasks_openPage

@@ -53,5 +53,6 @@ interface TasksNewTasksInitialStateInterface {
 
 export {
   TasksNewTaskInterface,
+  TasksPotentialExecutorInterface,
   TasksNewTasksInitialStateInterface
 }

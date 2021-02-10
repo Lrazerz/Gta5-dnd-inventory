@@ -8,7 +8,7 @@ import removeRoleImg from '../../../../../assets/hud/images/components/Corporati
 import CorporationsText from "../../CorporationsText";
 import HorizontalLine from "../../HorizontalLine";
 import SixCircles from "../../SixCircles";
-import {corporationsTheme} from "../../consts/corporationsTheme";
+import {corporationsTheme} from "../../../../../constants/hud/corporations/corporationsTheme";
 import LeftVerticalLine from "../../LeftVerticalLine";
 import {SingleRoleInterface} from "../../../../models/corporations/interfaces";
 import {

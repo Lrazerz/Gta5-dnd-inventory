@@ -77,7 +77,6 @@ const RangeComponent: React.FC<Props> = React.memo(({leftOffset, topOffset, cont
   const successButtonMouseDownHandler = event => {
     if (event.button !== 0) return;
     const contextItemWithChangedCount = {...contextItem, currentCount: Number(splittedCount)};
-    // todo last-todo
     dispatch(addDraggedItem(contextItemWithChangedCount, hoveredArea));
 
 

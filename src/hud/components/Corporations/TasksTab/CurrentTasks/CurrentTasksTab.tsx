@@ -32,7 +32,7 @@ const CurrentTasksTab: React.FC<Props> = React.memo(() => {
     useSelector(state => state.hud.corporations.tabs.tasks.tabs.current.tasks);
   const currentPage: number = useSelector(state => state.hud.corporations.tabs.tasks.tabs.current.currentPage);
   const pagesCount: number = useSelector(state => state.hud.corporations.tabs.tasks.tabs.current.pagesCount);
-  const isLoading: number = useSelector(state => state.hud.corporations.tabs.tasks.tabs.current.isLoading);
+  const isLoading: boolean = useSelector(state => state.hud.corporations.tabs.tasks.tabs.current.isLoading);
 
   useEffect(() => {
     // @ts-ignore
@@ -61,7 +61,6 @@ const CurrentTasksTab: React.FC<Props> = React.memo(() => {
     }
     paginationOptions.goToPage(pageNumber);
     dispatch(tasksCurrentTasksChangePageAction(pageNumber, currentTasks[currentTasks.length - 1]));
-    // todo mp trigger
   }
 
   const changeTasksTabHandler = (tab: CorporationsTasksTabsEnumEng) => {

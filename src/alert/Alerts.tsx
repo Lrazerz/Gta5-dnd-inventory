@@ -41,7 +41,6 @@ const Alerts: React.FC<Props> = React.memo(() => {
           }
           const newAlertsIdx = alerts.findIndex(alert => alert.id === alertsWithDisappearing[i].alert.id);
           if(newAlertsIdx === -1) {
-            // console.log('Didnt find (element deprecated)');
             timeOuts.push(setTimeout(() => {
               removeAlertWithDisappearing(alertsWithDisappearing[i].alert.id);
             }, 2000));
@@ -50,7 +49,6 @@ const Alerts: React.FC<Props> = React.memo(() => {
             disappearedElements.push({...alertsWithDisappearing[i], isDisappearing: true});
           }
         }
-        // console.log('disappeared alerts', disappearedElements);
 
         // порядок al от новейших к старешйшим, порядок существующих такой же
         // тоесть сначала добавляем новые, потом существующие и берем первые 3
@@ -77,7 +75,6 @@ const Alerts: React.FC<Props> = React.memo(() => {
 
   const alertsBlock: JSX.Element[] = alertsWithDisappearing.length > 0 && alertsWithDisappearing.map(alertWithDisappearing => {
 
-    // console.log('bfore err', alertWithDisappearing);
     return (
       <div className={classes.SingleAlertWrapper} key={alertWithDisappearing.alert.id}>
         <SingleAlert alert={alertWithDisappearing.alert} isDisappearing={alertWithDisappearing.isDisappearing}/>
@@ -85,7 +82,6 @@ const Alerts: React.FC<Props> = React.memo(() => {
     )
   });
 
-  // console.log('alertsBlock', alertsBlock, alertsWithDisappearing);
   return (
     <div className={classes.Alerts}>
       {alertsBlock}

@@ -11,12 +11,6 @@ interface Props {
 
 const SingleAlert: React.FC<Props> = React.memo((Props) => {
 
-  // console.log('SingleAlert', Props.alert.id, Props.isDisappearing)
-
-  const hideContainerHandler = () => {
-    // setIsContainerVisible(prevState => !prevState);
-  }
-
   // for opacity and properly animations
   const containerStyles: CSSProperties = {
     opacity: Props.isDisappearing ? 0 : 1,
@@ -41,8 +35,7 @@ const SingleAlert: React.FC<Props> = React.memo((Props) => {
 
   return (
     <div style={containerStyles} className={`${classes.SingleAlert} ${alertClassName} 
-    ${Props.isDisappearing ? classes.FadeOut : classes.FadeIn}`}
-         onClick={hideContainerHandler}>
+    ${Props.isDisappearing ? classes.FadeOut : classes.FadeIn}`}>
       <AlertsText>
         {Props.alert.message}
       </AlertsText>

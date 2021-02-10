@@ -35,7 +35,7 @@ const mpTrigger_phone_changeSetting = (settingTitle: string, value: boolean | st
       }
     }
   }
-  console.log('mp trig phone changeSetting', translateOptionToUpper(settingTitle), value);
+  console.log('cef_cl_phone_changeSetting', translateOptionToUpper(settingTitle), value);
   // todo translate to UpperCase first l
   const obj = {SettingTitle: translateOptionToUpper(settingTitle), SettingValue: value};
   try {
@@ -148,7 +148,7 @@ const mpTrigger_phone_changeCurrentCallOption = (optionTitle: string, value: boo
     }
   }
 
-  console.log('mp trig phone changeCurrentCallOption', translateOptionToUpper(optionTitle), value);
+  console.log('cef_cl_phone_changeCurrentCallOption', translateOptionToUpper(optionTitle), value);
   // todo translate to UpperCase first l
   const obj = {OptionTitle: translateOptionToUpper(optionTitle), OptionValue: value};
   try {

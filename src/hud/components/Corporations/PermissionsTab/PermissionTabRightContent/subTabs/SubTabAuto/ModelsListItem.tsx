@@ -3,7 +3,7 @@ import classes
   from '../../../../../../../styles/hud/components/Corporations/PermissionsTab/PermissionTabRightContent/subTabs/SubTabAuto/ModelsListItem.module.scss';
 import CorporationsText from "../../../../CorporationsText";
 import LeftVerticalLine from "../../../../LeftVerticalLine";
-import {corporationsTheme} from "../../../../consts/corporationsTheme";
+import {corporationsTheme} from "../../../../../../../constants/hud/corporations/corporationsTheme";
 
 interface Props {
   title: string;

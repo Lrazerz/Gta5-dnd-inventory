@@ -2,7 +2,7 @@ import React, {CSSProperties, useEffect, useRef, useState} from 'react';
 import classes from '../../../styles/hud/components/Corporations/CorporationsDropdown.module.scss';
 import CorporationsText from "./CorporationsText";
 import HorizontalLine from "./HorizontalLine";
-import {corporationsTheme} from "./consts/corporationsTheme";
+import {corporationsTheme} from "../../../constants/hud/corporations/corporationsTheme";
 
 interface Props {
   selectedItem: string;
@@ -33,6 +33,7 @@ const CorporationsDropdown: React.FC<Props> = (Props) => {
 
   const openDropdownHandler = () => {
     if(Props.isDisabled) {
+      console.warn('[forb] dropdown disabled right now')
       return;
     }
     setIsOpened(true);
@@ -96,7 +97,9 @@ const CorporationsDropdown: React.FC<Props> = (Props) => {
             {Props.selectedItem}
           </CorporationsText>
         </div>
-        {listBlock}
+        <div className={classes.ItemsList}>
+          {listBlock}
+        </div>
       </div>)}
     </div>
   );

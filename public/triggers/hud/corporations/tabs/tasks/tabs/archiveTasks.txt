@@ -1,0 +1,66 @@
+corporations_tasks_openArchiveTasks(JSON)
+
+JSON: '{
+    "CurrentPage": number,
+    "PagesCount": number,
+	"Tasks": [
+		{
+	      "Id": string,
+	      "Title": string,
+	      "Sum": number,
+	      "ExecutorType": "Nickname" | "Role",
+	      "Executor": string,
+	      "Description": string,
+	      "Appointer": string,
+	      "IsSuccessful": boolean
+	    }
+    ]
+}'
+
+
+mp.trigger('cef_cl_tasks_archiveTasks_changePage', JSON);
+
+JSON: '{
+	"OpenedTab": "Задачи",
+	"OpenedSubTab": "Архив задач",
+	"PageNumber": number,
+	"LastTask": {
+		"Id": lastTask.id,
+		"Title": lastTask.title,
+		"Sum": lastTask,
+		"ExecutorType": "Nickname" | "Role",
+		"Executor": string,
+		"Description": string,
+		"Appointer": string,
+		"IsSuccessful": boolean
+	}
+}'
+
+
+// как и в corporations_tasks_openArchiveTasks
+corporations_tasks_archiveTasks_openPage(JSON)
+
+JSON: '{
+    "CurrentPage": number,
+    "PagesCount": number,
+	"Tasks": [
+		{
+	      "Id": string,
+	      "Title": string,
+	      "Sum": number,
+	      "ExecutorType": "Nickname" | "Role",
+	      "Executor": string,
+	      "Description": string,
+	      "Appointer": string,
+	      "IsSuccessful": boolean
+	    }
+    ]
+}'
+
+mp.trigger('cef_cl_tasks_archiveTasks_removeTask', JSON);
+
+JSON: '{
+	"OpenedTab": "Задачи",
+	"OpenedSubTab": "Архив задач",
+	"TaskId": string
+}'

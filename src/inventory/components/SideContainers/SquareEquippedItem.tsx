@@ -65,10 +65,6 @@ const SquareEquippedItem: React.FC<Props> = React.memo(function SquareEquippedIt
     if(event.button !== 0) return;
     dispatch(addDraggedItem({...item}, 3));
 
-    // last-remove
-    // const savedTarget = event.currentTarget;
-    // event.target.style.zIndex = 0;
-
     const newClone = event.currentTarget.cloneNode(true);
     // event.target.style.width = '100%';
     if(item.mainCell === 1 || item.mainCell === 2 || item.mainCell === 3) {

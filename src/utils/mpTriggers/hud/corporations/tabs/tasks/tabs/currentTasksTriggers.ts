@@ -9,8 +9,21 @@ import {transformDateFromObject} from "../../../../../../common/date";
 
 
 const mpTrigger_tasks_currentTasks_changePage = (pageNumber: number, lastTask: TasksSingleTaskInterface) => {
-  console.log('cef_cl_tasks_currentTasks_changePage', CorporationsTabsDict.tasks,
-    translateTasksTabToServer(CorporationsTasksTabsEnumEng.currentTasks), pageNumber, lastTask);
+  console.log('cef_cl_tasks_currentTasks_changePage', {
+    OpenedTab: CorporationsTabsDict.tasks,
+    OpenedSubTab: translateTasksTabToServer(CorporationsTasksTabsEnumEng.currentTasks),
+    PageNumber: pageNumber,
+    LastTask: {
+      "Id": lastTask.id,
+      "Title": lastTask.title,
+      "Date": transformDateFromObject(lastTask.date),
+      "Sum": lastTask.sum,
+      "ExecutorType": translateTasksExecutorTypeToServer(lastTask.executorType),
+      "Executor": lastTask.executor,
+      "Description": lastTask.description,
+      "Appointer": lastTask.appointer
+    }
+  });
   try {
     const data = JSON.stringify({
       OpenedTab: CorporationsTabsDict.tasks,
@@ -33,8 +46,12 @@ const mpTrigger_tasks_currentTasks_changePage = (pageNumber: number, lastTask: T
 }
 
 const mpTrigger_tasks_currentTasks_completeTask = (taskId: string, isSuccessful: boolean) => {
-  console.log('cef_cl_tasks_currentTasks_completeTask', CorporationsTabsDict.tasks,
-    translateTasksTabToServer(CorporationsTasksTabsEnumEng.currentTasks), taskId, isSuccessful);
+  console.log('cef_cl_tasks_currentTasks_completeTask', {
+    OpenedTab: CorporationsTabsDict.tasks,
+    OpenedSubTab: translateTasksTabToServer(CorporationsTasksTabsEnumEng.currentTasks),
+    TaskId: taskId,
+    IsSuccessful: isSuccessful
+  });
   try {
     const data = JSON.stringify({
       OpenedTab: CorporationsTabsDict.tasks,

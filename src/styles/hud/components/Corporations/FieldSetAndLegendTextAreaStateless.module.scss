@@ -1,8 +1,9 @@
-@use '../../../../../hud/components/Corporations/consts/corporationsTheme';
+@use '../../../../constants/hud/corporations/corporationsTheme';
 
-.FieldSetAndLegend {
+.FieldSetAndLegendTextArea {
   width: 100%;
-  height: 100%;
+  //height: 100%;
+  // todo add vertical paddings
   display: flex;
   justify-content: space-between;
   box-sizing: border-box;
@@ -29,6 +30,6 @@
     align-items: center;
     box-sizing: border-box;
     //padding: 0 0.65rem 0.4662rem 0.65rem;
-    padding: 0 0.65rem 0.48rem 0.65rem;
+    padding: 1rem 0.65rem 1rem 0.65rem;
   }
 }

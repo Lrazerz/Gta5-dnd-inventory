@@ -4,7 +4,7 @@ import {splitStringDigits} from "../../../../utils/common/splitStringDigits";
 import {joinSplitedDigits} from "../../../../utils/common/joinSplittedDigits";
 import {
   treasuryMinAmountToWithdraw
-} from "../../../../constants/hud/corporations/treasury/treasuryConstants";
+} from "../../../../constants/hud/corporations/treasury/treasury";
 import {corporationsTreasuryWithdrawMoneyAction} from "../../../../redux/actions/hud/corporations/tabs/treasury/treasury";
 import TreasuryWithdrawPutPopUp from "./TreasuryWithdrawPutPopUp";
 

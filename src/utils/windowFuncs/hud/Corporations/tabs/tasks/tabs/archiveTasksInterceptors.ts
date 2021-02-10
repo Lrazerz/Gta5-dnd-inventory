@@ -4,10 +4,10 @@ import {
 } from "../../../../../../../hud/models/corporations/tabs/tasks/tabs/currentTasksEnums";
 import {TasksArchiveTasksInitialStateInterface} from "../../../../../../../hud/models/corporations/tabs/tasks/tabs/archiveTasksInterfaces";
 import {transformDateFromString} from "../../../../../../common/date";
-import {archiveTasksPageSize} from "../../../../../../../constants/hud/corporations/tabs/tasks";
+import {archiveTasksPageSize} from "../../../../../../../constants/hud/corporations/tasks/tasks";
 
-let window_corporations_tasks_OpenArchiveTasks: (jsonData: string) => TasksArchiveTasksInitialStateInterface;
-window_corporations_tasks_OpenArchiveTasks = (jsonData: string) => {
+let window_corporations_tasks_openArchiveTasks: (jsonData: string) => TasksArchiveTasksInitialStateInterface;
+window_corporations_tasks_openArchiveTasks = (jsonData: string) => {
   const parsedData = JSON.parse(jsonData);
 
   return {
@@ -51,7 +51,7 @@ window_corporations_tasks_archiveTasks_openPage = (jsonData: string) => {
 }
 
 export {
-  window_corporations_tasks_OpenArchiveTasks,
+  window_corporations_tasks_openArchiveTasks,
   window_corporations_tasks_archiveTasks_openPage
 }
 

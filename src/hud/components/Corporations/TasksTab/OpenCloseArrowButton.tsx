@@ -6,7 +6,6 @@ interface Props {
 }
 
 const OpenCloseArrowButton: React.FC<Props> = React.memo((Props) => {
-  console.log('CLASSES', classes);
   return (
     <div className={`${classes.OpenCloseArrowButton} ${Props.isOpened ? classes.Close : classes.Open}`}/>
   );

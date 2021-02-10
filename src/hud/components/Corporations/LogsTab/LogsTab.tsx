@@ -44,7 +44,6 @@ const LogsTab: React.FC<Props> = React.memo(() => {
     numberOfPages: pagesCount,
     maxButtons: 3,
   });
-  console.log('pagination', paginationOptions);
 
   const handleGoToPage = (pageNumber) => {
     if(paginationOptions.activePage === pageNumber || !logs) {

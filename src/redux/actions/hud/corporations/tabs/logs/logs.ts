@@ -21,6 +21,7 @@ const corporationsLogsOpenPageAction = (logsData: LogsInitialStateInterface) => 
   return (dispatch, getState) => {
     const currentPage = getState().hud.corporations.tabs.logs.currentPage;
     if(currentPage !== logsData.currentPage) {
+      console.warn('[forb] current page doesnt match');
       return;
     }
     dispatch({type: CORPORATIONS_LOGS_OPEN, logsData});

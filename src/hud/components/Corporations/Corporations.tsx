@@ -20,9 +20,9 @@ import {LogsInitialStateInterface} from "../../models/corporations/tabs/logs/log
 import {window_corporations_tasks_openCurrentTasks} from "../../../utils/windowFuncs/hud/Corporations/tabs/tasks/tabs/currentTasksInterceptors";
 import {TasksCurrentTasksInitialStateInterface} from "../../models/corporations/tabs/tasks/tabs/currentTasksInterfaces";
 import {tasksCurrentTasksOpenAction} from "../../../redux/actions/hud/corporations/tabs/tasks/tabs/currentTasks";
-import {tasksArchiveTasksOpenAction} from "../../../redux/actions/hud/corporations/tabs/tasks/tabs/archiveTasks";
-import {TasksArchiveTasksInitialStateInterface} from "../../models/corporations/tabs/tasks/tabs/archiveTasksInterfaces";
-import {window_corporations_tasks_OpenArchiveTasks} from "../../../utils/windowFuncs/hud/Corporations/tabs/tasks/tabs/archiveTasksInterceptors";
+import {TasksNewTasksInitialStateInterface} from "../../models/corporations/tabs/tasks/tabs/newTaskInterfaces";
+import {window_corporations_tasks_OpenNewTask} from "../../../utils/windowFuncs/hud/Corporations/tabs/tasks/tabs/newTaskInterceptors";
+import {tasksNewTaskOpenAction} from "../../../redux/actions/hud/corporations/tabs/tasks/tabs/newTask";
 
 export interface CorporationsDimensionsInterface {
   width: number;
@@ -124,6 +124,14 @@ const Corporations = React.memo(() => {
         dispatch(tasksCurrentTasksOpenAction(parsedData));
       }
     }
+    // @ts-ignore
+    if(!window.corporations_tasks_openNewTask) {
+      // @ts-ignore
+      window.corporations_tasks_openNewTask = (jsonData: string) => {
+        const parsedData: TasksNewTasksInitialStateInterface = window_corporations_tasks_OpenNewTask(jsonData);
+        dispatch(tasksNewTaskOpenAction(parsedData));
+      }
+    }
     return () => {
       // @ts-ignore
       window.corporations_openPermissions = null;
@@ -133,6 +141,8 @@ const Corporations = React.memo(() => {
       window.corporations_openLogs = null;
       // @ts-ignore
       window.corporations_tasks_openCurrentTasks = null;
+      // @ts-ignore
+      window.corporations_tasks_openNewTask = null;
     }
   }, []);
 

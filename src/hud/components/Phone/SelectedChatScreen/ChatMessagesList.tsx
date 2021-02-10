@@ -52,15 +52,6 @@ const ChatMessagesList = React.memo(() => {
   }, [playerAvatar, interlocutorAvatar]);
 
   const messagesBlock = messages && messages.map((message,i) => {
-    // if(i === messages.length - 1) {
-    //   console.log('that el');
-    //   return (
-    //     //@ts-ignore
-    //     <ChatMessage forwardedRef={lastMessageRef} key={message.id} direction={message.direction} date={message.date} message={message.message} theme={theme}
-    //                  playerImage={message.direction === 'in' ? importedInterlocutorAvatarImg : importedPlayerAvatarImg}/>
-    //   )
-    // }
-
     return (
       <ChatMessage key={message.id} direction={message.direction} date={message.date} message={message.message} theme={theme}
                    playerImage={message.direction === 'in' ? importedInterlocutorAvatarImg : importedPlayerAvatarImg}/>

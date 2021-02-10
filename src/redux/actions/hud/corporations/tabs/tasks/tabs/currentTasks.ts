@@ -21,6 +21,7 @@ const tasksCurrentTasksOpenPageAction = (currentTasksData: TasksCurrentTasksInit
   return (dispatch, getState) => {
     const currentPage = getState().hud.corporations.tabs.tasks.tabs.current.currentPage;
     if(currentPage !== currentTasksData.currentPage) {
+      console.warn('[forb] current page doesnt match');
       return;
     }
     dispatch({type: TASKS_CURRENT_TASKS_OPEN, currentTasksData});

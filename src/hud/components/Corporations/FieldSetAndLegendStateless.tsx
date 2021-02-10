@@ -1,8 +1,8 @@
 import React, {CSSProperties} from 'react';
-import classes from '../../../../styles/hud/components/Corporations/TreasuryTab/FieldSetAndLegendStateless.module.scss';
-import CorporationsText from "../CorporationsText";
-import {corporationsTheme} from "../consts/corporationsTheme";
-import TreasuryInput from "./TreasuryInput";
+import classes from '../../../styles/hud/components/Corporations/FieldSetAndLegendStateless.module.scss';
+import CorporationsText from "./CorporationsText";
+import {corporationsTheme} from "../../../constants/hud/corporations/corporationsTheme";
+import CorporationsInput from "./CorporationsInput";
 
 interface Props {
   legend: string;
@@ -11,6 +11,7 @@ interface Props {
   rightContent?: JSX.Element;
   minLength?: number;
   maxLength?: number;
+  placeholder?: string;
 }
 
 const FieldSetAndLegendStateless: React.FC<Props> = React.memo((Props) => {
@@ -35,8 +36,8 @@ const FieldSetAndLegendStateless: React.FC<Props> = React.memo((Props) => {
         </CorporationsText>
       </legend>
       <div className={classes.Content}>
-        <TreasuryInput value={Props.contentText} onChange={Props.onChange} styles={contentTextStyles} minLength={Props.minLength}
-        maxLength={Props.maxLength}/>
+        <CorporationsInput value={Props.contentText} onChange={Props.onChange} styles={contentTextStyles} minLength={Props.minLength}
+                           maxLength={Props.maxLength} placeholder={Props.placeholder}/>
         {Props.rightContent}
       </div>
     </fieldset>

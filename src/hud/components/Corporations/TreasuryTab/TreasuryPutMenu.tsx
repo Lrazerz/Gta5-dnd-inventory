@@ -4,7 +4,7 @@ import {splitStringDigits} from "../../../../utils/common/splitStringDigits";
 import {joinSplitedDigits} from "../../../../utils/common/joinSplittedDigits";
 import {
   treasuryMinAmountToPut,
-} from "../../../../constants/hud/corporations/treasury/treasuryConstants";
+} from "../../../../constants/hud/corporations/treasury/treasury";
 import {
   corporationsTreasuryPutMoneyAction,
   corporationsTreasuryWithdrawMoneyAction
@@ -48,7 +48,6 @@ const TreasuryPutMenu: React.FC<Props> = React.memo(() => {
 
   const putMoneyHandler = () => {
     if (typeof putAmount === 'string') {
-      console.log('TreasuryPutMenu click')
       setPutAmount(treasuryMinAmountToPut);
       return;
     }

@@ -2,7 +2,7 @@ import React, {CSSProperties, ReactElement} from 'react';
 import classes
   from '../../../../../styles/hud/components/Corporations/PermissionsTab/PermissionTabRightContent/PermissionsSubTabHeader.module.scss';
 import CorporationsText from "../../CorporationsText";
-import {corporationsTheme} from "../../consts/corporationsTheme";
+import {corporationsTheme} from "../../../../../constants/hud/corporations/corporationsTheme";
 
 interface Props {
   title: string;

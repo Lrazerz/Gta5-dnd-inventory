@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {CSSProperties, useEffect, useState} from 'react';
 import {useDispatch} from 'react-redux';
 import classes
   from '../../../../../../../styles/hud/components/Corporations/PermissionsTab/PermissionTabRightContent/subTabs/SubTabAuto/ModelsList.module.scss';
@@ -9,7 +9,7 @@ import ModelsListItem from "./ModelsListItem";
 import {permissionsAutoSelectModelAction} from "../../../../../../../redux/actions/hud/corporations/tabs/permissions/tabs/auto";
 import {mpTrigger_corporations_permissions_auto_selectModel}
 from "../../../../../../../utils/mpTriggers/hud/corporations/tabs/permissions/permissionsTriggers";
-import {maxModelLength} from "../../../../../../../constants/hud/corporations/corporationsConstants";
+import {maxModelLength, modelTitleRegex} from "../../../../../../../constants/hud/corporations/permissions/auto/auto";
 
 interface Props {
   models: SingleAutoModelTitleInterface[];
@@ -31,8 +31,12 @@ const ModelsList: React.FC<Props> = React.memo((Props) => {
     }
   }
 
-  const searchTextChangeHandler = (text: string) => {
-    setSearchText(text);
+  const searchTextChangeHandler = (value: string) => {
+    if(!modelTitleRegex.test(value)) {
+      console.warn('[forb] role title search text does not match regex');
+      return;
+    }
+    setSearchText(value);
   }
 
   useEffect(() => {
@@ -42,6 +46,12 @@ const ModelsList: React.FC<Props> = React.memo((Props) => {
       setFilteredModels(Props.models);
     }
   }, [searchText, Props.models])
+
+  const searchTextStyles: CSSProperties = {
+    fontSize: '0.75rem',
+    padding: '0 7%',
+    fontWeight: 600
+  }
 
   if (!Props.models || Props.models.length === 0) {
     return <div></div>;
@@ -60,7 +70,7 @@ const ModelsList: React.FC<Props> = React.memo((Props) => {
     <div className={classes.ModelsList}>
       <div className={classes.SearchWrapper}>
         <CorporationsInput value={searchText} onChange={searchTextChangeHandler} placeholder={'Search'}
-                           maxLength={maxModelLength}/>
+                           maxLength={maxModelLength} styles={searchTextStyles}/>
       </div>
       <HorizontalLine/>
       <div className={classes.ListWrapper}>

@@ -1,6 +1,6 @@
 import React, {CSSProperties, useEffect, useRef, useState} from 'react';
 import classes from '../../../styles/hud/components/Corporations/CorporationsSwitch.module.scss';
-import {corporationsTheme} from "./consts/corporationsTheme";
+import {corporationsTheme} from "../../../constants/hud/corporations/corporationsTheme";
 
 interface Props {
   value: boolean;

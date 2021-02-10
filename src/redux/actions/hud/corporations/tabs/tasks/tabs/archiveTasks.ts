@@ -20,6 +20,7 @@ const tasksArchiveTasksOpenPageAction = (archiveTasksData: TasksArchiveTasksInit
   return (dispatch, getState) => {
     const currentPage = getState().hud.corporations.tabs.tasks.tabs.archive.currentPage;
     if(currentPage !== archiveTasksData.currentPage) {
+      console.warn('[forb] current page doesnt match');
       return;
     }
     dispatch({type: TASKS_ARCHIVE_TASKS_OPEN, archiveTasksData});

@@ -15,7 +15,7 @@ import {
   removeSelectedChat,
   setLastOutcomingMessage
 } from "../../../../redux/actions/hud/phone";
-import {maxMessageTextLength, maxMessageTextRows, minMessageTextLength} from "../../../../constants/hud/phone/phoneConstants";
+import {maxMessageTextLength, maxMessageTextRows, minMessageTextLength} from "../../../../constants/hud/phone/phone";
 
 const maxDisplayedRows = 6;
 
@@ -89,9 +89,7 @@ const SelectedChatScreen = React.memo(() => {
       return;
     }
     targetValue = targetValue.replace('\n', ' ');
-    console.log(`before reaplce "${targetValue}"`);
     targetValue = targetValue.replace(/\s\s+/, ' ');
-    console.log(`after reaplce "${targetValue}"`);
     targetValue = targetValue.slice(0, maxMessageTextLength);
 
     let splittedByNewLineRows = targetValue.split('\n');

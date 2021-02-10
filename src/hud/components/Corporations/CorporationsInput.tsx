@@ -3,29 +3,29 @@ import classes from '../../../styles/hud/components/Corporations/CorporationsInp
 
 interface Props {
   value: string;
-  onChange: (textFilter: string) => any;
-  placeholder?: string;
+  onChange: any;
   styles?: CSSProperties;
-  textInputStyles?: CSSProperties;
-  // text input styles?
+  minLength?: number;
   maxLength?: number;
-  isDisabled?: boolean;
+  placeholder?: string;
 }
 
-const CorporationsInput: React.FC<Props>
-  = React.memo(({value, onChange, placeholder = 'Search', styles, maxLength, textInputStyles, isDisabled}) => {
+const CorporationsInput: React.FC<Props> = React.memo((Props) => {
 
-  const changeTextHandler = (newText: string) => {
-    if(newText === ' ' || isDisabled) {
-      return;
-    } else onChange(newText);
+  let minLength: number = Props.minLength;
+  let maxLength: number = Props.maxLength;
+
+  if(!minLength) {
+    minLength = 0;
+  }
+  if(!maxLength) {
+    maxLength = 1000;
   }
 
   return (
-    <div style={styles} className={classes.CorporationsInput}>
-      <input style={textInputStyles} className={classes.TextInput} placeholder={placeholder} type="text" value={value} maxLength={maxLength}
-      onChange={e => changeTextHandler(e.target.value)} />
-    </div>
+    <input style={Props.styles} className={classes.CorporationsInput} value={Props.value}
+           onChange={(e) => Props.onChange(e.target.value)}
+           minLength={minLength} maxLength={maxLength} placeholder={Props.placeholder}/>
   );
 });
 

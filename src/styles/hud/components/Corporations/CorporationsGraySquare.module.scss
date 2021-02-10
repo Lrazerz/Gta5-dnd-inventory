@@ -1,4 +1,4 @@
-@use '../../../../hud/components/Corporations/consts/corporationsTheme';
+@use '../../../../constants/hud/corporations/corporationsTheme';
 
 .CorporationsGraySquare {
   background-color: corporationsTheme.$bg_gray;

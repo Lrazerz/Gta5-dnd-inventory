@@ -2,7 +2,7 @@ import React, {CSSProperties} from 'react';
 import classes from '../../../styles/hud/components/Corporations/TitleAndSwitchRow.module.scss';
 import CorporationsSwitch from "./CorporationsSwitch";
 import CorporationsText from "./CorporationsText";
-import {corporationsTheme} from "./consts/corporationsTheme";
+import {corporationsTheme} from "../../../constants/hud/corporations/corporationsTheme";
 
 interface Props {
   title: string;

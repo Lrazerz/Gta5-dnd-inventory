@@ -1,42 +1,43 @@
 import React from 'react';
 import FieldSetAndLegendStateless from "./FieldSetAndLegendStateless";
-import {splitStringDigits} from "../../../../utils/common/splitStringDigits";
-import {joinSplitedDigits} from "../../../../utils/common/joinSplittedDigits";
+import {splitStringDigits} from "../../../utils/common/splitStringDigits";
+import {joinSplitedDigits} from "../../../utils/common/joinSplittedDigits";
 
 interface Props {
   legend: string;
-  contentNumber: number;
-  max: number;
+  contentNumber: number | null;
   // more like onConfirm, only when enter pressed
-  onChange: any;
+  onChange: (string) => void;
+  max?: number;
   rightContent?: JSX.Element;
+  placeholder?: string;
 }
 
+// returns number or '' if nothing typed
 const FieldSetAndLegendNumber: React.FC<Props> = React.memo((Props) => {
-  // todo restr
 
   const onNumberChange = (numberStr: string) => {
     if(numberStr === '') {
-      console.log('null')
-      Props.onChange(null);
+      Props.onChange('');
       return;
     }
     const numberWithoutSpacesStr: string = joinSplitedDigits(numberStr);
     const numberWithoutSpaces: number = +numberWithoutSpacesStr;
     if(isNaN(numberWithoutSpaces)) {
-      console.log('NAN')
+      console.warn('[forb] number input is not a number');
       return;
     }
-    if(numberWithoutSpaces > Props.max) {
+    if(Props.max && numberWithoutSpaces > Props.max) {
+      console.warn('[forb] number input > max available');
       return;
     }
-    console.log('Not nan', numberStr)
     Props.onChange(numberWithoutSpaces.toString());
   }
 
   return (
     <FieldSetAndLegendStateless legend={Props.legend} contentText={splitStringDigits(Props.contentNumber)}
-                                onChange={onNumberChange} rightContent={Props.rightContent}/>
+                                onChange={onNumberChange} rightContent={Props.rightContent}
+                                placeholder={Props.placeholder}/>
   );
 });
 

@@ -22,7 +22,6 @@ interface Props {
 
 const CarInfo: React.FC<Props> = React.memo(({isCarRunning, isDoorsOpened, speed, fuel}) => {
 
-
   const keyStyles = isCarRunning ? null : {opacity: 0.45};
   const doorsLockedStyles = isDoorsOpened ? {opacity: 0.45} : null;
   const doorsOpenedStyles = isDoorsOpened ? null : {opacity: 0.45};
@@ -68,7 +67,6 @@ const CarInfo: React.FC<Props> = React.memo(({isCarRunning, isDoorsOpened, speed
         fuelSvgWrapper.childNodes[i].style.transform = 'rotate(-180deg)';
       }
     }
-
   }, [fuel]);
 
   const fuelConditionalImg = fuel > 0 ? FullFuelCanisterImg : EmptyCanisterImg;

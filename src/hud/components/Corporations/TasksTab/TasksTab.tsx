@@ -4,8 +4,9 @@ import {CorporationsTasksTabsEnumEng} from "../../../models/corporations/tabs/ta
 import CurrentTasksTab from "./CurrentTasks/CurrentTasksTab";
 import ArchiveTasksTab from "./ArchiveTasks/ArchiveTasksTab";
 import {TasksArchiveTasksInitialStateInterface} from "../../../models/corporations/tabs/tasks/tabs/archiveTasksInterfaces";
-import {window_corporations_tasks_OpenArchiveTasks} from "../../../../utils/windowFuncs/hud/Corporations/tabs/tasks/tabs/archiveTasksInterceptors";
+import {window_corporations_tasks_openArchiveTasks} from "../../../../utils/windowFuncs/hud/Corporations/tabs/tasks/tabs/archiveTasksInterceptors";
 import {tasksArchiveTasksOpenAction} from "../../../../redux/actions/hud/corporations/tabs/tasks/tabs/archiveTasks";
+import NewTaskTab from "./NewTask/NewTaskTab";
 
 interface Props {
 }
@@ -21,8 +22,7 @@ const TasksTab: React.FC<Props> = React.memo(() => {
     if(!window.corporations_tasks_openArchiveTasks) {
       // @ts-ignore
       window.corporations_tasks_openArchiveTasks = (jsonData: string) => {
-        const parsedData: TasksArchiveTasksInitialStateInterface = window_corporations_tasks_OpenArchiveTasks(jsonData);
-        console.log('[TasksTab] corporations_tasks_openArchiveTasks', parsedData);
+        const parsedData: TasksArchiveTasksInitialStateInterface = window_corporations_tasks_openArchiveTasks(jsonData);
         dispatch(tasksArchiveTasksOpenAction(parsedData));
       }
     }
@@ -40,7 +40,7 @@ const TasksTab: React.FC<Props> = React.memo(() => {
       break;
     }
     case CorporationsTasksTabsEnumEng.newTask: {
-      contentToReturn = <div></div>;
+      contentToReturn = <NewTaskTab />;
       break;
     }
     case CorporationsTasksTabsEnumEng.archiveTasks: {

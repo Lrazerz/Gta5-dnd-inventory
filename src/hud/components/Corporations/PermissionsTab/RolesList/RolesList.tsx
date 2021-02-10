@@ -1,4 +1,4 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, {useState, useRef, useEffect, CSSProperties} from 'react';
 import {useSelector} from 'react-redux';
 import classes from '../../../../../styles/hud/components/Corporations/PermissionsTab/RolesList/RolesList.module.scss';
 import RolesListHeader from "./RolesListHeader";
@@ -10,7 +10,7 @@ import {
   permissionsSelectRoleAction
 } from "../../../../../redux/actions/hud/corporations/tabs/permissions/permissions";
 import {SingleRoleInterface} from "../../../../models/corporations/interfaces";
-import {maxRoleLength} from "../../../../../constants/hud/corporations/corporationsConstants";
+import {maxRoleTitleLength, roleTitleRegex} from "../../../../../constants/hud/corporations/permissions/permissions";
 import LoadingIndicator from "../../../common/LoadingIndicator/LoadingIndicator";
 
 const RolesList = React.memo(() => {
@@ -41,6 +41,20 @@ const RolesList = React.memo(() => {
     }
   }, [containerRef.current]);
 
+  const setSearchTextHandler = (value) => {
+    if(!roleTitleRegex.test(value)) {
+      console.warn('[forb] role title search text does not match regex');
+      return;
+    }
+    setSearchText(value);
+  }
+
+  const searchTextStyles: CSSProperties = {
+    fontSize: '0.75rem',
+    padding: '0 7%',
+    fontWeight: 600
+  }
+
   const rolesListContentBlock: JSX.Element = roleHeight ? (<RolesListContent
     roles={filteredRoles} selectedRole={selectedRole}
     onSelectRole={permissionsSelectRoleAction}
@@ -55,7 +69,7 @@ const RolesList = React.memo(() => {
         </div>
         <HorizontalLine />
         <div className={classes.LoadingWrapper}>
-          <LoadingIndicator />;
+          <LoadingIndicator />
         </div>
       </div>
     )
@@ -68,7 +82,8 @@ const RolesList = React.memo(() => {
       </div>
       <HorizontalLine />
       <div className={classes.RolesSearchWrapper}>
-        <CorporationsInput value={searchText} onChange={setSearchText} maxLength={maxRoleLength}/>
+        <CorporationsInput value={searchText} onChange={setSearchTextHandler} maxLength={maxRoleTitleLength}
+        styles={searchTextStyles} placeholder={'Название роли...'}/>
       </div>
       <HorizontalLine />
       <div className={classes.RolesListContent}>

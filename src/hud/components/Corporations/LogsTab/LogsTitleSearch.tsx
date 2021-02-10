@@ -3,7 +3,7 @@ import classes from '../../../../styles/hud/components/Corporations/LogsTab/Logs
 import CorporationsText from "../CorporationsText";
 import CorporationsInput from "../CorporationsInput";
 import HorizontalLine from "../HorizontalLine";
-import {corporationsTheme} from "../consts/corporationsTheme";
+import {corporationsTheme} from "../../../../constants/hud/corporations/corporationsTheme";
 import CorporationsDropdown from "../CorporationsDropdown";
 import {
   LogsSearchByDict,
@@ -66,13 +66,13 @@ const LogsTitleSearch: React.FC<Props> = React.memo((Props) => {
     marginRight: '2.41%',
   }
 
-  const searchInputContainerStyles: CSSProperties = {
-    padding: 0,
-  }
+  // const searchInputContainerStyles: CSSProperties = {
+  // }
 
   const searchTextInputStyles: CSSProperties = {
     lineHeight: '0.86rem',
     fontSize: '0.7rem',
+    fontWeight: 600,
     color: '#fff',
   }
 
@@ -98,8 +98,10 @@ const LogsTitleSearch: React.FC<Props> = React.memo((Props) => {
       </CorporationsText>
       <div className={classes.SearchWrapper}>
         <div className={classes.SearchInputWrapper} onKeyDown={searchKeyDownHandler} onBlur={searchBlurHandler}>
-          <CorporationsInput value={searchText} onChange={setSearchText} styles={searchInputContainerStyles}
-                             isDisabled={Props.isLoading} textInputStyles={searchTextInputStyles}/>
+          {/*<CorporationsInput value={searchText} onChange={setSearchText} styles={searchTextInputStyles}*/}
+          {/*                   isDisabled={Props.isLoading}/>*/}
+          <CorporationsInput value={searchText} onChange={setSearchText} styles={searchTextInputStyles}
+          placeholder={'Поиск'}/>
         </div>
         <HorizontalLine styles={horizontalLineStyles}/>
       </div>

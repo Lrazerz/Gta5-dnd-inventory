@@ -4,10 +4,11 @@ import FieldSetAndLegendStateless from "./FieldSetAndLegendStateless";
 interface Props {
   legend: string;
   contentString: string;
-  onChange: any;
+  onChange: (string) => void;
   rightContent?: JSX.Element;
   minLength?: number;
   maxLength?: number;
+  placeholder?: string;
 }
 
 const FieldSetAndLegendString: React.FC<Props> = React.memo((Props) => {
@@ -19,7 +20,7 @@ const FieldSetAndLegendString: React.FC<Props> = React.memo((Props) => {
 
   return (
     <FieldSetAndLegendStateless legend={Props.legend} contentText={Props.contentString} onChange={onContentChange}
-    minLength={Props.minLength} maxLength={Props.maxLength}/>
+    minLength={Props.minLength} maxLength={Props.maxLength} placeholder={Props.placeholder}/>
   );
 });
 

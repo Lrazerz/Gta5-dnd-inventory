@@ -73,7 +73,6 @@ const ExternalSquareCommonItem: React.FC<Props> = React.memo(function SquareComm
     event.stopPropagation();
     dispatch(addDraggedItem({...item}, 2));
 
-
     const newClone = event.currentTarget.cloneNode(true);
 
     newClone.addEventListener('dragstart', (e) => {

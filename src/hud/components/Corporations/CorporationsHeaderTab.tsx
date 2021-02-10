@@ -1,6 +1,6 @@
 import React, {CSSProperties} from 'react';
 import classes from '../../../styles/hud/components/Corporations/CorporationsHeaderTab.module.scss';
-import {corporationsTheme} from "./consts/corporationsTheme";
+import {corporationsTheme} from "../../../constants/hud/corporations/corporationsTheme";
 import CorporationsText from "./CorporationsText";
 
 interface Props {

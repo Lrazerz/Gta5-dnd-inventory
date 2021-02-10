@@ -1,6 +1,6 @@
 import React from 'react';
 import classes from '../../../../styles/hud/components/Corporations/TreasuryTab/TreasuryBorderedInput.module.scss';
-import TreasuryInput from "./TreasuryInput";
+import CorporationsInput from "../CorporationsInput";
 
 interface Props {
   value: string;
@@ -11,7 +11,7 @@ const TreasuryBorderedInput: React.FC<Props> = React.memo((Props) => {
 
   return (
     <div className={classes.TreasuryBorderedInput}>
-      <TreasuryInput value={Props.value} onChange={Props.onChange} />
+      <CorporationsInput value={Props.value} onChange={Props.onChange} />
       <div className={classes.DollarSign}/>
     </div>
   );

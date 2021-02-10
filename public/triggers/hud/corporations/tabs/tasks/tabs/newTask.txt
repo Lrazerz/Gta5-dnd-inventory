@@ -1,0 +1,26 @@
+window_corporations_tasks_openNewTask(JSON);
+
+JSON: '{
+	"PotentialExecutors": [
+		{
+			"Id": string,
+			"Executor": string,
+			"ExecutorType": "Nickname" | "Role"
+		}
+	]
+}'
+
+
+mp.trigger('cef_cl_tasks_newTask_addTask', JSON);
+
+JSON: '{
+	"OpenedTab": "Задачи",
+	"OpenedSubTab": "Новая задача",
+	"Task": {
+		"Title": string,
+		"Sum": string,
+		"ExecutorType": "Nickname" | "Role",
+		"Executor": string,
+		"Description": string
+	}
+}'

@@ -8,8 +8,22 @@ import {translateTasksExecutorTypeToServer} from "../../../../../../../hud/model
 import {transformDateFromObject} from "../../../../../../common/date";
 
 const mpTrigger_tasks_archiveTasks_changePage = (pageNumber: number, lastTask: TasksDoneTaskInterface) => {
-  console.log('cef_cl_tasks_archiveTasks_changePage', CorporationsTabsDict.tasks,
-    translateTasksTabToServer(CorporationsTasksTabsEnumEng.archiveTasks), pageNumber, lastTask);
+  console.log('cef_cl_tasks_archiveTasks_changePage', {
+    OpenedTab: CorporationsTabsDict.tasks,
+    OpenedSubTab: translateTasksTabToServer(CorporationsTasksTabsEnumEng.archiveTasks),
+    PageNumber: pageNumber,
+    LastTask: {
+      Id: lastTask.id,
+      Title: lastTask.title,
+      Date: transformDateFromObject(lastTask.date),
+      Sum: lastTask.sum,
+      ExecutorType: translateTasksExecutorTypeToServer(lastTask.executorType),
+      Executor: lastTask.executor,
+      Description: lastTask.description,
+      Appointer: lastTask.appointer,
+      IsSuccessful: lastTask.isSuccessful
+    }});
+
   try {
     const data = JSON.stringify({
       OpenedTab: CorporationsTabsDict.tasks,

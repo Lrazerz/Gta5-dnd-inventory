@@ -7,8 +7,7 @@ import makeCallImg
 import {OpenedScreenEnum, ThemesEnum} from "../../../models/phone/enums";
 import {openOutComingCall, openScreen, setAddNewContactPhoneNumber} from "../../../../redux/actions/hud/phone";
 import phoneTheme from "../consts/phoneTheme";
-
-const maxPhoneLength = 11;
+import {phoneLengthWithoutPlus} from "../../../../constants/hud/phone/phone";
 
 const buttons = ['1','2','3','4','5','6','7','8','9','*','0','#'];
 
@@ -39,13 +38,17 @@ const PhoneTypingScreen = React.memo(() => {
 
   const typingHandler = (value) => {
     const newNumber = phoneNumber + value;
-    if(newNumber.length <= maxPhoneLength) {
+    if(newNumber.length <= phoneLengthWithoutPlus) {
       setPhoneNumber(newNumber);
     }
   }
 
   const makeCallHandler = () => {
-    if(phoneNumber.length !== maxPhoneLength) return;
+    if(phoneNumber.length !== phoneLengthWithoutPlus) {
+      console.warn('[forb] phone length does not match');
+      return;
+    }
+
     dispatch(openOutComingCall(`+${phoneNumber}`));
   }
 

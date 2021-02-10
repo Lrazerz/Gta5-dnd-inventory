@@ -8,7 +8,7 @@ import {
 } from "../../../../../../models/corporations/interfaces";
 import HorizontalLine from "../../../../HorizontalLine";
 import CorporationsText from "../../../../CorporationsText";
-import {corporationsTheme} from "../../../../consts/corporationsTheme";
+import {corporationsTheme} from "../../../../../../../constants/hud/corporations/corporationsTheme";
 import TitleAndSwitchRow from "../../../../TitleAndSwitchRow";
 import {
   permissionsAutoChangeOption,

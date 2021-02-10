@@ -7,7 +7,10 @@ import CorporationsInput from "../../CorporationsInput";
 import HorizontalLine from "../../HorizontalLine";
 import {CommonPermissionsSetInterface} from "../../../../models/corporations/interfaces";
 import CommonPermissionsSet from "./CommonPermissionsSet";
-import {maxCommonPermissionLength} from "../../../../../constants/hud/corporations/corporationsConstants";
+import {
+  commonPermissionTitleRegex,
+  maxCommonPermissionLength
+} from "../../../../../constants/hud/corporations/permissions/permissions";
 import LoadingIndicator from "../../../common/LoadingIndicator/LoadingIndicator";
 
 interface Props {
@@ -23,8 +26,6 @@ const CommonPermissionsList: React.FC<Props> = React.memo(() => {
   const permissionsSetsRedux = useSelector(state => state.hud.corporations.tabs.permissions.permissions.commonPermissionsSets);
   const selectedRole = useSelector(state => state.hud.corporations.tabs.permissions.permissions.selectedRole);
 
-  // const isLoadingRedux = useSelector(state => state.hud.corporations.corporations.isLoading);
-
   const permissionsSets: CommonPermissionsSetInterface[] = permissionsSetsRedux;
 
   useEffect(() => {
@@ -32,20 +33,16 @@ const CommonPermissionsList: React.FC<Props> = React.memo(() => {
       const resultFilteredSets = [];
 
       for (let i = 0; i < permissionsSets.length; i++) {
-        // console.log('permSet', permissionsSets[i]);
         if (permissionsSets[i].title.toLowerCase().includes(searchText.toLowerCase())) {
-          // console.log('Found perm set', permissionsSets[i].title);
           resultFilteredSets.push(permissionsSets[i]);
         } else {
           for (let j = 0; j < permissionsSets[i].permissions.length; j++) {
             if (permissionsSets[i].permissions[j].title.toLowerCase().includes(searchText.toLowerCase())) {
-              // console.log('Found single permission', permissionsSets[i].permissions[j].title);
 
               let addedSetIdx: number = -1;
 
               for (let k = 0; k < resultFilteredSets.length; k++) {
                 if (resultFilteredSets[k].title === permissionsSets[i].title) {
-                  // console.log('Add single permission to existing set', permissionsSets[i].permissions[j].title);
                   addedSetIdx = k;
                   resultFilteredSets[k].permissions.push(permissionsSets[i].permissions[j]);
                 }
@@ -66,28 +63,25 @@ const CommonPermissionsList: React.FC<Props> = React.memo(() => {
     }
   }, [searchText, permissionsSets]);
 
+  const setSearchTextHandler = (value) => {
+    if(!commonPermissionTitleRegex.test(value)) {
+      console.warn('[forb] common perm title search text does not match regex');
+      return;
+    }
+    setSearchText(value);
+  }
+
   const horizontalLineWrapperStyles: CSSProperties = {
     boxSizing: 'border-box',
     padding: '0 7.95%'
   }
 
-  // if (!permissionsSets) {
-  //   return <div className={classes.CommonPermissionsList}/>
-  // }
-
-  // loading-changed
-  // if(!permissionsSets) {
-  //   return (
-  //     <div className={classes.CommonPermissionsList}>
-  //       <div className={classes.HeaderWrapper}>
-  //         <CommonPermissionsHeader/>
-  //       </div>
-  //       <div className={classes.LoadingWrapper}>
-  //         <LoadingIndicator />
-  //       </div>
-  //     </div>
-  //   )
-  // }
+  const searchTextStyles: CSSProperties = {
+    paddingLeft: 0,
+    paddingRight: 0,
+    fontSize: '0.75rem',
+    fontWeight: 600
+  }
 
   if(!permissionsSetsRedux) {
       return (
@@ -102,15 +96,14 @@ const CommonPermissionsList: React.FC<Props> = React.memo(() => {
       )
   }
 
-
   return (
     <div className={classes.CommonPermissionsList}>
       <div className={classes.HeaderWrapper}>
         <CommonPermissionsHeader/>
       </div>
       <div className={classes.InputWrapper}>
-        <CorporationsInput styles={{paddingLeft: '0', paddingRight: '0'}} maxLength={maxCommonPermissionLength}
-                           value={searchText} onChange={setSearchText} placeholder={"Название разрешения"}/>
+        <CorporationsInput styles={searchTextStyles} maxLength={maxCommonPermissionLength}
+                           value={searchText} onChange={setSearchTextHandler} placeholder={"Название разрешения..."}/>
       </div>
       <div style={horizontalLineWrapperStyles}>
         <HorizontalLine/>

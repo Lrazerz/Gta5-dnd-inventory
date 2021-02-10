@@ -1,7 +1,7 @@
 import React, {CSSProperties} from 'react';
 import classes from '../../../../styles/hud/components/Corporations/TreasuryTab/TreasuryButton.module.scss';
 import CorporationsText from "../CorporationsText";
-import {corporationsTheme} from "../consts/corporationsTheme";
+import {corporationsTheme} from "../../../../constants/hud/corporations/corporationsTheme";
 
 interface Props {
   children: string;

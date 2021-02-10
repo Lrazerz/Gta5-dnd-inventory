@@ -1,7 +1,7 @@
 import React, {CSSProperties, useEffect, useRef} from 'react';
 import classes from '../../../styles/hud/components/Corporations/CorporationsGraySquare.module.scss';
 import CorporationsText from "./CorporationsText";
-import {corporationsTheme} from "./consts/corporationsTheme";
+import {corporationsTheme} from "../../../constants/hud/corporations/corporationsTheme";
 
 interface Props {
   styles?: CSSProperties;
@@ -10,16 +10,6 @@ interface Props {
 }
 
 const CorporationsGraySquare: React.FC<Props> = React.memo((Props) => {
-
-  // const containerRef = useRef();
-  //
-  // useEffect(() => {
-  //   if(containerRef.current) {
-  //     const width: string = window.getComputedStyle(containerRef.current).width;
-  //     const widthNumber: number = +width.match(/(\d|\.)+/)[0];
-  //     console.log('styles', widthNumber);
-  //   }
-  // }, [containerRef.current])
 
   const textStyles: CSSProperties = {
     fontSize: '0.7058rem',

@@ -9,7 +9,7 @@ import {
 } from "../../../../models/corporations/enums";
 import PermissionsSubTabHeader from "./PermissionsSubTabHeader";
 
-import {corporationsTheme} from "../../consts/corporationsTheme";
+import {corporationsTheme} from "../../../../../constants/hud/corporations/corporationsTheme";
 import {permissionsOpenTabAction} from "../../../../../redux/actions/hud/corporations/tabs/permissions/permissions";
 import {mpTrigger_corporations_permissions_openTab}
 from "../../../../../utils/mpTriggers/hud/corporations/tabs/permissions/permissionsTriggers";

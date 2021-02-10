@@ -12,7 +12,7 @@ import {
   tasksCurrentTasksRemoveAction
 } from "../../../../redux/actions/hud/corporations/tabs/tasks/tabs/currentTasks";
 import removeImg from '../../../../assets/hud/images/components/Corporations/removeRole.svg';
-import {corporationsTheme} from "../consts/corporationsTheme";
+import {corporationsTheme} from "../../../../constants/hud/corporations/corporationsTheme";
 import {TasksDoneTaskInterface} from "../../../models/corporations/tabs/tasks/tabs/archiveTasksInterfaces";
 import {tasksArchiveTasksRemoveTaskAction} from "../../../../redux/actions/hud/corporations/tabs/tasks/tabs/archiveTasks";
 

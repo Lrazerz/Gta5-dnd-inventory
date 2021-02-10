@@ -1,0 +1,65 @@
+.NewTaskTabStateless {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 3.9% 23.65% 4% 23.65%;
+  //background-color: green;
+
+  .NewTaskTabContent {
+    width: 100%;
+    height: 100%;
+    //background-color: red;
+
+    .TitleWrapper {
+      width: 100%;
+      min-height: 3.9%;
+      max-height: 3.9%;
+    }
+
+    .TaskTitleAndSumContainer {
+      margin-top: 5.89%;
+      width: 100%;
+      height: 7.69%;
+      display: flex;
+      justify-content: space-between;
+
+      .TaskTitleWrapper {
+        width: 47.12%;
+        height: 100%;
+      }
+    }
+
+    .ExecutorWrapper {
+      position: relative;
+      margin-top: 4.49%;
+      width: 100%;
+      height: 7.69%;
+    }
+
+    .TaskDescriptionWrapper {
+      margin-top: 4.49%;
+    }
+
+    .SendButtonWrapper {
+      margin-top: 5.89%;
+      width: 100%;
+      height: 5.77%;
+    }
+
+    .LoadingContainer {
+      width: 100%;
+      height: 80%;
+    }
+  }
+}
+
+.DollarSign {
+  min-width: 9.4%;
+  max-width: 9.4%;
+  padding-bottom: 9.4%;
+  background-image: url("../../../../../../assets/hud/images/components/Corporations/tabs/treasury/dollar-bordered.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  margin-right: 4%;
+}

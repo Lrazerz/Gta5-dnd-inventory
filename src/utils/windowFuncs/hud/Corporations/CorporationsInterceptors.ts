@@ -28,7 +28,7 @@ corporationsOpenPermissionsTab = (jsonData) => {
   // find selected role id
   const selectedRole = roles.find(role => role.title.toLowerCase() === SelectedRoleInfo.Title.toLowerCase());
   if(!selectedRole) {
-    console.log('error', 'Selected role name doesnt exists in the roles list');
+    console.warn('[forb] Selected role name doesnt exists in the roles list');
   }
 
   const selectedRoleInfo = {

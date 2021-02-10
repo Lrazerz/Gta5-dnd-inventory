@@ -13,9 +13,9 @@ import {
   permissionsRefreshPermissions,
   permissionsSetRoleInfoAction
 } from "../../../../redux/actions/hud/corporations/tabs/permissions/permissions";
-import {CommonPermissionsSetInterface, PermissionsAutoModelInterface} from "../../../models/corporations/interfaces";
+import {CommonPermissionsSetInterface} from "../../../models/corporations/interfaces";
 import {
-  permissionsAutoSelectModelAction, permissionsAutoSetDataAction,
+  permissionsAutoSetDataAction,
 } from "../../../../redux/actions/hud/corporations/tabs/permissions/tabs/auto";
 
 interface Props {
@@ -54,7 +54,6 @@ const PermissionsTab: React.FC<Props> = React.memo(({dimensions}) => {
     if(!window.corporations_permissions_openAutoTab) {
       // @ts-ignore
       window.corporations_permissions_openAutoTab = (autoData: string) => {
-        console.log('OpenAutTab', JSON.parse(autoData));
         const parsedData = corporationsPermissionsOpenAutoTab(autoData);
         dispatch(permissionsAutoSetDataAction(parsedData));
       }

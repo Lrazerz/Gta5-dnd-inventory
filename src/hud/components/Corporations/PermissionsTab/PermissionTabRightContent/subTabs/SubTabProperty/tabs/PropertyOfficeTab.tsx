@@ -6,7 +6,7 @@ import HorizontalLine from "../../../../../HorizontalLine";
 import {RowFieldTypeEnum} from "../../../../../../../models/corporations/enums";
 import CorporationsGraySquare from "../../../../../CorporationsGraySquare";
 import CorporationsDropdown from "../../../../../CorporationsDropdown";
-import {corporationsTheme} from "../../../../../consts/corporationsTheme";
+import {corporationsTheme} from "../../../../../../../../constants/hud/corporations/corporationsTheme";
 import {permissionsPropertyOfficeChangeOption} from "../../../../../../../../redux/actions/hud/corporations/tabs/permissions/tabs/property/tabs/office";
 import {mpTrigger_permissions_property_office_changeOption} from "../../../../../../../../utils/mpTriggers/hud/corporations/tabs/permissions/tabs/permissionsPropertyTriggers";
 import {SingleRoleInterface} from "../../../../../../../models/corporations/interfaces";

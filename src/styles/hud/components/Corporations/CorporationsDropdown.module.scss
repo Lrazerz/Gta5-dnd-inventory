@@ -1,35 +1,43 @@
-@use '../../../../hud/components/Corporations/consts/corporationsTheme';
+@use '../../../../constants/hud/corporations/corporationsTheme';
 
 .CorporationsDropdown {
-  //border-radius: 0.3rem;
-  //padding-bottom: 2%;
-  //padding-left: 2%;
-  //padding-right: 2%;
-  //box-sizing: border-box;
-  //background-color: corporationsTheme.$bg_gray2;
-
   position: absolute;
   top: 0;
   border-radius: 0.294rem;
   box-sizing: border-box;
   background-color: corporationsTheme.$bg_gray2;
-  //background-color: red;
   padding-bottom: 15%;
 
+  .ItemsList {
+    width: 100%;
+    max-height: 6.6rem;
+    overflow-x: hidden;
+    overflow-y: auto;
 
-  //
-  .ListItemWrapper {
-    height: 1.65rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    //padding-left: 15%;
-    //padding-right: 15%;
-
-
-    &:hover {
-      background-color: rgba(corporationsTheme.$text_white3, 0.15);
+    &::-webkit-scrollbar {
+      position: absolute;
+      //width: 0.941rem;
+      width: 0.341rem;
     }
+
+    &::-webkit-scrollbar-thumb {
+      box-shadow: inset 0 0 0 0.2rem corporationsTheme.$scrollbar_brightGrey;
+      //border: solid 0.3529412rem transparent;
+      background-color: transparent;
+    }
+  }
+
+}
+
+.ListItemWrapper {
+  min-height: 1.65rem;
+  max-height: 1.65rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    background-color: rgba(corporationsTheme.$text_white3, 0.15);
   }
 }
 
@@ -40,9 +48,11 @@
   justify-content: center;
   align-items: center;
   border-radius: 0.294rem;
-  //padding: 0.91% 1.57%;
   padding: 0.91% 1.7%;
   box-sizing: border-box;
 
+  &:hover {
+    filter: contrast(110%);
+  }
 
 }
