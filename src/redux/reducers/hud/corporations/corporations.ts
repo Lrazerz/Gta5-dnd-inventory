@@ -10,9 +10,8 @@ interface InitialStateInterface {
   openedTab: CorporationsTabsEnum;
   // todo maybe info from main screen (info about corporation)
 }
-
 const initialState: InitialStateInterface = {
-  isOpened: true,
+  isOpened: false,
   openedTab: CorporationsTabsEnum.tasks
 }
 

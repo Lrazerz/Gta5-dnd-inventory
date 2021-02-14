@@ -13,12 +13,13 @@ const translateToServerItem = (item: ItemModel) => {
     posNumberLeftAngle = mainCell[1] * (xMax + 1) + (mainCell[0] + 1);
   }
 
+  //last-change
   // change before sending item
-  if(isRotated) {
-    const tmp = width;
-    width = height;
-    height = tmp;
-  }
+  // if(isRotated) {
+  //   const tmp = width;
+  //   width = height;
+  //   height = tmp;
+  // }
 
   return JSON.stringify({
     ID: id,

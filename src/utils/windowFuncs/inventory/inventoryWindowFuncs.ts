@@ -52,17 +52,17 @@ _getEnabledAndBoardItems = async (items) => {
 
     let FullItem: ItemModel;
 
+    //last-change
+    FullItem = new ItemModel(ID, Name, category, PosNumberLeftAngle,
+      SizeX, SizeY, CurrentCount, MaxCount,
+      ImageUrl, IsRotated, rest);
+
     if(IsRotated) {
       // swap width and height
       const tmp = SizeX;
       SizeX = SizeY;
       SizeY = tmp;
     }
-
-    FullItem = new ItemModel(ID, Name, category, PosNumberLeftAngle,
-      SizeX, SizeY, CurrentCount, MaxCount,
-      ImageUrl, IsRotated, rest);
-
 
     if (Enabled === true) {
       enabledItems.push(FullItem);
@@ -118,16 +118,16 @@ _getExternalBoardItems = async (items) => {
 
     let FullItem: ItemModel;
 
+    FullItem = new ItemModel(ID, Name, category, PosNumberLeftAngle,
+      SizeX, SizeY, CurrentCount, MaxCount,
+      ImageUrl, IsRotated, rest);
+
     if(IsRotated) {
       // swap width and height
       const tmp = SizeX;
       SizeX = SizeY;
       SizeY = tmp;
     }
-
-    FullItem = new ItemModel(ID, Name, category, PosNumberLeftAngle,
-      SizeX, SizeY, CurrentCount, MaxCount,
-      ImageUrl, IsRotated, rest);
 
     const mainCellY = Math.floor(PosNumberLeftAngle / (xMax + 1));
     const mainCellX = PosNumberLeftAngle % (xMax + 1) - 1;

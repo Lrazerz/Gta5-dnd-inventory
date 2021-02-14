@@ -411,7 +411,6 @@ const stackItem = (fromSplit = false) => {
       mpTriggerStackItem(draggedItem, stackableItem);
     }
     //endregion
-
   }
 }
 

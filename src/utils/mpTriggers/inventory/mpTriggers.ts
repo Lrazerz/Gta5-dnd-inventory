@@ -5,6 +5,7 @@ import {translateExternalToServerItem, translateToServerItem} from "../../../inv
 const mpTriggerMoveItem = (item) => {
   const transformedItem = translateToServerItem(item);
   try {
+    console.log('cef_cl_moveItem', transformedItem);
     // @ts-ignore
     mp.trigger('cef_cl_moveItem', transformedItem);
   } catch (e) {}
@@ -14,6 +15,7 @@ const mpTriggerMoveItem = (item) => {
 const mpTriggerMoveToExternalItem = (item) => {
   const transformedItem = translateToServerItem(item);
   try {
+    console.log('cef_cl_moveToExternalItem', transformedItem);
     // @ts-ignore
     mp.trigger('cef_cl_moveToExternalItem', transformedItem);
   } catch (e) {}
@@ -23,6 +25,7 @@ const mpTriggerMoveToExternalItem = (item) => {
 const mpTriggerMoveFromExternalItem = (item) => {
   const transformedItem = translateToServerItem(item);
   try {
+    console.log('cef_cl_moveFromExternalItem', transformedItem);
     // @ts-ignore
     mp.trigger('cef_cl_moveFromExternalItem', transformedItem);
   } catch (e) {}
@@ -32,6 +35,7 @@ const mpTriggerMoveFromExternalItem = (item) => {
 const mpTriggerMoveFromExternalToExternalItem = (item) => {
   const transformedItem = translateToServerItem(item);
   try {
+    console.log('cef_cl_moveExternalItem', transformedItem);
     // @ts-ignore
     mp.trigger('cef_cl_moveExternalItem', transformedItem);
   } catch (e) {}
