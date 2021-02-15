@@ -311,8 +311,9 @@ const RangeComponent: React.FC<Props> = React.memo(({leftOffset, topOffset, cont
           }
           // Add from equipped to external board
           else if (hoveredArea === 3) {
+            console.log('eqChCC');
             // @ts-ignore
-            dispatch(equippedChangeCurrentCount(contextItem.id, contextItem.currentCount - draggedItemRef.current.currentCount));
+            dispatch(equippedChangeCurrentCount(contextItem.mainCell, contextItem.currentCount - draggedItemRef.current.currentCount));
             try {
               dispatch(addExternalBoardItem());
             } catch (e) {}

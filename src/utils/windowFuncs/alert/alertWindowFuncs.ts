@@ -6,7 +6,7 @@ interface AcceptedAlertInterface {
   Duration: number; // ms
 }
 
-const alertWindowFunc = (jsonData: string) => {
+const window_setAlert = (jsonData: string) => {
   const parsedData: AcceptedAlertInterface = JSON.parse(jsonData);
 
   let alertType;
@@ -34,5 +34,5 @@ const alertWindowFunc = (jsonData: string) => {
 }
 
 export {
-  alertWindowFunc
+  window_setAlert
 }

@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useRef} from 'react';
 import classes from '../../../styles/hud/components/PlayerInfo/SingleBuff.module.scss';
-import {BuffInterface} from "../../models/Buff";
+import {BuffInterface} from "../../models/hudInterfaces";
 
 interface Props {
   buff: BuffInterface;

@@ -16,11 +16,11 @@ import {
 import {SingleInteractionInterface} from "./models/InteractionInterfaces";
 import {mpTrigger_interactions_closeInteractions} from "../utils/mpTriggers/hud/interactions/interactionsTriggers";
 import HudAppStateless from "./HudAppStateless";
-import {DefaultHudDataInterface} from "../App";
 import {openCorporations} from "../utils/windowFuncs/hud/Corporations/CorporationsInterceptors";
 import {corporationsOpenAction, corporationsCloseAction} from "../redux/actions/hud/corporations/corporations";
 import {setAlert} from "../redux/actions/alert/alert";
 import {AlertTypesEnum} from "../models/alert/enums";
+import {DefaultHudDataInterface} from "./models/hudInterfaces";
 // import Notification from 'rc-notification';
 
 interface Props {

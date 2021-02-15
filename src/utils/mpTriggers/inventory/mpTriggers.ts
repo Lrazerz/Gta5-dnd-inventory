@@ -47,6 +47,7 @@ const mpTriggerMoveFromExternalToExternalItem = (item) => {
 const mpTriggerDropItem = (item) => {
   const transformedItem = translateToServerItem(item);
   try {
+    console.log('cef_cl_dropItem', transformedItem);
     // @ts-ignore
     mp.trigger('cef_cl_dropItem', transformedItem);
   } catch (e) {}
@@ -56,6 +57,7 @@ const mpTriggerDropItem = (item) => {
 const mpTriggerDropExternalItem = (item) => {
   const transformedItem = translateExternalToServerItem(item);
   try {
+    console.log('cef_cl_dropExternalItem', transformedItem);
     // @ts-ignore
     mp.trigger('cef_cl_dropExternalItem', transformedItem);
   } catch (e) {}
@@ -67,6 +69,7 @@ const mpTriggerStackItem = (draggedItem, stackableItem) => {
   const transformedDraggedItem = translateToServerItem(draggedItem);
   const transformedStackableItem = translateToServerItem(stackableItem);
   try {
+    console.log('cef_cl_stackItem', transformedDraggedItem, transformedStackableItem);
     // @ts-ignore
     mp.trigger('cef_cl_stackItem', transformedDraggedItem, transformedStackableItem);
   } catch (e) {}
@@ -76,6 +79,7 @@ const mpTriggerStackToExternalItem = (draggedItem, stackableItem) => {
   const transformedDraggedItem = translateToServerItem(draggedItem);
   const transformedStackableItem = translateExternalToServerItem(stackableItem);
   try {
+    console.log('cef_cl_stackToExternalItem', transformedDraggedItem, transformedStackableItem);
     // @ts-ignore
     mp.trigger('cef_cl_stackToExternalItem', transformedDraggedItem, transformedStackableItem);
   } catch (e) {}
@@ -85,6 +89,7 @@ const mpTriggerStackFromExternalItem = (draggedItem, stackableItem) => {
   const transformedDraggedItem = translateExternalToServerItem(draggedItem);
   const transformedStackableItem = translateToServerItem(stackableItem);
   try {
+    console.log('cef_cl_stackFromExternalItem', transformedDraggedItem, transformedStackableItem);
     // @ts-ignore
     mp.trigger('cef_cl_stackFromExternalItem', transformedDraggedItem, transformedStackableItem);
   } catch (e) {}
@@ -94,6 +99,7 @@ const mpTriggerStackFromExternalToExternalItem = (draggedItem, stackableItem) =>
   const transformedDraggedItem = translateExternalToServerItem(draggedItem);
   const transformedStackableItem = translateExternalToServerItem(stackableItem);
   try {
+    console.log('cef_cl_stackExternalItem', transformedDraggedItem, transformedStackableItem);
     // @ts-ignore
     mp.trigger('cef_cl_stackExternalItem', transformedDraggedItem, transformedStackableItem);
   } catch (e) {}
@@ -105,6 +111,7 @@ const mpTriggerStackFromExternalToExternalItem = (draggedItem, stackableItem) =>
 const mpTriggerRotateBoardItem = (item) => {
   const transformedItem = translateToServerItem(item);
   try {
+    console.log('cef_cl_rotateItem', transformedItem);
     // @ts-ignore
     mp.trigger('cef_cl_rotateItem', transformedItem);
   } catch (e) {}
@@ -113,6 +120,7 @@ const mpTriggerRotateBoardItem = (item) => {
 const mpTriggerRotateExternalItem = (item) => {
   const transformedItem = translateExternalToServerItem(item);
   try {
+    console.log('cef_cl_rotateExternalItem', transformedItem);
     // @ts-ignore
     mp.trigger('cef_cl_rotateExternalItem', transformedItem);
   } catch (e) {}

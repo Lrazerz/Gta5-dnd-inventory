@@ -148,7 +148,7 @@ _getExternalBoardItems = async (items) => {
   return {externalBoardItems};
 }
 
-const openOrRefreshInventory = async (info) => {
+const window_openOrRefreshInventory = async (info) => {
   const values = JSON.parse(info).$values;
 
   const {boardItems, enabledItems} = await _getEnabledAndBoardItems(values);
@@ -158,7 +158,7 @@ const openOrRefreshInventory = async (info) => {
   store.dispatch(setEquippedItems(enabledItems));
 }
 
-const  openDoubleInventory = async (info, externalInfo, externalBoardHeight) => {
+const  window_openDoubleInventory = async (info, externalInfo, externalBoardHeight) => {
   const {$values: values} = JSON.parse(info);
   const {$values: externalValues} = JSON.parse(externalInfo);
 
@@ -171,7 +171,7 @@ const  openDoubleInventory = async (info, externalInfo, externalBoardHeight) => 
 }
 
 export {
-  openOrRefreshInventory,
-  openDoubleInventory
+  window_openOrRefreshInventory,
+  window_openDoubleInventory
 }
 

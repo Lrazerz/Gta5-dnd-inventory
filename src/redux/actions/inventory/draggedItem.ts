@@ -382,9 +382,10 @@ const stackItem = (fromSplit = false) => {
 
     draggedItem.currentCount = draggedItemNewCurrentCount;
     stackableItem.currentCount = stackableItemNewCurrentCount;
-    if(draggedItemNewCurrentCount === 0) {
-      draggedItem.mainCell = stackableItem.mainCell;
-    }
+    //last-change
+    // if(draggedItemNewCurrentCount === 0) {
+    //   draggedItem.mainCell = stackableItem.mainCell;
+    // }
 
     //region ------------------------------ Invoke triggers ------------------------------
 

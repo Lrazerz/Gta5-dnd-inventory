@@ -5,28 +5,16 @@ import store from './redux/store';
 import HudApp from "./hud/HudApp";
 import {openHud} from "./utils/windowFuncs/hud/PlayerInfo/PlayerInfoInterceptors";
 import {setPhoneTime, setPlayerAvatarAction} from "./redux/actions/hud/phone";
-import {openDoubleInventory, openOrRefreshInventory} from "./utils/windowFuncs/inventory/inventoryWindowFuncs";
+import {window_openOrRefreshInventory, window_openDoubleInventory} from "./utils/windowFuncs/inventory/inventoryWindowFuncs";
 import classes from './styles/App.module.scss';
 import Alerts from "./alert/Alerts";
-import {alertWindowFunc} from "./utils/windowFuncs/alert/alertWindowFuncs";
+import {window_setAlert} from "./utils/windowFuncs/alert/alertWindowFuncs";
 import {setAlert} from "./redux/actions/alert/alert";
+import {DefaultHudDataInterface} from "./hud/models/hudInterfaces";
 
 enum OpenedPartsEnum {
   inventory,
   hud,
-}
-
-export interface DefaultHudDataInterface {
-  playerAvatarName: string;
-  playerRankTitle: string;
-  stateIndicators: {
-    firstIndicator: number;
-    secondIndicator: number;
-    thirdIndicator: number;
-  },
-  network: number;
-  time: string,
-  buffs: [],
 }
 
 const defaultHudData: DefaultHudDataInterface = {
@@ -70,11 +58,11 @@ const App = React.memo(function App() {
         if ( !(openedPart === OpenedPartsEnum.inventory) ) {
           setOpenedPart(OpenedPartsEnum.inventory);
         }
-        openOrRefreshInventory(info);
+        window_openOrRefreshInventory(info);
         return;
       };
       // @ts-ignore
-      window.refreshInventory = openOrRefreshInventory;
+      window.refreshInventory = window_openOrRefreshInventory;
     }
 
     // @ts-ignore
@@ -84,7 +72,7 @@ const App = React.memo(function App() {
         if ( !(openedPart === OpenedPartsEnum.inventory) ) {
           setOpenedPart(OpenedPartsEnum.inventory);
         }
-        openDoubleInventory(info, externalInfo, extBoardHeight);
+        window_openDoubleInventory(info, externalInfo, extBoardHeight);
       }
     }
     //endregion
@@ -111,7 +99,7 @@ const App = React.memo(function App() {
     if(!window.setAlert) {
       // @ts-ignore
       window.setAlert = (jsonData: string) => {
-        const parsedData = alertWindowFunc(jsonData);
+        const parsedData = window_setAlert(jsonData);
         dispatch(setAlert(parsedData.message, parsedData.type, parsedData.duration));
       }
     }
