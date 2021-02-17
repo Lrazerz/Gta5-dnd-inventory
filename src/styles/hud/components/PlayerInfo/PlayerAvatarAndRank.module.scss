@@ -42,30 +42,30 @@
     left: 4%;
     width: 61%;
     height: 58.45%;
-    background-image: url("../../../../assets/hud/images/components/PlayerInfo/LevelWrapper.svg");
+    background-image: url('../../../../assets/hud/images/components/PlayerInfo/LevelWrapper.svg');
     background-position: 0 0;
     background-size: contain;
     background-repeat: no-repeat;
     background-attachment: local;
     background-clip: border-box;
 
-    @media(min-aspect-ratio: theme.$aspect-ratio-5x4) {
+    @media (min-aspect-ratio: theme.$aspect-ratio-5x4) {
       top: 24%;
       left: 6%;
     }
-    @media(min-aspect-ratio: theme.$aspect-ratio-3x2) and (min-width: 2000px) {
+    @media (min-aspect-ratio: theme.$aspect-ratio-3x2) and (min-width: 2000px) {
       top: 18%;
       left: 6%;
     }
-    @media(min-aspect-ratio: theme.$aspect-ratio-16x10){
+    @media (min-aspect-ratio: theme.$aspect-ratio-16x10) {
       top: 16%;
       left: 3%;
     }
-    @media(min-aspect-ratio: theme.$aspect-ratio-16x9) {
+    @media (min-aspect-ratio: theme.$aspect-ratio-16x9) {
       top: 8.45%;
       left: 4%;
 
-      @media(min-width: 1800px) {
+      @media (min-width: 1800px) {
         top: 8.45%;
         left: 4%;
       }
@@ -78,30 +78,30 @@
       top: 33%;
       left: 30%;
 
-      @media(min-aspect-ratio: theme.$aspect-ratio-5x4) {
+      @media (min-aspect-ratio: theme.$aspect-ratio-5x4) {
         top: 26.8%;
       }
-      @media(min-aspect-ratio: theme.$aspect-ratio-4x3) {
+      @media (min-aspect-ratio: theme.$aspect-ratio-4x3) {
         top: 27%;
         left: 29.2%;
       }
-      @media(min-aspect-ratio: theme.$aspect-ratio-3x2) and (min-width: 2000px) {
+      @media (min-aspect-ratio: theme.$aspect-ratio-3x2) and (min-width: 2000px) {
         top: 28.9%;
         left: 29%;
       }
-      @media(min-aspect-ratio: theme.$aspect-ratio-16x10){
+      @media (min-aspect-ratio: theme.$aspect-ratio-16x10) {
         top: 29.8%;
         left: 29.5%;
       }
-      @media(min-aspect-ratio: theme.$aspect-ratio-16x9) {
+      @media (min-aspect-ratio: theme.$aspect-ratio-16x9) {
         top: 33%;
         left: 29.2%;
 
-        @media(min-width: 1800px) {
+        @media (min-width: 1800px) {
           top: 33%;
         }
       }
-      @media(min-aspect-ratio: theme.$aspect-ratio-17x9) {
+      @media (min-aspect-ratio: theme.$aspect-ratio-17x9) {
         top: 31.8%;
         left: 26.5%;
       }

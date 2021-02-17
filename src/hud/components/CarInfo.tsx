@@ -1,6 +1,6 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import classes from '../../styles/hud/components/CarInfo.module.scss';
-import ProgressBar from 'progressbar.js'
+import ProgressBar from 'progressbar.js';
 
 // images
 import DoorsLockedImg from '../../assets/hud/images/components/CarInfo/doorsClosedLight.svg';
@@ -20,16 +20,15 @@ interface Props {
   fuel: number;
 }
 
-const CarInfo: React.FC<Props> = React.memo(({isCarRunning, isDoorsOpened, speed, fuel}) => {
-
-  const keyStyles = isCarRunning ? null : {opacity: 0.45};
-  const doorsLockedStyles = isDoorsOpened ? {opacity: 0.45} : null;
-  const doorsOpenedStyles = isDoorsOpened ? null : {opacity: 0.45};
+const CarInfo: React.FC<Props> = React.memo(({ isCarRunning, isDoorsOpened, speed, fuel }) => {
+  const keyStyles = isCarRunning ? null : { opacity: 0.45 };
+  const doorsLockedStyles = isDoorsOpened ? { opacity: 0.45 } : null;
+  const doorsOpenedStyles = isDoorsOpened ? null : { opacity: 0.45 };
 
   // draw progress bar (fuel)
   useEffect(() => {
     let fuelSvgWrapper = document.getElementById('fuel-svg-container');
-    for(let i = 0; i < fuelSvgWrapper.childNodes.length; i++) {
+    for (let i = 0; i < fuelSvgWrapper.childNodes.length; i++) {
       // @ts-ignore
       if (fuelSvgWrapper.childNodes[i].tagName.toLowerCase() === 'svg') {
         // @ts-ignore
@@ -37,20 +36,20 @@ const CarInfo: React.FC<Props> = React.memo(({isCarRunning, isDoorsOpened, speed
       }
     }
 
-    let bar = new ProgressBar.Circle('#fuel-svg-container', {
+    const bar = new ProgressBar.Circle('#fuel-svg-container', {
       trailColor: 'rgba(188, 207, 193,0.3)',
       trailWidth: 4,
       easing: 'easeInOut',
       strokeWidth: 4,
       svgStyle: {
         display: 'block',
-        width: '100%'
+        width: '100%',
       },
-      from: {color: '#fff', a: 1},
-      to: {color: '#fff', a: 1},
+      from: { color: '#fff', a: 1 },
+      to: { color: '#fff', a: 1 },
       step: function (state, circle) {
         circle.path.setAttribute('stroke', state.color);
-      }
+      },
     });
     // displayed area
     const oneCellRelational = (89 - 11) / 100;
@@ -60,7 +59,7 @@ const CarInfo: React.FC<Props> = React.memo(({isCarRunning, isDoorsOpened, speed
 
     fuelSvgWrapper = document.getElementById('fuel-svg-container');
 
-    for(let i = 0; i < fuelSvgWrapper.childNodes.length; i++) {
+    for (let i = 0; i < fuelSvgWrapper.childNodes.length; i++) {
       // @ts-ignore
       if (fuelSvgWrapper.childNodes[i].tagName.toLowerCase() === 'svg') {
         // @ts-ignore
@@ -75,27 +74,25 @@ const CarInfo: React.FC<Props> = React.memo(({isCarRunning, isDoorsOpened, speed
     <div className={classes.CarInfo}>
       <div className={classes.SpeedAndFuelWrapper}>
         <div className={classes.SpeedContainer}>
-          <div className={classes.SpeedText}>
-            {speed + ' KM/H'}
-          </div>
+          <div className={classes.SpeedText}>{speed + ' KM/H'}</div>
         </div>
         <div className={classes.FuelContainer}>
           <div className={classes.FuelWrapper}>
-            <div id='fuel-svg-container'>
-              <img src={fuelConditionalImg} className={classes.FuelCanisterWrapper}/>
+            <div id="fuel-svg-container">
+              <img src={fuelConditionalImg} className={classes.FuelCanisterWrapper} />
             </div>
           </div>
         </div>
-        <div className={classes.DecorativeBorder}/>
+        <div className={classes.DecorativeBorder} />
       </div>
       <div className={classes.CarStateWrapper}>
         <div className={classes.BorderedGrayBlock}>
           <div className={classes.KeyWrapper}>
-            <img src={KeyImg} className={classes.KeyImage} style={keyStyles}/>
+            <img src={KeyImg} className={classes.KeyImage} style={keyStyles} />
           </div>
           <div className={classes.DoorsStateWrapper}>
-            <img src={DoorsLockedImg} className={classes.DoorImage} style={doorsLockedStyles}/>
-            <img src={DoorsOpenedImg} className={classes.DoorImage} style={doorsOpenedStyles}/>
+            <img src={DoorsLockedImg} className={classes.DoorImage} style={doorsLockedStyles} />
+            <img src={DoorsOpenedImg} className={classes.DoorImage} style={doorsOpenedStyles} />
           </div>
         </div>
       </div>

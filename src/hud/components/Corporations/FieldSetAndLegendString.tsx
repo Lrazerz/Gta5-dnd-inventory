@@ -1,5 +1,5 @@
 import React from 'react';
-import FieldSetAndLegendStateless from "./FieldSetAndLegendStateless";
+import FieldSetAndLegendStateless from './FieldSetAndLegendStateless';
 
 interface Props {
   legend: string;
@@ -11,16 +11,22 @@ interface Props {
   placeholder?: string;
 }
 
-const FieldSetAndLegendString: React.FC<Props> = React.memo((Props) => {
+const FieldSetAndLegendString: React.FC<Props> = React.memo((props) => {
   // todo restr
 
   const onContentChange = (content: string) => {
-    Props.onChange(content);
-  }
+    props.onChange(content);
+  };
 
   return (
-    <FieldSetAndLegendStateless legend={Props.legend} contentText={Props.contentString} onChange={onContentChange}
-    minLength={Props.minLength} maxLength={Props.maxLength} placeholder={Props.placeholder}/>
+    <FieldSetAndLegendStateless
+      legend={props.legend}
+      contentText={props.contentString}
+      onChange={onContentChange}
+      minLength={props.minLength}
+      maxLength={props.maxLength}
+      placeholder={props.placeholder}
+    />
   );
 });
 

@@ -1,8 +1,3 @@
-const setBoostDataAction = () => {
+const setBoostDataAction = () => {};
 
-}
-
-
-export {
-
-}
+export {};

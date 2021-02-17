@@ -1,13 +1,13 @@
-import React, {useState, useEffect, useRef, CSSProperties} from 'react';
-import {useSelector} from 'react-redux';
+import React, { useState, useEffect, useRef, CSSProperties } from 'react';
+import { useSelector } from 'react-redux';
 // @ts-ignore
 import classes from '../styles/hud/HudApp.module.scss';
-import CarInfo from "./components/CarInfo";
-import PlayerInfo from "./components/PlayerInfo/PlayerInfo";
-import Hotkeys from "./components/Hotkeys/Hotkeys";
-import Phone from "./components/Phone/Phone";
-import InteractionsContainer from "./components/Interactions/InteractionsContainer";
-import Corporations from "./components/Corporations/Corporations";
+import CarInfo from './components/CarInfo';
+import PlayerInfo from './components/PlayerInfo/PlayerInfo';
+import Hotkeys from './components/Hotkeys/Hotkeys';
+import Phone from './components/Phone/Phone';
+import InteractionsContainer from './components/Interactions/InteractionsContainer';
+import Corporations from './components/Corporations/Corporations';
 
 //region ------------------------------ Props, defaults, state ------------------------------
 interface Props {
@@ -16,17 +16,16 @@ interface Props {
   onInteractionsClose: () => void;
 }
 
-const HudAppStateless: React.FC<Props> = React.memo(function HudApp({playerState, carInfo, onInteractionsClose}) {
-
+const HudAppStateless: React.FC<Props> = React.memo(function HudApp({ playerState, carInfo, onInteractionsClose }) {
   const [playerInfoWrapperHeight, setPlayerInfoWrapperHeight]: [number, any] = useState(0);
   const [carInfoWrapperHeight, setCarInfoWrapperHeight]: [number, any] = useState(0);
   const [hotkeyWrapperHeight, setHotkeyWrapperHeight]: [number, any] = useState(0);
 
   const phoneWrapperRef = useRef();
 
-  const isPhoneOpenedRedux = useSelector(state => state.hud.phone.isPhoneOpened);
-  const isInteractionsOpenedRedux = useSelector(state => state.hud.interactions.isOpened);
-  const isCorporationsOpenedRedux = useSelector(state => state.hud.corporations.corporations.isOpened);
+  const isPhoneOpenedRedux = useSelector((state) => state.hud.phone.isPhoneOpened);
+  const isInteractionsOpenedRedux = useSelector((state) => state.hud.interactions.isOpened);
+  const isCorporationsOpenedRedux = useSelector((state) => state.hud.corporations.corporations.isOpened);
 
   //region -------------------- Set up and clean up dimensions --------------------
   useEffect(() => {
@@ -53,54 +52,56 @@ const HudAppStateless: React.FC<Props> = React.memo(function HudApp({playerState
   //region -------------------- Styles --------------------
   const playerInfoWrapperStyles: CSSProperties = {
     height: playerInfoWrapperHeight + 'px',
-  }
+  };
 
   const carInfoWrapperStyles: CSSProperties = {
     height: carInfoWrapperHeight + 'px',
-  }
+  };
 
   const hotkeysWrapperStyles: CSSProperties = {
     height: hotkeyWrapperHeight + 'px',
-  }
+  };
   //endregion
 
   const carInfoOrHotkeysBlock = carInfo.isCarOpen ? (
     <div style={carInfoWrapperStyles} className={classes.CarInfoWrapper}>
-      <CarInfo isCarRunning={carInfo.carIndicators.isCarRunning} isDoorsOpened={carInfo.carIndicators.isDoorsOpen}
-               speed={carInfo.carIndicators.speed} fuel={carInfo.carIndicators.fuel}/>
+      <CarInfo
+        isCarRunning={carInfo.carIndicators.isCarRunning}
+        isDoorsOpened={carInfo.carIndicators.isDoorsOpen}
+        speed={carInfo.carIndicators.speed}
+        fuel={carInfo.carIndicators.fuel}
+      />
     </div>
   ) : (
     <div style={hotkeysWrapperStyles} className={classes.HotkeysWrapper}>
-      <Hotkeys/>
+      <Hotkeys />
     </div>
   );
 
   return (
     <div className={classes.HudApp}>
       <div className={classes.TopOfTheScreenWrapper}>
-        <div/>
+        <div />
         <div style={playerInfoWrapperStyles} className={classes.PlayerInfoWrapper}>
-          <PlayerInfo data={playerState}/>
+          <PlayerInfo data={playerState} />
         </div>
       </div>
-      <div className={classes.BottomOfTheScreenWrapper}>
-        {carInfoOrHotkeysBlock}
-      </div>
+      <div className={classes.BottomOfTheScreenWrapper}>{carInfoOrHotkeysBlock}</div>
       <div ref={phoneWrapperRef} className={classes.PhoneWrapper}>
-        {isPhoneOpenedRedux && <Phone/>}
+        {isPhoneOpenedRedux && <Phone />}
       </div>
       {isInteractionsOpenedRedux && (
         <div className={classes.InteractionsWrapper} onClick={onInteractionsClose}>
-          <InteractionsContainer/>
+          <InteractionsContainer />
         </div>
       )}
       {isCorporationsOpenedRedux && (
         <div className={classes.InteractionsWrapper}>
-          <Corporations/>
+          <Corporations />
         </div>
       )}
     </div>
   );
-})
+});
 
 export default HudAppStateless;

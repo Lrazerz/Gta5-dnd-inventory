@@ -3,19 +3,22 @@ import {
   DRAGGED_ITEM_RELEASE,
   HOVERED_SQUARES_SET,
   HOVERED_SQUARES_REMOVE,
-  GOING_TO_DROP_SET, EXTERNAL_BOARD_CURRENT_COUNT_CHANGE,
-} from "../../actions/inventory/types";
-import ItemModel from "../../../inventory/models/ItemModel";
+  GOING_TO_DROP_SET,
+  EXTERNAL_BOARD_CURRENT_COUNT_CHANGE,
+} from '../../actions/inventory/types';
+import ItemModel from '../../../inventory/models/ItemModel';
 
 export interface GoingToStack {
-  stackableItem: ItemModel,
-  stackableItemNewCurrentCount: number,
-  draggedItemNewCurrentCount: number,
+  stackableItem: ItemModel;
+  stackableItemNewCurrentCount: number;
+  draggedItemNewCurrentCount: number;
 }
 
 // from 1 coz 0 casting to false
 enum HoveredAreas {
-  Board = 1, ExternalBoard, Equipped
+  Board = 1,
+  ExternalBoard,
+  Equipped,
 }
 
 interface State {
@@ -31,18 +34,18 @@ interface State {
   // isHoveredEquipped: boolean;
   hoveredArea: HoveredAreas | null;
 
-  hoveredSquare: [number,number] | number | null;
+  hoveredSquare: [number, number] | number | null;
   allHoveredSquares: Array<Array<number>> | number | null;
 
   canDrop: boolean;
 
-  goingToDrop : null | {areaId: number},
-  goingToStack: null | GoingToStack,
+  goingToDrop: null | { areaId: number };
+  goingToStack: null | GoingToStack;
 }
 
 const initialState: State = {
   item: null,
-  draggedItemArea:  null,
+  draggedItemArea: null,
 
   xUp: null,
   xDown: null,
@@ -53,7 +56,6 @@ const initialState: State = {
   // isHoveredEquipped: false,
   hoveredArea: null,
 
-
   // Square, hovered with mouse
   hoveredSquare: null,
   // All hovered squares depending on the size of the item
@@ -61,17 +63,17 @@ const initialState: State = {
 
   canDrop: false,
 
-  goingToDrop : null,
+  goingToDrop: null,
   goingToStack: null,
-}
+};
 
 export default (state = initialState, action) => {
   switch (action.type) {
     case DRAGGED_ITEM_SET: {
-      const {item,xUp,xDown,yUp,yDown, draggedItemArea} = action;
+      const { item, xUp, xDown, yUp, yDown, draggedItemArea } = action;
       return {
         ...state,
-        item: {...item},
+        item: { ...item },
         draggedItemArea,
         xUp,
         xDown,
@@ -79,7 +81,7 @@ export default (state = initialState, action) => {
         yDown,
         goingToDrop: false,
         goingToStack: false,
-      }
+      };
     }
     case DRAGGED_ITEM_RELEASE: {
       return initialState;
@@ -90,7 +92,7 @@ export default (state = initialState, action) => {
         hoveredSquare: null,
         allHoveredSquares: [],
         hoveredArea: null,
-      }
+      };
     }
     case HOVERED_SQUARES_SET: {
       return {
@@ -101,10 +103,10 @@ export default (state = initialState, action) => {
         canDrop: action.canDrop,
         goingToDrop: false,
         goingToStack: action.goingToStack,
-      }
+      };
     }
     case GOING_TO_DROP_SET: {
-      const newGoingToDrop = action.goingToDrop ? {areaId: action.areaId} : null;
+      const newGoingToDrop = action.goingToDrop ? { areaId: action.areaId } : null;
       return {
         ...state,
         hoveredSquare: null,
@@ -113,10 +115,10 @@ export default (state = initialState, action) => {
         canDrop: action.canDrop,
         goingToStack: false,
         hoveredArea: null,
-      }
+      };
     }
     default: {
       return state;
     }
   }
-}
+};

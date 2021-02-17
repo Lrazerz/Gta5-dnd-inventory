@@ -1,12 +1,11 @@
-import {CorporationsTabsDict} from "../../../../../../../hud/models/corporations/enums";
+import { CorporationsTabsDict } from '../../../../../../../models/hud/corporations/enums';
 import {
   CorporationsTasksTabsEnumEng,
-  translateTasksTabToServer
-} from "../../../../../../../hud/models/corporations/tabs/tasks/tasksEnums";
-import {TasksSingleTaskInterface} from "../../../../../../../hud/models/corporations/tabs/tasks/tabs/currentTasksInterfaces";
-import {translateTasksExecutorTypeToServer} from "../../../../../../../hud/models/corporations/tabs/tasks/tabs/currentTasksEnums";
-import {transformDateFromObject} from "../../../../../../common/date";
-
+  translateTasksTabToServer,
+} from '../../../../../../../models/hud/corporations/tabs/tasks/tasksEnums';
+import { TasksSingleTaskInterface } from '../../../../../../../models/hud/corporations/tabs/tasks/tabs/currentTasksInterfaces';
+import { translateTasksExecutorTypeToServer } from '../../../../../../../models/hud/corporations/tabs/tasks/tabs/currentTasksEnums';
+import { transformDateFromObject } from '../../../../../../common/date';
 
 const mpTrigger_tasks_currentTasks_changePage = (pageNumber: number, lastTask: TasksSingleTaskInterface) => {
   console.log('cef_cl_tasks_currentTasks_changePage', {
@@ -14,15 +13,15 @@ const mpTrigger_tasks_currentTasks_changePage = (pageNumber: number, lastTask: T
     OpenedSubTab: translateTasksTabToServer(CorporationsTasksTabsEnumEng.currentTasks),
     PageNumber: pageNumber,
     LastTask: {
-      "Id": lastTask.id,
-      "Title": lastTask.title,
-      "Date": transformDateFromObject(lastTask.date),
-      "Sum": lastTask.sum,
-      "ExecutorType": translateTasksExecutorTypeToServer(lastTask.executorType),
-      "Executor": lastTask.executor,
-      "Description": lastTask.description,
-      "Appointer": lastTask.appointer
-    }
+      Id: lastTask.id,
+      Title: lastTask.title,
+      Date: transformDateFromObject(lastTask.date),
+      Sum: lastTask.sum,
+      ExecutorType: translateTasksExecutorTypeToServer(lastTask.executorType),
+      Executor: lastTask.executor,
+      Description: lastTask.description,
+      Appointer: lastTask.appointer,
+    },
   });
   try {
     const data = JSON.stringify({
@@ -30,56 +29,60 @@ const mpTrigger_tasks_currentTasks_changePage = (pageNumber: number, lastTask: T
       OpenedSubTab: translateTasksTabToServer(CorporationsTasksTabsEnumEng.currentTasks),
       PageNumber: pageNumber,
       LastTask: {
-        "Id": lastTask.id,
-        "Title": lastTask.title,
-        "Date": transformDateFromObject(lastTask.date),
-        "Sum": lastTask.sum,
-        "ExecutorType": translateTasksExecutorTypeToServer(lastTask.executorType),
-        "Executor": lastTask.executor,
-        "Description": lastTask.description,
-        "Appointer": lastTask.appointer
-      }
+        Id: lastTask.id,
+        Title: lastTask.title,
+        Date: transformDateFromObject(lastTask.date),
+        Sum: lastTask.sum,
+        ExecutorType: translateTasksExecutorTypeToServer(lastTask.executorType),
+        Executor: lastTask.executor,
+        Description: lastTask.description,
+        Appointer: lastTask.appointer,
+      },
     });
     // @ts-ignore
     mp.trigger('cef_cl_tasks_currentTasks_changePage', data);
   } catch (e) {}
-}
+};
 
 const mpTrigger_tasks_currentTasks_completeTask = (taskId: string, isSuccessful: boolean) => {
   console.log('cef_cl_tasks_currentTasks_completeTask', {
     OpenedTab: CorporationsTabsDict.tasks,
     OpenedSubTab: translateTasksTabToServer(CorporationsTasksTabsEnumEng.currentTasks),
     TaskId: taskId,
-    IsSuccessful: isSuccessful
+    IsSuccessful: isSuccessful,
   });
   try {
     const data = JSON.stringify({
       OpenedTab: CorporationsTabsDict.tasks,
       OpenedSubTab: translateTasksTabToServer(CorporationsTasksTabsEnumEng.currentTasks),
       TaskId: taskId,
-      IsSuccessful: isSuccessful
-    })
+      IsSuccessful: isSuccessful,
+    });
     // @ts-ignore
     mp.trigger('cef_cl_tasks_currentTasks_completeTask', data);
   } catch (e) {}
-}
+};
 
 const mpTrigger_tasks_currentTasks_removeTask = (taskId: string) => {
-  console.log('cef_cl_tasks_currentTasks_removeTask', CorporationsTabsDict.tasks,
-    translateTasksTabToServer(CorporationsTasksTabsEnumEng.currentTasks), taskId);
+  console.log(
+    'cef_cl_tasks_currentTasks_removeTask',
+    CorporationsTabsDict.tasks,
+    translateTasksTabToServer(CorporationsTasksTabsEnumEng.currentTasks),
+    taskId,
+  );
   try {
     const data = JSON.stringify({
       OpenedTab: CorporationsTabsDict.tasks,
       OpenedSubTab: translateTasksTabToServer(CorporationsTasksTabsEnumEng.currentTasks),
       TaskId: taskId,
-    })
+    });
     // @ts-ignore
     mp.trigger('cef_cl_tasks_currentTasks_removeTask', data);
   } catch (e) {}
-}
+};
 
 export {
   mpTrigger_tasks_currentTasks_changePage,
   mpTrigger_tasks_currentTasks_completeTask,
-  mpTrigger_tasks_currentTasks_removeTask
-}
+  mpTrigger_tasks_currentTasks_removeTask,
+};

@@ -6,11 +6,7 @@ interface Props {
 }
 
 const CommonItem: React.FC<Props> = ({ children }) => {
-  return (
-    <div className={classes.CommonItem}>
-        {children}
-    </div>
-  );
+  return <div className={classes.CommonItem}>{children}</div>;
 };
 
 export default CommonItem;

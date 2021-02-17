@@ -1,4 +1,4 @@
-import React, {CSSProperties, useEffect} from 'react';
+import React, { CSSProperties, useEffect } from 'react';
 import classes from '../../../styles/hud/components/Corporations/CorporationsTextArea.module.scss';
 
 interface Props {
@@ -9,12 +9,17 @@ interface Props {
   placeholder?: string;
 }
 
-const CorporationsTextArea: React.FC<Props> = React.memo((Props) => {
-
+const CorporationsTextArea: React.FC<Props> = React.memo((props) => {
   return (
-    <textarea className={classes.CorporationsTextArea} value={Props.value} style={Props.styles}
-              onChange={e => Props.onChange(e.target.value)} maxLength={Props.maxLength} rows={4}
-              placeholder={Props.placeholder}/>
+    <textarea
+      className={classes.CorporationsTextArea}
+      value={props.value}
+      style={props.styles}
+      onChange={(e) => props.onChange(e.target.value)}
+      maxLength={props.maxLength}
+      rows={4}
+      placeholder={props.placeholder}
+    />
   );
 });
 

@@ -1,7 +1,7 @@
 import React from 'react';
-import FieldSetAndLegendStateless from "./FieldSetAndLegendStateless";
-import {splitStringDigits} from "../../../utils/common/splitStringDigits";
-import {joinSplitedDigits} from "../../../utils/common/joinSplittedDigits";
+import FieldSetAndLegendStateless from './FieldSetAndLegendStateless';
+import { splitStringDigits } from '../../../utils/common/splitStringDigits';
+import { joinSplitedDigits } from '../../../utils/common/joinSplittedDigits';
 
 interface Props {
   legend: string;
@@ -14,30 +14,33 @@ interface Props {
 }
 
 // returns number or '' if nothing typed
-const FieldSetAndLegendNumber: React.FC<Props> = React.memo((Props) => {
-
+const FieldSetAndLegendNumber: React.FC<Props> = React.memo((props) => {
   const onNumberChange = (numberStr: string) => {
-    if(numberStr === '') {
-      Props.onChange('');
+    if (numberStr === '') {
+      props.onChange('');
       return;
     }
     const numberWithoutSpacesStr: string = joinSplitedDigits(numberStr);
     const numberWithoutSpaces: number = +numberWithoutSpacesStr;
-    if(isNaN(numberWithoutSpaces)) {
+    if (isNaN(numberWithoutSpaces)) {
       console.warn('[forb] number input is not a number');
       return;
     }
-    if(Props.max && numberWithoutSpaces > Props.max) {
+    if (props.max && numberWithoutSpaces > props.max) {
       console.warn('[forb] number input > max available');
       return;
     }
-    Props.onChange(numberWithoutSpaces.toString());
-  }
+    props.onChange(numberWithoutSpaces.toString());
+  };
 
   return (
-    <FieldSetAndLegendStateless legend={Props.legend} contentText={splitStringDigits(Props.contentNumber)}
-                                onChange={onNumberChange} rightContent={Props.rightContent}
-                                placeholder={Props.placeholder}/>
+    <FieldSetAndLegendStateless
+      legend={props.legend}
+      contentText={splitStringDigits(props.contentNumber)}
+      onChange={onNumberChange}
+      rightContent={props.rightContent}
+      placeholder={props.placeholder}
+    />
   );
 });
 

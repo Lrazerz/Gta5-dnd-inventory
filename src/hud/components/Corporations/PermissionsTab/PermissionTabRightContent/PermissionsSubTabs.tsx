@@ -1,20 +1,17 @@
-import React, {ReactElement} from 'react';
-import {useSelector} from 'react-redux';
-import classes
-  from '../../../../../styles/hud/components/Corporations/PermissionsTab/PermissionTabRightContent/PermissionsSubTabs.module.scss';
-import PermissionsSubTabsHeader from "./PermissionsSubTabsHeader";
-import {CorporationsPermissionsTabsEnum} from "../../../../models/corporations/enums";
-import SubTabAuto from "./subTabs/SubTabAuto/SubTabAuto";
-import SubTabProperty from "./subTabs/SubTabProperty/SubTabProperty";
+import React, { ReactElement } from 'react';
+import { useSelector } from 'react-redux';
+import classes from '../../../../../styles/hud/components/Corporations/PermissionsTab/PermissionTabRightContent/PermissionsSubTabs.module.scss';
+import PermissionsSubTabsHeader from './PermissionsSubTabsHeader';
+import { CorporationsPermissionsTabsEnum } from '../../../../../models/hud/corporations/enums';
+import SubTabAuto from './subTabs/SubTabAuto/SubTabAuto';
+import SubTabProperty from './subTabs/SubTabProperty/SubTabProperty';
 
-interface Props {
+interface Props {}
 
-}
-
-const PermissionsSubTabs = React.memo((Props) => {
-``
-  const openedTab = useSelector(state => state.hud.corporations.tabs.permissions.permissions.openedTab);
-  const selectedRole = useSelector(state => state.hud.corporations.tabs.permissions.permissions.selectedRole);
+const PermissionsSubTabs = React.memo((props) => {
+  ``;
+  const openedTab = useSelector((state) => state.hud.corporations.tabs.permissions.permissions.openedTab);
+  const selectedRole = useSelector((state) => state.hud.corporations.tabs.permissions.permissions.selectedRole);
 
   let tabContent: ReactElement;
 
@@ -44,11 +41,9 @@ const PermissionsSubTabs = React.memo((Props) => {
   return (
     <div className={classes.PermissionsSubTabs}>
       <div className={classes.Header}>
-        <PermissionsSubTabsHeader openedRoleTitle={selectedRole && selectedRole.title} openedTab={openedTab}/>
+        <PermissionsSubTabsHeader openedRoleTitle={selectedRole && selectedRole.title} openedTab={openedTab} />
       </div>
-      <div className={classes.TabContent}>
-        {tabContent}
-      </div>
+      <div className={classes.TabContent}>{tabContent}</div>
     </div>
   );
 });

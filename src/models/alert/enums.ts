@@ -1,9 +1,7 @@
 enum AlertTypesEnum {
   success,
   warning,
-  error
+  error,
 }
 
-export {
-  AlertTypesEnum
-}
+export { AlertTypesEnum };

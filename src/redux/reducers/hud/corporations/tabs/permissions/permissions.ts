@@ -1,4 +1,4 @@
-import {CorporationsPermissionsTabsEnum} from "../../../../../../hud/models/corporations/enums";
+import { CorporationsPermissionsTabsEnum } from '../../../../../../models/hud/corporations/enums';
 import {
   PERMISSIONS_PERMISSION_CHANGE,
   PERMISSIONS_PERMISSIONS_SET,
@@ -6,20 +6,21 @@ import {
   PERMISSIONS_ROLE_SELECT,
   PERMISSIONS_ROLE_SET_INFO,
   PERMISSIONS_ROLES_PERMISSIONS_SET,
-  PERMISSIONS_TAB_OPEN
-} from "../../../../../actions/hud/corporations/tabs/permissions/permissionsTypes";
+  PERMISSIONS_TAB_OPEN,
+} from '../../../../../actions/hud/corporations/tabs/permissions/permissionsTypes';
 import {
-  CommonPermissionsSetInterface, PermissionsReducerInterface,
-  SingleRoleInterface
-} from "../../../../../../hud/models/corporations/interfaces";
-import {CORPORATIONS_TAB_OPEN} from "../../../../../actions/hud/corporations/corporationsTypes";
+  CommonPermissionsSetInterface,
+  PermissionsReducerInterface,
+  SingleRoleInterface,
+} from '../../../../../../models/hud/corporations/interfaces';
+import { CORPORATIONS_TAB_OPEN } from '../../../../../actions/hud/corporations/corporationsTypes';
 
 const initialState: PermissionsReducerInterface = {
   openedTab: CorporationsPermissionsTabsEnum.auto,
   roles: null,
   selectedRole: null,
-  commonPermissionsSets: null
-}
+  commonPermissionsSets: null,
+};
 
 // const initialState: PermissionsReducerInterface = {
 //   openedTab: CorporationsPermissionsTabsEnum.auto,
@@ -104,66 +105,65 @@ export default (state = initialState, action) => {
     case PERMISSIONS_TAB_OPEN: {
       return {
         ...state,
-        openedTab: action.openedTab
-      }
+        openedTab: action.openedTab,
+      };
     }
     case PERMISSIONS_ROLES_PERMISSIONS_SET: {
-      const selectedRole = action.roles.find(el => el.title === action.selectedRoleTitle);
+      const selectedRole = action.roles.find((el) => el.title === action.selectedRoleTitle);
       return {
         ...state,
         roles: action.roles,
         selectedRole: selectedRole,
-        commonPermissionsSets: action.permissions
-      }
+        commonPermissionsSets: action.permissions,
+      };
     }
     case PERMISSIONS_ROLE_SELECT: {
-      const selectedRoleIdx = state.roles.findIndex(role => role.title === action.title);
+      const selectedRoleIdx = state.roles.findIndex((role) => role.title === action.title);
       return {
         ...initialState,
         roles: state.roles,
-        selectedRole: {...state.roles[selectedRoleIdx]}
-      }
+        selectedRole: { ...state.roles[selectedRoleIdx] },
+      };
     }
     case PERMISSIONS_ROLE_REMOVE: {
       const oldRoles = [...state.roles];
-      const selectedRoleId = oldRoles.findIndex(role => role.title === action.title);
+      const selectedRoleId = oldRoles.findIndex((role) => role.title === action.title);
       oldRoles.splice(selectedRoleId, 1);
       return {
         ...initialState,
-        roles: oldRoles
-      }
+        roles: oldRoles,
+      };
     }
     // will be modules too or any other standard tab
     case PERMISSIONS_ROLE_SET_INFO: {
       console.log('action permissionsSets', action.permissionsSets);
       return {
         ...state,
-        commonPermissionsSets: action.permissionsSets
-      }
+        commonPermissionsSets: action.permissionsSets,
+      };
     }
     case PERMISSIONS_PERMISSIONS_SET: {
       return {
         ...state,
-        commonPermissionsSets: action.permissionsSets
-      }
+        commonPermissionsSets: action.permissionsSets,
+      };
     }
     case PERMISSIONS_PERMISSION_CHANGE: {
       const newCommonPermissionsSets = [...state.commonPermissionsSets];
-      const selectedPermissionsSetIdx = newCommonPermissionsSets.findIndex(set => set.title === action.setTitle);
-      const selectedPermissionIdx =
-        newCommonPermissionsSets[selectedPermissionsSetIdx].permissions
-          .findIndex(permission => permission.title === action.permissionTitle);
+      const selectedPermissionsSetIdx = newCommonPermissionsSets.findIndex((set) => set.title === action.setTitle);
+      const selectedPermissionIdx = newCommonPermissionsSets[selectedPermissionsSetIdx].permissions.findIndex(
+        (permission) => permission.title === action.permissionTitle,
+      );
 
       newCommonPermissionsSets[selectedPermissionsSetIdx].permissions[selectedPermissionIdx].value = action.value;
 
       return {
         ...state,
-        commonPermissionsSets: newCommonPermissionsSets
-      }
+        commonPermissionsSets: newCommonPermissionsSets,
+      };
     }
     default: {
       return state;
     }
   }
-}
-
+};

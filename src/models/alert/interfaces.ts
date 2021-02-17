@@ -1,4 +1,4 @@
-import {AlertTypesEnum} from "./enums";
+import { AlertTypesEnum } from './enums';
 
 interface SingleAlertInterface {
   id: string;
@@ -6,6 +6,4 @@ interface SingleAlertInterface {
   type: AlertTypesEnum;
 }
 
-export {
-  SingleAlertInterface
-}
+export { SingleAlertInterface };

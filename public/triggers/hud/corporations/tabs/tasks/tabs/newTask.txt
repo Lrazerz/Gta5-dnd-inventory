@@ -1,4 +1,4 @@
-window_corporations_tasks_openNewTask(JSON);
+corporations_tasks_openNewTask(JSON);
 
 JSON: '{
 	"PotentialExecutors": [

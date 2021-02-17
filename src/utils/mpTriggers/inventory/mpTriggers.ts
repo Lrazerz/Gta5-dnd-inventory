@@ -1,4 +1,4 @@
-import {translateExternalToServerItem, translateToServerItem} from "../../../inventory/utils/translateToServerItem";
+import { translateExternalToServerItem, translateToServerItem } from '../../../inventory/utils/translateToServerItem';
 
 //region ------------------------------ Move triggers ------------------------------
 // when add item at board or equipped inventory (addItem, setEquippedItem)
@@ -9,7 +9,7 @@ const mpTriggerMoveItem = (item) => {
     // @ts-ignore
     mp.trigger('cef_cl_moveItem', transformedItem);
   } catch (e) {}
-}
+};
 
 // when add item at external board from board/eq (addExternalBoardItem)  (*in fact addExtBoardItem)
 const mpTriggerMoveToExternalItem = (item) => {
@@ -19,7 +19,7 @@ const mpTriggerMoveToExternalItem = (item) => {
     // @ts-ignore
     mp.trigger('cef_cl_moveToExternalItem', transformedItem);
   } catch (e) {}
-}
+};
 
 // move from external to board/eq
 const mpTriggerMoveFromExternalItem = (item) => {
@@ -29,7 +29,7 @@ const mpTriggerMoveFromExternalItem = (item) => {
     // @ts-ignore
     mp.trigger('cef_cl_moveFromExternalItem', transformedItem);
   } catch (e) {}
-}
+};
 
 // when add item at external board from external board
 const mpTriggerMoveFromExternalToExternalItem = (item) => {
@@ -39,7 +39,7 @@ const mpTriggerMoveFromExternalToExternalItem = (item) => {
     // @ts-ignore
     mp.trigger('cef_cl_moveExternalItem', transformedItem);
   } catch (e) {}
-}
+};
 //endregion
 
 //region ------------------------------ Drop triggers ------------------------------
@@ -51,7 +51,7 @@ const mpTriggerDropItem = (item) => {
     // @ts-ignore
     mp.trigger('cef_cl_dropItem', transformedItem);
   } catch (e) {}
-}
+};
 
 // invoke from dragEndHandler, RangeComponent, contextMenu ("Выкинуть")
 const mpTriggerDropExternalItem = (item) => {
@@ -61,7 +61,7 @@ const mpTriggerDropExternalItem = (item) => {
     // @ts-ignore
     mp.trigger('cef_cl_dropExternalItem', transformedItem);
   } catch (e) {}
-}
+};
 //endregion
 
 //region ------------------------------ Stack triggers ------------------------------
@@ -73,7 +73,7 @@ const mpTriggerStackItem = (draggedItem, stackableItem) => {
     // @ts-ignore
     mp.trigger('cef_cl_stackItem', transformedDraggedItem, transformedStackableItem);
   } catch (e) {}
-}
+};
 
 const mpTriggerStackToExternalItem = (draggedItem, stackableItem) => {
   const transformedDraggedItem = translateToServerItem(draggedItem);
@@ -83,7 +83,7 @@ const mpTriggerStackToExternalItem = (draggedItem, stackableItem) => {
     // @ts-ignore
     mp.trigger('cef_cl_stackToExternalItem', transformedDraggedItem, transformedStackableItem);
   } catch (e) {}
-}
+};
 
 const mpTriggerStackFromExternalItem = (draggedItem, stackableItem) => {
   const transformedDraggedItem = translateExternalToServerItem(draggedItem);
@@ -93,7 +93,7 @@ const mpTriggerStackFromExternalItem = (draggedItem, stackableItem) => {
     // @ts-ignore
     mp.trigger('cef_cl_stackFromExternalItem', transformedDraggedItem, transformedStackableItem);
   } catch (e) {}
-}
+};
 
 const mpTriggerStackFromExternalToExternalItem = (draggedItem, stackableItem) => {
   const transformedDraggedItem = translateExternalToServerItem(draggedItem);
@@ -103,7 +103,7 @@ const mpTriggerStackFromExternalToExternalItem = (draggedItem, stackableItem) =>
     // @ts-ignore
     mp.trigger('cef_cl_stackExternalItem', transformedDraggedItem, transformedStackableItem);
   } catch (e) {}
-}
+};
 //endregion
 
 //region ------------------------------ Rotate triggers ------------------------------
@@ -115,7 +115,7 @@ const mpTriggerRotateBoardItem = (item) => {
     // @ts-ignore
     mp.trigger('cef_cl_rotateItem', transformedItem);
   } catch (e) {}
-}
+};
 
 const mpTriggerRotateExternalItem = (item) => {
   const transformedItem = translateExternalToServerItem(item);
@@ -124,13 +124,20 @@ const mpTriggerRotateExternalItem = (item) => {
     // @ts-ignore
     mp.trigger('cef_cl_rotateExternalItem', transformedItem);
   } catch (e) {}
-}
+};
 //endregion
 
-export {mpTriggerMoveItem, mpTriggerMoveToExternalItem,
-  mpTriggerMoveFromExternalItem, mpTriggerMoveFromExternalToExternalItem,
-  mpTriggerDropItem, mpTriggerDropExternalItem,
-  mpTriggerStackItem, mpTriggerStackToExternalItem,
-  mpTriggerStackFromExternalItem, mpTriggerStackFromExternalToExternalItem,
-  mpTriggerRotateBoardItem, mpTriggerRotateExternalItem
-}
+export {
+  mpTriggerMoveItem,
+  mpTriggerMoveToExternalItem,
+  mpTriggerMoveFromExternalItem,
+  mpTriggerMoveFromExternalToExternalItem,
+  mpTriggerDropItem,
+  mpTriggerDropExternalItem,
+  mpTriggerStackItem,
+  mpTriggerStackToExternalItem,
+  mpTriggerStackFromExternalItem,
+  mpTriggerStackFromExternalToExternalItem,
+  mpTriggerRotateBoardItem,
+  mpTriggerRotateExternalItem,
+};

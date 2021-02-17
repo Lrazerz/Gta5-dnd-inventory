@@ -5,10 +5,8 @@ interface Props {
   isOpened: boolean;
 }
 
-const OpenCloseArrowButton: React.FC<Props> = React.memo((Props) => {
-  return (
-    <div className={`${classes.OpenCloseArrowButton} ${Props.isOpened ? classes.Close : classes.Open}`}/>
-  );
+const OpenCloseArrowButton: React.FC<Props> = React.memo((props) => {
+  return <div className={`${classes.OpenCloseArrowButton} ${props.isOpened ? classes.Close : classes.Open}`} />;
 });
 
 export default OpenCloseArrowButton;

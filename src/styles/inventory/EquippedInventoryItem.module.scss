@@ -5,9 +5,9 @@
   position: relative;
   height: 16%;
   border-radius: 5px;
-  background: linear-gradient(theme.$color-lightGray,theme.$color-lighterGray);
+  background: linear-gradient(theme.$color-lightGray, theme.$color-lighterGray);
   &:last-child {
-    background: linear-gradient(theme.$color-lighterGray,theme.$color-gray);
+    background: linear-gradient(theme.$color-lighterGray, theme.$color-gray);
   }
   @media (max-width: theme.$breakpoint-md) {
     height: 100%;

@@ -1,26 +1,28 @@
-import React, {useState, useEffect, useRef} from 'react';
-import {useSelector, useDispatch} from 'react-redux';
-import {openCar, setFuel, setSpeed} from "../utils/windowFuncs/hud/CarInfo/CarInfoInterceptors";
+import React, { useState, useEffect, useRef } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { openCar, setFuel, setSpeed } from '../utils/windowFuncs/hud/CarInfo/CarInfoInterceptors';
 import {
   setNetwork,
   setPlayerAvatar,
-  setPlayerBuffs, setPlayerIndicators,
-  setPlayerRank, setTime
-} from "../utils/windowFuncs/hud/PlayerInfo/PlayerInfoInterceptors";
-import {closePhone, openPhone, phone_openIncomingCall} from "../utils/windowFuncs/hud/phone/phoneInterceptors";
-import {setPhoneTime, setPlayerAvatarAction} from "../redux/actions/hud/phone";
+  setPlayerBuffs,
+  setPlayerIndicators,
+  setPlayerRank,
+  setTime,
+} from '../utils/windowFuncs/hud/PlayerInfo/PlayerInfoInterceptors';
+import { closePhone, openPhone, phone_openIncomingCall } from '../utils/windowFuncs/hud/phone/phoneInterceptors';
+import { setPhoneTime, setPlayerAvatarAction } from '../redux/actions/hud/phone';
 import {
   windowCloseInteractions,
   windowOpenInteractions,
-} from "../utils/windowFuncs/hud/Interactions/interactionsInterceptors";
-import {SingleInteractionInterface} from "./models/InteractionInterfaces";
-import {mpTrigger_interactions_closeInteractions} from "../utils/mpTriggers/hud/interactions/interactionsTriggers";
-import HudAppStateless from "./HudAppStateless";
-import {openCorporations} from "../utils/windowFuncs/hud/Corporations/CorporationsInterceptors";
-import {corporationsOpenAction, corporationsCloseAction} from "../redux/actions/hud/corporations/corporations";
-import {setAlert} from "../redux/actions/alert/alert";
-import {AlertTypesEnum} from "../models/alert/enums";
-import {DefaultHudDataInterface} from "./models/hudInterfaces";
+} from '../utils/windowFuncs/hud/Interactions/interactionsInterceptors';
+import { SingleInteractionInterface } from '../models/hud/InteractionInterfaces';
+import { mpTrigger_interactions_closeInteractions } from '../utils/mpTriggers/hud/interactions/interactionsTriggers';
+import HudAppStateless from './HudAppStateless';
+import { openCorporations } from '../utils/windowFuncs/hud/Corporations/CorporationsInterceptors';
+import { corporationsOpenAction, corporationsCloseAction } from '../redux/actions/hud/corporations/corporations';
+import { setAlert } from '../redux/actions/alert/alert';
+import { AlertTypesEnum } from '../models/alert/enums';
+import { DefaultHudDataInterface } from '../models/hud/hudInterfaces';
 // import Notification from 'rc-notification';
 
 interface Props {
@@ -32,28 +34,28 @@ interface CarInfoState {
 
   carIndicators: {
     // key image
-    isCarRunning: boolean,
+    isCarRunning: boolean;
     // 2 different images
-    isDoorsOpen: boolean,
+    isDoorsOpen: boolean;
     // speed text, unlimited
-    speed: number,
+    speed: number;
     // canister image, from 1 to 100
-    fuel: number,
+    fuel: number;
   };
 }
 
 const playerInfoDefaultState: DefaultHudDataInterface = {
-  playerAvatarName: "",
-  playerRankTitle: "",
+  playerAvatarName: '',
+  playerRankTitle: '',
   stateIndicators: {
     firstIndicator: 0,
     secondIndicator: 0,
-    thirdIndicator: 0
+    thirdIndicator: 0,
   },
   network: 0,
   time: '00:00',
   buffs: [],
-}
+};
 
 const carInfoDefaultState = {
   isCarOpen: false,
@@ -66,11 +68,10 @@ const carInfoDefaultState = {
     speed: 0,
     // canister image, from 1 to 100
     fuel: 0,
-  }
-}
+  },
+};
 
-const HudApp: React.FC<Props> = React.memo(function HudApp({data}) {
-
+const HudApp: React.FC<Props> = React.memo(function HudApp({ data }) {
   const dispatch = useDispatch();
   //
   // setTimeout(() => {
@@ -99,108 +100,117 @@ const HudApp: React.FC<Props> = React.memo(function HudApp({data}) {
   useEffect(() => {
     //region ------------------------------ PlayerInfo window interceptors ------------------------------
     //@ts-ignore
-    if(!window.setPlayerRank) {
+    if (!window.setPlayerRank) {
       //@ts-ignore
       window.setPlayerRank = (data) => {
         const playerRankTitle = setPlayerRank(data);
-        setPlayerInfo(prevState => ({...prevState, playerRankTitle}));
-      }
+        setPlayerInfo((prevState) => ({ ...prevState, playerRankTitle }));
+      };
     }
 
     //@ts-ignore
-    if(!window.setPlayerAvatar) {
+    if (!window.setPlayerAvatar) {
       //@ts-ignore
       window.setPlayerAvatar = (data) => {
         const playerAvatarName = setPlayerAvatar(data);
         dispatch(setPlayerAvatarAction(playerAvatarName));
-        setPlayerInfo(prevState => ({...prevState, playerAvatarName}));
-      }
+        setPlayerInfo((prevState) => ({ ...prevState, playerAvatarName }));
+      };
     }
 
     //@ts-ignore
-    if(!window.setPlayerBuffs) {
+    if (!window.setPlayerBuffs) {
       //@ts-ignore
       window.setPlayerBuffs = (data) => {
         const buffs = setPlayerBuffs(data);
-        setPlayerInfo(prevState => ({...prevState, buffs}));
-      }
+        setPlayerInfo((prevState) => ({ ...prevState, buffs }));
+      };
     }
 
     //@ts-ignore
-    if(!window.setPlayerIndicators) {
+    if (!window.setPlayerIndicators) {
       //@ts-ignore
       window.setPlayerIndicators = (data) => {
         const indicators = setPlayerIndicators(data);
-        setPlayerInfo(prevState => ({...prevState, stateIndicators: indicators}));
-      }
+        setPlayerInfo((prevState) => ({
+          ...prevState,
+          stateIndicators: indicators,
+        }));
+      };
     }
     //endregion
 
     //region ------------------------------ Time and network interceptors ------------------------------
     //@ts-ignore
-    if(!window.setTime) {
+    if (!window.setTime) {
       //@ts-ignore
       window.setTime = (data) => {
         const time = setTime(data);
         dispatch(setPhoneTime(time));
-        setPlayerInfo(prevState => ({...prevState, time}))
-      }
+        setPlayerInfo((prevState) => ({ ...prevState, time }));
+      };
     }
     //@ts-ignore
-    if(!window.setNetwork) {
+    if (!window.setNetwork) {
       //@ts-ignore
       window.setNetwork = (data) => {
         const network = setNetwork(data);
-        setPlayerInfo(prevState => ({...prevState, network}));
-      }
+        setPlayerInfo((prevState) => ({ ...prevState, network }));
+      };
     }
     //endregion
 
     //region ------------------------------ Car info interceptors ------------------------------
     //@ts-ignore
-    if(!window.openCar) {
+    if (!window.openCar) {
       //@ts-ignore
       window.openCar = (data) => {
         const carIndicators = openCar(data);
-        setCarInfo({isCarOpen: true, carIndicators});
-      }
+        setCarInfo({ isCarOpen: true, carIndicators });
+      };
     }
 
     //@ts-ignore
-    if(!window.closeCar) {
+    if (!window.closeCar) {
       //@ts-ignore
       window.closeCar = () => {
         setCarInfo(carInfoDefaultState);
-      }
+      };
     }
 
     //@ts-ignore
-    if(!window.setSpeed) {
+    if (!window.setSpeed) {
       //@ts-ignore
       window.setSpeed = (data) => {
         const speed = setSpeed(data);
-        setCarInfo(prevState => ({...prevState, carIndicators: {...prevState.carIndicators, speed}}));
-      }
+        setCarInfo((prevState) => ({
+          ...prevState,
+          carIndicators: { ...prevState.carIndicators, speed },
+        }));
+      };
     }
 
     //@ts-ignore
-    if(!window.setFuel) {
+    if (!window.setFuel) {
       //@ts-ignore
       window.setFuel = (data) => {
         const fuel = setFuel(data);
-        setCarInfo(prevState => ({...prevState, carIndicators: {...prevState.carIndicators, fuel}}));
-      }
+        setCarInfo((prevState) => ({
+          ...prevState,
+          carIndicators: { ...prevState.carIndicators, fuel },
+        }));
+      };
     }
     //endregion
 
     //region -------------------- Phone interceptors --------------------
     // @ts-ignore
-    if(!window.openPhone) {
+    if (!window.openPhone) {
       // @ts-ignore
       window.openPhone = openPhone;
     }
     // @ts-ignore
-    if(!window.closePhone) {
+    if (!window.closePhone) {
       // @ts-ignore
       window.closePhone = closePhone;
     }
@@ -208,21 +218,21 @@ const HudApp: React.FC<Props> = React.memo(function HudApp({data}) {
 
     //region -------------------- Interactions interceptors --------------------
     // @ts-ignore
-    if(!window.openInteractions) {
+    if (!window.openInteractions) {
       // @ts-ignore
       window.openInteractions = (jsonData) => {
         const parsedData = JSON.parse(jsonData).$values;
-        const lowerCaseValues: SingleInteractionInterface[] = parsedData.map(value => {
+        const lowerCaseValues: SingleInteractionInterface[] = parsedData.map((value) => {
           return {
             name: value.Name,
             enabled: value.Enabled,
-          }
+          };
         });
         windowOpenInteractions(lowerCaseValues);
-      }
+      };
     }
     // @ts-ignore
-    if(!window.closeInteractions) {
+    if (!window.closeInteractions) {
       // @ts-ignore
       window.closeInteractions = windowCloseInteractions;
     }
@@ -230,20 +240,20 @@ const HudApp: React.FC<Props> = React.memo(function HudApp({data}) {
 
     //region -------------------- Corporations interceptors --------------------
     // @ts-ignore
-    if(!window.openCorporations) {
+    if (!window.openCorporations) {
       // @ts-ignore
       window.openCorporations = (mainScreenData) => {
         const data = openCorporations(mainScreenData);
         dispatch(corporationsOpenAction());
-      }
+      };
     }
 
     // @ts-ignore
-    if(!window.closeCorporations) {
+    if (!window.closeCorporations) {
       // @ts-ignore
       window.closeCorporations = () => {
         dispatch(corporationsCloseAction());
-      }
+      };
     }
     //endregion
 
@@ -293,13 +303,13 @@ const HudApp: React.FC<Props> = React.memo(function HudApp({data}) {
       // @ts-ignore
       window.closeCorporations = undefined;
       //endregion
-    }
+    };
   }, []);
   //endregion
 
   //region -------------------- Set up and clean up dimensions --------------------
   useEffect(() => {
-    if(phoneWrapperRef.current) {
+    if (phoneWrapperRef.current) {
       // @ts-ignore
       const width = window.getComputedStyle(phoneWrapperRef.current).width;
       // @ts-ignore
@@ -312,11 +322,9 @@ const HudApp: React.FC<Props> = React.memo(function HudApp({data}) {
     try {
       mpTrigger_interactions_closeInteractions();
     } catch (e) {}
-  }
+  };
 
-  return <HudAppStateless playerState={playerInfo} carInfo={carInfo} onInteractionsClose={interactionsCloseHandler} />
-
-})
+  return <HudAppStateless playerState={playerInfo} carInfo={carInfo} onInteractionsClose={interactionsCloseHandler} />;
+});
 
 export default HudApp;
-

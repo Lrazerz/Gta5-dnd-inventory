@@ -1,13 +1,13 @@
-import React, {CSSProperties, useRef} from 'react';
+import React, { CSSProperties, useRef } from 'react';
 import classes from '../../../styles/inventory/equippedClosingInventory/ClosingWeaponSquare.module.scss';
-import {useDispatch} from 'react-redux';
-import Overlay from "../UI/Overlay";
-import {useSelector} from 'react-redux';
-import {setHoveredSquares} from "../../../redux/actions/inventory/draggedItem";
-import theme from "../../constants/css/theme";
-import {WeaponItemTypes} from "../../constants/dnd/types";
-import {EquippedCategoriesToCells} from "../../constants/dnd/equippedCategoriesToCells";
-import {removeHoveredItem} from "../../../redux/actions/inventory/hoveredItem";
+import { useDispatch } from 'react-redux';
+import Overlay from '../UI/Overlay';
+import { useSelector } from 'react-redux';
+import { setHoveredSquares } from '../../../redux/actions/inventory/draggedItem';
+import theme from '../../constants/css/theme';
+import { WeaponItemTypes } from '../../constants/dnd/types';
+import { EquippedCategoriesToCells } from '../../constants/dnd/equippedCategoriesToCells';
+import { removeHoveredItem } from '../../../redux/actions/inventory/hoveredItem';
 
 interface Props {
   children: any;
@@ -15,13 +15,13 @@ interface Props {
 }
 
 // using no transparent square (unlike in the boardSquare), coz we have no decorative outlines
-const ClosingWeaponSquare: React.FC<Props> = React.memo(function ClosingWeaponSquare({children, coords}) {
+const ClosingWeaponSquare: React.FC<Props> = React.memo(function ClosingWeaponSquare({ children, coords }) {
   const dispatch = useDispatch();
 
-  const draggedItem = useSelector(state => state.inventory.draggedItem.item);
-  const hoveredSquare = useSelector(state => state.inventory.draggedItem.hoveredSquare);
-  const canDrop = useSelector(state => state.inventory.draggedItem.canDrop);
-  const hoveredItem = useSelector(state => state.inventory.hoveredItem.item);
+  const draggedItem = useSelector((state) => state.inventory.draggedItem.item);
+  const hoveredSquare = useSelector((state) => state.inventory.draggedItem.hoveredSquare);
+  const canDrop = useSelector((state) => state.inventory.draggedItem.canDrop);
+  const hoveredItem = useSelector((state) => state.inventory.hoveredItem.item);
 
   const draggedItemRef = useRef();
   const hoveredSquareRef = useRef();
@@ -33,22 +33,26 @@ const ClosingWeaponSquare: React.FC<Props> = React.memo(function ClosingWeaponSq
   const squareMouseOverHandler = () => {
     //region ------------------------------ Set squares if drag item ------------------------------
     if (draggedItemRef.current) {
-      if (!hoveredSquareRef.current || typeof hoveredSquareRef.current !== 'number' || hoveredSquareRef.current !== coords) {
+      if (
+        !hoveredSquareRef.current ||
+        typeof hoveredSquareRef.current !== 'number' ||
+        hoveredSquareRef.current !== coords
+      ) {
         dispatch(setHoveredSquares(coords, 3));
       }
     }
     //endregion
     //region ------------------------------ Release hovered item if don't drag item ------------------------------
-    else if(hoveredItem) {
+    else if (hoveredItem) {
       dispatch(removeHoveredItem());
     }
     //endregion
-  }
+  };
 
-  let closingWeaponSquareStyles: CSSProperties = {
+  const closingWeaponSquareStyles: CSSProperties = {
     pointerEvents: isOver ? 'none' : 'auto',
     zIndex: hoveredSquare === coords ? 'auto' : 200,
-  }
+  };
 
   // overlay colors
   let successColor = theme.colors.success;
@@ -63,13 +67,12 @@ const ClosingWeaponSquare: React.FC<Props> = React.memo(function ClosingWeaponSq
   const isFromOctagon = coords !== 1 && coords !== 2 && coords !== 3;
 
   return (
-    <div className={classes.ClosingWeaponSquare} style={closingWeaponSquareStyles}
-         onMouseOver={squareMouseOverHandler}>
+    <div className={classes.ClosingWeaponSquare} style={closingWeaponSquareStyles} onMouseOver={squareMouseOverHandler}>
       {children}
-      {isOver && canDrop && <Overlay color={successColor} fromOctagon={isFromOctagon} fromWeapon={!isFromOctagon}/>}
-      {isOver && !canDrop && <Overlay color={dangerColor} fromOctagon={isFromOctagon} fromWeapon={!isFromOctagon}/>}
+      {isOver && canDrop && <Overlay color={successColor} fromOctagon={isFromOctagon} fromWeapon={!isFromOctagon} />}
+      {isOver && !canDrop && <Overlay color={dangerColor} fromOctagon={isFromOctagon} fromWeapon={!isFromOctagon} />}
     </div>
   );
 });
 
-export default ClosingWeaponSquare;//
+export default ClosingWeaponSquare; //

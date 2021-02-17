@@ -20,8 +20,7 @@ const phoneTheme = {
   chatMessageLightPurpleBg: '#642BE7',
 
   // rare
-  beige: 'rgba(252, 228, 206, 0.2)'
-}
-
+  beige: 'rgba(252, 228, 206, 0.2)',
+};
 
 export default phoneTheme;

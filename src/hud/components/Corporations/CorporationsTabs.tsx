@@ -1,10 +1,10 @@
-import React, {CSSProperties} from 'react';
+import React, { CSSProperties } from 'react';
 import classes from '../../../styles/hud/components/Corporations/CorporationsTabs.module.scss';
-import {CorporationsTabsEnum} from "../../models/corporations/enums";
-import CorporationsHeader from "./CorporationsHeader";
-import TreasuryTab from "./TreasuryTab/TreasuryTab";
-import LogsTab from "./LogsTab/LogsTab";
-import TasksTab from "./TasksTab/TasksTab";
+import { CorporationsTabsEnum } from '../../../models/hud/corporations/enums';
+import CorporationsHeader from './CorporationsHeader';
+import TreasuryTab from './TreasuryTab/TreasuryTab';
+import LogsTab from './LogsTab/LogsTab';
+import TasksTab from './TasksTab/TasksTab';
 
 interface Props {
   dimensions: {
@@ -12,31 +12,30 @@ interface Props {
     height: number;
     topGap: number;
     leftGap: number;
-  }
+  };
   openedTab: CorporationsTabsEnum;
 }
 
-const CorporationsTabs: React.FC<Props> = React.memo((Props) => {
-
+const CorporationsTabs: React.FC<Props> = React.memo((props) => {
   // в зависимости от openedTab возвращать разный хедэр (отдельный комп)
   // и разный контент скрина
 
   const containerStyles: CSSProperties = {
-    width: Props.dimensions.width,
-    height: Props.dimensions.height,
-    top: Props.dimensions.topGap,
-    left: Props.dimensions.leftGap,
-  }
+    width: props.dimensions.width,
+    height: props.dimensions.height,
+    top: props.dimensions.topGap,
+    left: props.dimensions.leftGap,
+  };
 
   let tabBlock: JSX.Element;
 
-  switch(Props.openedTab) {
+  switch (props.openedTab) {
     case CorporationsTabsEnum.staff: {
       tabBlock = <></>;
       break;
     }
     case CorporationsTabsEnum.treasury: {
-      tabBlock = <TreasuryTab/>;
+      tabBlock = <TreasuryTab />;
       break;
     }
     case CorporationsTabsEnum.property: {
@@ -63,11 +62,9 @@ const CorporationsTabs: React.FC<Props> = React.memo((Props) => {
   return (
     <div style={containerStyles} className={classes.CorporationsTabs}>
       <div className={classes.HeaderWrapper}>
-        <CorporationsHeader openedTab={Props.openedTab}/>
+        <CorporationsHeader openedTab={props.openedTab} />
       </div>
-      <div className={classes.TabContentWrapper}>
-        {tabBlock}
-      </div>
+      <div className={classes.TabContentWrapper}>{tabBlock}</div>
     </div>
   );
 });

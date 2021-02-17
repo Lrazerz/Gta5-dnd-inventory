@@ -42,9 +42,6 @@ const corporationsTheme = {
 
   bg_eggplant: '#2B2229',
 
-  red: '#E85959'
-
-}
-export {
-  corporationsTheme
-}
+  red: '#E85959',
+};
+export { corporationsTheme };

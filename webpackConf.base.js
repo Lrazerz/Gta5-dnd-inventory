@@ -1,10 +1,10 @@
-const path = require("path");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: './index.tsx',
   resolve: {
-    extensions: [".js", ".jsx", ".json", ".ts", ".tsx", ".css", ".scss", "png", "jpg", "cur"],
+    extensions: ['.js', '.jsx', '.json', '.ts', '.tsx', '.css', '.scss', 'png', 'jpg', 'cur'],
   },
   module: {
     rules: [
@@ -12,11 +12,11 @@ module.exports = {
         test: /\.tsx?$/,
         use: [
           {
-            loader: "ts-loader",
+            loader: 'ts-loader',
             options: {
-              transpileOnly: true
-            }
-          }
+              transpileOnly: true,
+            },
+          },
         ],
         exclude: /node_modules/,
       },
@@ -24,17 +24,17 @@ module.exports = {
         test: /\.(sa|sc|c)ss$/,
         use: [
           // Creates `style` nodes from JS strings
-          "style-loader",
+          'style-loader',
           // Translates CSS into CommonJS
           {
-            loader: "css-loader",
+            loader: 'css-loader',
             options: {
               sourceMap: true,
             },
           },
           // Compiles Sass to CSS
           {
-            loader: "sass-loader",
+            loader: 'sass-loader',
             options: {
               sourceMap: true,
             },
@@ -47,8 +47,8 @@ module.exports = {
           loader: 'file-loader',
           options: {
             name: '[name].[ext]',
-            outputPath: 'images/'
-          }
+            outputPath: 'images/',
+          },
         },
       },
       {
@@ -58,12 +58,12 @@ module.exports = {
             loader: 'file-loader',
             options: {
               name: '[name].[ext]',
-              outputPath: 'fonts/'
-            }
-          }
-        ]
-      }
-    ]
+              outputPath: 'fonts/',
+            },
+          },
+        ],
+      },
+    ],
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -77,6 +77,6 @@ module.exports = {
   output: {
     publicPath: '',
     path: path.resolve(__dirname, 'dist'),
-    filename: 'main.js'
-  }
+    filename: 'main.js',
+  },
 };

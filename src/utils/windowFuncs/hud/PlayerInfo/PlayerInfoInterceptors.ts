@@ -5,18 +5,14 @@ openHud = (data) => {
     // must have
     PlayerAvatar: playerAvatarName,
     PlayerRank: playerRankTitle,
-    PlayerStateIndicators: {
-      First: firstIndicator,
-      Second: secondIndicator,
-      Third: thirdIndicator
-    },
+    PlayerStateIndicators: { First: firstIndicator, Second: secondIndicator, Third: thirdIndicator },
     // maybe only in another functions
     Network: network,
     Time: time,
-    Buffs: buffs
+    Buffs: buffs,
   } = parsedData;
 
-  const transformedBuffs = buffs.map(buff => {
+  const transformedBuffs = buffs.map((buff) => {
     const newBuff = {};
     //@ts-ignore
     newBuff.title = buff.Title;
@@ -31,23 +27,23 @@ openHud = (data) => {
     stateIndicators: {
       firstIndicator,
       secondIndicator,
-      thirdIndicator
+      thirdIndicator,
     },
     network,
     time,
-    buffs: transformedBuffs
-  }
-}
+    buffs: transformedBuffs,
+  };
+};
 
 let setPlayerRank: (data: string) => string;
 setPlayerRank = (data) => {
   return data;
-}
+};
 
-let setPlayerAvatar: (data: string) => string
+let setPlayerAvatar: (data: string) => string;
 setPlayerAvatar = (data) => {
   return data;
-}
+};
 
 let setPlayerBuffs: (data: string) => any[];
 setPlayerBuffs = (data) => {
@@ -55,7 +51,7 @@ setPlayerBuffs = (data) => {
 
   const buffs: [] = parsedData.$values;
 
-  const transformedBuffs = buffs.map(buff => {
+  const transformedBuffs = buffs.map((buff) => {
     const newBuff = {};
     //@ts-ignore
     newBuff.title = buff.Title;
@@ -64,31 +60,31 @@ setPlayerBuffs = (data) => {
     return newBuff;
   });
   return transformedBuffs;
-}
+};
 
-let setPlayerIndicators: (data: string) => {firstIndicator: number, secondIndicator: number, thirdIndicator: number};
+let setPlayerIndicators: (
+  data: string,
+) => {
+  firstIndicator: number;
+  secondIndicator: number;
+  thirdIndicator: number;
+};
 setPlayerIndicators = (data) => {
   const parsedData = JSON.parse(data);
 
-  const {
-    First: firstIndicator,
-    Second: secondIndicator,
-    Third: thirdIndicator
-  } = parsedData;
+  const { First: firstIndicator, Second: secondIndicator, Third: thirdIndicator } = parsedData;
 
-  return {firstIndicator, secondIndicator, thirdIndicator};
-}
+  return { firstIndicator, secondIndicator, thirdIndicator };
+};
 
 let setTime: (data: string) => string;
 setTime = (data) => {
   return data;
-}
+};
 
 let setNetwork: (quality: number) => number;
 setNetwork = (quality) => {
   return quality;
-}
+};
 
-
-export {openHud, setPlayerRank, setPlayerAvatar, setPlayerBuffs, setPlayerIndicators,
-setTime, setNetwork}
+export { openHud, setPlayerRank, setPlayerAvatar, setPlayerBuffs, setPlayerIndicators, setTime, setNetwork };

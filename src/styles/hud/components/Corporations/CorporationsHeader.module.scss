@@ -20,7 +20,7 @@
       width: 3rem;
       background-color: green;
       box-sizing: border-box;
-      border: 0.0588rem solid #3E4555;
+      border: 0.0588rem solid #3e4555;
       background-color: rgba(41, 46, 57, 0.95);
       display: flex;
       justify-content: center;
@@ -34,7 +34,7 @@
       .BackButton {
         width: 30.77%;
         height: 30.77%;
-        background-image: url("../../../../assets/hud/images/components/Corporations/tabs/tasks/backButton.svg");
+        background-image: url('../../../../assets/hud/images/components/Corporations/tabs/tasks/backButton.svg');
         background-position: center;
         background-repeat: no-repeat;
         background-size: contain;
@@ -48,7 +48,7 @@
 
   .AdditionalButtonWrapper {
     height: 100%;
-    background-image: url("../../../../assets/hud/images/components/Corporations/boostButton.svg");
+    background-image: url('../../../../assets/hud/images/components/Corporations/boostButton.svg');
     background-size: cover;
     background-position: center;
     display: flex;
@@ -60,6 +60,5 @@
       //filter: drop-shadow(0.1rem 0.1rem 0.3rem corporationsTheme.$text_white3) contrast(150%);
       //filter: brightness(80%);
     }
-
   }
 }

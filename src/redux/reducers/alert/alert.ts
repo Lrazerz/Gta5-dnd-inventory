@@ -1,14 +1,14 @@
-import {SingleAlertInterface} from "../../../models/alert/interfaces";
-import {ALERT_REMOVE, ALERT_SET} from "../../actions/alert/alertTypes";
-import {AlertTypesEnum} from "../../../models/alert/enums";
+import { SingleAlertInterface } from '../../../models/alert/interfaces';
+import { ALERT_REMOVE, ALERT_SET } from '../../actions/alert/alertTypes';
+import { AlertTypesEnum } from '../../../models/alert/enums';
 
 interface InitialStateInterface {
   alerts: SingleAlertInterface[];
 }
 
 const initialState = {
-  alerts: []
-}
+  alerts: [],
+};
 
 // const initialState = {
 //   alerts: [
@@ -35,20 +35,17 @@ export default (state = initialState, action) => {
     case ALERT_SET: {
       return {
         ...state,
-        alerts: [
-          action.alert,
-          ...state.alerts
-        ].slice(0,3)
-      }
+        alerts: [action.alert, ...state.alerts].slice(0, 3),
+      };
     }
     case ALERT_REMOVE: {
       return {
         ...state,
-        alerts: state.alerts.filter(alert => alert.id !== action.id)
-      }
+        alerts: state.alerts.filter((alert) => alert.id !== action.id),
+      };
     }
     default: {
       return state;
     }
   }
-}
+};

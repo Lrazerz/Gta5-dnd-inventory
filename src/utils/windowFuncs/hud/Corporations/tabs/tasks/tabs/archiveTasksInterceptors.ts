@@ -1,17 +1,17 @@
 import {
   TasksExecutorTypeEnumServer,
-  translateTasksExecutorTypeFromServer
-} from "../../../../../../../hud/models/corporations/tabs/tasks/tabs/currentTasksEnums";
-import {TasksArchiveTasksInitialStateInterface} from "../../../../../../../hud/models/corporations/tabs/tasks/tabs/archiveTasksInterfaces";
-import {transformDateFromString} from "../../../../../../common/date";
-import {archiveTasksPageSize} from "../../../../../../../constants/hud/corporations/tasks/tasks";
+  translateTasksExecutorTypeFromServer,
+} from '../../../../../../../models/hud/corporations/tabs/tasks/tabs/currentTasksEnums';
+import { TasksArchiveTasksInitialStateInterface } from '../../../../../../../models/hud/corporations/tabs/tasks/tabs/archiveTasksInterfaces';
+import { transformDateFromString } from '../../../../../../common/date';
+import { archiveTasksPageSize } from '../../../../../../../constants/hud/corporations/tasks/tasks';
 
 let window_corporations_tasks_openArchiveTasks: (jsonData: string) => TasksArchiveTasksInitialStateInterface;
 window_corporations_tasks_openArchiveTasks = (jsonData: string) => {
   const parsedData = JSON.parse(jsonData);
 
   return {
-    tasks: parsedData.Tasks.slice(0, archiveTasksPageSize).map(task => ({
+    tasks: parsedData.Tasks.slice(0, archiveTasksPageSize).map((task) => ({
       id: task.Id,
       title: task.Title,
       date: transformDateFromString(task.Date),
@@ -20,20 +20,20 @@ window_corporations_tasks_openArchiveTasks = (jsonData: string) => {
       executor: task.Executor,
       description: task.Description,
       appointer: task.Appointer,
-      isSuccessful: task.IsSuccessful
+      isSuccessful: task.IsSuccessful,
     })),
     currentPage: parsedData.CurrentPage,
     pagesCount: parsedData.PagesCount,
-    isLoading: false
-  }
-}
+    isLoading: false,
+  };
+};
 
 let window_corporations_tasks_archiveTasks_openPage: (jsonData: string) => TasksArchiveTasksInitialStateInterface;
 window_corporations_tasks_archiveTasks_openPage = (jsonData: string) => {
   const parsedData = JSON.parse(jsonData);
 
   return {
-    tasks: parsedData.Tasks.slice(0, archiveTasksPageSize).map(task => ({
+    tasks: parsedData.Tasks.slice(0, archiveTasksPageSize).map((task) => ({
       id: task.Id,
       title: task.Title,
       date: transformDateFromString(task.Date),
@@ -42,16 +42,12 @@ window_corporations_tasks_archiveTasks_openPage = (jsonData: string) => {
       executor: task.Executor,
       description: task.Description,
       appointer: task.Appointer,
-      isSuccessful: task.IsSuccessful
+      isSuccessful: task.IsSuccessful,
     })),
     currentPage: parsedData.CurrentPage,
     pagesCount: parsedData.PagesCount,
-    isLoading: false
-  }
-}
+    isLoading: false,
+  };
+};
 
-export {
-  window_corporations_tasks_openArchiveTasks,
-  window_corporations_tasks_archiveTasks_openPage
-}
-
+export { window_corporations_tasks_openArchiveTasks, window_corporations_tasks_archiveTasks_openPage };

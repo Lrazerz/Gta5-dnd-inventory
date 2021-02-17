@@ -5,29 +5,34 @@ import {
   CallsInterface,
   ChatMessageInterface,
   ChatsDemoInterface,
-  ContactInterface, CurrentCallInterface,
+  ContactInterface,
+  CurrentCallInterface,
   DateObjectInterface,
-  IncomingCallInterface, LastMessageInterface,
+  IncomingCallInterface,
+  LastMessageInterface,
   SettingsInterface,
-  ThemesEnum
-} from "../../../../hud/models/phone/reducerInterfaces";
+  ThemesEnum,
+} from '../../../../models/hud/phone/reducerInterfaces';
 import {
   abortCall,
   openCall,
-  openIncomingCall, openLastMessages, phoneClose, phoneOpen,
+  openIncomingCall,
+  openLastMessages,
+  phoneClose,
+  phoneOpen,
   setCalls,
   setChatsDemo,
   setContacts,
   setSelectedChat,
-  setSettings
-} from "../../../../redux/actions/hud/phone";
-import {transformDateFromString} from "../../../common/date";
+  setSettings,
+} from '../../../../redux/actions/hud/phone';
+import { transformDateFromString } from '../../../common/date';
 
 // lastmessages as params
 const openPhone = (jsonData) => {
   console.log('window.openPhone');
   const parsedData = JSON.parse(jsonData);
-  const transformedLastMessages: LastMessageInterface[] = parsedData.LastMessages.map(lastMessage => ({
+  const transformedLastMessages: LastMessageInterface[] = parsedData.LastMessages.map((lastMessage) => ({
     id: shortId.generate(),
     name: lastMessage.Name,
     imageName: lastMessage.ImageName,
@@ -42,22 +47,22 @@ const openPhone = (jsonData) => {
       themeImage: parsedData.Settings.Cosmetics.ThemeImage,
     },
     ringtone: parsedData.Settings.Ringtone,
-  }
+  };
 
   // @ts-ignore
   dispatch(phoneOpen(transformedLastMessages, transformedSettings));
-}
+};
 
 const closePhone = () => {
   console.log('window.closePhone');
   // @ts-ignore
   dispatch(phoneClose());
-}
+};
 
 const phone_openLastMessages = (jsonData) => {
   console.log('window.phone_openLastMessages');
   const parsedData = JSON.parse(jsonData).$values;
-  const transformedLastMessages: LastMessageInterface[] = parsedData.map(lastMessage => ({
+  const transformedLastMessages: LastMessageInterface[] = parsedData.map((lastMessage) => ({
     id: shortId.generate(),
     name: lastMessage.Name,
     imageName: lastMessage.ImageName,
@@ -66,7 +71,7 @@ const phone_openLastMessages = (jsonData) => {
   }));
   // @ts-ignore
   dispatch(openLastMessages(transformedLastMessages));
-}
+};
 
 const phone_openSettings = (jsonData) => {
   console.log('window.phone_openSettings');
@@ -79,10 +84,10 @@ const phone_openSettings = (jsonData) => {
       themeImage: parsedData.Cosmetics.ThemeImage,
     },
     ringtone: parsedData.Ringtone,
-  }
+  };
   // @ts-ignore
   dispatch(setSettings(transformedSettingsData));
-}
+};
 
 //region -------------------- Incoming call funcs --------------------
 const phone_openIncomingCall = (jsonData) => {
@@ -93,17 +98,17 @@ const phone_openIncomingCall = (jsonData) => {
     name: parsedData.Name,
     imageName: parsedData.ImageName,
     phoneNumber: parsedData.PhoneNumber,
-  }
+  };
   //@ts-ignore
   dispatch(openIncomingCall(transformedIncCallData));
-}
+};
 
 // abort incoming, outcoming, current calls
 const phone_abortCall = () => {
   console.log('phone_abortCall');
   //@ts-ignore
   dispatch(abortCall());
-}
+};
 //endregion
 
 // open curr call, outcoming call
@@ -120,17 +125,17 @@ const phone_openCurrentCall = (jsonData) => {
     isMuted: parsedData.IsMuted,
     speaker: parsedData.Speaker,
     isRecording: parsedData.IsRecording,
-  }
+  };
   // @ts-ignore
   dispatch(openCall(transformedCurrCallData));
-}
+};
 
 //region -------------------- Calls, contacts, chats --------------------
 const phone_openCalls = (jsonData) => {
   console.log('window.phone_openCalls');
   const parsedData = JSON.parse(jsonData).$values;
 
-  const transformedCallsData: CallsInterface[] = parsedData.map(call => {
+  const transformedCallsData: CallsInterface[] = parsedData.map((call) => {
     return {
       id: shortId.generate(),
       name: call.Name,
@@ -138,32 +143,32 @@ const phone_openCalls = (jsonData) => {
       status: call.Status,
       date: transformDateFromString(call.Date),
       phoneNumber: call.PhoneNumber,
-    }
+    };
   });
   // @ts-ignore
   dispatch(setCalls(transformedCallsData));
-}
+};
 
 const phone_openContacts = (jsonData) => {
   console.log('window.phone_openCalls');
   const parsedData = JSON.parse(jsonData).$values;
 
-  const transformedContactsData: ContactInterface[] = parsedData.map(incomingContact => {
+  const transformedContactsData: ContactInterface[] = parsedData.map((incomingContact) => {
     return {
       id: incomingContact.PhoneNumber,
       name: incomingContact.Name,
       imageName: incomingContact.ImageName,
-    }
+    };
   });
   // @ts-ignore
   dispatch(setContacts(transformedContactsData));
-}
+};
 
 const phone_openChats = (jsonData) => {
   console.log('window.phone_openContacts');
   const parsedData = JSON.parse(jsonData).$values;
 
-  const transformedChatsData: ChatsDemoInterface[] = parsedData.map(call => {
+  const transformedChatsData: ChatsDemoInterface[] = parsedData.map((call) => {
     return {
       id: call.PhoneNumber,
       name: call.Name,
@@ -172,21 +177,21 @@ const phone_openChats = (jsonData) => {
       unreadMessages: call.UnreadMessages,
       lastMessage: call.LastMessage,
       lastMessageDate: transformDateFromString(call.LastMessageDate),
-    }
+    };
   });
 
   // @ts-ignore
   dispatch(setChatsDemo(transformedChatsData));
-}
+};
 //endregion
 
 const phone_openSingleChat = (jsonData) => {
   console.log('window.phone_openSingleChat');
   const parsedData = JSON.parse(jsonData);
 
-  const {Name: name, AvatarName: avatarName, Messages: messages} = parsedData;
+  const { Name: name, AvatarName: avatarName, Messages: messages } = parsedData;
 
-  const transformedMessages: ChatMessageInterface[] = messages.map(incomingMessage => {
+  const transformedMessages: ChatMessageInterface[] = messages.map((incomingMessage) => {
     return {
       id: shortId.generate(),
       direction: incomingMessage.Direction,
@@ -196,23 +201,19 @@ const phone_openSingleChat = (jsonData) => {
   });
 
   // @ts-ignore
-  dispatch(setSelectedChat({name, avatarName, messages: transformedMessages}));
-}
+  dispatch(setSelectedChat({ name, avatarName, messages: transformedMessages }));
+};
 
 export {
   openPhone,
   closePhone,
-
   phone_openIncomingCall,
   phone_abortCall,
   phone_openCurrentCall,
-
   phone_openLastMessages,
   phone_openSettings,
-
   phone_openCalls,
   phone_openContacts,
   phone_openChats,
   phone_openSingleChat,
-}
-
+};

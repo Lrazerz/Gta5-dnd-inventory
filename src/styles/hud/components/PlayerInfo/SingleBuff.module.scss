@@ -8,16 +8,16 @@
   flex-direction: column;
   justify-content: space-between;
 
-  @media(min-aspect-ratio: theme.$aspect-ratio-4x3) {
+  @media (min-aspect-ratio: theme.$aspect-ratio-4x3) {
     width: 1.6vw;
-    @media(min-width: 1500px) {
+    @media (min-width: 1500px) {
       width: 1.61vw;
     }
   }
-  @media(min-aspect-ratio: theme.$aspect-ratio-3x2) and (min-width: 2000px) {
+  @media (min-aspect-ratio: theme.$aspect-ratio-3x2) and (min-width: 2000px) {
     width: 1.53vw;
   }
-  @media(min-aspect-ratio: theme.$aspect-ratio-16x9) {
+  @media (min-aspect-ratio: theme.$aspect-ratio-16x9) {
     width: 1.49vw;
   }
 
@@ -42,42 +42,42 @@
     white-space: nowrap;
     text-overflow: ellipsis;
 
-    @media(min-aspect-ratio: theme.$aspect-ratio-5x4) {
+    @media (min-aspect-ratio: theme.$aspect-ratio-5x4) {
       font-size: 0.47rem;
     }
 
-    @media(min-aspect-ratio: theme.$aspect-ratio-4x3) {
+    @media (min-aspect-ratio: theme.$aspect-ratio-4x3) {
       font-size: 0.43rem;
 
-      @media(min-width: 1500px) {
+      @media (min-width: 1500px) {
         font-size: 0.42rem;
       }
     }
 
-    @media(min-aspect-ratio: theme.$aspect-ratio-3x2) and (min-width: 2000px) {
+    @media (min-aspect-ratio: theme.$aspect-ratio-3x2) and (min-width: 2000px) {
       font-size: 0.5rem;
     }
 
-    @media(min-aspect-ratio: theme.$aspect-ratio-16x10) {
+    @media (min-aspect-ratio: theme.$aspect-ratio-16x10) {
       padding-top: 22%;
       font-size: 0.48rem;
 
-      @media(min-width: 1800px) {
+      @media (min-width: 1800px) {
         font-size: 0.47rem;
       }
     }
 
-    @media(min-aspect-ratio: theme.$aspect-ratio-16x9) {
+    @media (min-aspect-ratio: theme.$aspect-ratio-16x9) {
       padding-top: 17%;
       font-size: 0.41rem;
 
-      @media(min-width: 1800px) {
+      @media (min-width: 1800px) {
         padding-top: 15%;
         font-size: 0.44rem;
       }
     }
 
-    @media(min-width: 3500px) {
+    @media (min-width: 3500px) {
       font-size: 0.53rem;
     }
   }

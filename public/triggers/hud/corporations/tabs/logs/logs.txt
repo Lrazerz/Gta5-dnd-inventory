@@ -27,8 +27,8 @@ JSON: '{
 mp.trigger('cef_cl_corporations_logs_changePage', JSON);
 
 JSON: '{
-	OpenedTab: CorporationsTabsDict.logs,
-	PageNumber: pageNumber,
+	OpenedTab: "Логи",
+	PageNumber: number,
 	LastLog: {
 		Executor: string, // "DigitalNox Design"
 		Action: string, // "создаёт"

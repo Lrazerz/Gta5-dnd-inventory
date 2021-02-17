@@ -1,4 +1,4 @@
-import {combineReducers} from 'redux';
+import { combineReducers } from 'redux';
 import officeReducer from './office';
 
 export default combineReducers({

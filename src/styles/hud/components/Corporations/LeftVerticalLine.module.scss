@@ -8,10 +8,10 @@
   width: 1px;
 
   background-color: corporationsTheme.$bg_orange_picked;
-  @media(min-width: 1900px) {
+  @media (min-width: 1900px) {
     width: 2px;
   }
-  @media(min-width: 2500px) {
+  @media (min-width: 2500px) {
     width: 4px;
   }
 }

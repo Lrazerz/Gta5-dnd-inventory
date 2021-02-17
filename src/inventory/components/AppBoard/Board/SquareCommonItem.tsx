@@ -1,35 +1,34 @@
-import React, {CSSProperties, useEffect, useRef, useState} from 'react';
-import {useDispatch, useSelector} from "react-redux";
-import {addDraggedItem, dragEndHandler} from "../../../../redux/actions/inventory/draggedItem";
-import CommonItem from "../CommonItem";
+import React, { CSSProperties, useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { addDraggedItem, dragEndHandler } from '../../../../redux/actions/inventory/draggedItem';
+import CommonItem from '../CommonItem';
 import classes from '../../../../styles/inventory/board/SquareCommonItem.module.scss';
-import SecondaryText from "../../layout/SecondaryText";
-import {openContextMenu} from "../../../../redux/actions/inventory/contextMenu";
-import ItemModel from "../../../models/ItemModel";
-import {addHoveredItem} from "../../../../redux/actions/inventory/hoveredItem";
+import SecondaryText from '../../layout/SecondaryText';
+import { openContextMenu } from '../../../../redux/actions/inventory/contextMenu';
+import ItemModel from '../../../models/ItemModel';
+import { addHoveredItem } from '../../../../redux/actions/inventory/hoveredItem';
 
 interface Props {
   coords: [number, number];
   item: ItemModel;
 }
 
-const SquareCommonItem: React.FC<Props> = React.memo(function SquareCommonItem({coords: [x, y], item}) {
-
+const SquareCommonItem: React.FC<Props> = React.memo(function SquareCommonItem({ coords: [x, y], item }) {
   const [imageWidth, setImageWidth] = useState();
   const [imageHeight, setImageHeight] = useState();
 
-  const boardSquareSize = useSelector(state => state.inventory.board.boardSquareSize);
+  const boardSquareSize = useSelector((state) => state.inventory.board.boardSquareSize);
 
-  const canDrop = useSelector(state => state.inventory.draggedItem.canDrop);
-  const hoveredSquare = useSelector(state => state.inventory.draggedItem.hoveredSquare);
-  const draggedItem = useSelector(state => state.inventory.draggedItem.item);
-  const xDown = useSelector(state => state.inventory.draggedItem.xDown);
-  const yDown = useSelector(state => state.inventory.draggedItem.yDown);
-  const goingToDrop = useSelector(state => state.inventory.draggedItem.goingToDrop);
-  const goingToStack = useSelector(state => state.inventory.draggedItem.goingToStack);
+  const canDrop = useSelector((state) => state.inventory.draggedItem.canDrop);
+  const hoveredSquare = useSelector((state) => state.inventory.draggedItem.hoveredSquare);
+  const draggedItem = useSelector((state) => state.inventory.draggedItem.item);
+  const xDown = useSelector((state) => state.inventory.draggedItem.xDown);
+  const yDown = useSelector((state) => state.inventory.draggedItem.yDown);
+  const goingToDrop = useSelector((state) => state.inventory.draggedItem.goingToDrop);
+  const goingToStack = useSelector((state) => state.inventory.draggedItem.goingToStack);
 
-  const hoveredItem = useSelector(state => state.inventory.hoveredItem.item);
-  const hoveredItemArea = useSelector(state => state.inventory.hoveredItem.hoveredArea);
+  const hoveredItem = useSelector((state) => state.inventory.hoveredItem.item);
+  const hoveredItemArea = useSelector((state) => state.inventory.hoveredItem.hoveredArea);
 
   // refs to pass to event handler
   const canDropRef = useRef();
@@ -51,7 +50,7 @@ const SquareCommonItem: React.FC<Props> = React.memo(function SquareCommonItem({
 
   useEffect(() => {
     // ***1.25 coz image's width === 80% of the container
-    if(boardSquareSize) {
+    if (boardSquareSize) {
       // @ts-ignore
       setImageWidth(item.width * boardSquareSize);
       // @ts-ignore
@@ -69,7 +68,7 @@ const SquareCommonItem: React.FC<Props> = React.memo(function SquareCommonItem({
   const handleMouseDown = (event) => {
     if (event.button !== 0) return;
     event.stopPropagation();
-    dispatch(addDraggedItem({...item}, 1));
+    dispatch(addDraggedItem({ ...item }, 1));
 
     const newClone = event.currentTarget.cloneNode(true);
 
@@ -102,13 +101,13 @@ const SquareCommonItem: React.FC<Props> = React.memo(function SquareCommonItem({
     const onMouseMove = (event) => {
       event.stopPropagation();
       moveAt(event.pageX, event.pageY);
-    }
+    };
 
     document.addEventListener('mousemove', onMouseMove);
 
-    newClone.onmouseover = e => {
+    newClone.onmouseover = (e) => {
       e.stopPropagation();
-    }
+    };
 
     newClone.onmouseup = () => {
       event.stopPropagation();
@@ -122,10 +121,10 @@ const SquareCommonItem: React.FC<Props> = React.memo(function SquareCommonItem({
 
   const handleMouseOver = (e) => {
     e.stopPropagation();
-    if(!draggedItem && (!hoveredItem || hoveredItemArea === 1 || hoveredItem.mainCell !== item.mainCell)) {
+    if (!draggedItem && (!hoveredItem || hoveredItemArea === 1 || hoveredItem.mainCell !== item.mainCell)) {
       dispatch(addHoveredItem(item, 1));
     }
-  }
+  };
   //endregion
 
   let imageElement = null;
@@ -134,14 +133,12 @@ const SquareCommonItem: React.FC<Props> = React.memo(function SquareCommonItem({
     let currentCountText = null;
 
     if (item.currentCount > 1) {
-      currentCountText =
-        (<div className={classes.CurrentCountText}>
-          <SecondaryText styles={{fontSize: '0.9rem'}}>
-            {item.currentCount}
-          </SecondaryText>
-        </div>);
+      currentCountText = (
+        <div className={classes.CurrentCountText}>
+          <SecondaryText styles={{ fontSize: '0.9rem' }}>{item.currentCount}</SecondaryText>
+        </div>
+      );
     }
-
 
     // if item is hovered when we have no dragged item
     const isItemHovered = hoveredItem && hoveredItemArea === 1 && hoveredItem.mainCell === item.mainCell;
@@ -150,32 +147,37 @@ const SquareCommonItem: React.FC<Props> = React.memo(function SquareCommonItem({
       width: imageWidth,
       height: imageHeight,
       //@ts-ignore
-      top: imageHeight && imageWidth && item.isRotated ? -(imageHeight/2 - imageWidth/2) : 0,
+      top: imageHeight && imageWidth && item.isRotated ? -(imageHeight / 2 - imageWidth / 2) : 0,
       //@ts-ignore
-      left: imageHeight && imageWidth && item.isRotated ? -(imageWidth/2 - imageHeight/2) : 0,
+      left: imageHeight && imageWidth && item.isRotated ? -(imageWidth / 2 - imageHeight / 2) : 0,
       pointerEvents: draggedItem ? 'none' : 'inherit',
       zIndex: draggedItem ? 'auto' : 100,
       transform: item.isRotated ? 'rotate3d(0,0,1,90deg)' : 'none',
       backgroundColor: isItemHovered ? 'rgba(151, 159, 161, 0.5)' : 'transparent',
-    }
+    };
 
     imageElement = (
-      <div className={classes.ImageContainer} style={imageContainerStyles} id={`square-common-item-${x}-${y}`}
-           onMouseDown={handleMouseDown}
-           onContextMenu={handleContextMenuOpen}
-           onMouseOver={handleMouseOver}>
-        <img src={item.imageUrl} style={item.isWeaponEquipped ? {opacity: '0.5'} : null}
-             className={classes.Image} width='96%' height='96%'/>
+      <div
+        className={classes.ImageContainer}
+        style={imageContainerStyles}
+        id={`square-common-item-${x}-${y}`}
+        onMouseDown={handleMouseDown}
+        onContextMenu={handleContextMenuOpen}
+        onMouseOver={handleMouseOver}
+      >
+        <img
+          src={item.imageUrl}
+          style={item.isWeaponEquipped ? { opacity: '0.5' } : null}
+          className={classes.Image}
+          width="96%"
+          height="96%"
+        />
         {currentCountText}
       </div>
     );
   }
 
-  return (
-    <CommonItem>
-      {imageElement}
-    </CommonItem>
-  )
+  return <CommonItem>{imageElement}</CommonItem>;
 });
 
 export default SquareCommonItem;

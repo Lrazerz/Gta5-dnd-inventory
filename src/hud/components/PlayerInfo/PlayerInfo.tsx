@@ -1,37 +1,33 @@
 import React from 'react';
 import classes from '../../../styles/hud/components/PlayerInfo.module.scss';
-import PlayerIndicators from "./PlayerIndicators";
-import PlayerAvatarAndRank from "./PlayerAvatarAndRank";
-import NetworkAndTime from "./NetworkAndTime";
-import Buffs from "./Buffs";
+import PlayerIndicators from './PlayerIndicators';
+import PlayerAvatarAndRank from './PlayerAvatarAndRank';
+import NetworkAndTime from './NetworkAndTime';
+import Buffs from './Buffs';
 
 interface Props {
   data: {
-    playerAvatarName: string,
-    playerRankTitle: string,
+    playerAvatarName: string;
+    playerRankTitle: string;
     stateIndicators: {
-      firstIndicator: number,
-      secondIndicator: number,
-      thirdIndicator: number
-    },
-    network: number,
-    time: string,
-    buffs: [],
-  }
+      firstIndicator: number;
+      secondIndicator: number;
+      thirdIndicator: number;
+    };
+    network: number;
+    time: string;
+    buffs: [];
+  };
 }
 
-const PlayerInfo: React.FC<Props> = React.memo(function PlayerInfo({data}) {
+const PlayerInfo: React.FC<Props> = React.memo(function PlayerInfo({ data }) {
   const {
     playerAvatarName: avatarName,
     playerRankTitle: rankTitle,
-    stateIndicators: {
-      firstIndicator: firstInd,
-      secondIndicator: secondInd,
-      thirdIndicator: thirdInd
-    },
+    stateIndicators: { firstIndicator: firstInd, secondIndicator: secondInd, thirdIndicator: thirdInd },
     time,
     network,
-    buffs
+    buffs,
   } = data;
 
   return (
@@ -39,19 +35,19 @@ const PlayerInfo: React.FC<Props> = React.memo(function PlayerInfo({data}) {
       <div className={classes.PlayerStats}>
         <div className={classes.PlayerAvatarAndRankWrapper}>
           {/*@ts-ignore*/}
-          <PlayerAvatarAndRank rankTitle={rankTitle} avatarName={avatarName}/>
+          <PlayerAvatarAndRank rankTitle={rankTitle} avatarName={avatarName} />
         </div>
         <div className={classes.PlayerIndicatorsAndNetwork}>
           <div className={classes.NetworkAndTime}>
-            <NetworkAndTime time={time} network={network}/>
+            <NetworkAndTime time={time} network={network} />
           </div>
           <div className={classes.PlayerIndicatorsWrapper}>
-            <PlayerIndicators firstIndicator={firstInd} secondIndicator={secondInd} thirdIndicator={thirdInd}/>
+            <PlayerIndicators firstIndicator={firstInd} secondIndicator={secondInd} thirdIndicator={thirdInd} />
           </div>
         </div>
       </div>
       <div className={classes.PlayerBuffsWrapper}>
-        <Buffs buffs={buffs}/>
+        <Buffs buffs={buffs} />
       </div>
     </div>
   );

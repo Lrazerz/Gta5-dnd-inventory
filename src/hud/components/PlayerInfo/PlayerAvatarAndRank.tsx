@@ -1,13 +1,13 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import classes from '../../../styles/hud/components/PlayerInfo/PlayerAvatarAndRank.module.scss';
-import {ThemesEnum} from "../../models/phone/enums";
+import { ThemesEnum } from '../../../models/hud/phone/enums';
 
 interface Props {
   avatarName: string;
   rankTitle: string;
 }
 
-const PlayerAvatarAndRank: React.FC<Props> = React.memo(({avatarName, rankTitle}) => {
+const PlayerAvatarAndRank: React.FC<Props> = React.memo(({ avatarName, rankTitle }) => {
   const [importedAvatarImage, setImportedAvatarImage] = useState();
   const [importedRankImage, setImportedRankImage] = useState();
 
@@ -16,7 +16,7 @@ const PlayerAvatarAndRank: React.FC<Props> = React.memo(({avatarName, rankTitle}
   // dynamic import rank and avatar images
   useEffect(() => {
     const getRankImage = async () => {
-      if(rankTitle) {
+      if (rankTitle) {
         let rankImage;
         try {
           rankImage = await import(`../../../assets/hud/images/components/PlayerInfo/levels/${rankTitle}.svg`);
@@ -25,7 +25,7 @@ const PlayerAvatarAndRank: React.FC<Props> = React.memo(({avatarName, rankTitle}
           console.log('Rank import error', e);
         }
       }
-      if(avatarName) {
+      if (avatarName) {
         let avatarImage;
         try {
           avatarImage = await import(`../../../assets/avatars/${avatarName}.svg`);
@@ -36,14 +36,13 @@ const PlayerAvatarAndRank: React.FC<Props> = React.memo(({avatarName, rankTitle}
           setImportedRankImage(importedThemeImage.default);
         }
       }
-    }
+    };
     getRankImage();
-
-  },[avatarName, rankTitle]);
+  }, [avatarName, rankTitle]);
 
   // force imageContainer to be square
   useEffect(() => {
-    if(imageContainerRef.current) {
+    if (imageContainerRef.current) {
       //@ts-ignore
       const width = window.getComputedStyle(imageContainerRef.current).width;
       //@ts-ignore
@@ -51,22 +50,16 @@ const PlayerAvatarAndRank: React.FC<Props> = React.memo(({avatarName, rankTitle}
     }
   }, [imageContainerRef.current]);
 
-  const playerRankBlock = importedRankImage ?
-    (<img src={importedRankImage}/>) : null;
-  const playerAvatarBlock = importedAvatarImage ?
-    (<img src={importedAvatarImage} className={classes.Image}/>) : null;
+  const playerRankBlock = importedRankImage ? <img src={importedRankImage} /> : null;
+  const playerAvatarBlock = importedAvatarImage ? <img src={importedAvatarImage} className={classes.Image} /> : null;
 
   return (
     <div className={classes.PlayerAvatarAndRank}>
       <div className={classes.PlayerAvatarWrapper} ref={imageContainerRef}>
-        <div className={classes.PlayerAvatarRoundedBorder}>
-          {playerAvatarBlock}
-        </div>
+        <div className={classes.PlayerAvatarRoundedBorder}>{playerAvatarBlock}</div>
       </div>
       <div className={classes.PlayerRankWrapper}>
-        <div className={classes.PlayerRank}>
-          {playerRankBlock}
-        </div>
+        <div className={classes.PlayerRank}>{playerRankBlock}</div>
       </div>
     </div>
   );

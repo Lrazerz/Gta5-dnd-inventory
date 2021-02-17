@@ -1,6 +1,6 @@
-import React, {CSSProperties, useEffect, useState} from 'react';
+import React, { CSSProperties, useEffect, useState } from 'react';
 import classes from '../../../../styles/hud/components/Phone/currentCalls/CallerInfoContainer.module.scss';
-import LeadText from "../Text/LeadText";
+import LeadText from '../Text/LeadText';
 
 interface Props {
   imageName: string;
@@ -8,8 +8,7 @@ interface Props {
   phoneNumber: string;
 }
 
-const CallerInfoContainer: React.FC<Props> = React.memo(({imageName, name, phoneNumber}) => {
-
+const CallerInfoContainer: React.FC<Props> = React.memo(function CallerInfoContainer({ imageName, name, phoneNumber }) {
   const [image, setImage] = useState();
 
   useEffect(() => {
@@ -21,13 +20,13 @@ const CallerInfoContainer: React.FC<Props> = React.memo(({imageName, name, phone
       } catch (e) {
         console.log('Phone caller info container image import error', e);
       }
-    }
-    if(imageName) {
+    };
+    if (imageName) {
       loadImage();
     }
   }, [imageName]);
 
-  const imageElement = image ? <img className={classes.Image} src={image}/> : null;
+  const imageElement = image ? <img className={classes.Image} src={image} /> : null;
 
   const nameTextStyles: CSSProperties = {
     textAlign: 'center',
@@ -36,30 +35,24 @@ const CallerInfoContainer: React.FC<Props> = React.memo(({imageName, name, phone
     whiteSpace: 'nowrap',
     textOverflow: 'ellipsis',
     overflow: 'hidden',
-  }
+  };
   const phoneNumberTextStyles: CSSProperties = {
     textAlign: 'center',
     fontSize: '0.62rem',
     color: '#fff',
     fontWeight: 400,
-  }
+  };
 
   return (
     <div className={classes.CallerInfoContainer}>
       <div className={classes.AvatarContainer}>
-        <div className={classes.AvatarWrapper}>
-          {imageElement}
-        </div>
+        <div className={classes.AvatarWrapper}>{imageElement}</div>
       </div>
       <div className={classes.Name}>
-        <LeadText styles={nameTextStyles}>
-          {name}
-        </LeadText>
+        <LeadText styles={nameTextStyles}>{name}</LeadText>
       </div>
       <div className={classes.PhoneNumber}>
-        <LeadText styles={phoneNumberTextStyles}>
-          {phoneNumber}
-        </LeadText>
+        <LeadText styles={phoneNumberTextStyles}>{phoneNumber}</LeadText>
       </div>
     </div>
   );

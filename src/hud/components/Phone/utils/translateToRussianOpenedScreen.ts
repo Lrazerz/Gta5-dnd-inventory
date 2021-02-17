@@ -1,24 +1,24 @@
-import {OpenedScreenEnum} from "../../../../redux/reducers/hud/phone";
+import { OpenedScreenEnum } from '../../../../redux/reducers/hud/phone';
 
 let translateToRussianOpenedScreen: (openedScreenEng: OpenedScreenEnum) => string;
 translateToRussianOpenedScreen = (openedScreenEng: OpenedScreenEnum) => {
-  switch(openedScreenEng) {
+  switch (openedScreenEng) {
     case OpenedScreenEnum.phoneTyping: {
-      return 'Набор'
+      return 'Набор';
     }
     case OpenedScreenEnum.calls: {
-      return 'Последние'
+      return 'Последние';
     }
     case OpenedScreenEnum.contacts: {
-      return 'Контакты'
+      return 'Контакты';
     }
     case OpenedScreenEnum.chats: {
-      return 'Чаты'
+      return 'Чаты';
     }
     default: {
-      return 'undefined'
+      return 'undefined';
     }
   }
-}
+};
 
-export {translateToRussianOpenedScreen}
+export { translateToRussianOpenedScreen };

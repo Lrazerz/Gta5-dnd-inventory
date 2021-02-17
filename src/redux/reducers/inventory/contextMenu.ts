@@ -1,5 +1,10 @@
-import ItemModel from "../../../inventory/models/ItemModel";
-import {CONTEXT_MENU_OPEN, CONTEXT_MENU_CLOSE, DRAGGED_ITEM_SET, CONTEXT_MENU_SPLIT_OPEN} from "../../actions/inventory/types";
+import ItemModel from '../../../inventory/models/ItemModel';
+import {
+  CONTEXT_MENU_OPEN,
+  CONTEXT_MENU_CLOSE,
+  DRAGGED_ITEM_SET,
+  CONTEXT_MENU_SPLIT_OPEN,
+} from '../../actions/inventory/types';
 
 interface State {
   contextItem: null | ItemModel;
@@ -20,7 +25,7 @@ const initialState: State = {
   topOffset: null,
   topOffsetTopContext: null,
   splitMenuOpen: false,
-}
+};
 
 export default (state = initialState, action) => {
   switch (action.type) {
@@ -33,13 +38,13 @@ export default (state = initialState, action) => {
         topOffset: action.topOffset,
         topOffsetTopContext: action.topOffsetTopContext,
         splitMenuOpen: false,
-      }
+      };
     }
     case CONTEXT_MENU_SPLIT_OPEN: {
       return {
         ...state,
         splitMenuOpen: true,
-      }
+      };
     }
     case CONTEXT_MENU_CLOSE:
     case DRAGGED_ITEM_SET: {
@@ -49,4 +54,4 @@ export default (state = initialState, action) => {
       return state;
     }
   }
-}
+};

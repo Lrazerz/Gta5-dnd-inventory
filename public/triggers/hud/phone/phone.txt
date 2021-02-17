@@ -117,10 +117,10 @@ PhoneNumber: string // +88005553532
 
 
 mp.trigger('cef_cl_phone_changeCurrentCallOption', JSON);
-JSON: '{"OptionTitle": "IsMuted"|"Speaker"|"IsRecording", "OptionValue": boolean}
+JSON: '{"OptionTitle": "IsMuted"|"Speaker"|"IsRecording", "OptionValue": boolean}'
 
 // обновить данные - phone_openCurrentCall
 
 
-// если игрок, которому звонил, отменил звонок
+// если игрок, которому звонил, отклонил звонок
 3. phone_abortCall()

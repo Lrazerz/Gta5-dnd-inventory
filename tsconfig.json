@@ -6,11 +6,7 @@
     "module": "commonjs",
     "preserveConstEnums": true,
     "target": "es6",
-    "lib": [
-      "esnext",
-      "dom",
-      "dom.iterable"
-    ],
+    "lib": ["esnext", "dom", "dom.iterable"],
     "removeComments": true,
     "allowSyntheticDefaultImports": true,
     "jsx": "react",
@@ -21,21 +17,11 @@
     "moduleResolution": "node",
     "downlevelIteration": true,
     "paths": {
-      "components/*": [
-        "src/components/*"
-      ]
+      "components/*": ["src/components/*"]
     },
     "strictNullChecks": false,
     "strict": false
   },
-  "include": [
-    "./index.tsx",
-    "./webpack.config.js",
-    "./declarations.d.ts"
-  ],
-  "exclude": [
-    "node_modules",
-    "dist",
-    "**/*.spec.ts"
-  ]
+  "include": ["./index.tsx", "./webpack.config.js", "./declarations.d.ts"],
+  "exclude": ["node_modules", "dist", "**/*.spec.ts"]
 }

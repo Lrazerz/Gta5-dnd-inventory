@@ -1,28 +1,24 @@
-import React, {useState} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
-import {splitStringDigits} from "../../../../utils/common/splitStringDigits";
-import {joinSplitedDigits} from "../../../../utils/common/joinSplittedDigits";
-import {
-  treasuryMinAmountToPut,
-} from "../../../../constants/hud/corporations/treasury/treasury";
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { splitStringDigits } from '../../../../utils/common/splitStringDigits';
+import { joinSplitedDigits } from '../../../../utils/common/joinSplittedDigits';
+import { treasuryMinAmountToPut } from '../../../../constants/hud/corporations/treasury/treasury';
 import {
   corporationsTreasuryPutMoneyAction,
-  corporationsTreasuryWithdrawMoneyAction
-} from "../../../../redux/actions/hud/corporations/tabs/treasury/treasury";
-import TreasuryWithdrawPutPopUp from "./TreasuryWithdrawPutPopUp";
+  corporationsTreasuryWithdrawMoneyAction,
+} from '../../../../redux/actions/hud/corporations/tabs/treasury/treasury';
+import TreasuryWithdrawPutPopUp from './TreasuryWithdrawPutPopUp';
 
-interface Props {
-}
+interface Props {}
 
 type PutAmountType = number | '';
 
 const TreasuryPutMenu: React.FC<Props> = React.memo(() => {
-
   const dispatch = useDispatch();
 
   const [putAmount, setPutAmount]: [PutAmountType, (PutAmountType) => void] = useState(treasuryMinAmountToPut);
 
-  const availableToPutToday = useSelector(state => state.hud.corporations.tabs.treasury.putAvailableToday);
+  const availableToPutToday = useSelector((state) => state.hud.corporations.tabs.treasury.putAvailableToday);
 
   const changePutAmountHandler = (amount: string) => {
     if (!amount) {
@@ -38,13 +34,13 @@ const TreasuryPutMenu: React.FC<Props> = React.memo(() => {
       return;
     }
     setPutAmount(formattedAmount);
-  }
+  };
 
   const inputBlurHandler = () => {
-    if(typeof putAmount === 'string') {
+    if (typeof putAmount === 'string') {
       setPutAmount(treasuryMinAmountToPut);
     }
-  }
+  };
 
   const putMoneyHandler = () => {
     if (typeof putAmount === 'string') {
@@ -59,13 +55,18 @@ const TreasuryPutMenu: React.FC<Props> = React.memo(() => {
     }
     // td
     dispatch(corporationsTreasuryPutMoneyAction(putAmount));
-  }
+  };
 
   return (
-    <TreasuryWithdrawPutPopUp title={'Введите сумму'} tipTitle={'Возможно положить в казну сегодня'}
-                              tipNumber={availableToPutToday} inputNumber={splitStringDigits(putAmount)}
-                              onInputChange={changePutAmountHandler} onButtonClick={putMoneyHandler}
-                              onInputBlur={inputBlurHandler}/>
+    <TreasuryWithdrawPutPopUp
+      title={'Введите сумму'}
+      tipTitle={'Возможно положить в казну сегодня'}
+      tipNumber={availableToPutToday}
+      inputNumber={splitStringDigits(putAmount)}
+      onInputChange={changePutAmountHandler}
+      onButtonClick={putMoneyHandler}
+      onInputBlur={inputBlurHandler}
+    />
   );
 });
 

@@ -4,18 +4,15 @@ const mpTrigger_interactions_openInteraction = (interactionName: string) => {
     // @ts-ignore
     mp.trigger('cef_cl_openInteraction', interactionName);
   } catch (e) {}
-}
+};
 
 // cross pressed
 const mpTrigger_interactions_closeInteractions = () => {
-  console.log('close interactions trigger')
+  console.log('close interactions trigger');
   try {
     // @ts-ignore
     mp.trigger('cef_cl_closeInteractions');
   } catch (e) {}
-}
+};
 
-export {
-  mpTrigger_interactions_openInteraction,
-  mpTrigger_interactions_closeInteractions,
-}
+export { mpTrigger_interactions_openInteraction, mpTrigger_interactions_closeInteractions };

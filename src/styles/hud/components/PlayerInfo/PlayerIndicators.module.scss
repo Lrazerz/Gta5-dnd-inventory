@@ -21,19 +21,19 @@
       justify-content: space-between;
       overflow: visible;
 
-      @media(min-aspect-ratio: theme.$aspect-ratio-4x3) {
+      @media (min-aspect-ratio: theme.$aspect-ratio-4x3) {
         margin-top: 20%;
       }
-      @media(min-aspect-ratio: theme.$aspect-ratio-3x2) and (min-width: 2000px) {
+      @media (min-aspect-ratio: theme.$aspect-ratio-3x2) and (min-width: 2000px) {
         margin-top: 31%;
       }
-      @media(min-aspect-ratio: theme.$aspect-ratio-16x10) {
+      @media (min-aspect-ratio: theme.$aspect-ratio-16x10) {
         margin-top: 24%;
       }
-      @media(min-aspect-ratio: theme.$aspect-ratio-16x9) {
+      @media (min-aspect-ratio: theme.$aspect-ratio-16x9) {
         margin-top: 15%;
       }
-      @media(min-aspect-ratio: theme.$aspect-ratio-17x9) {
+      @media (min-aspect-ratio: theme.$aspect-ratio-17x9) {
         margin-top: 22%;
       }
 
@@ -60,7 +60,7 @@
         height: 15.9%;
         width: 100%;
         border-radius: 0.5rem;
-        background-color: #8F929D;
+        background-color: #8f929d;
 
         .SingleIndicator {
           height: 100%;

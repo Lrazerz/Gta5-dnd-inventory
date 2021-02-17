@@ -1,4 +1,4 @@
-import {combineReducers} from 'redux';
+import { combineReducers } from 'redux';
 import boardReducer from './board';
 import externalBoardReducer from './externalBoard';
 import draggedItemReducer from './draggedItem';
@@ -13,4 +13,4 @@ export default combineReducers({
   equippedItems: equippedItemsReducer,
   contextMenu: contextMenuReducer,
   hoveredItem: hoveredItemReducer,
-})
+});

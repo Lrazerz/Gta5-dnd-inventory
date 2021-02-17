@@ -5,9 +5,7 @@ import hotkeyBorderImg from '../../../assets/hud/images/components/Hotkeys/hotke
 const HotkeyCell = React.memo(() => {
   return (
     <div className={classes.HotkeyCell}>
-      <img src={hotkeyBorderImg} className={classes.BorderElement}>
-
-      </img>
+      <img src={hotkeyBorderImg} className={classes.BorderElement}></img>
     </div>
   );
 });

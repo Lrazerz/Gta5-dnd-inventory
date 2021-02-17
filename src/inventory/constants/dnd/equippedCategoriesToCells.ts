@@ -1,4 +1,4 @@
-import {ItemTypes} from "./types";
+import { ItemTypes } from './types';
 
 const EquippedCategoriesToCells = {
   1: ItemTypes.WEAPON_RIFLE,
@@ -43,6 +43,6 @@ const EquippedCategoriesToCells = {
   91: ItemTypes.ACCESSORIES,
   92: ItemTypes.ACCESSORIES,
   93: ItemTypes.ACCESSORIES,
-}
+};
 
-export {EquippedCategoriesToCells}
+export { EquippedCategoriesToCells };

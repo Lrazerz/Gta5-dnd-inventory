@@ -9,16 +9,12 @@ const maxMessageTextRows = 10;
 const phoneLengthWithoutPlus = 11;
 const phoneNumberWithPlusRegex = /^\+\d+$/;
 
-
-
 export {
   minContactLength,
   maxContactLength,
-
   minMessageTextLength,
   maxMessageTextLength,
   maxMessageTextRows,
-
   phoneLengthWithoutPlus,
-  phoneNumberWithPlusRegex
-}
+  phoneNumberWithPlusRegex,
+};

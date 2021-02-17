@@ -1,8 +1,7 @@
-import React, {CSSProperties, ReactElement} from 'react';
-import classes
-  from '../../../../../styles/hud/components/Corporations/PermissionsTab/PermissionTabRightContent/PermissionsSubTabHeader.module.scss';
-import CorporationsText from "../../CorporationsText";
-import {corporationsTheme} from "../../../../../constants/hud/corporations/corporationsTheme";
+import React, { CSSProperties, ReactElement } from 'react';
+import classes from '../../../../../styles/hud/components/Corporations/PermissionsTab/PermissionTabRightContent/PermissionsSubTabHeader.module.scss';
+import CorporationsText from '../../CorporationsText';
+import { corporationsTheme } from '../../../../../constants/hud/corporations/corporationsTheme';
 
 interface Props {
   title: string;
@@ -10,13 +9,12 @@ interface Props {
   isActive: boolean;
 }
 
-const PermissionsSubTabHeader: React.FC<Props> = React.memo((Props) => {
-
+const PermissionsSubTabHeader: React.FC<Props> = React.memo((props) => {
   const containerStyles: CSSProperties = {
-    opacity: Props.isActive ? 0.95 : 1,
-  }
+    opacity: props.isActive ? 0.95 : 1,
+  };
 
-  if(Props.isActive) {
+  if (props.isActive) {
     containerStyles.backgroundColor = corporationsTheme.bg_darkGrey2;
   }
 
@@ -24,19 +22,15 @@ const PermissionsSubTabHeader: React.FC<Props> = React.memo((Props) => {
     whiteSpace: 'nowrap',
     fontSize: '0.7647rem',
     lineHeight: '0.9324rem',
-    color: Props.isActive ? corporationsTheme.text_white : corporationsTheme.text_gray,
-  }
+    color: props.isActive ? corporationsTheme.text_white : corporationsTheme.text_gray,
+  };
 
   return (
     <div style={containerStyles} className={classes.PermissionsSubTab}>
       <div className={classes.Content}>
-        <div className={classes.ImageWrapper}>
-          {Props.imageUrl}
-        </div>
+        <div className={classes.ImageWrapper}>{props.imageUrl}</div>
         <div className={classes.TitleTextWrapper}>
-          <CorporationsText styles={titleTextStyles}>
-            {Props.title}
-          </CorporationsText>
+          <CorporationsText styles={titleTextStyles}>{props.title}</CorporationsText>
         </div>
       </div>
     </div>

@@ -1,14 +1,12 @@
-import React, {CSSProperties} from 'react';
-import {useDispatch} from 'react-redux';
-import classes
-  from '../../../../../styles/hud/components/Corporations/PermissionsTab/CommonPermissionsList/CommonPermissionsSet.module.scss';
-import CorporationsText from "../../CorporationsText";
-import {PermissionInterface, SingleRoleInterface} from "../../../../models/corporations/interfaces";
-import permissions from "../../../../../redux/reducers/hud/corporations/tabs/permissions/permissions";
-import TitleAndSwitchRow from "../../TitleAndSwitchRow";
-import {permissionsChangePermission} from "../../../../../redux/actions/hud/corporations/tabs/permissions/permissions";
-import {mpTrigger_corporations_permissions_changePermission}
-from "../../../../../utils/mpTriggers/hud/corporations/tabs/permissions/permissionsTriggers";
+import React, { CSSProperties } from 'react';
+import { useDispatch } from 'react-redux';
+import classes from '../../../../../styles/hud/components/Corporations/PermissionsTab/CommonPermissionsList/CommonPermissionsSet.module.scss';
+import CorporationsText from '../../CorporationsText';
+import { PermissionInterface, SingleRoleInterface } from '../../../../../models/hud/corporations/interfaces';
+import permissions from '../../../../../redux/reducers/hud/corporations/tabs/permissions/permissions';
+import TitleAndSwitchRow from '../../TitleAndSwitchRow';
+import { permissionsChangePermission } from '../../../../../redux/actions/hud/corporations/tabs/permissions/permissions';
+import { mpTrigger_corporations_permissions_changePermission } from '../../../../../utils/mpTriggers/hud/corporations/tabs/permissions/permissionsTriggers';
 
 interface Props {
   selectedRole: SingleRoleInterface;
@@ -16,26 +14,33 @@ interface Props {
   permissions: PermissionInterface[];
 }
 
-const CommonPermissionsSet: React.FC<Props> = (Props) => {
-
+const CommonPermissionsSet: React.FC<Props> = (props) => {
   const dispatch = useDispatch();
 
   const changePermissionHandler = (permission: PermissionInterface) => {
-    dispatch(permissionsChangePermission(Props.title, permission.title, !permission.value));
-    mpTrigger_corporations_permissions_changePermission(Props.selectedRole.title, Props.title, permission.title, !permission.value);
-  }
+    dispatch(permissionsChangePermission(props.title, permission.title, !permission.value));
+    mpTrigger_corporations_permissions_changePermission(
+      props.selectedRole.title,
+      props.title,
+      permission.title,
+      !permission.value,
+    );
+  };
 
   const titleTextStyles: CSSProperties = {
     fontWeight: 700,
     fontSize: '0.83rem',
-    lineHeight: '1rem'
-  }
+    lineHeight: '1rem',
+  };
 
-  const permissionsBlock = Props.permissions.map(permission => {
+  const permissionsBlock = props.permissions.map((permission) => {
     return (
       <div className={classes.PermissionWithSwitch} key={permission.title}>
-        <TitleAndSwitchRow title={permission.title} value={permission.value}
-                           onChange={() => changePermissionHandler({...permission})}/>
+        <TitleAndSwitchRow
+          title={permission.title}
+          value={permission.value}
+          onChange={() => changePermissionHandler({ ...permission })}
+        />
       </div>
     );
   });
@@ -43,9 +48,7 @@ const CommonPermissionsSet: React.FC<Props> = (Props) => {
   return (
     <div className={classes.CommonPermissionsSet}>
       <div className={classes.TitleWrapper}>
-        <CorporationsText styles={titleTextStyles}>
-          {Props.title}
-        </CorporationsText>
+        <CorporationsText styles={titleTextStyles}>{props.title}</CorporationsText>
       </div>
       {permissions && permissionsBlock}
     </div>

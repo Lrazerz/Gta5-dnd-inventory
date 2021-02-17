@@ -1,8 +1,11 @@
 import {
   EQUIPPED_ITEM_SET,
-  EQUIPPED_ITEM_REMOVE, EQUIPPED_ITEMS_SET, EQUIPPED_CURRENT_COUNT_CHANGE, EQUIPPED_ALL_ITEMS_RELEASE
-} from "../../actions/inventory/types";
-import EquippedItemsCellModel from "../../../inventory/models/EquippedItemsCellModel";
+  EQUIPPED_ITEM_REMOVE,
+  EQUIPPED_ITEMS_SET,
+  EQUIPPED_CURRENT_COUNT_CHANGE,
+  EQUIPPED_ALL_ITEMS_RELEASE,
+} from '../../actions/inventory/types';
+import EquippedItemsCellModel from '../../../inventory/models/EquippedItemsCellModel';
 
 // cells[x] - {item: null | Item}
 
@@ -62,8 +65,8 @@ const fillInitialState = () => {
   cells[92] = new EquippedItemsCellModel(null);
   cells[93] = new EquippedItemsCellModel(null);
 
-  return {cells};
-}
+  return { cells };
+};
 
 export default (state = fillInitialState(), action) => {
   switch (action.type) {
@@ -72,16 +75,16 @@ export default (state = fillInitialState(), action) => {
       cells[action.id] = {
         ...cells[action.id],
         item: action.item,
-      }
+      };
       return {
         ...state,
         cells,
       };
     }
     case EQUIPPED_ITEMS_SET: {
-      const {cells} = fillInitialState();
-      action.items.forEach(item => {
-        const newItem = {...item};
+      const { cells } = fillInitialState();
+      action.items.forEach((item) => {
+        const newItem = { ...item };
         cells[newItem.mainCell].item = newItem;
       });
       return {
@@ -94,7 +97,7 @@ export default (state = fillInitialState(), action) => {
       cells[action.id] = {
         ...cells[action.id],
         item: null,
-      }
+      };
       return {
         ...state,
         cells,
@@ -102,11 +105,14 @@ export default (state = fillInitialState(), action) => {
     }
     case EQUIPPED_CURRENT_COUNT_CHANGE: {
       const cells = [...state.cells];
-      cells[action.squareId].item = {...cells[action.squareId].item, currentCount: action.newCurrentCount};
+      cells[action.squareId].item = {
+        ...cells[action.squareId].item,
+        currentCount: action.newCurrentCount,
+      };
       return {
         ...state,
-        cells
-      }
+        cells,
+      };
     }
     case EQUIPPED_ALL_ITEMS_RELEASE: {
       return fillInitialState();
@@ -115,4 +121,4 @@ export default (state = fillInitialState(), action) => {
       return state;
     }
   }
-}
+};

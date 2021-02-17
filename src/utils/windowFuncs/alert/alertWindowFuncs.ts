@@ -1,4 +1,4 @@
-import {AlertTypesEnum} from "../../../models/alert/enums";
+import { AlertTypesEnum } from '../../../models/alert/enums';
 
 interface AcceptedAlertInterface {
   Type: 'Success' | 'Warning' | 'Error';
@@ -12,15 +12,15 @@ const window_setAlert = (jsonData: string) => {
   let alertType;
 
   switch (parsedData.Type.toLowerCase()) {
-    case "success": {
+    case 'success': {
       alertType = AlertTypesEnum.success;
       break;
     }
-    case "warning": {
+    case 'warning': {
       alertType = AlertTypesEnum.warning;
       break;
     }
-    case "error": {
+    case 'error': {
       alertType = AlertTypesEnum.error;
       break;
     }
@@ -29,10 +29,8 @@ const window_setAlert = (jsonData: string) => {
   return {
     type: alertType,
     message: parsedData.Message,
-    duration: parsedData.Duration
-  }
-}
+    duration: parsedData.Duration,
+  };
+};
 
-export {
-  window_setAlert
-}
+export { window_setAlert };

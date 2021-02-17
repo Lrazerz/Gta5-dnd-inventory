@@ -1,4 +1,4 @@
-import {combineReducers} from 'redux';
+import { combineReducers } from 'redux';
 import inventoryReducers from './inventory';
 import hudReducers from './hud';
 import alertReducer from './alert/alert';
@@ -7,5 +7,5 @@ import alertReducer from './alert/alert';
 export default combineReducers({
   hud: hudReducers,
   inventory: inventoryReducers,
-  alert: alertReducer
-})
+  alert: alertReducer,
+});

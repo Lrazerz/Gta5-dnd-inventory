@@ -1,25 +1,27 @@
 import {
   PermissionsAutoModelOptionInterface,
-  PermissionsTabAutoInterface, RowDropdownInterface
-} from "../../../../../../../hud/models/corporations/interfaces";
+  PermissionsTabAutoInterface,
+  RowDropdownInterface,
+} from '../../../../../../../models/hud/corporations/interfaces';
 import {
   PERMISSIONS_AUTO_CHANGE_OPTION,
   PERMISSIONS_AUTO_CHANGE_PERMISSION,
   PERMISSIONS_AUTO_SELECT_MODEL,
-  PERMISSIONS_AUTO_SET_DATA
-} from "../../../../../../actions/hud/corporations/tabs/permissions/tabs/autoTypes";
+  PERMISSIONS_AUTO_SET_DATA,
+} from '../../../../../../actions/hud/corporations/tabs/permissions/tabs/autoTypes';
 import {
   PERMISSIONS_ROLE_REMOVE,
-  PERMISSIONS_ROLE_SELECT, PERMISSIONS_TAB_OPEN
-} from "../../../../../../actions/hud/corporations/tabs/permissions/permissionsTypes";
-import {RowFieldTypeEnum} from "../../../../../../../hud/models/corporations/enums";
-import {CORPORATIONS_TAB_OPEN} from "../../../../../../actions/hud/corporations/corporationsTypes";
+  PERMISSIONS_ROLE_SELECT,
+  PERMISSIONS_TAB_OPEN,
+} from '../../../../../../actions/hud/corporations/tabs/permissions/permissionsTypes';
+import { RowFieldTypeEnum } from '../../../../../../../models/hud/corporations/enums';
+import { CORPORATIONS_TAB_OPEN } from '../../../../../../actions/hud/corporations/corporationsTypes';
 // import {permissionsAutoFields} from "../../../../../../../constants/hud/corporations/permissions/auto";
 
 const initialState: PermissionsTabAutoInterface = {
   models: null,
-  selectedModelInfo: null
-}
+  selectedModelInfo: null,
+};
 
 //region filled initState
 // const initialState: PermissionsTabAutoInterface = {
@@ -105,25 +107,25 @@ const initialState: PermissionsTabAutoInterface = {
 //endregion
 
 export default (state = initialState, action) => {
-  switch(action.type) {
+  switch (action.type) {
     case CORPORATIONS_TAB_OPEN:
     case PERMISSIONS_ROLE_SELECT:
     case PERMISSIONS_ROLE_REMOVE:
     case PERMISSIONS_TAB_OPEN: {
-        return initialState;
+      return initialState;
     }
     case PERMISSIONS_AUTO_SET_DATA: {
       return {
-        ...action.data
-      }
+        ...action.data,
+      };
     }
     case PERMISSIONS_AUTO_SELECT_MODEL: {
       return {
         ...state,
         selectedModelInfo: {
-          title: action.title
-        }
-      }
+          title: action.title,
+        },
+      };
     }
     //cfg-file
     // case PERMISSIONS_AUTO_SET_RESPONSIBLE: {
@@ -146,28 +148,30 @@ export default (state = initialState, action) => {
     //   }
     // }
     case PERMISSIONS_AUTO_CHANGE_OPTION: {
-      let newOptions: PermissionsAutoModelOptionInterface[] = [...state.selectedModelInfo.options];
+      const newOptions: PermissionsAutoModelOptionInterface[] = [...state.selectedModelInfo.options];
 
       // if dropdown - change potentialResponsibles too
 
       // else - just value
 
-      const selectedOptionIdx = newOptions
-        .findIndex(({option}) => option.title.toLowerCase() === action.title.toLowerCase());
+      const selectedOptionIdx = newOptions.findIndex(
+        ({ option }) => option.title.toLowerCase() === action.title.toLowerCase(),
+      );
 
-      if(newOptions[selectedOptionIdx].option.type === RowFieldTypeEnum.dropdown) {
-        let dropdownOption: RowDropdownInterface = newOptions[selectedOptionIdx].option as RowDropdownInterface;
+      if (newOptions[selectedOptionIdx].option.type === RowFieldTypeEnum.dropdown) {
+        const dropdownOption: RowDropdownInterface = newOptions[selectedOptionIdx].option as RowDropdownInterface;
 
-        const potentialValueIdx = dropdownOption.potentialValues
-          .findIndex(potentialValue => potentialValue.toLowerCase() === action.value.toLowerCase());
+        const potentialValueIdx = dropdownOption.potentialValues.findIndex(
+          (potentialValue) => potentialValue.toLowerCase() === action.value.toLowerCase(),
+        );
 
         dropdownOption.potentialValues = [
           ...dropdownOption.potentialValues.slice(0, potentialValueIdx),
           state.selectedModelInfo.options[selectedOptionIdx].option.value.toString(),
-          ...dropdownOption.potentialValues.slice(potentialValueIdx + 1)
-        ]
+          ...dropdownOption.potentialValues.slice(potentialValueIdx + 1),
+        ];
 
-        newOptions[selectedOptionIdx] = {option: dropdownOption};
+        newOptions[selectedOptionIdx] = { option: dropdownOption };
       }
 
       newOptions[selectedOptionIdx].option.value = action.value;
@@ -177,13 +181,12 @@ export default (state = initialState, action) => {
         selectedModelInfo: {
           ...state.selectedModelInfo,
           options: newOptions,
-        }
-      }
+        },
+      };
     }
     case PERMISSIONS_AUTO_CHANGE_PERMISSION: {
       const newPermissions = [...state.selectedModelInfo.permissions];
-      const selectedPermissionIdx = newPermissions
-        .findIndex(permission => permission.title === action.title);
+      const selectedPermissionIdx = newPermissions.findIndex((permission) => permission.title === action.title);
 
       newPermissions[selectedPermissionIdx].value = action.value;
 
@@ -191,12 +194,12 @@ export default (state = initialState, action) => {
         ...state,
         selectedModelInfo: {
           ...state.selectedModelInfo,
-          permissions: newPermissions
-        }
-      }
+          permissions: newPermissions,
+        },
+      };
     }
     default: {
       return state;
     }
   }
-}
+};

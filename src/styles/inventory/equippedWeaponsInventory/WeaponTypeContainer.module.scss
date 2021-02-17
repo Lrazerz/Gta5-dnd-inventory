@@ -23,35 +23,59 @@
   width: 100%;
   //background: linear-gradient(90deg, transparent, rgba(44, 60, 97, 1));
   background: linear-gradient(90deg, transparent, rgba(53, 78, 163, 0.7));
-  clip-path: polygon(0% 10.56792%, 77.45% 10.56792%, 81.0447% 0%, 100% 0%,
-          100% 100%, 81.0447% 100%, 77.45% 89.43208%, 0% 89.43208%);
+  clip-path: polygon(
+    0% 10.56792%,
+    77.45% 10.56792%,
+    81.0447% 0%,
+    100% 0%,
+    100% 100%,
+    81.0447% 100%,
+    77.45% 89.43208%,
+    0% 89.43208%
+  );
   position: absolute;
   // top border
   &::before {
-    content: "";
+    content: '';
     position: absolute;
     width: 100%;
     top: 0;
     left: 0;
     height: 12.5%;
 
-    clip-path: polygon(0% 84.6154%, 77.45% 84.6154%, 81.0447% 0%, 100% 0%,
-            100% 23.077%, 81.0447% 23.077%, 77.8% 100%, 0% 100%);
+    clip-path: polygon(
+      0% 84.6154%,
+      77.45% 84.6154%,
+      81.0447% 0%,
+      100% 0%,
+      100% 23.077%,
+      81.0447% 23.077%,
+      77.8% 100%,
+      0% 100%
+    );
 
-    background: linear-gradient(90deg, transparent 40%, rgba(63,118,243, 0.8) 60%, rgb(63,118,243) 70%);
+    background: linear-gradient(90deg, transparent 40%, rgba(63, 118, 243, 0.8) 60%, rgb(63, 118, 243) 70%);
   }
   // bottom border
   &::after {
-    content: "";
+    content: '';
     position: absolute;
     width: 100%;
     bottom: 0;
     height: 12.5%;
 
-    clip-path: polygon(0% 0%, 77.8% 0%, 81.0447% 76.923%, 100% 76.923%,
-            100% 100%, 81.0447% 100%, 77.45% 15.3846%, 0% 15.3846%);
+    clip-path: polygon(
+      0% 0%,
+      77.8% 0%,
+      81.0447% 76.923%,
+      100% 76.923%,
+      100% 100%,
+      81.0447% 100%,
+      77.45% 15.3846%,
+      0% 15.3846%
+    );
 
-    background: linear-gradient(90deg, transparent 40%, rgba(63,118,243, 0.8) 60%, rgb(63,118,243) 70%);
+    background: linear-gradient(90deg, transparent 40%, rgba(63, 118, 243, 0.8) 60%, rgb(63, 118, 243) 70%);
   }
 }
 

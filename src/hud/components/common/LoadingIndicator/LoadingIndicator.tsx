@@ -1,7 +1,7 @@
-import React, {CSSProperties, useEffect, useState} from 'react';
+import React, { CSSProperties, useEffect, useState } from 'react';
 import classes from '../../../../styles/hud/components/common/LoadingIndicator.module.scss';
 import evionLogo from '../../../../assets/common/evionLogo.svg';
-import CorporationsText from "../../Corporations/CorporationsText";
+import CorporationsText from '../../Corporations/CorporationsText';
 
 interface Props {
   animationDelay?: string;
@@ -11,8 +11,7 @@ interface Props {
   loadingText?: string;
 }
 
-const LoadingIndicator: React.FC<Props> = React.memo((Props) => {
-
+const LoadingIndicator: React.FC<Props> = React.memo((props) => {
   // const [isVisible, setIsVisible] = useState(true);
   //
   // useEffect(() => {
@@ -22,24 +21,24 @@ const LoadingIndicator: React.FC<Props> = React.memo((Props) => {
   //   }
   // }, [])
 
-  const animationDelay = Props.animationDelay || '0.2s';
-  const animationDuration = Props.animationDuration || '2s';
-  const animationIterationCount = Props.animationIterationCount || '1';
+  const animationDelay = props.animationDelay || '0.2s';
+  const animationDuration = props.animationDuration || '2s';
+  const animationIterationCount = props.animationIterationCount || '1';
 
-  const loadingText = Props.loadingText || 'Загрузка данных';
+  const loadingText = props.loadingText || 'Загрузка данных';
 
   const imageStyles: CSSProperties = {
     animationDelay: animationDelay,
     animationDuration: animationDuration,
-    animationIterationCount: animationIterationCount
-  }
+    animationIterationCount: animationIterationCount,
+  };
 
   const loadingTextStyles: CSSProperties = {
     fontSize: '0.7rem',
     lineHeight: '1rem',
     color: '#fff',
     marginTop: '1rem',
-  }
+  };
 
   // if(!isVisible) {
   //   return null;
@@ -47,10 +46,8 @@ const LoadingIndicator: React.FC<Props> = React.memo((Props) => {
 
   return (
     <div className={classes.LoadingIndicator}>
-      <img style={imageStyles} className={classes.IndicatorImage} src={evionLogo}/>
-      <CorporationsText styles={loadingTextStyles}>
-        {loadingText}
-      </CorporationsText>
+      <img style={imageStyles} className={classes.IndicatorImage} src={evionLogo} />
+      <CorporationsText styles={loadingTextStyles}>{loadingText}</CorporationsText>
     </div>
   );
 });

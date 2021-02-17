@@ -1,4 +1,4 @@
-import {LogsInitialStateInterface} from "../../../../../../hud/models/corporations/tabs/logs/logsInterfaces";
+import { LogsInitialStateInterface } from '../../../../../../models/hud/corporations/tabs/logs/logsInterfaces';
 
 let corporations_openLogs: (jsonData: string) => LogsInitialStateInterface;
 corporations_openLogs = (jsonData) => {
@@ -7,14 +7,14 @@ corporations_openLogs = (jsonData) => {
   return {
     currentPage: parsedData.CurrentPage,
     pagesCount: parsedData.PagesCount,
-    logs: parsedData.Logs.slice(0,10).map(log => ({
+    logs: parsedData.Logs.slice(0, 10).map((log) => ({
       executor: log.Executor,
       action: log.Action,
       type: log.Type,
-      description: log.Description
-    }))
-  }
-}
+      description: log.Description,
+    })),
+  };
+};
 
 let corporations_logs_openPage: (jsonData: string) => LogsInitialStateInterface;
 corporations_logs_openPage = (jsonData) => {
@@ -23,16 +23,13 @@ corporations_logs_openPage = (jsonData) => {
   return {
     currentPage: parsedData.CurrentPage,
     pagesCount: parsedData.PagesCount,
-    logs: parsedData.Logs.slice(0,10).map(log => ({
+    logs: parsedData.Logs.slice(0, 10).map((log) => ({
       executor: log.Executor,
       action: log.Action,
       type: log.Type,
-      description: log.Description
-    }))
-  }
-}
+      description: log.Description,
+    })),
+  };
+};
 
-export {
-  corporations_openLogs,
-  corporations_logs_openPage
-}
+export { corporations_openLogs, corporations_logs_openPage };

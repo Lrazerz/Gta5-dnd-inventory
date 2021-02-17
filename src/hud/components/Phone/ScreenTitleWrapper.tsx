@@ -1,8 +1,8 @@
-import React, {CSSProperties} from 'react';
+import React, { CSSProperties } from 'react';
 import classes from '../../../styles/hud/components/Phone/SettingsScreen/ScreenTitleWrapper.module.scss';
-import {ThemesEnum} from "../../models/phone/enums";
-import leftArrowImg from "../../../assets/hud/images/components/Phone/components/left-arrow.svg";
-import LeadText from "./Text/LeadText";
+import { ThemesEnum } from '../../../models/hud/phone/enums';
+import leftArrowImg from '../../../assets/hud/images/components/Phone/components/left-arrow.svg';
+import LeadText from './Text/LeadText';
 
 interface Props {
   theme: ThemesEnum;
@@ -10,16 +10,15 @@ interface Props {
   onBackButtonPress: () => any;
 }
 
-const ScreenTitleWrapper: React.FC<Props> = React.memo(({theme, titleText, onBackButtonPress}) => {
-
+const ScreenTitleWrapper: React.FC<Props> = React.memo(({ theme, titleText, onBackButtonPress }) => {
   const titleTextStyles: CSSProperties = {
     fontSize: '0.62rem',
     color: theme === ThemesEnum.black ? '#fff' : '#251152',
-  }
+  };
 
   const horizontalLineStyles: CSSProperties = {
     backgroundColor: theme === ThemesEnum.black ? '#5422b0' : '#DAD8E6',
-  }
+  };
 
   return (
     <>
@@ -31,7 +30,7 @@ const ScreenTitleWrapper: React.FC<Props> = React.memo(({theme, titleText, onBac
           {titleText}
         </LeadText>
       </div>
-      <div className={classes.HorizontalLine} style={horizontalLineStyles}/>
+      <div className={classes.HorizontalLine} style={horizontalLineStyles} />
     </>
   );
 });

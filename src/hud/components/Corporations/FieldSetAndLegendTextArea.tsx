@@ -1,5 +1,5 @@
 import React from 'react';
-import FieldSetAndLegendTextAreaStateless from "./FieldSetAndLegendTextAreaStateless";
+import FieldSetAndLegendTextAreaStateless from './FieldSetAndLegendTextAreaStateless';
 
 interface Props {
   legend: string;
@@ -8,15 +8,18 @@ interface Props {
   placeholder?: string;
 }
 
-const FieldSetAndLegendTextArea: React.FC<Props> = React.memo((Props) => {
-
+const FieldSetAndLegendTextArea: React.FC<Props> = React.memo((props) => {
   const textChangeHandler = (value: string) => {
-    Props.onChange(value);
-  }
+    props.onChange(value);
+  };
 
   return (
-    <FieldSetAndLegendTextAreaStateless legend={Props.legend} contentText={Props.contentString}
-                                        onChange={textChangeHandler} placeholder={Props.placeholder}/>
+    <FieldSetAndLegendTextAreaStateless
+      legend={props.legend}
+      contentText={props.contentString}
+      onChange={textChangeHandler}
+      placeholder={props.placeholder}
+    />
   );
 });
 

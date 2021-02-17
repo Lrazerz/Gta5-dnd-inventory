@@ -1,11 +1,11 @@
-import React, {useState, useEffect, useRef} from 'react';
-import {useSelector} from 'react-redux';
-import InteractionsContainerStateless from "./InteractionsContainerStateless";
-import {SingleInteractionInterface} from "../../models/InteractionInterfaces";
+import React, { useState, useEffect, useRef } from 'react';
+import { useSelector } from 'react-redux';
+import InteractionsContainerStateless from './InteractionsContainerStateless';
+import { SingleInteractionInterface } from '../../../models/hud/InteractionInterfaces';
 import {
   mpTrigger_interactions_closeInteractions,
-  mpTrigger_interactions_openInteraction
-} from "../../../utils/mpTriggers/hud/interactions/interactionsTriggers";
+  mpTrigger_interactions_openInteraction,
+} from '../../../utils/mpTriggers/hud/interactions/interactionsTriggers';
 
 interface SortedInteractionsInterface {
   headerInteractions: SingleInteractionInterface[] | null;
@@ -28,41 +28,43 @@ interface DimensionsInterface {
 }
 
 const InteractionsContainer = React.memo(() => {
-
   const [dimensions, setDimensions]: [DimensionsInterface, any] = useState();
 
   const [sortedInteractions, setSortedInteractions]: [SortedInteractionsInterface, any] = useState();
 
   const crossRef = useRef();
 
-  const interactions = useSelector(state => state.hud.interactionsinteractions);
+  const interactions = useSelector((state) => state.hud.interactionsinteractions);
 
   //region -------------------- Set up dimensions --------------------
   // will be invoked from func which sort to header,base,footer
-  let _getDimensions: (headerIntPiecesHeight: number, baseIntPiecesHeight: number,
-                       footerIntPiecesHeight: number, columnsCount: number) =>
-    ({intContHeight: number,
-      intContMaxHeight: number,
-      singleInteractionHeight: number,
-      crossContainerHeight: number,
-      fullContainerWidth: number,
-      fullContainerLeft: number,
-      fullContainerTop: number,
-      fullContainerHeight: number,
-      fullContainerMaxHeight: number});
+  let _getDimensions: (
+    headerIntPiecesHeight: number,
+    baseIntPiecesHeight: number,
+    footerIntPiecesHeight: number,
+    columnsCount: number,
+  ) => {
+    intContHeight: number;
+    intContMaxHeight: number;
+    singleInteractionHeight: number;
+    crossContainerHeight: number;
+    fullContainerWidth: number;
+    fullContainerLeft: number;
+    fullContainerTop: number;
+    fullContainerHeight: number;
+    fullContainerMaxHeight: number;
+  };
   _getDimensions = (headerIntPiecesHeight, baseIntPiecesHeight, footerIntPiecesHeight, columnsCount) => {
-
     // const fullContainerWidth: number = columnsCount === 3 ?
     //   window.innerWidth * 0.495 : window.innerWidth * 0.33;
-    const fullContainerWidth: number = columnsCount === 3 ?
-      window.innerWidth * 0.425 : window.innerWidth * 0.29;
+    const fullContainerWidth: number = columnsCount === 3 ? window.innerWidth * 0.425 : window.innerWidth * 0.29;
 
     const intContWidthNumber = fullContainerWidth;
 
     // height to calc height of the full container
     // const singleInteractionHeight: number = intContWidthNumber * 0.1356;
     // const singleInteractionHeight: number = intContWidthNumber * 0.1156;
-    const singleInteractionHeight: number = intContWidthNumber / columnsCount * 0.25;
+    const singleInteractionHeight: number = (intContWidthNumber / columnsCount) * 0.25;
     const headerIntHeight: number = singleInteractionHeight * headerIntPiecesHeight;
     const baseIntHeight: number = singleInteractionHeight * baseIntPiecesHeight;
     const footerIntHeight: number = singleInteractionHeight * footerIntPiecesHeight;
@@ -90,13 +92,13 @@ const InteractionsContainer = React.memo(() => {
       fullContainerLeft,
       fullContainerTop,
       fullContainerHeight,
-      fullContainerMaxHeight
-    }
-  }
+      fullContainerMaxHeight,
+    };
+  };
 
   // make cross circle square
   useEffect(() => {
-    if(crossRef.current) {
+    if (crossRef.current) {
       const width = window.getComputedStyle(crossRef.current).width;
       // @ts-ignore
       crossRef.current.style.height = width;
@@ -108,30 +110,32 @@ const InteractionsContainer = React.memo(() => {
   useEffect(() => {
     const interactionsCount = interactions.length;
 
-    if(interactions.length === 0) {
+    if (interactions.length === 0) {
       return;
     }
 
     //region -------------------- Functions to sort interactions to header, base, footer --------------------
     let _sortInteractions: (interactions: SingleInteractionInterface[]) => SingleInteractionInterface[];
     _sortInteractions = (interactions) => {
-      const compareFunction = (a,b) => {
+      const compareFunction = (a, b) => {
         let result: number;
-        if(a.name.length > b.name.length) {
+        if (a.name.length > b.name.length) {
           result = -1;
         } else {
           result = 1;
         }
         return result;
-      }
+      };
       const newInteractions = [...interactions];
 
       return newInteractions.sort(compareFunction);
-    }
+    };
 
-    let _getInteractionsFor2Columns: () =>
-      ({headerInteractions: SingleInteractionInterface[] | [], baseInteractions: SingleInteractionInterface[],
-        footerInteractions: SingleInteractionInterface[] | []});
+    let _getInteractionsFor2Columns: () => {
+      headerInteractions: SingleInteractionInterface[] | [];
+      baseInteractions: SingleInteractionInterface[];
+      footerInteractions: SingleInteractionInterface[] | [];
+    };
     _getInteractionsFor2Columns = () => {
       const headerInteractions = [];
       const baseInteractions = [];
@@ -139,20 +143,24 @@ const InteractionsContainer = React.memo(() => {
 
       const sortedInteractions = _sortInteractions(interactions);
 
-      if(interactionsCount <= 2) {
+      if (interactionsCount <= 2) {
         // only base elements
         const baseElements: SingleInteractionInterface[] | [] = [];
 
-        for(let i = interactionsCount; i > -1; i--) {
+        for (let i = interactionsCount; i > -1; i--) {
           // @ts-ignore
           baseElements.push(sortedInteractions[i]);
         }
-        return {headerInteractions, baseInteractions: baseElements, footerInteractions};
+        return {
+          headerInteractions,
+          baseInteractions: baseElements,
+          footerInteractions,
+        };
       }
 
-      if(!(interactionsCount % 2)) {
+      if (!(interactionsCount % 2)) {
         // if even
-        if(interactionsCount === 4 || interactionsCount === 8) {
+        if (interactionsCount === 4 || interactionsCount === 8) {
           // if last element - header
           headerInteractions.push(sortedInteractions.pop());
           footerInteractions.push(sortedInteractions.pop());
@@ -161,10 +169,9 @@ const InteractionsContainer = React.memo(() => {
           footerInteractions.push(sortedInteractions.pop());
           headerInteractions.push(sortedInteractions.pop());
         }
-      }
-      else {
+      } else {
         // if odd
-        if(interactionsCount === 5 || interactionsCount === 9) {
+        if (interactionsCount === 5 || interactionsCount === 9) {
           headerInteractions.push(sortedInteractions.pop());
         } else {
           footerInteractions.push(sortedInteractions.pop());
@@ -178,12 +185,12 @@ const InteractionsContainer = React.memo(() => {
       const bElLength = 2;
       let bCurrElLength = 0;
 
-      for(let i = 0; i < sortedInteractions.length; i++) {
-        if(bCurrElLength === bElLength) {
+      for (let i = 0; i < sortedInteractions.length; i++) {
+        if (bCurrElLength === bElLength) {
           pairsReversedArray.push([sortedInteractions[i]]);
           bCurrElLength = 1;
         } else {
-          pairsReversedArray[pairsReversedArray.length - 1].unshift(sortedInteractions[i])
+          pairsReversedArray[pairsReversedArray.length - 1].unshift(sortedInteractions[i]);
           bCurrElLength++;
         }
       }
@@ -193,8 +200,8 @@ const InteractionsContainer = React.memo(() => {
       let isAppend = true; // append of prepend next pair
       newBaseInteractions.push(...pairsReversedArray[0]);
 
-      for(let i = 1; i < pairsReversedArray.length; i++) {
-        if(isAppend) {
+      for (let i = 1; i < pairsReversedArray.length; i++) {
+        if (isAppend) {
           newBaseInteractions.push(...pairsReversedArray[i]);
           isAppend = false;
         } else {
@@ -206,12 +213,14 @@ const InteractionsContainer = React.memo(() => {
       baseInteractions.push(...newBaseInteractions);
       //endregion
 
-      return {headerInteractions, baseInteractions, footerInteractions};
-    }
+      return { headerInteractions, baseInteractions, footerInteractions };
+    };
 
-    let _getInteractionsFor3Columns: () =>
-      ({headerInteractions: SingleInteractionInterface[] | [], baseInteractions: SingleInteractionInterface[],
-        footerInteractions: SingleInteractionInterface[] | []});
+    let _getInteractionsFor3Columns: () => {
+      headerInteractions: SingleInteractionInterface[] | [];
+      baseInteractions: SingleInteractionInterface[];
+      footerInteractions: SingleInteractionInterface[] | [];
+    };
     _getInteractionsFor3Columns = () => {
       const headerInteractions = [];
       const baseInteractions = [];
@@ -227,7 +236,7 @@ const InteractionsContainer = React.memo(() => {
       switch (remainder) {
         case 2: {
           // header and footer has 1 elements
-          if(basePiecesHeight % 2 === 1) {
+          if (basePiecesHeight % 2 === 1) {
             // last element in the header
             headerInteractions.push(sortedInteractions.pop());
             footerInteractions.push(sortedInteractions.pop());
@@ -239,7 +248,7 @@ const InteractionsContainer = React.memo(() => {
         }
         case 1: {
           // 1 el in the header or in the footer
-          if(basePiecesHeight % 2 === 0) {
+          if (basePiecesHeight % 2 === 0) {
             headerInteractions.push(sortedInteractions.pop());
           } else {
             footerInteractions.push(sortedInteractions.pop());
@@ -250,14 +259,14 @@ const InteractionsContainer = React.memo(() => {
       //endregion
 
       //region -------------------- Fill up the base --------------------
-      const centralColumn = sortedInteractions.slice(0,sortedInteractions.length / 3);
+      const centralColumn = sortedInteractions.slice(0, sortedInteractions.length / 3);
 
       const sortedCentralColumn = [centralColumn.shift()];
 
       let isAppend = true;
 
-      for(let i = 0; i < centralColumn.length; i++) {
-        if(isAppend) {
+      for (let i = 0; i < centralColumn.length; i++) {
+        if (isAppend) {
           sortedCentralColumn.push(centralColumn[i]);
           isAppend = false;
         } else {
@@ -270,7 +279,7 @@ const InteractionsContainer = React.memo(() => {
 
       // так же разбить по 2 элемента, реверснуть, и циклом отсортировать
 
-      const intArrWithoutCentralColumn = sortedInteractions.splice(sortedInteractions.length/3);
+      const intArrWithoutCentralColumn = sortedInteractions.splice(sortedInteractions.length / 3);
 
       // sorted from longest to shortest pairs of 2 columns
       const leftAndRightColumns = [[]];
@@ -278,8 +287,8 @@ const InteractionsContainer = React.memo(() => {
       const newArrSingleElementLength = 2;
       let currentElementLength = 0;
 
-      for(let i = 0; i < intArrWithoutCentralColumn.length; i++) {
-        if(currentElementLength === newArrSingleElementLength) {
+      for (let i = 0; i < intArrWithoutCentralColumn.length; i++) {
+        if (currentElementLength === newArrSingleElementLength) {
           leftAndRightColumns.push([intArrWithoutCentralColumn[i]]);
           currentElementLength = 1;
         } else {
@@ -292,9 +301,9 @@ const InteractionsContainer = React.memo(() => {
 
       const res = [leftAndRightColumns[0]];
 
-      for(let i = 1; i < leftAndRightColumns.length; i++) {
-        if(isAppend) {
-          res.push(leftAndRightColumns[i])
+      for (let i = 1; i < leftAndRightColumns.length; i++) {
+        if (isAppend) {
+          res.push(leftAndRightColumns[i]);
           isAppend = false;
         } else {
           res.unshift(leftAndRightColumns[i]);
@@ -303,30 +312,30 @@ const InteractionsContainer = React.memo(() => {
       }
 
       // теперь есть 2 массива одинаковой длины, массив с центральным
-      for(let i = 0; i < sortedCentralColumn.length; i++) {
+      for (let i = 0; i < sortedCentralColumn.length; i++) {
         res[i].splice(1, 0, sortedCentralColumn[i]);
       }
 
-      for(let i = 0; i < res.length; i++) {
-        baseInteractions.push(...res[i])
+      for (let i = 0; i < res.length; i++) {
+        baseInteractions.push(...res[i]);
       }
       //endregion
 
       return {
         footerInteractions,
         baseInteractions,
-        headerInteractions
-      }
-    }
+        headerInteractions,
+      };
+    };
     //endregion
 
     let headerInteractions, baseInteractions, footerInteractions, columnsCount;
 
-    if(interactionsCount < 12) {
+    if (interactionsCount < 12) {
       const {
         headerInteractions: localHeaderInter,
         baseInteractions: localBaseInter,
-        footerInteractions: localFooterInter
+        footerInteractions: localFooterInter,
       } = _getInteractionsFor2Columns();
       headerInteractions = localHeaderInter;
       baseInteractions = localBaseInter;
@@ -336,7 +345,7 @@ const InteractionsContainer = React.memo(() => {
       const {
         headerInteractions: localHeaderInter,
         baseInteractions: localBaseInter,
-        footerInteractions: localFooterInter
+        footerInteractions: localFooterInter,
       } = _getInteractionsFor3Columns();
       headerInteractions = localHeaderInter;
       baseInteractions = localBaseInter;
@@ -353,9 +362,13 @@ const InteractionsContainer = React.memo(() => {
       fullContainerLeft,
       fullContainerTop,
       fullContainerHeight,
-      fullContainerMaxHeight
-    } = _getDimensions(headerInteractions.length, Math.floor(baseInteractions.length / columnsCount),
-      footerInteractions.length, columnsCount);
+      fullContainerMaxHeight,
+    } = _getDimensions(
+      headerInteractions.length,
+      Math.floor(baseInteractions.length / columnsCount),
+      footerInteractions.length,
+      columnsCount,
+    );
 
     setDimensions({
       crossContainerHeight,
@@ -367,15 +380,14 @@ const InteractionsContainer = React.memo(() => {
       fullContainerLeft,
       fullContainerTop,
       fullContainerHeight,
-      fullContainerMaxHeight
+      fullContainerMaxHeight,
     });
 
     setSortedInteractions({
       headerInteractions,
       baseInteractions,
-      footerInteractions
+      footerInteractions,
     });
-
   }, [interactions]);
   //endregion
 
@@ -384,15 +396,15 @@ const InteractionsContainer = React.memo(() => {
     try {
       mpTrigger_interactions_closeInteractions();
     } catch (e) {}
-  }
+  };
 
   const pickInteractionHandler = (interactionName: string) => {
     mpTrigger_interactions_openInteraction(interactionName);
-  }
+  };
   //endregion
 
-  //region -------------------- Props for interaction wrapper --------------------
-  const dimensionsProps = dimensions && {
+  //region -------------------- props for interaction wrapper --------------------
+  const dimensionsprops = dimensions && {
     crossContainerHeight: dimensions.crossContainerHeight,
     singleInteractionHeight: dimensions.singleInteractionHeight,
     interactionsContainerHeight: dimensions.interactionsContainerHeight,
@@ -402,14 +414,18 @@ const InteractionsContainer = React.memo(() => {
     fullContainerLeft: dimensions.fullContainerLeft,
     fullContainerTop: dimensions.fullContainerTop,
     fullContainerMaxHeight: dimensions.fullContainerMaxHeight,
-    fullContainerHeight: dimensions.fullContainerHeight
-  }
+    fullContainerHeight: dimensions.fullContainerHeight,
+  };
   //endregion
 
   return (
-    <InteractionsContainerStateless crossRef={crossRef} onPickInteraction={pickInteractionHandler}
-                                    onClose={closeClickHandler} dimensions={dimensionsProps}
-                                    interactionsArrays={sortedInteractions && sortedInteractions}/>
+    <InteractionsContainerStateless
+      crossRef={crossRef}
+      onPickInteraction={pickInteractionHandler}
+      onClose={closeClickHandler}
+      dimensions={dimensionsprops}
+      interactionsArrays={sortedInteractions && sortedInteractions}
+    />
   );
 });
 

@@ -1,12 +1,102 @@
-mp.trigger: ()
+Триггеры перемещения
 
-Move:
-('cef_cl_moveItem',params[]) (params - item v json)
+Также срабатывают при сплите айтема и перемещения в свободную ячейку.
 
-Drop:
-('cef_cl_dropItem',json); - json - не измененный айтем в json'e
+// перемещение между базовой доской - одетым инвентарем
+mp.trigger(‘cef_cl_moveItem’,  JSON)
 
-Stack:
-mp.trigger('cef_cl_stackItem',json1,json2);
+JSON - предмет со всеми свойствами и, измененными, или не измененными PosNumberLeftAngle, IsRotated, Enabled
 
-Split:
+
+
+// перемещение с базовой доски / одетого инвентаря на внешний инвентарь
+mp.trigger(cef_cl_moveToExternalItem, JSON)
+
+JSON - предмет со всеми свойствами и, измененными, или не измененными PosNumberLeftAngle, IsRotated, Enabled
+
+
+
+// перемещение с внешнего инвентаря на внешний инвентарь
+mp.trigger(cef_cl_moveExternalItem, JSON)
+
+JSON - предмет со всеми свойствами и, измененными, или не измененными PosNumberLeftAngle, IsRotated
+
+
+
+// перемещение с внешнего инвентаря на базовый / одетый инвентарь
+mp.trigger(cef_cl_moveFromExternalItem, JSON)
+
+JSON - предмет со всеми свойствами и, измененными, или не измененными PosNumberLeftAngle, IsRotated, Enabled
+
+
+
+Триггеры вращения на месте
+
+// вращение на  базовой доске
+mp.trigger('cef_cl_rotateItem', JSON);
+
+JSON - предмет со всеми свойствами и, измененными PosNumberLeftAngle, IsRotated,
+
+
+
+// вращение на  внешней доске
+mp.trigger(cef_cl_rotateExternalItem, JSON);
+
+JSON - предмет со всеми свойствами и, измененными PosNumberLeftAngle, IsRotated,
+
+
+
+Триггеры для стака
+
+Либо перемещение всего айтема мышкой на другой, либо сплит и стак.
+
+
+// стак с базовой доски на базовую доску, с базовой доски на одетый инвентарь, с одетого инвентаря на доску
+mp.trigger('cef_cl_stackItem', JSON1, JSON2);
+
+JSON1 - предмет, с которого стакали, с измененным CurrentCount
+(если перемещаем полностью - CurrentCount == 0)
+JSON2 - предмет, в который стакали, с измененным CurrentCount
+
+
+// стак с базовой доски / одетого инвентаря на внешний инвентарь
+mp.trigger(cef_cl_stackToExternalItem, JSON1, JSON2);
+
+JSON1 - предмет, с которого стакали, с измененным CurrentCount
+(если перемещаем полностью - CurrentCount == 0)
+JSON2 - предмет, в который стакали, с измененным CurrentCount
+
+
+
+// стак с внешнего инвентаря на базовую доску/одетый инвентарь
+mp.trigger(cef_cl_stackFromExternalItem, JSON1, JSON2);
+
+JSON1 - предмет, с которого стакали, с измененным CurrentCount
+(если перемещаем полностью - CurrentCount == 0)
+JSON2 - предмет, в который стакали, с измененным CurrentCount
+
+
+
+// стак с внешнего инвентаря на внешний инвентарь
+mp.trigger(cef_cl_stackExternalItem, JSON1, JSON2);
+
+JSON1 - предмет, с которого стакали, с измененным CurrentCount
+(если перемещаем полностью - CurrentCount == 0)
+JSON2 - предмет, в который стакали, с измененным CurrentCount
+
+
+
+Триггеры для дропа
+
+
+// дроп айтема с базовой доски / одетого инвентаря
+mp.trigger('cef_cl_dropItem', JSON);
+
+JSON - предмет с не измененными свойствами
+
+
+
+// дроп айтема с внешнего инвентаря
+mp.trigger(‘cef_cl_dropExternalItem’, JSON);
+
+JSON - предмет с не измененными свойствами

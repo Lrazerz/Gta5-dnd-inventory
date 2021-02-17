@@ -1,17 +1,17 @@
-import {TasksCurrentTasksInitialStateInterface} from "../../../../../../../hud/models/corporations/tabs/tasks/tabs/currentTasksInterfaces";
+import { TasksCurrentTasksInitialStateInterface } from '../../../../../../../models/hud/corporations/tabs/tasks/tabs/currentTasksInterfaces';
 import {
   TasksExecutorTypeEnumServer,
   translateTasksExecutorTypeFromServer,
-} from "../../../../../../../hud/models/corporations/tabs/tasks/tabs/currentTasksEnums";
-import {currentTasksPageSize} from "../../../../../../../constants/hud/corporations/tasks/tasks";
-import {transformDateFromString} from "../../../../../../common/date";
+} from '../../../../../../../models/hud/corporations/tabs/tasks/tabs/currentTasksEnums';
+import { currentTasksPageSize } from '../../../../../../../constants/hud/corporations/tasks/tasks';
+import { transformDateFromString } from '../../../../../../common/date';
 
 let window_corporations_tasks_openCurrentTasks: (jsonData: string) => TasksCurrentTasksInitialStateInterface;
 window_corporations_tasks_openCurrentTasks = (jsonData: string) => {
   const parsedData = JSON.parse(jsonData);
 
   return {
-    tasks: parsedData.Tasks.slice(0, currentTasksPageSize).map(task => ({
+    tasks: parsedData.Tasks.slice(0, currentTasksPageSize).map((task) => ({
       id: task.Id,
       title: task.Title,
       date: transformDateFromString(task.Date),
@@ -23,16 +23,16 @@ window_corporations_tasks_openCurrentTasks = (jsonData: string) => {
     })),
     currentPage: parsedData.CurrentPage,
     pagesCount: parsedData.PagesCount,
-    isLoading: false
-  }
-}
+    isLoading: false,
+  };
+};
 
 let window_corporations_tasks_currentTasks_openPage: (jsonData: string) => TasksCurrentTasksInitialStateInterface;
 window_corporations_tasks_currentTasks_openPage = (jsonData: string) => {
   const parsedData = JSON.parse(jsonData);
 
   return {
-    tasks: parsedData.Tasks.slice(0, currentTasksPageSize).map(task => ({
+    tasks: parsedData.Tasks.slice(0, currentTasksPageSize).map((task) => ({
       id: task.Id,
       title: task.Title,
       date: transformDateFromString(task.Date),
@@ -44,11 +44,8 @@ window_corporations_tasks_currentTasks_openPage = (jsonData: string) => {
     })),
     currentPage: parsedData.CurrentPage,
     pagesCount: parsedData.PagesCount,
-    isLoading: false
-  }
-}
+    isLoading: false,
+  };
+};
 
-export {
-  window_corporations_tasks_openCurrentTasks,
-  window_corporations_tasks_currentTasks_openPage
-}
+export { window_corporations_tasks_openCurrentTasks, window_corporations_tasks_currentTasks_openPage };

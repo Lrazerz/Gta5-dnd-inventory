@@ -1,4 +1,4 @@
-import {ItemCategories} from "../constants/dnd/categories";
+import { ItemCategories } from '../constants/dnd/categories';
 
 export default class ItemModel {
   public id: string;
@@ -35,9 +35,20 @@ export default class ItemModel {
   // is rotated 90 degrees
   public isRotated: boolean;
 
-  constructor(id: string, name: string, category: ItemCategories | string, mainCell: [number, number] | number,
-              width: number, height: number, currentCount: number, maxCount: number | undefined, imageUrl: string | null,
-              isRotated = false, rest: any, isWeaponEquipped: boolean = false) {
+  constructor(
+    id: string,
+    name: string,
+    category: ItemCategories | string,
+    mainCell: [number, number] | number,
+    width: number,
+    height: number,
+    currentCount: number,
+    maxCount: number | undefined,
+    imageUrl: string | null,
+    isRotated = false,
+    rest: any,
+    isWeaponEquipped = false,
+  ) {
     this.id = id;
     this.name = name;
     this.category = category;

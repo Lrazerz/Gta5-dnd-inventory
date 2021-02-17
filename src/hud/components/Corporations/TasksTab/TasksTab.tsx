@@ -1,40 +1,36 @@
-import React, {useEffect} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
-import {CorporationsTasksTabsEnumEng} from "../../../models/corporations/tabs/tasks/tasksEnums";
-import CurrentTasksTab from "./CurrentTasks/CurrentTasksTab";
-import ArchiveTasksTab from "./ArchiveTasks/ArchiveTasksTab";
-import {TasksArchiveTasksInitialStateInterface} from "../../../models/corporations/tabs/tasks/tabs/archiveTasksInterfaces";
-import {window_corporations_tasks_openArchiveTasks} from "../../../../utils/windowFuncs/hud/Corporations/tabs/tasks/tabs/archiveTasksInterceptors";
-import {tasksArchiveTasksOpenAction} from "../../../../redux/actions/hud/corporations/tabs/tasks/tabs/archiveTasks";
-import NewTaskTab from "./NewTask/NewTaskTab";
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { CorporationsTasksTabsEnumEng } from '../../../../models/hud/corporations/tabs/tasks/tasksEnums';
+import CurrentTasksTab from './CurrentTasks/CurrentTasksTab';
+import ArchiveTasksTab from './ArchiveTasks/ArchiveTasksTab';
+import { TasksArchiveTasksInitialStateInterface } from '../../../../models/hud/corporations/tabs/tasks/tabs/archiveTasksInterfaces';
+import { window_corporations_tasks_openArchiveTasks } from '../../../../utils/windowFuncs/hud/Corporations/tabs/tasks/tabs/archiveTasksInterceptors';
+import { tasksArchiveTasksOpenAction } from '../../../../redux/actions/hud/corporations/tabs/tasks/tabs/archiveTasks';
+import NewTaskTab from './NewTask/NewTaskTab';
 
-interface Props {
-}
-
-const TasksTab: React.FC<Props> = React.memo(() => {
-
+const TasksTab: React.FC = React.memo(() => {
   const dispatch = useDispatch();
 
-  const openedTab = useSelector(state => state.hud.corporations.tabs.tasks.tasks.openedTab);
+  const openedTab = useSelector((state) => state.hud.corporations.tabs.tasks.tasks.openedTab);
 
   useEffect(() => {
     // @ts-ignore
-    if(!window.corporations_tasks_openArchiveTasks) {
+    if (!window.corporations_tasks_openArchiveTasks) {
       // @ts-ignore
       window.corporations_tasks_openArchiveTasks = (jsonData: string) => {
         const parsedData: TasksArchiveTasksInitialStateInterface = window_corporations_tasks_openArchiveTasks(jsonData);
         dispatch(tasksArchiveTasksOpenAction(parsedData));
-      }
+      };
     }
     return () => {
       // @ts-ignore
       window.corporations_tasks_openArchiveTasks = null;
-    }
-  })
+    };
+  });
 
   let contentToReturn: JSX.Element;
 
-  switch(openedTab) {
+  switch (openedTab) {
     case CorporationsTasksTabsEnumEng.currentTasks: {
       contentToReturn = <CurrentTasksTab />;
       break;
@@ -44,7 +40,7 @@ const TasksTab: React.FC<Props> = React.memo(() => {
       break;
     }
     case CorporationsTasksTabsEnumEng.archiveTasks: {
-      contentToReturn = <ArchiveTasksTab/>;
+      contentToReturn = <ArchiveTasksTab />;
       break;
     }
     default: {
@@ -53,7 +49,6 @@ const TasksTab: React.FC<Props> = React.memo(() => {
   }
 
   return contentToReturn;
-
 });
 
 export default TasksTab;

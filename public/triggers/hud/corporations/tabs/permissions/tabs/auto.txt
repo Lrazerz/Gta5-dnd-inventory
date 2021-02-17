@@ -22,8 +22,8 @@ mp.trigger('cef_cl_corporations_permissions_auto_changeOption', JSON)
 
 JSON: '{
 	"OpenedRole": string // "DigitalNoxDesign",
-	"OpenedTab": string // "Разрешения",
-	"OpenedPermissionsTab": string // "Техника",
+	"OpenedTab": "Разрешения",
+	"OpenedPermissionsTab": "Техника",
 	"OpenedModel": string, // "Пример модели 1", ...
 	"OptionTitle": string // "Ответственный", ...
 	"OptionValue": string | boolean // "Hova)_Type_1"

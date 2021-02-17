@@ -1,5 +1,5 @@
 // All types should be lowerCase
-import {ItemCategories} from "./categories";
+import { ItemCategories } from './categories';
 
 const ItemTypes = {
   // Standardized
@@ -23,16 +23,15 @@ const ItemTypes = {
   // TOOLS - Tools for weapons
   TOOLS: ItemCategories[12],
   SIM_CARD: ItemCategories[13],
-  PHONE: ItemCategories[14]
-}
+  PHONE: ItemCategories[14],
+};
 
-let AllItemTypes = [];
+const AllItemTypes = [];
 
 for (const propName in ItemTypes) {
   AllItemTypes.push(ItemTypes[propName]);
 }
 
-let WeaponItemTypes = [ItemCategories[0], ItemCategories[1], ItemCategories[2]];
+const WeaponItemTypes = [ItemCategories[0], ItemCategories[1], ItemCategories[2]];
 
-
-export {ItemTypes, AllItemTypes, WeaponItemTypes};
+export { ItemTypes, AllItemTypes, WeaponItemTypes };

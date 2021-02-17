@@ -1,16 +1,16 @@
-import React, {CSSProperties} from 'react';
+import React, { CSSProperties } from 'react';
 import classes from '../../../../styles/hud/components/Corporations/TreasuryTab/TreasuryTabStateless.module.scss';
-import CorporationsText from "../CorporationsText";
-import HalfGearWithMoney from "./HalfGearWithMoney";
-import TreasuryButton from "./TreasuryButton";
-import {corporationsTheme} from "../../../../constants/hud/corporations/corporationsTheme";
-import FieldSetAndLegendNumber from "../FieldSetAndLegendNumber";
-import FieldSetAndLegendString from "../FieldSetAndLegendString";
-import {maxNicknameLength, minNicknameLength} from "../../../../constants/commonConstants";
-import TreasuryWithdrawMenu from "./TreasuryWithdrawMenu";
-import TreasuryPutMenu from "./TreasuryPutMenu";
-import LoadingIndicator from "../../common/LoadingIndicator/LoadingIndicator";
-import {TreasuryInitialStateInterfaceWithLoading} from "../../../models/corporations/tabs/treasury/treasuryInterfaces";
+import CorporationsText from '../CorporationsText';
+import HalfGearWithMoney from './HalfGearWithMoney';
+import TreasuryButton from './TreasuryButton';
+import { corporationsTheme } from '../../../../constants/hud/corporations/corporationsTheme';
+import FieldSetAndLegendNumber from '../FieldSetAndLegendNumber';
+import FieldSetAndLegendString from '../FieldSetAndLegendString';
+import { maxNicknameLength, minNicknameLength } from '../../../../constants/commonConstants';
+import TreasuryWithdrawMenu from './TreasuryWithdrawMenu';
+import TreasuryPutMenu from './TreasuryPutMenu';
+import LoadingIndicator from '../../common/LoadingIndicator/LoadingIndicator';
+import { TreasuryInitialStateInterfaceWithLoading } from '../../../../models/hud/corporations/tabs/treasury/treasuryInterfaces';
 
 interface Props {
   treasuryTabData: TreasuryInitialStateInterfaceWithLoading;
@@ -39,94 +39,95 @@ interface Props {
   onAmountToTransferBlur: () => void;
 }
 
-const TreasuryTabStateless: React.FC<Props> = React.memo((Props) => {
-
+const TreasuryTabStateless: React.FC<Props> = React.memo((props) => {
   const titleTextStyles: CSSProperties = {
     lineHeight: '1.79rem',
     fontSize: '1.47rem',
-    marginTop: '3.1%'
-  }
+    marginTop: '3.1%',
+  };
 
   const todayAmountDollarBlock: JSX.Element = (
     <div className={`${classes.DollarSign} ${classes.TodayAmountDollarSign}`} />
-  )
+  );
 
-  const transferSimDollarBlock: JSX.Element = (
-    <div className={classes.DollarSign}/>
-  )
+  const transferSimDollarBlock: JSX.Element = <div className={classes.DollarSign} />;
 
-  if(Props.treasuryTabData.isLoading) {
+  if (props.treasuryTabData.isLoading) {
     return (
       <div className={classes.TreasuryTabStateless}>
-        <LoadingIndicator/>
+        <LoadingIndicator />
       </div>
-    )
+    );
   }
 
   return (
     <div className={classes.TreasuryTabStateless}>
       <CorporationsText styles={titleTextStyles}>Управление казной</CorporationsText>
       <div className={classes.HalfGearWithMoneyWrapper}>
-        <HalfGearWithMoney amount={Props.treasuryTabData.treasuryAmount}/>
+        <HalfGearWithMoney amount={props.treasuryTabData.treasuryAmount} />
       </div>
-      <div className={classes.WithdrawPutButtonsContainer} >
+      <div className={classes.WithdrawPutButtonsContainer}>
         <div className={classes.WithdrawButtonWrapper}>
-          <TreasuryButton onClick={Props.onWithdrawMenuOpen}>
-            Получить из казны
-          </TreasuryButton>
+          <TreasuryButton onClick={props.onWithdrawMenuOpen}>Получить из казны</TreasuryButton>
         </div>
         <div className={classes.PutButtonWrapper}>
-          <TreasuryButton onClick={Props.onPutMenuOpen} color={corporationsTheme.button_Blue}>
+          <TreasuryButton onClick={props.onPutMenuOpen} color={corporationsTheme.button_Blue}>
             Положить в казну
           </TreasuryButton>
         </div>
       </div>
-      <div className={classes.WithdrawTodayWrapper} onBlur={Props.onAvailableAmountBlur}
-           onKeyDown={Props.onAvailableAmountKeyDown}>
-        <FieldSetAndLegendNumber legend={'Сегодня можно снять'}
-                                 contentNumber={Props.availableAmountToday}
-                                 max={Props.treasuryTabData.treasuryAmount}
-                                 onChange={Props.onAvailableAmountChange} rightContent={todayAmountDollarBlock}/>
+      <div
+        className={classes.WithdrawTodayWrapper}
+        onBlur={props.onAvailableAmountBlur}
+        onKeyDown={props.onAvailableAmountKeyDown}
+      >
+        <FieldSetAndLegendNumber
+          legend={'Сегодня можно снять'}
+          contentNumber={props.availableAmountToday}
+          max={props.treasuryTabData.treasuryAmount}
+          onChange={props.onAvailableAmountChange}
+          rightContent={todayAmountDollarBlock}
+        />
       </div>
-      <CorporationsText styles={titleTextStyles}>
-        Отправить деньги
-      </CorporationsText>
+      <CorporationsText styles={titleTextStyles}>Отправить деньги</CorporationsText>
       <div className={classes.NicknameAndSumBlock}>
         <div className={classes.InputWrapper}>
-          <FieldSetAndLegendString legend={'Введите ник'} contentString={Props.nicknameToTransfer} placeholder={'Никнейм...'}
-                                   onChange={Props.onNicknameToTransferChange} minLength={minNicknameLength}
-                                   maxLength={maxNicknameLength}/>
+          <FieldSetAndLegendString
+            legend={'Введите ник'}
+            contentString={props.nicknameToTransfer}
+            placeholder={'Никнейм...'}
+            onChange={props.onNicknameToTransferChange}
+            minLength={minNicknameLength}
+            maxLength={maxNicknameLength}
+          />
         </div>
-        <div className={classes.InputWrapper} onBlur={Props.onAmountToTransferBlur}>
-          <FieldSetAndLegendNumber legend={'Сумма перевода'} contentNumber={Props.amountToTransfer}
-                                   onChange={Props.onAmountToTransferChange} max={Props.treasuryTabData.withdrawAvailableToday}
-                                   rightContent={transferSimDollarBlock}/>
+        <div className={classes.InputWrapper} onBlur={props.onAmountToTransferBlur}>
+          <FieldSetAndLegendNumber
+            legend={'Сумма перевода'}
+            contentNumber={props.amountToTransfer}
+            onChange={props.onAmountToTransferChange}
+            max={props.treasuryTabData.withdrawAvailableToday}
+            rightContent={transferSimDollarBlock}
+          />
         </div>
       </div>
       <div className={classes.TransferButtonWrapper}>
-        <TreasuryButton onClick={Props.onTransfer}>
-          Перевести
-        </TreasuryButton>
+        <TreasuryButton onClick={props.onTransfer}>Перевести</TreasuryButton>
       </div>
-      {Props.isWithdrawMenuOpened &&
-      (
-        <div className={classes.BlurredMenuTabWrapper} onClick={Props.onWithdrawMenuClose}>
+      {props.isWithdrawMenuOpened && (
+        <div className={classes.BlurredMenuTabWrapper} onClick={props.onWithdrawMenuClose}>
           <div className={classes.WithdrawMenuWrapper}>
             <TreasuryWithdrawMenu />
           </div>
         </div>
-      )
-      }
-      {
-        Props.isPutMenuOpened &&
-        (
-          <div className={classes.BlurredMenuTabWrapper} onClick={Props.onPutMenuClose}>
-            <div className={classes.WithdrawMenuWrapper}>
-              <TreasuryPutMenu />
-            </div>
+      )}
+      {props.isPutMenuOpened && (
+        <div className={classes.BlurredMenuTabWrapper} onClick={props.onPutMenuClose}>
+          <div className={classes.WithdrawMenuWrapper}>
+            <TreasuryPutMenu />
           </div>
-        )
-      }
+        </div>
+      )}
     </div>
   );
 });

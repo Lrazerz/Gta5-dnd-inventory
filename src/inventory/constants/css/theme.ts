@@ -13,5 +13,5 @@ export default {
     success: '#1f9816',
     warning: '#f6ff00',
     danger: '#ff0000',
-  }
-}
+  },
+};

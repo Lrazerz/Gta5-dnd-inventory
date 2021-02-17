@@ -30,7 +30,7 @@
         transform: rotate(-45deg);
 
         &:before {
-          content: "";
+          content: '';
           display: block;
           width: 100%;
           height: 100%;
@@ -47,7 +47,7 @@
       width: 0.3rem;
     }
     &::-webkit-scrollbar-thumb {
-      background-color: #3F77F5;
+      background-color: #3f77f5;
       border-radius: 0.3rem;
     }
 
@@ -114,4 +114,3 @@
     }
   }
 }
-

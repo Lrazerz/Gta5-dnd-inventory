@@ -1,4 +1,4 @@
-import {combineReducers} from 'redux';
+import { combineReducers } from 'redux';
 import propertyReducer from './property';
 import tabsReducers from './tabs';
 

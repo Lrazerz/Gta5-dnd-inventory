@@ -1,9 +1,10 @@
 import {
   CORPORATIONS_CLOSE,
-  CORPORATIONS_OPEN, CORPORATIONS_SET_LOADING,
-  CORPORATIONS_TAB_OPEN
-} from "../../../actions/hud/corporations/corporationsTypes";
-import {CorporationsTabsEnum} from "../../../../hud/models/corporations/enums";
+  CORPORATIONS_OPEN,
+  CORPORATIONS_SET_LOADING,
+  CORPORATIONS_TAB_OPEN,
+} from '../../../actions/hud/corporations/corporationsTypes';
+import { CorporationsTabsEnum } from '../../../../models/hud/corporations/enums';
 
 interface InitialStateInterface {
   isOpened: boolean;
@@ -12,8 +13,8 @@ interface InitialStateInterface {
 }
 const initialState: InitialStateInterface = {
   isOpened: false,
-  openedTab: CorporationsTabsEnum.tasks
-}
+  openedTab: CorporationsTabsEnum.tasks,
+};
 
 export default (state = initialState, action) => {
   switch (action.type) {
@@ -21,7 +22,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         isOpened: true,
-      }
+      };
     }
     case CORPORATIONS_CLOSE: {
       return initialState;
@@ -30,10 +31,10 @@ export default (state = initialState, action) => {
       return {
         ...state,
         openedTab: action.openedTab,
-      }
+      };
     }
     default: {
       return state;
     }
   }
-}
+};

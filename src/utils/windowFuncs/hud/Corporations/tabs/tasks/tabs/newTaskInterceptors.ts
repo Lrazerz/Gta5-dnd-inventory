@@ -1,23 +1,21 @@
-import {TasksNewTasksInitialStateInterface} from "../../../../../../../hud/models/corporations/tabs/tasks/tabs/newTaskInterfaces";
+import { TasksNewTasksInitialStateInterface } from '../../../../../../../models/hud/corporations/tabs/tasks/tabs/newTaskInterfaces';
 import {
   TasksExecutorTypeEnumServer,
-  translateTasksExecutorTypeFromServer
-} from "../../../../../../../hud/models/corporations/tabs/tasks/tabs/currentTasksEnums";
+  translateTasksExecutorTypeFromServer,
+} from '../../../../../../../models/hud/corporations/tabs/tasks/tabs/currentTasksEnums';
 
 let window_corporations_tasks_OpenNewTask: (jsonData: string) => TasksNewTasksInitialStateInterface;
 window_corporations_tasks_OpenNewTask = (jsonData: string) => {
   const parsedData = JSON.parse(jsonData);
 
   return {
-    potentialExecutors: parsedData.PotentialExecutors.map(executor => ({
+    potentialExecutors: parsedData.PotentialExecutors.map((executor) => ({
       id: executor.Id,
       executor: executor.Executor,
       executorType: translateTasksExecutorTypeFromServer(TasksExecutorTypeEnumServer[executor.ExecutorType]),
     })),
-    isLoading: false
-  }
-}
+    isLoading: false,
+  };
+};
 
-export {
-  window_corporations_tasks_OpenNewTask
-}
+export { window_corporations_tasks_OpenNewTask };

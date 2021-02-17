@@ -1,26 +1,21 @@
-import React, {CSSProperties, useEffect, useRef, useState} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
-import {useSwipeable} from "react-swipeable";
+import React, { CSSProperties, useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useSwipeable } from 'react-swipeable';
 import classes from '../../../../styles/hud/components/Phone/SelectedChatScreen/SelectedChatScreen.module.scss';
-import {OpenedScreenEnum, ThemesEnum} from "../../../models/phone/enums";
-import LeadText from "../Text/LeadText";
+import { OpenedScreenEnum, ThemesEnum } from '../../../../models/hud/phone/enums';
+import LeadText from '../Text/LeadText';
 import backButton from '../../../../assets/hud/images/components/Phone/components/left-arrow.svg';
 import removeChat from '../../../../assets/hud/images/components/Phone/components/SelectedChatScreen/remove-chat.svg';
-import ChatMessagesList from "./ChatMessagesList";
+import ChatMessagesList from './ChatMessagesList';
 
 import sendMessageImg from '../../../../assets/hud/images/components/Phone/components/SelectedChatScreen/send-message.svg';
-import phoneTheme from "../consts/phoneTheme";
-import {
-  openScreen,
-  removeSelectedChat,
-  setLastOutcomingMessage
-} from "../../../../redux/actions/hud/phone";
-import {maxMessageTextLength, maxMessageTextRows, minMessageTextLength} from "../../../../constants/hud/phone/phone";
+import phoneTheme from '../consts/phoneTheme';
+import { openScreen, removeSelectedChat, setLastOutcomingMessage } from '../../../../redux/actions/hud/phone';
+import { maxMessageTextLength, maxMessageTextRows, minMessageTextLength } from '../../../../constants/hud/phone/phone';
 
 const maxDisplayedRows = 6;
 
 const SelectedChatScreen = React.memo(() => {
-
   const dispatch = useDispatch();
 
   const [messageText, setMessageText] = useState();
@@ -31,30 +26,30 @@ const SelectedChatScreen = React.memo(() => {
   const scrollWrapperRef = useRef();
   const textAreaRef = useRef();
 
-  const selectedChat = useSelector(state => state.hud.phone.selectedChat);
-  const theme = useSelector(state => state.hud.phone.settings.cosmetics.theme);
+  const selectedChat = useSelector((state) => state.hud.phone.selectedChat);
+  const theme = useSelector((state) => state.hud.phone.settings.cosmetics.theme);
 
   useEffect(() => {
     setFocusOnTextArea();
-  }, [])
+  }, []);
 
   useEffect(() => {
     const timer = setTimeout(() => {
       scrollToTheLastEl();
     }, 500);
 
-    return () =>  clearTimeout(timer);
+    return () => clearTimeout(timer);
   }, [scrollWrapperRef.current, selectedChat]);
 
   const scrollToTheLastEl = () => {
     // @ts-ignore
     // lastMessageRef.current.scrollIntoView({behavior: "smooth"});
     scrollWrapperRef.current.scrollTop = 99999;
-  }
+  };
 
   const swipeUpHandler = () => {
     dispatch(openScreen(OpenedScreenEnum.mainScreen));
-  }
+  };
 
   // to external lib
   const handlers = useSwipeable({
@@ -62,37 +57,37 @@ const SelectedChatScreen = React.memo(() => {
     // onSwipedRight: () => openChatsScreen(),
     onSwipedUp: () => swipeUpHandler(),
     preventDefaultTouchmoveEvent: true,
-    trackMouse: true
+    trackMouse: true,
   });
   //endregion
 
   const openChatsScreen = () => {
     dispatch(openScreen(OpenedScreenEnum.chats));
-  }
+  };
 
   const setFocusOnTextArea = () => {
     // @ts-ignore
     textAreaRef.current.focus();
-  }
+  };
 
   const removeChatHandler = () => {
     dispatch(removeSelectedChat(selectedChat.id));
-  }
+  };
 
   const setTextHandler = (e) => {
     let targetValue = e.target.value;
-    if(targetValue.length === 0) {
+    if (targetValue.length === 0) {
       setRowsCount(0);
       setAdditionalRowsCount(0);
       // @ts-ignore
-      setMessageText("");
+      setMessageText('');
       return;
     }
     targetValue = targetValue.replace('\n', ' ');
     targetValue = targetValue.replace(/\s\s+/, ' ');
     targetValue = targetValue.slice(0, maxMessageTextLength);
 
-    let splittedByNewLineRows = targetValue.split('\n');
+    const splittedByNewLineRows = targetValue.split('\n');
 
     // let newRows = [...splittedByNewLineRows];
 
@@ -114,52 +109,52 @@ const SelectedChatScreen = React.memo(() => {
     //   splittedByNewLineRows = [...newRows];
     // }
 
-    let resRowsCount = splittedByNewLineRows.length;
+    const resRowsCount = splittedByNewLineRows.length;
     // const resStr = splittedByNewLineRows.join('\n');
 
-    if(resRowsCount > maxMessageTextRows) {
+    if (resRowsCount > maxMessageTextRows) {
       return;
     }
     setRowsCount(maxDisplayedRows);
     setMessageText(targetValue);
-  }
+  };
 
   const sendMessageHandler = () => {
     // @ts-ignore
-    if(messageText && messageText.length >= minMessageTextLength) {
+    if (messageText && messageText.length >= minMessageTextLength) {
       // @ts-ignore
       dispatch(setLastOutcomingMessage(selectedChat.id, messageText.trim()));
     }
     // todo send message
-  }
+  };
 
   const horizontalLineStyles: CSSProperties = {
     backgroundColor: theme === ThemesEnum.black ? '#5422b0' : '#DAD8E6',
-  }
+  };
 
   const nameTextStyles: CSSProperties = {
     fontSize: '0.7rem',
     whiteSpace: 'nowrap',
     textOverflow: 'ellipsis',
     overflow: 'hidden',
-  }
+  };
 
   const sendMessageContainerStyles: CSSProperties = {
     minHeight: 0.675 * (rowsCount + additionalRowsCount) + 1 + 'rem',
     // maxHeight: 0.45 * rowsCount + 1 + 'rem',
     backgroundColor: theme === ThemesEnum.black ? phoneTheme.lightBlack : '#fff',
     borderTop: `0.015rem solid ${theme === ThemesEnum.black ? '#5422b0' : '#DAD8E6'}`,
-  }
+  };
 
   const sendButtonContainerStyles: CSSProperties = {
     borderLeft: `0.015rem solid ${theme === ThemesEnum.black ? '#5422b0' : '#DAD8E6'}`,
-  }
+  };
 
   const textTypingStyles = {
     fontSize: '0.57rem',
     backgroundColor: 'transparent',
     color: theme === ThemesEnum.black ? phoneTheme.white : phoneTheme.darkGray,
-  }
+  };
 
   return (
     <div className={classes.SelectedChatScreen} {...handlers}>
@@ -168,39 +163,48 @@ const SelectedChatScreen = React.memo(() => {
         <div className={classes.BackTitleRemoveContainer}>
           <div className={classes.ArrowNameContainer} onClick={openChatsScreen}>
             <div className={classes.ArrowButton}>
-              <img src={backButton} className={classes.Button}/>
+              <img src={backButton} className={classes.Button} />
             </div>
             <div className={classes.NameWrapper}>
-              <LeadText styles={nameTextStyles}>
-                {selectedChat.name}
-              </LeadText>
+              <LeadText styles={nameTextStyles}>{selectedChat.name}</LeadText>
             </div>
           </div>
           <div className={classes.RemoveButtonWrapper} onClick={removeChatHandler}>
-            <img src={removeChat} className={classes.RemoveButton}/>
+            <img src={removeChat} className={classes.RemoveButton} />
           </div>
         </div>
       </div>
-      <div className={classes.HorizontalLine} style={horizontalLineStyles}/>
+      <div className={classes.HorizontalLine} style={horizontalLineStyles} />
       {/*End of the header*/}
       <div ref={scrollWrapperRef} className={classes.MessagesListWrapper} onClick={() => setFocusOnTextArea()}>
-        <ChatMessagesList/>
+        <ChatMessagesList />
       </div>
-      <div className={classes.SendMessageContainer} style={sendMessageContainerStyles}
-           onClick={() => setFocusOnTextArea()}>
+      <div
+        className={classes.SendMessageContainer}
+        style={sendMessageContainerStyles}
+        onClick={() => setFocusOnTextArea()}
+      >
         <div className={classes.TypeTextContainer}>
           {/*<input type={"text"} className={classes.TextContainer}*/}
           {/*       onChange={setTextHandler}/>*/}
-          <textarea className={classes.TextArea} style={textTypingStyles} id="story" ref={textAreaRef}
-                    name="story" rows={rowsCount + additionalRowsCount}
-          placeholder={"Когда зайдешь в игру уже ?"} maxLength={100} onChange={setTextHandler} value={messageText}/>
+          <textarea
+            className={classes.TextArea}
+            style={textTypingStyles}
+            id="story"
+            ref={textAreaRef}
+            name="story"
+            rows={rowsCount + additionalRowsCount}
+            placeholder={'Когда зайдешь в игру уже ?'}
+            maxLength={100}
+            onChange={setTextHandler}
+            value={messageText}
+          />
         </div>
         <div className={classes.SendButtonContainer} style={sendButtonContainerStyles} onClick={sendMessageHandler}>
           <div className={classes.SendButtonWrapper}>
-            <img src={sendMessageImg} className={classes.Button}/>
+            <img src={sendMessageImg} className={classes.Button} />
           </div>
         </div>
-
       </div>
     </div>
   );

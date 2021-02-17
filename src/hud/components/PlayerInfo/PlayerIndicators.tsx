@@ -11,10 +11,8 @@ interface Props {
   thirdIndicator: number;
 }
 
-const PlayerIndicators: React.FC<Props> = React.memo(({firstIndicator,
-                                                      secondIndicator, thirdIndicator}) => {
-
-  let getIndicatorBackground: (indicatorPosition: number, indicatorPercentage) => {background: string, width: string};
+const PlayerIndicators: React.FC<Props> = React.memo(({ firstIndicator, secondIndicator, thirdIndicator }) => {
+  let getIndicatorBackground: (indicatorPosition: number, indicatorPercentage) => { background: string; width: string };
   getIndicatorBackground = (indicatorPosition, indicatorPercentage) => {
     let fromColor = '#A8BBC1';
     let toColor = '#FCFCFD';
@@ -25,9 +23,9 @@ const PlayerIndicators: React.FC<Props> = React.memo(({firstIndicator,
     }
     return {
       background: `linear-gradient(90deg, ${fromColor} 0%, ${toColor} 100%)`,
-      width: `${indicatorPercentage+'%'}`
+      width: `${indicatorPercentage + '%'}`,
     };
-  }
+  };
 
   const firstIndicatorBackground = getIndicatorBackground(1, firstIndicator);
   const secondIndicatorBackground = getIndicatorBackground(2, secondIndicator);
@@ -38,36 +36,32 @@ const PlayerIndicators: React.FC<Props> = React.memo(({firstIndicator,
       <div className={classes.IndicatorsIconsWrapper}>
         <div className={classes.ShiftedIndicatorsIconsWrapper}>
           <div className={classes.SingleIndicatorIconWrapper}>
-            <img src={FoodImage}/>
+            <img src={FoodImage} />
           </div>
           <div className={classes.SingleIndicatorIconWrapper}>
-            <img src={HealthImage}/>
+            <img src={HealthImage} />
           </div>
           <div className={classes.SingleIndicatorIconWrapper}>
-            <img src={ArmorImg}/>
+            <img src={ArmorImg} />
           </div>
         </div>
-
       </div>
 
       <div className={classes.IndicatorsWrapper}>
         <div className={classes.ShiftedIndicatorsWrapper}>
           <div className={classes.SingleIndicatorWrapper}>
-            <div className={classes.SingleIndicator} style={firstIndicatorBackground}>
-            </div>
+            <div className={classes.SingleIndicator} style={firstIndicatorBackground}></div>
           </div>
           <div className={classes.SingleIndicatorWrapper}>
-            <div className={classes.SingleIndicator} style={secondIndicatorBackground}>
-            </div>
+            <div className={classes.SingleIndicator} style={secondIndicatorBackground}></div>
           </div>
           <div className={classes.SingleIndicatorWrapper}>
-            <div className={classes.SingleIndicator} style={thirdIndicatorBackground}>
-            </div>
+            <div className={classes.SingleIndicator} style={thirdIndicatorBackground}></div>
           </div>
         </div>
       </div>
     </div>
   );
-})
+});
 
 export default PlayerIndicators;

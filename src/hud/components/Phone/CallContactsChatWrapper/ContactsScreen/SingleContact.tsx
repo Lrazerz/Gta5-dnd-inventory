@@ -1,16 +1,15 @@
-import React, {CSSProperties, useEffect, useState} from 'react';
+import React, { CSSProperties, useEffect, useState } from 'react';
 import classes from '../../../../../styles/hud/components/Phone/CallContactsChatWrapper/ContactsScreen/SingleContact.module.scss';
-import {CallsInterface, ThemesEnum} from "../../../../models/phone/reducerInterfaces";
+import { CallsInterface, ThemesEnum } from '../../../../../models/hud/phone/reducerInterfaces';
 import phoneTheme from '../../consts/phoneTheme';
-import LeadText from "../../Text/LeadText";
+import LeadText from '../../Text/LeadText';
 
 interface Props {
   contact: CallsInterface;
   theme: ThemesEnum;
 }
 
-const SingleContact: React.FC<Props> = React.memo(({contact, theme}) => {
-
+const SingleContact: React.FC<Props> = React.memo(({ contact, theme }) => {
   const [importedAvatarImg, setImportedAvatarImg] = useState();
 
   useEffect(() => {
@@ -21,15 +20,15 @@ const SingleContact: React.FC<Props> = React.memo(({contact, theme}) => {
           importedThemeImage = await import(`../../../../../assets/avatars/${contact.imageName}.svg`);
           setImportedAvatarImg(importedThemeImage.default);
         } catch (e) {
-          if(e.message.startsWith('Cannot find')) {
+          if (e.message.startsWith('Cannot find')) {
             console.log(`Contact avatar "${contact.imageName}" import error, using default avatar`);
-            let defaultAvatarName = theme === ThemesEnum.white ? 'default-avatar' : 'default-avatar-white';
+            const defaultAvatarName = theme === ThemesEnum.white ? 'default-avatar' : 'default-avatar-white';
             importedThemeImage = await import(`../../../../../assets/avatars/${defaultAvatarName}.svg`);
             setImportedAvatarImg(importedThemeImage.default);
           }
         }
       }
-    }
+    };
     loadThemeImage();
   }, [contact.imageName]);
 
@@ -39,20 +38,18 @@ const SingleContact: React.FC<Props> = React.memo(({contact, theme}) => {
     overflow: 'hidden',
     whiteSpace: 'nowrap',
     textOverflow: 'ellipsis',
-  }
+  };
 
   return (
     <div className={classes.SingleContact}>
       <div className={classes.ImageContainer}>
         <div className={classes.ImageWrapper}>
-          <img className={classes.Image} src={importedAvatarImg}/>
+          <img className={classes.Image} src={importedAvatarImg} />
         </div>
       </div>
       <div className={classes.InfoWrapper}>
         <div className={classes.NameWrapper}>
-          <LeadText styles={nameStyles}>
-            {contact.name}
-          </LeadText>
+          <LeadText styles={nameStyles}>{contact.name}</LeadText>
         </div>
       </div>
     </div>

@@ -1,14 +1,14 @@
-const {merge} = require('webpack-merge');
+const { merge } = require('webpack-merge');
 const baseConfig = require('./webpackConf.base.js');
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
-const path = require("path");
+const path = require('path');
 
 const prodConfig = {
   mode: 'production',
   entry: './index.tsx',
   resolve: {
-    extensions: [".js", ".jsx", ".json", ".ts", ".tsx", ".css", ".scss", "png", "jpg", "cur"],
+    extensions: ['.js', '.jsx', '.json', '.ts', '.tsx', '.css', '.scss', 'png', 'jpg', 'cur'],
   },
   module: {
     rules: [
@@ -16,11 +16,11 @@ const prodConfig = {
         test: /\.tsx?$/,
         use: [
           {
-            loader: "ts-loader",
+            loader: 'ts-loader',
             options: {
-              transpileOnly: true
-            }
-          }
+              transpileOnly: true,
+            },
+          },
         ],
         exclude: /node_modules/,
       },
@@ -31,14 +31,14 @@ const prodConfig = {
           MiniCssExtractPlugin.loader,
           // Translates CSS into CommonJS
           {
-            loader: "css-loader",
+            loader: 'css-loader',
             options: {
               sourceMap: false,
             },
           },
           // Compiles Sass to CSS
           {
-            loader: "sass-loader",
+            loader: 'sass-loader',
             options: {
               sourceMap: false,
             },
@@ -51,8 +51,8 @@ const prodConfig = {
           loader: 'file-loader',
           options: {
             name: '[name].[ext]',
-            outputPath: 'images/'
-          }
+            outputPath: 'images/',
+          },
         },
       },
       {
@@ -62,12 +62,12 @@ const prodConfig = {
             loader: 'file-loader',
             options: {
               name: '[name].[ext]',
-              outputPath: 'fonts/'
-            }
-          }
-        ]
-      }
-    ]
+              outputPath: 'fonts/',
+            },
+          },
+        ],
+      },
+    ],
   },
   plugins: [
     // removes css comments
@@ -82,8 +82,8 @@ const prodConfig = {
       },
     }),
     new MiniCssExtractPlugin({
-      filename: "style.css",
-      chunkFilename: "[name].css"
+      filename: 'style.css',
+      chunkFilename: '[name].css',
     }),
   ],
   optimization: {

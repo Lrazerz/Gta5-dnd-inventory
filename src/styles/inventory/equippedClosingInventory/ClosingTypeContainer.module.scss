@@ -12,22 +12,22 @@
     display: flex;
     align-items: center;
     @media (min-aspect-ratio: theme.$aspect-ratio-5x4) {
-        margin-bottom: -2%;
+      margin-bottom: -2%;
     }
 
     @media (min-aspect-ratio: theme.$aspect-ratio-4x3) {
-        margin-bottom: -2.3%;
-      @media(min-width: 1500px) {
-          margin-bottom: -1.7%;
+      margin-bottom: -2.3%;
+      @media (min-width: 1500px) {
+        margin-bottom: -1.7%;
       }
     }
 
     @media (min-aspect-ratio: theme.$aspect-ratio-3x2) {
-        margin-bottom: -1.8%;
+      margin-bottom: -1.8%;
     }
 
     @media (min-aspect-ratio: theme.$aspect-ratio-16x10) {
-        margin-bottom: -1%;
+      margin-bottom: -1%;
     }
 
     @media (min-aspect-ratio: theme.$aspect-ratio-16x9) {
@@ -79,4 +79,3 @@
     }
   }
 }
-

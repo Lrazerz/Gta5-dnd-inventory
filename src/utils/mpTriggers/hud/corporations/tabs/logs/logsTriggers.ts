@@ -1,6 +1,6 @@
-import {CorporationsTabsDict} from "../../../../../../hud/models/corporations/enums";
-import {LogsSearchByEnumEng} from "../../../../../../hud/models/corporations/tabs/logs/logsEnums";
-import {SingleLogInterface} from "../../../../../../hud/models/corporations/tabs/logs/logsInterfaces";
+import { CorporationsTabsDict } from '../../../../../../models/hud/corporations/enums';
+import { LogsSearchByEnumEng } from '../../../../../../models/hud/corporations/tabs/logs/logsEnums';
+import { SingleLogInterface } from '../../../../../../models/hud/corporations/tabs/logs/logsInterfaces';
 
 const mpTrigger_corporations_logs_setFilter = (searchBy: LogsSearchByEnumEng, searchText: string) => {
   console.log('mpTrigger_corporations_logs_setFilter', CorporationsTabsDict.logs, searchBy, searchText);
@@ -8,12 +8,12 @@ const mpTrigger_corporations_logs_setFilter = (searchBy: LogsSearchByEnumEng, se
     const jsonData = JSON.stringify({
       OpenedTab: CorporationsTabsDict.logs,
       SearchBy: searchBy,
-      searchText: searchText
-    })
+      searchText: searchText,
+    });
     // @ts-ignore
     mp.trigger('cef_cl_corporations_logs_setFilter', jsonData);
   } catch (e) {}
-}
+};
 
 const mpTrigger_corporations_logs_changePage = (pageNumber: number, lastLog: SingleLogInterface) => {
   console.log('mpTrigger_corporations_logs_changePage', CorporationsTabsDict.logs, pageNumber, lastLog);
@@ -25,15 +25,12 @@ const mpTrigger_corporations_logs_changePage = (pageNumber: number, lastLog: Sin
         Executor: lastLog.executor,
         Action: lastLog.action,
         Type: lastLog.type,
-        Description: lastLog.description
-      }
-    })
+        Description: lastLog.description,
+      },
+    });
     // @ts-ignore
     mp.trigger('cef_cl_corporations_logs_changePage', jsonData);
   } catch (e) {}
-}
+};
 
-export {
-  mpTrigger_corporations_logs_setFilter,
-  mpTrigger_corporations_logs_changePage
-}
+export { mpTrigger_corporations_logs_setFilter, mpTrigger_corporations_logs_changePage };

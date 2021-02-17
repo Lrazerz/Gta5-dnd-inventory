@@ -8,7 +8,6 @@ const minTaskTitleLengthMessage = `Минимальная длина: ${minTaskT
 const maxTaskTitleLength = 20;
 const maxTaskTitleLengthMessage = `Максимальная длина: ${minTaskTitleLength}.`;
 
-
 const _taskTitleRegex = `^(\\w|_|[а-я]|[А-Я]|\\s){${minTaskTitleLength},${maxTaskTitleLength}}$`;
 const taskTitleRegex = new RegExp(_taskTitleRegex);
 const taskTitleRegexMessage = 'Введены недопустимые символы';
@@ -32,7 +31,7 @@ const minTaskDescriptionLengthMessage = `Минимальная длина: ${mi
 const maxTaskDescriptionLength = 300;
 const maxTaskDescriptionLengthMessage = `Максимальная длина: ${maxTaskDescriptionLength}`;
 
-const _taskDescriptionRegex = `^(\\w|_|[а-я]|[А-Я]|\\s){${minTaskDescriptionLength},${maxTaskDescriptionLength}}$`
+const _taskDescriptionRegex = `^(\\w|_|[а-я]|[А-Я]|\\s){${minTaskDescriptionLength},${maxTaskDescriptionLength}}$`;
 const taskDescriptionRegex = new RegExp(_taskDescriptionRegex);
 const taskDescriptionRegexMessage = 'Введены недопустимые символы';
 
@@ -43,26 +42,22 @@ const taskDescriptionRegexMessage = 'Введены недопустимые с�
 export {
   currentTasksPageSize,
   archiveTasksPageSize,
-
   minTaskTitleLength,
   minTaskTitleLengthMessage,
   maxTaskTitleLength,
   maxTaskTitleLengthMessage,
   taskTitleRegex,
   taskTitleRegexMessage,
-
   minTaskSum,
   minTaskSumMessage,
   maxTaskSum,
   maxTaskSumMessage,
-
   noTaskExecutorMessage,
   noTypedTaskExecutorMessage,
-
   minTaskDescriptionLength,
   minTaskDescriptionLengthMessage,
   maxTaskDescriptionLength,
   maxTaskDescriptionLengthMessage,
   taskDescriptionRegex,
-  taskDescriptionRegexMessage
-}
+  taskDescriptionRegexMessage,
+};
