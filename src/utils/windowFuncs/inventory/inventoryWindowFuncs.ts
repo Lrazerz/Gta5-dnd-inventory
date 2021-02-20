@@ -7,6 +7,7 @@ import { xMax } from '../../../inventory/constants/boardDimensions';
 import { addItems } from '../../../redux/actions/inventory/board';
 // @ts-ignore
 import DummyImage from '../../../assets/inventory/dummy/dummy.svg';
+import logs from '../../../redux/reducers/hud/corporations/tabs/logs/logs';
 
 const _importItemImage: (itemName: string) => Promise<any> = async (itemName) => {
   let imageUrl;
@@ -160,7 +161,7 @@ const _getExternalBoardItems = async (items: any[]) => {
 };
 
 const window_openOrRefreshInventory = async (info) => {
-  const values = JSON.parse(info);
+  const values = JSON.parse(info).$values;
 
   const { boardItems, enabledItems } = await _getEnabledAndBoardItems(values);
 
@@ -170,7 +171,7 @@ const window_openOrRefreshInventory = async (info) => {
 };
 
 const window_openDoubleInventory = async (info, externalInfo, externalBoardHeight) => {
-  const { $values: values } = JSON.parse(info);
+  const { $values: values } = JSON.parse(info).$values;
   const { $values: externalValues } = JSON.parse(externalInfo);
 
   const { boardItems, enabledItems } = await _getEnabledAndBoardItems(values);

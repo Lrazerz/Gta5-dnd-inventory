@@ -174,9 +174,9 @@ const phone_openChats = (jsonData) => {
       name: call.Name,
       imageName: call.ImageName,
       // count
-      unreadMessages: call.UnreadMessages,
-      lastMessage: call.LastMessage,
-      lastMessageDate: transformDateFromString(call.LastMessageDate),
+      unreadMessages: call.UnreadMessages || 0,
+      lastMessage: call.LastMessage || '',
+      lastMessageDate: call.LastMessageDate ? transformDateFromString(call.LastMessageDate) : null,
     };
   });
 

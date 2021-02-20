@@ -95,15 +95,19 @@ const SingleChat: React.FC<Props> = React.memo(({ chat, theme }) => {
         <div className={classes.NameWrapper}>
           <LeadText styles={nameStyles}>{chat.name}</LeadText>
         </div>
-        <div className={classes.TimeWrapper}>
-          <LeadText styles={TimeStyles}>{chat.lastMessageDate.hours + ':' + chat.lastMessageDate.minutes}</LeadText>
-        </div>
+        {chat.lastMessage && (
+          <div className={classes.TimeWrapper}>
+            <LeadText styles={TimeStyles}>{chat.lastMessageDate.hours + ':' + chat.lastMessageDate.minutes}</LeadText>
+          </div>
+        )}
       </div>
-      <div className={classes.TextWrapper} style={textBlockStyles}>
-        <div className={classes.Text} style={TextStyles}>
-          {chat.lastMessage}
+      {chat.lastMessage && (
+        <div className={classes.TextWrapper} style={textBlockStyles}>
+          <div className={classes.Text} style={TextStyles}>
+            {chat.lastMessage}
+          </div>
         </div>
-      </div>
+      )}
     </>
   );
 

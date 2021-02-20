@@ -16,6 +16,7 @@ import { setAlert } from './redux/actions/alert/alert';
 import { DefaultHudDataInterface } from './models/hud/hudInterfaces';
 
 enum OpenedPartsEnum {
+  none,
   inventory,
   hud,
 }
@@ -76,6 +77,11 @@ const App = React.memo(function App() {
         }
         window_openDoubleInventory(info, externalInfo, extBoardHeight);
       };
+    }
+    //endregion
+
+    // @ts-ignore
+    if (!window.closeInventory) {
     }
     //endregion
 

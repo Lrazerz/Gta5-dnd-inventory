@@ -52,7 +52,7 @@
     }
 
     .InteractionsContainer {
-      background-color: #3f77f5;
+      //background-color: #3f77f5;
       display: flex;
       flex-direction: column;
       flex-wrap: wrap;
@@ -74,7 +74,7 @@
 
       .Base {
         width: 100%;
-        background-color: yellow;
+        //background-color: yellow;
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
@@ -82,7 +82,7 @@
         align-items: flex-start;
 
         .BaseSingleInteractionWrapper {
-          background-color: fuchsia;
+          //background-color: fuchsia;
         }
       }
 
