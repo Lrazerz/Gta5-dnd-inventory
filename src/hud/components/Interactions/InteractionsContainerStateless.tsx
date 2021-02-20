@@ -144,6 +144,7 @@ const InteractionsContainerStateless: React.FC<Props> = React.memo(
     );
     //endregion
 
+    console.log('baseInteractionsBlock', baseInteractionsBlock, dimensions);
     return (
       <div style={fullContainerStyles} className={classes.Interactions} onClick={(e) => e.stopPropagation()}>
         <div className={classes.CrossContainer} style={crossContainerStyles}>

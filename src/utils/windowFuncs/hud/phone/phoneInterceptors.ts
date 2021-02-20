@@ -61,7 +61,7 @@ const closePhone = () => {
 
 const phone_openLastMessages = (jsonData) => {
   console.log('window.phone_openLastMessages');
-  const parsedData = JSON.parse(jsonData).$values;
+  const parsedData = JSON.parse(jsonData);
   const transformedLastMessages: LastMessageInterface[] = parsedData.map((lastMessage) => ({
     id: shortId.generate(),
     name: lastMessage.Name,
@@ -133,7 +133,7 @@ const phone_openCurrentCall = (jsonData) => {
 //region -------------------- Calls, contacts, chats --------------------
 const phone_openCalls = (jsonData) => {
   console.log('window.phone_openCalls');
-  const parsedData = JSON.parse(jsonData).$values;
+  const parsedData = JSON.parse(jsonData);
 
   const transformedCallsData: CallsInterface[] = parsedData.map((call) => {
     return {
@@ -151,7 +151,7 @@ const phone_openCalls = (jsonData) => {
 
 const phone_openContacts = (jsonData) => {
   console.log('window.phone_openCalls');
-  const parsedData = JSON.parse(jsonData).$values;
+  const parsedData = JSON.parse(jsonData);
 
   const transformedContactsData: ContactInterface[] = parsedData.map((incomingContact) => {
     return {
@@ -166,7 +166,7 @@ const phone_openContacts = (jsonData) => {
 
 const phone_openChats = (jsonData) => {
   console.log('window.phone_openContacts');
-  const parsedData = JSON.parse(jsonData).$values;
+  const parsedData = JSON.parse(jsonData);
 
   const transformedChatsData: ChatsDemoInterface[] = parsedData.map((call) => {
     return {

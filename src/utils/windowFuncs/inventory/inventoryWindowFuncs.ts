@@ -160,7 +160,7 @@ const _getExternalBoardItems = async (items: any[]) => {
 };
 
 const window_openOrRefreshInventory = async (info) => {
-  const values = JSON.parse(info).$values;
+  const values = JSON.parse(info);
 
   const { boardItems, enabledItems } = await _getEnabledAndBoardItems(values);
 

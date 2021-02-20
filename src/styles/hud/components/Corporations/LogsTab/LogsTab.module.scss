@@ -19,8 +19,7 @@
     .LogsWrapper {
       margin-top: 4.4%;
       width: 100%;
-      flex-grow: 1;
-      height: 84.23%;
+      min-height: 84.23%;
       max-height: 84.23%;
       display: flex;
       flex-direction: column;

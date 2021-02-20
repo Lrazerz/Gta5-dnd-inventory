@@ -49,7 +49,7 @@ let setPlayerBuffs: (data: string) => any[];
 setPlayerBuffs = (data) => {
   const parsedData = JSON.parse(data);
 
-  const buffs: [] = parsedData.$values;
+  const buffs: [] = parsedData;
 
   const transformedBuffs = buffs.map((buff) => {
     const newBuff = {};
