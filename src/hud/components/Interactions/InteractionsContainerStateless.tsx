@@ -107,6 +107,7 @@ const InteractionsContainerStateless: React.FC<Props> = React.memo(
 
           // only for 3-column grid
           const isAlignedRight: boolean = (i + 1) % dimensions.columnsCount === 1;
+          console.log('alignedRIght', isAlignedRight);
 
           return (
             <div

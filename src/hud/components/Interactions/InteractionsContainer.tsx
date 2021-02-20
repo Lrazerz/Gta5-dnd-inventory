@@ -147,10 +147,11 @@ const InteractionsContainer = React.memo(() => {
         // only base elements
         const baseElements: SingleInteractionInterface[] | [] = [];
 
-        for (let i = interactionsCount; i > -1; i--) {
+        for (let i = interactionsCount - 1; i > -1; i--) {
           // @ts-ignore
           baseElements.push(sortedInteractions[i]);
         }
+        console.log('baseElements', baseElements);
         return {
           headerInteractions,
           baseInteractions: baseElements,

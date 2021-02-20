@@ -45,7 +45,8 @@ const SingleInteractionStateless: React.FC<Props> = React.memo(
 
     //region -------------------- Styles --------------------
     const fullContainerStyles: CSSProperties = dimensions && {
-      justifyContent: isAlignedRight ? 'flex-end' : 'flex-start',
+      // justifyContent: isAlignedRight ? 'flex-end' : 'flex-start',
+      flexDirection: isReversed ? 'row' : 'row-reverse',
     };
 
     const interactionContentStyles: CSSProperties = dimensions && {
