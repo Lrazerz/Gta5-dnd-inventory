@@ -34,7 +34,7 @@ const InteractionsContainer = React.memo(() => {
 
   const crossRef = useRef();
 
-  const interactions = useSelector((state) => state.hud.interactionsinteractions);
+  const interactions = useSelector((state) => state.hud.interactions.interactions);
 
   //region -------------------- Set up dimensions --------------------
   // will be invoked from func which sort to header,base,footer
@@ -398,8 +398,12 @@ const InteractionsContainer = React.memo(() => {
     } catch (e) {}
   };
 
-  const pickInteractionHandler = (interactionName: string) => {
-    mpTrigger_interactions_openInteraction(interactionName);
+  const pickInteractionHandler = (interaction: SingleInteractionInterface) => {
+    if (interaction.enabled) {
+      mpTrigger_interactions_openInteraction(interaction.name);
+    } else {
+      console.warn(`Disabled interaction ${interaction.name} can not be triggered`);
+    }
   };
   //endregion
 

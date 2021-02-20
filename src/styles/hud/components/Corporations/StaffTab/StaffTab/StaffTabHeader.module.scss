@@ -1,0 +1,23 @@
+.StaffTabHeader {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+
+  .InviteButtonWrapper {
+    width: 24.76%;
+    height: 100%;
+  }
+
+  .SearchWrapper {
+    margin-left: auto;
+    margin-right: 0;
+    width: 15.07%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: stretch;
+  }
+}

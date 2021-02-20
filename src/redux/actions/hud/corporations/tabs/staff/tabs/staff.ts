@@ -1,4 +1,7 @@
-import { StaffTabInitialStateInterface } from '../../../../../../../models/hud/corporations/tabs/staff/tabs/staffInterfaces';
+import {
+  SingleStaffWorkerInterface,
+  StaffTabInitialStateInterface,
+} from '../../../../../../../models/hud/corporations/tabs/staff/tabs/staffInterfaces';
 import {
   STAFF_STAFF_ADD_TO_ROLE,
   STAFF_STAFF_CHANGE_PAGE,
@@ -21,10 +24,13 @@ const staffOpenStaffTabAction = (tabData: StaffTabInitialStateInterface) => {
   return { type: STAFF_STAFF_OPEN, tabData };
 };
 
-const staffChangePageAction = (pageNumber: number): ThunkAction<void, RootStoreInterface, unknown, Action<string>> => {
+const staffChangePageAction = (
+  pageNumber: number,
+  lastMember: SingleStaffWorkerInterface,
+): ThunkAction<void, RootStoreInterface, unknown, Action<string>> => {
   return (dispatch) => {
     dispatch({ type: STAFF_STAFF_CHANGE_PAGE, pageNumber });
-    mpTrigger_corporations_staff_changePage(pageNumber);
+    mpTrigger_corporations_staff_changePage(pageNumber, lastMember);
   };
 };
 

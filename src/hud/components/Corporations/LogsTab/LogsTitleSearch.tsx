@@ -16,7 +16,7 @@ interface Props {
   isLoading: boolean;
 }
 
-const LogsTitleSearch: React.FC<Props> = React.memo((props) => {
+const LogsTitleSearch: React.FC<Props> = (props) => {
   const [searchText, setSearchText]: [string, (string) => void] = useState('');
 
   const [searchByFilter, setSearchByFilter]: [string, (string) => void] = useState(
@@ -67,9 +67,6 @@ const LogsTitleSearch: React.FC<Props> = React.memo((props) => {
     color: '#fff',
     marginRight: '2.41%',
   };
-
-  // const searchInputContainerStyles: CSSProperties = {
-  // }
 
   const searchTextInputStyles: CSSProperties = {
     lineHeight: '0.86rem',
@@ -128,6 +125,6 @@ const LogsTitleSearch: React.FC<Props> = React.memo((props) => {
       </div>
     </div>
   );
-});
+};
 
 export default LogsTitleSearch;

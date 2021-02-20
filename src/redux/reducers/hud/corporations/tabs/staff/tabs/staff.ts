@@ -1,4 +1,4 @@
-import { StaffTabInitialStateInterface } from '../../../../../../../models/hud/corporations/tabs/staff/tabs/staffInterfaces';
+import { StaffTabInitialStateInterfaceWithLoading } from '../../../../../../../models/hud/corporations/tabs/staff/tabs/staffInterfaces';
 import {
   STAFF_STAFF_ADD_TO_ROLE,
   STAFF_STAFF_CHANGE_PAGE,
@@ -7,8 +7,12 @@ import {
   STAFF_STAFF_REMOVE_FROM_ROLE,
 } from '../../../../../../actions/hud/corporations/tabs/staff/tabs/staffTypes';
 import { CORPORATIONS_STAFF_OPEN_TAB } from '../../../../../../actions/hud/corporations/tabs/staff/staffTypes';
+import { CORPORATIONS_TAB_OPEN } from '../../../../../../actions/hud/corporations/corporationsTypes';
+import { CorporationsTabsEnum } from '../../../../../../../models/hud/corporations/enums';
+import { CorporationsStaffTabsEnumEng } from '../../../../../../../models/hud/corporations/tabs/staff/staffEnums';
 
-const initialState: StaffTabInitialStateInterface = {
+const initialState: StaffTabInitialStateInterfaceWithLoading = {
+  isLoading: false,
   currentPage: 1,
   pagesCount: 1,
   staff: [],
@@ -16,19 +20,35 @@ const initialState: StaffTabInitialStateInterface = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case CORPORATIONS_TAB_OPEN: {
+      const stateToReturn = { ...initialState };
+
+      if (action.openedTab === CorporationsTabsEnum.staff) {
+        stateToReturn.isLoading = true;
+      }
+      return stateToReturn;
+    }
     case CORPORATIONS_STAFF_OPEN_TAB: {
-      return initialState;
+      const stateToReturn = { ...initialState };
+
+      if (action.openedTab === CorporationsStaffTabsEnumEng.personal) {
+        stateToReturn.isLoading = true;
+      }
+      return stateToReturn;
     }
     case STAFF_STAFF_OPEN: {
       return {
         ...state,
         ...action.tabData,
+        isLoading: false,
       };
     }
     case STAFF_STAFF_CHANGE_PAGE: {
       return {
         ...state,
         currentPage: action.pageNumber,
+        isLoading: true,
+        staff: [],
       };
     }
     case STAFF_STAFF_REMOVE_FROM_ROLE: {

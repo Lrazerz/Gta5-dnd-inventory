@@ -14,4 +14,9 @@ interface StaffTabInitialStateInterface {
   staff: SingleStaffWorkerInterface[];
 }
 
-export { SingleStaffWorkerInterface, StaffTabInitialStateInterface };
+// state, useReducer
+interface StaffTabInitialStateInterfaceWithLoading extends StaffTabInitialStateInterface {
+  isLoading: boolean;
+}
+
+export { SingleStaffWorkerInterface, StaffTabInitialStateInterface, StaffTabInitialStateInterfaceWithLoading };

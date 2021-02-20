@@ -7,7 +7,7 @@ import SingleInteraction from './SingleInteraction';
 interface Props {
   crossRef: Ref<any>;
   onClose: () => void;
-  onPickInteraction: (name: string) => void;
+  onPickInteraction: (interaction: SingleInteractionInterface) => void;
 
   dimensions: {
     crossContainerHeight: number;

@@ -5,7 +5,7 @@ import { xMax } from '../constants/boardDimensions';
 const translateToServerItem = (item: ItemModel) => {
   const { id, name, category, mainCell, width, height, currentCount, isRotated, rest } = item;
 
-  const posNumberLeftAngle = mainCell;
+  let posNumberLeftAngle = mainCell;
 
   // translate coords to 1-dimension
   if (typeof item.mainCell === 'object') {

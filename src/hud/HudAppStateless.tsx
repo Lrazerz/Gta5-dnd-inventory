@@ -13,6 +13,7 @@ import Corporations from './components/Corporations/Corporations';
 interface Props {
   playerState: any;
   carInfo: any;
+  // todo delete?
   onInteractionsClose: () => void;
 }
 
@@ -91,7 +92,9 @@ const HudAppStateless: React.FC<Props> = React.memo(function HudApp({ playerStat
         {isPhoneOpenedRedux && <Phone />}
       </div>
       {isInteractionsOpenedRedux && (
-        <div className={classes.InteractionsWrapper} onClick={onInteractionsClose}>
+        // todo delete?
+        // <div className={classes.InteractionsWrapper} onClick={onInteractionsClose}>
+        <div className={classes.InteractionsWrapper}>
           <InteractionsContainer />
         </div>
       )}

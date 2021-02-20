@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import SingleInteractionStateless from './SingleInteractionStateless';
+import { SingleInteractionInterface } from '../../../models/hud/InteractionInterfaces';
 
 export interface DimensionsInterface {
   textBlockPadding: string;
@@ -15,7 +16,7 @@ interface Props {
   Enabled: boolean;
   isAlignedRight?: boolean;
 
-  onPickInteraction: (name: string) => void;
+  onPickInteraction: (interaction: SingleInteractionInterface) => void;
 }
 
 const SingleInteraction: React.FC<Props> = React.memo(
@@ -78,7 +79,11 @@ const SingleInteraction: React.FC<Props> = React.memo(
 
     //region -------------------- Click handlers --------------------
     const pickInteractionHandler = () => {
-      onPickInteraction(name);
+      const interaction: SingleInteractionInterface = {
+        name: name,
+        enabled: Enabled,
+      };
+      onPickInteraction(interaction);
     };
 
     // make different bg

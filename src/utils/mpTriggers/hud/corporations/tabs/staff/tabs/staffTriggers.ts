@@ -1,10 +1,19 @@
 import { CorporationsTabsDict } from '../../../../../../../models/hud/corporations/enums';
+import { SingleStaffWorkerInterface } from '../../../../../../../models/hud/corporations/tabs/staff/tabs/staffInterfaces';
 
-const mpTrigger_corporations_staff_changePage = (pageNumber: number) => {
+const mpTrigger_corporations_staff_changePage = (pageNumber: number, lastMember: SingleStaffWorkerInterface) => {
   try {
     const data = JSON.stringify({
       OpenedTab: CorporationsTabsDict.staff,
-      pageNumber: pageNumber,
+      PageNumber: pageNumber,
+      LastMember: {
+        Nickname: lastMember.nickname,
+        Role: lastMember.role,
+        PotentialRoles: lastMember.potentialRoles,
+        AverageOnline: lastMember.averageOnline,
+        AverageEarns: lastMember.averageEarns,
+        ContributedToTreasury: lastMember.contributedToTreasury,
+      },
     });
     console.log('cef_cl_corporations_staff_changePage', data);
     // @ts-ignore
@@ -16,7 +25,7 @@ const mpTrigger_corporations_staff_setFilter = (text: string) => {
   try {
     const data = JSON.stringify({
       OpenedTab: CorporationsTabsDict.staff,
-      searchText: text,
+      SearchText: text,
     });
     console.log('cef_cl_corporations_staff_setFilter', data);
     // @ts-ignore
@@ -29,7 +38,7 @@ const mpTrigger_corporations_staff_removeFromRole = (playerNickname: string, rol
     const data = JSON.stringify({
       OpenedTab: CorporationsTabsDict.staff,
       Nickname: playerNickname,
-      role: roleTitle,
+      Role: roleTitle,
     });
     console.log('cef_cl_corporations_staff_removeFromRole', data);
     // @ts-ignore
@@ -42,7 +51,7 @@ const mpTrigger_corporations_staff_addToRole = (playerNickname: string, roleTitl
     const data = JSON.stringify({
       OpenedTab: CorporationsTabsDict.staff,
       Nickname: playerNickname,
-      role: roleTitle,
+      Role: roleTitle,
     });
     console.log('cef_cl_corporations_staff_addToRole', data);
     // @ts-ignore

@@ -16,9 +16,7 @@ import {
 } from '../../../../redux/actions/hud/corporations/tabs/logs/logs';
 import { corporations_logs_openPage } from '../../../../utils/windowFuncs/hud/Corporations/tabs/logs/logsInterceptors';
 
-interface Props {}
-
-const LogsTab: React.FC<Props> = React.memo(() => {
+const LogsTab: React.FC = () => {
   const dispatch = useDispatch();
 
   const logs: SingleLogInterface[] = useSelector((state) => state.hud.corporations.tabs.logs.logs);
@@ -107,6 +105,6 @@ const LogsTab: React.FC<Props> = React.memo(() => {
   }
 
   return contentToReturn;
-});
+};
 
 export default LogsTab;

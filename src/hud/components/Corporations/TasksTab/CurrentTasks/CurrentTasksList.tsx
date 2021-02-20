@@ -22,9 +22,7 @@ const initialDimensions = {
   moneySign: '0px',
 };
 
-interface Props {}
-
-const CurrentTasksList: React.FC<Props> = React.memo(() => {
+const CurrentTasksList: React.FC = () => {
   const currentTasks: TasksSingleTaskInterface[] = useSelector(
     (state) => state.hud.corporations.tabs.tasks.tabs.current.tasks,
   );
@@ -66,6 +64,6 @@ const CurrentTasksList: React.FC<Props> = React.memo(() => {
       {currentTasksBlock}
     </div>
   );
-});
+};
 
 export default CurrentTasksList;

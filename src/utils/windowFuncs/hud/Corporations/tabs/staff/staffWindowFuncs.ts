@@ -6,7 +6,7 @@ const window_corporations_staff_openStaffTab = (jsonData: string) => {
   const transformedData: StaffTabInitialStateInterface = {
     currentPage: parsedData.CurrentPage,
     pagesCount: parsedData.PagesCount,
-    staff: parsedData.Staff.map((singleWorker) => {
+    staff: parsedData.Staff.slice(0, 10).map((singleWorker) => {
       return {
         nickname: singleWorker.Nickname,
         role: singleWorker.Role,

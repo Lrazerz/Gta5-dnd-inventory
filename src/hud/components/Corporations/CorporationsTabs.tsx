@@ -5,6 +5,7 @@ import CorporationsHeader from './CorporationsHeader';
 import TreasuryTab from './TreasuryTab/TreasuryTab';
 import LogsTab from './LogsTab/LogsTab';
 import TasksTab from './TasksTab/TasksTab';
+import StaffTab from './StaffTab/StaffTab';
 
 interface Props {
   dimensions: {
@@ -31,7 +32,7 @@ const CorporationsTabs: React.FC<Props> = React.memo((props) => {
 
   switch (props.openedTab) {
     case CorporationsTabsEnum.staff: {
-      tabBlock = <></>;
+      tabBlock = <StaffTab />;
       break;
     }
     case CorporationsTabsEnum.treasury: {

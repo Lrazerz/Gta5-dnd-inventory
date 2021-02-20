@@ -1,6 +1,7 @@
 // user opened interaction, server should invoke closeInteractions() on window
 const mpTrigger_interactions_openInteraction = (interactionName: string) => {
   try {
+    console.log('cef_cl_openInteraction', interactionName);
     // @ts-ignore
     mp.trigger('cef_cl_openInteraction', interactionName);
   } catch (e) {}

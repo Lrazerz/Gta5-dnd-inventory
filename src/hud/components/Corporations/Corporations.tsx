@@ -19,7 +19,7 @@ import { window_corporations_tasks_OpenNewTask } from '../../../utils/windowFunc
 import { tasksNewTaskOpenAction } from '../../../redux/actions/hud/corporations/tabs/tasks/tabs/newTask';
 import { StaffTabInitialStateInterface } from '../../../models/hud/corporations/tabs/staff/tabs/staffInterfaces';
 import { window_corporations_staff_openStaffTab } from '../../../utils/windowFuncs/hud/Corporations/tabs/staff/staffWindowFuncs';
-import { staffOpenStaffTab } from '../../../redux/actions/hud/corporations/tabs/staff/tabs/staff';
+import { staffOpenStaffTabAction } from '../../../redux/actions/hud/corporations/tabs/staff/tabs/staff';
 
 export interface CorporationsDimensionsInterface {
   width: number;
@@ -137,7 +137,7 @@ const Corporations = React.memo(() => {
       // @ts-ignore
       window.corporations_openStaff = (jsonData: string) => {
         const parsedData: StaffTabInitialStateInterface = window_corporations_staff_openStaffTab(jsonData);
-        dispatch(staffOpenStaffTab(parsedData));
+        dispatch(staffOpenStaffTabAction(parsedData));
       };
     }
     return () => {
