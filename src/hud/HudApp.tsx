@@ -23,6 +23,7 @@ import { corporationsOpenAction, corporationsCloseAction } from '../redux/action
 import { setAlert } from '../redux/actions/alert/alert';
 import { AlertTypesEnum } from '../models/alert/enums';
 import { DefaultHudDataInterface } from '../models/hud/hudInterfaces';
+import { parse } from '@typescript-eslint/parser';
 // import Notification from 'rc-notification';
 
 interface Props {
@@ -221,13 +222,15 @@ const HudApp: React.FC<Props> = React.memo(function HudApp({ data }) {
     if (!window.openInteractions) {
       // @ts-ignore
       window.openInteractions = (jsonData) => {
-        const parsedData = JSON.parse(jsonData).$values;
+        const parsedData = JSON.parse(jsonData);
+        console.log('parsedData', parsedData);
         const lowerCaseValues: SingleInteractionInterface[] = parsedData.map((value) => {
           return {
             name: value.Name,
             enabled: value.Enabled,
           };
         });
+        console.log('lowerCaseValues', lowerCaseValues);
         windowOpenInteractions(lowerCaseValues);
       };
     }

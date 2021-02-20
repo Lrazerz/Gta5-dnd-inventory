@@ -34,6 +34,7 @@ interface Props {
 
 const InteractionsContainerStateless: React.FC<Props> = React.memo(
   ({ crossRef, onClose, onPickInteraction, dimensions, interactionsArrays }) => {
+    console.log('interactionsArrays', interactionsArrays);
     // в зависимости от flexColumnsCount считать ширину айттемов внутри контейнера
     // header, base, footer
     // высота хэдера и футера либо 0 либо singleInteractionHeight
