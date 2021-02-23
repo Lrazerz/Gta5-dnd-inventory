@@ -14,7 +14,6 @@ const mpTrigger_corporations_permissions_property_openTab = (openedRoleTitle: st
       OpenedPermissionsTab: CorporationsPermissionsTabsDict.property,
       OpenedPropertyTab: tabTitle,
     });
-    // @ts-ignore
     mp.trigger('cef_cl_property_openTab', data);
   } catch (e) {}
 };
@@ -43,7 +42,6 @@ const mpTrigger_permissions_property_office_changeOption = (
       OptionTitle: optionTitle,
       OptionValue: optionValue,
     });
-    // @ts-ignore
     mp.trigger('cef_cl_corporations_permissions_auto_changeOption', data);
   } catch (e) {}
 };

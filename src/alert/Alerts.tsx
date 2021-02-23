@@ -9,9 +9,7 @@ interface AlertWithDisappearingInterface {
   isDisappearing: boolean;
 }
 
-interface Props {}
-
-const Alerts: React.FC<Props> = React.memo(() => {
+const Alerts: React.FC = React.memo(() => {
   const alerts: SingleAlertInterface[] = useSelector(({ alert }) => alert.alerts);
 
   const [alertsWithDisappearing, setAlertsWithDisappearing]: [AlertWithDisappearingInterface[], any] = useState([]);

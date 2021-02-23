@@ -13,10 +13,10 @@ const mpTrigger_corporations_staff_changePage = (pageNumber: number, lastMember:
         AverageOnline: lastMember.averageOnline,
         AverageEarns: lastMember.averageEarns,
         ContributedToTreasury: lastMember.contributedToTreasury,
+        BoostStatus: lastMember.boostStatus,
       },
     });
     console.log('cef_cl_corporations_staff_changePage', data);
-    // @ts-ignore
     mp.trigger('cef_cl_corporations_staff_changePage', data);
   } catch (e) {}
 };
@@ -28,7 +28,6 @@ const mpTrigger_corporations_staff_setFilter = (text: string) => {
       SearchText: text,
     });
     console.log('cef_cl_corporations_staff_setFilter', data);
-    // @ts-ignore
     mp.trigger('cef_cl_corporations_staff_setFilter', data);
   } catch (e) {}
 };
@@ -41,7 +40,6 @@ const mpTrigger_corporations_staff_removeFromRole = (playerNickname: string, rol
       Role: roleTitle,
     });
     console.log('cef_cl_corporations_staff_removeFromRole', data);
-    // @ts-ignore
     mp.trigger('cef_cl_corporations_staff_removeFromRole', data);
   } catch (e) {}
 };
@@ -54,7 +52,6 @@ const mpTrigger_corporations_staff_addToRole = (playerNickname: string, roleTitl
       Role: roleTitle,
     });
     console.log('cef_cl_corporations_staff_addToRole', data);
-    // @ts-ignore
     mp.trigger('cef_cl_corporations_staff_addToRole', data);
   } catch (e) {}
 };
@@ -66,7 +63,6 @@ const mpTrigger_corporations_staff_kick = (playerNickname: string) => {
       Nickname: playerNickname,
     });
     console.log('cef_cl_corporations_staff_kick', data);
-    // @ts-ignore
     mp.trigger('cef_cl_corporations_staff_kick', data);
   } catch (e) {}
 };

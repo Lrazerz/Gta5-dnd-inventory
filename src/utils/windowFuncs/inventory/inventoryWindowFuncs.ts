@@ -5,9 +5,7 @@ import ItemModel from '../../../inventory/models/ItemModel';
 import { ItemCategories } from '../../../inventory/constants/dnd/categories';
 import { xMax } from '../../../inventory/constants/boardDimensions';
 import { addItems } from '../../../redux/actions/inventory/board';
-// @ts-ignore
 import DummyImage from '../../../assets/inventory/dummy/dummy.svg';
-import logs from '../../../redux/reducers/hud/corporations/tabs/logs/logs';
 
 const _importItemImage: (itemName: string) => Promise<any> = async (itemName) => {
   let imageUrl;

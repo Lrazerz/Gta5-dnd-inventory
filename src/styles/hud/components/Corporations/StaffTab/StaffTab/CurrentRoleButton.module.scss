@@ -1,0 +1,42 @@
+.CurrentRoleButton {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: #34466A;
+  box-sizing: border-box;
+  border-radius: 2rem;
+
+  &:hover {
+    filter: contrast(130%);
+  }
+
+  .RemoveButton {
+    position: relative;
+    border-radius: 50%;
+    background-color: #627DB6;
+
+    &::before {
+      content: "";
+      position: absolute;
+      width: 70%;
+      height: 10%;
+      top: 45%;
+      left: 15%;
+      background-color: #34466A;
+      transform: rotate(45deg);
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      width: 70%;
+      height: 10%;
+      top: 45%;
+      left: 15%;
+      background-color: #34466A;
+      transform: rotate(-45deg);
+    }
+  }
+}

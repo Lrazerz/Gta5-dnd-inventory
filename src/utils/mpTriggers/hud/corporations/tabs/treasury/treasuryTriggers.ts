@@ -7,7 +7,6 @@ const mpTrigger_corporations_treasury_changeAvailableAmount = (amount: number) =
       OpenedTab: CorporationsTabsDict.treasury,
       Amount: amount,
     });
-    // @ts-ignore
     mp.trigger('cef_cl_corporations_treasury_changeAvailableAmount', jsonData);
   } catch (e) {}
 };
@@ -19,7 +18,6 @@ const mpTrigger_corporations_treasury_withdraw = (amount: number) => {
       OpenedTab: CorporationsTabsDict.treasury,
       Amount: amount,
     });
-    // @ts-ignore
     mp.trigger('cef_cl_corporations_treasury_withdraw', jsonData);
   } catch (e) {}
 };
@@ -31,7 +29,6 @@ const mpTrigger_corporations_treasury_put = (amount: number) => {
       OpenedTab: CorporationsTabsDict.treasury,
       Amount: amount,
     });
-    // @ts-ignore
     mp.trigger('cef_cl_corporations_treasury_put', jsonData);
   } catch (e) {}
 };
@@ -44,7 +41,6 @@ const mpTrigger_corporations_treasury_transfer = (nickname: string, amount: numb
       Nickname: nickname,
       Amount: amount,
     });
-    // @ts-ignore
     mp.trigger('cef_cl_corporations_treasury_transfer', jsonData);
   } catch (e) {}
 };

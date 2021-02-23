@@ -10,7 +10,6 @@ const mpTrigger_corporations_logs_setFilter = (searchBy: LogsSearchByEnumEng, se
       SearchBy: searchBy,
       searchText: searchText,
     });
-    // @ts-ignore
     mp.trigger('cef_cl_corporations_logs_setFilter', jsonData);
   } catch (e) {}
 };
@@ -28,7 +27,6 @@ const mpTrigger_corporations_logs_changePage = (pageNumber: number, lastLog: Sin
         Description: lastLog.description,
       },
     });
-    // @ts-ignore
     mp.trigger('cef_cl_corporations_logs_changePage', jsonData);
   } catch (e) {}
 };

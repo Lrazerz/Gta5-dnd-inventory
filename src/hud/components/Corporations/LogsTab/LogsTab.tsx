@@ -24,16 +24,13 @@ const LogsTab: React.FC = () => {
   const pagesCount: number = useSelector((state) => state.hud.corporations.tabs.logs.pagesCount);
 
   useEffect(() => {
-    // @ts-ignore
     if (!window.corporations_logs_openPage) {
-      // @ts-ignore
       window.corporations_logs_openPage = (jsonData: string) => {
         const parsedData: LogsInitialStateInterface = corporations_logs_openPage(jsonData);
         dispatch(corporationsLogsOpenPageAction(parsedData));
       };
     }
     return () => {
-      // @ts-ignore
       window.corporations_logs_openPage = null;
     };
   }, []);
@@ -50,7 +47,6 @@ const LogsTab: React.FC = () => {
     }
     paginationOptions.goToPage(pageNumber);
     dispatch(corporationsLogsOpenPageOnlyAction(pageNumber, logs[logs.length - 1]));
-    // todo mp trigger
   };
 
   const logsBlock: JSX.Element[] =

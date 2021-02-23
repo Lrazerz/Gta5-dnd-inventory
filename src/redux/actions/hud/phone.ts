@@ -57,7 +57,7 @@ import {
   mpTrigger_phone_removeSingleChat,
   mpTrigger_phone_sendMessage,
 } from '../../../utils/mpTriggers/hud/phone/phoneTriggers';
-import { LastMessageInterface, SelectedChatInterface, ThemesEnum } from '../../../models/hud/phone/reducerInterfaces';
+import { LastMessageInterface, SelectedChatInterface } from '../../../models/hud/phone/reducerInterfaces';
 
 const phoneOpen = (lastMessages: LastMessageInterface[], settings) => {
   return { type: PHONE_OPEN, lastMessages, settings };
@@ -67,16 +67,15 @@ const phoneClose = () => {
   return { type: PHONE_CLOSE };
 };
 
-//region ------------------------ From hud (avatar, time) ------------------------
+// From hud (avatar, time)
 const setPlayerAvatarAction = (avatar: string) => {
   return { type: SET_PLAYER_AVATAR, avatar };
 };
 const setPhoneTime = (time: string) => {
   return { type: SET_TIME, time };
 };
-//endregion
 
-//region ------------------------------ Action cretors ------------------------------
+// Action cretors
 const _openScreen = (openedScreen: OpenedScreenEnum) => {
   return { type: OPEN_SCREEN, openedScreen };
 };
@@ -105,7 +104,7 @@ const _setChatsDemo = (chatsDemoData: ChatsDemoInterface[]) => {
   return { type: SET_CHATS_DEMO, chatsDemo: chatsDemoData };
 };
 
-//region ------------------------------ Settings changes ------------------------------
+// Settings changes
 const _setSettings = (settingsData: SettingsInterface) => {
   return {
     type: SET_SETTINGS,
@@ -151,12 +150,10 @@ const setRingtone = (ringtone) => {
     dispatch(_setRingtone(ringtone));
   };
 };
-//endregion
-//endregion
 
-//region ------------------------------ Redux thunk actions ------------------------------
+// Redux thunk actions
 
-//region -------------------- Current call actions--------------------
+// Current call actions
 const _currentCallChangeOption = (optionTitle, optionValue) => {
   return { type: CURRENT_CALL_CHANGE_OPTION, optionTitle, optionValue };
 };
@@ -166,22 +163,15 @@ const currentCallChangeOption = (optionTitle, optionValue) => {
     dispatch(_currentCallChangeOption(optionTitle, optionValue));
   };
 };
-//endregion
 
 // set up funcs on window
 const openScreen = (screenNumber: OpenedScreenEnum, selectedChatId = '0') => {
   return (dispatch) => {
-    // @ts-ignore
     window.phone_openCalls = undefined;
-    // @ts-ignore
     window.phone_openContacts = undefined;
-    // @ts-ignore
     window.phone_openChats = undefined;
-    // @ts-ignore
     window.phone_openChat = undefined;
-    // @ts-ignore
     window.phone_openCurrentCall = undefined;
-    // @ts-ignore
     window.phone_openSettings = undefined;
 
     switch (screenNumber) {
@@ -189,35 +179,29 @@ const openScreen = (screenNumber: OpenedScreenEnum, selectedChatId = '0') => {
         mpTrigger_phone_openLastMessages();
         break;
       }
-      //region -------------------- Calls, contacts, chats --------------------
+      // Calls, contacts, chats
       case OpenedScreenEnum.calls: {
         mpTrigger_phone_openCalls();
-        // @ts-ignore
         window.phone_openCalls = phone_openCalls;
         break;
       }
       case OpenedScreenEnum.contacts: {
         mpTrigger_phone_openContacts();
-        // @ts-ignore
         window.phone_openContacts = phone_openContacts;
         break;
       }
       case OpenedScreenEnum.chats: {
         mpTrigger_phone_openChats();
-        // @ts-ignore
         window.phone_openChats = phone_openChats;
         break;
       }
-      //endregion
       case OpenedScreenEnum.selectedChat: {
         mpTrigger_phone_openSingleChat(selectedChatId);
-        // @ts-ignore
         window.phone_openChat = phone_openSingleChat;
         break;
       }
       case OpenedScreenEnum.settings: {
         mpTrigger_phone_openSettings();
-        // @ts-ignore
         window.phone_openSettings = phone_openSettings;
         break;
       }
@@ -239,34 +223,28 @@ const openPrevScreen = () => {
         mpTrigger_phone_openLastMessages();
         break;
       }
-      //region -------------------- Calls, contacts, chats --------------------
+      // Calls, contacts, chats
       case OpenedScreenEnum.calls: {
         mpTrigger_phone_openCalls();
-        // @ts-ignore
         window.phone_openCalls = phone_openCalls;
         break;
       }
       case OpenedScreenEnum.contacts: {
         mpTrigger_phone_openContacts();
-        // @ts-ignore
         window.phone_openContacts = phone_openContacts;
         break;
       }
       case OpenedScreenEnum.chats: {
         mpTrigger_phone_openChats();
-        // @ts-ignore
         window.phone_openChats = phone_openChats;
         break;
       }
-      //endregion
       case OpenedScreenEnum.selectedChat: {
-        // @ts-ignore
         window.phone_openChat = phone_openSingleChat;
         break;
       }
       case OpenedScreenEnum.settings: {
         mpTrigger_phone_openSettings();
-        // @ts-ignore
         window.phone_openSettings = phone_openSettings;
         break;
       }
@@ -275,7 +253,7 @@ const openPrevScreen = () => {
   };
 };
 
-//region -------------------- Add new contact screen --------------------
+// Add new contact screen
 const setAddNewContactPhoneNumber = (phoneNumber) => {
   return { type: SET_ADD_NEW_CONTACT_NUMBER, phoneNumber };
 };
@@ -291,9 +269,8 @@ const addNewContactAction = (newContact) => {
     dispatch(_addNewContact(newContact));
   };
 };
-//endregion
 
-//region -------------------- Incoming call --------------------
+// Incoming call
 const _openIncomingCall = (incomingCallData: IncomingCallInterface) => {
   return {
     type: OPEN_INCOMING_CALL,
@@ -309,7 +286,6 @@ const _abortCall = () => {
 
 const openIncomingCall = (incomingCallData: IncomingCallInterface) => {
   return (dispatch) => {
-    // @ts-ignore
     window.phone_abortCall = phone_abortCall;
     dispatch(_openIncomingCall(incomingCallData));
   };
@@ -317,7 +293,6 @@ const openIncomingCall = (incomingCallData: IncomingCallInterface) => {
 
 const abortCall = () => {
   return (dispatch) => {
-    // @ts-ignore
     window.phone_abortIncomingCall = undefined;
     dispatch(_abortCall());
     dispatch(openPrevScreen());
@@ -326,13 +301,10 @@ const abortCall = () => {
 
 const acceptCall = (name, imageName, phoneNumber) => {
   return (dispatch) => {
-    // open curr call scr,
+    // open curr call scr
     mpTrigger_phone_acceptCall(phoneNumber);
-    // @ts-ignore
     window.phone_abortIncomingCall = undefined;
-    // @ts-ignore
     window.phone_openCurrentCall = phone_openCurrentCall;
-    // @ts-ignore
     window.phone_abortCall = phone_abortCall;
     dispatch(
       _openCall({
@@ -349,14 +321,12 @@ const acceptCall = (name, imageName, phoneNumber) => {
 
 const declineCall = (phoneNumber) => {
   return (dispatch) => {
-    // @ts-ignore
     window.phone_abortIncomingCall = undefined;
-    // open curr call scr,
+    // open curr call scr
     mpTrigger_phone_declineCall(phoneNumber);
     dispatch(openPrevScreen());
   };
 };
-//endregion
 
 // update data about call
 const openCall = (callingRightNowData: CurrentCallInterface, saveLastScreen = false) => {
@@ -366,9 +336,7 @@ const openCall = (callingRightNowData: CurrentCallInterface, saveLastScreen = fa
 const openOutComingCall = (phoneNumber) => {
   return (dispatch) => {
     mpTrigger_phone_openOutComingCall(phoneNumber);
-    // @ts-ignore
     window.phone_openCurrentCall = phone_openCurrentCall;
-    // @ts-ignore
     window.phone_abortCall = phone_abortCall;
     const callingData: CurrentCallInterface = {
       name: '',
@@ -378,7 +346,6 @@ const openOutComingCall = (phoneNumber) => {
       speaker: false,
       isRecording: false,
     };
-
     dispatch(openCall(callingData, true));
   };
 };
@@ -399,7 +366,7 @@ const setChatsDemo = (chatsDemoData: ChatsDemoInterface[]) => {
   return _setChatsDemo(chatsDemoData);
 };
 
-//region -------------------- Set selected chat --------------------
+// Set selected chat
 const _setSelectedChat = (selectedChatData: SelectedChatInterface) => {
   return { type: SET_SELECTED_CHAT, chatData: selectedChatData };
 };
@@ -431,8 +398,6 @@ const removeSelectedChat = (id) => {
     dispatch(_removeSelectedChat());
   };
 };
-//endregion
-//endregion
 
 export {
   phoneOpen,

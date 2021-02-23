@@ -8,7 +8,6 @@ const mpTrigger_corporations_permissions_selectRole = (roleTitle: string) => {
       OpenedTab: CorporationsTabsDict.permissions,
       RoleTitle: roleTitle,
     });
-    // @ts-ignore
     mp.trigger('cef_cl_corporations_permissions_selectRole', data);
   } catch (e) {}
 };
@@ -20,7 +19,6 @@ const mpTrigger_corporations_permissions_removeRole = (roleTitle: string) => {
       OpenedTab: CorporationsTabsDict.permissions,
       RoleTitle: roleTitle,
     });
-    // @ts-ignore
     mp.trigger('cef_cl_corporations_permissions_removeRole', data);
   } catch (e) {}
 };
@@ -47,7 +45,7 @@ const mpTrigger_corporations_permissions_changePermission = (
       PermissionTitle: permissionTitle,
       Value: value,
     });
-    // @ts-ignore
+
     mp.trigger('cef_cl_corporations_permissions_changePermission', data);
   } catch (e) {}
 };
@@ -60,7 +58,7 @@ const mpTrigger_corporations_permissions_openTab = (openedRoleTitle: string, tab
       OpenedRole: openedRoleTitle,
       OpenedPermissionsTab: tabTitle,
     });
-    // @ts-ignore
+
     mp.trigger('cef_cl_corporations_permissions_openTab', data);
   } catch (e) {}
 };
@@ -77,7 +75,7 @@ const mpTrigger_corporations_permissions_auto_selectModel = (openedRoleTitle: st
       OpenedPermissionsTab: CorporationsPermissionsTabsDict.auto,
       Model: modelTitle,
     });
-    // @ts-ignore
+
     mp.trigger('cef_cl_corporations_permissions_auto_selectModel', data);
   } catch (e) {}
 };
@@ -106,7 +104,6 @@ const mpTrigger_corporations_permissions_auto_changeOption = (
       OptionTitle: optionTitle,
       OptionValue: optionValue,
     });
-    // @ts-ignore
     mp.trigger('cef_cl_corporations_permissions_auto_changeOption', data);
   } catch (e) {}
 };
@@ -135,7 +132,7 @@ const mpTrigger_corporations_permissions_auto_changePermission = (
       Permission: permissionTitle,
       Value: value,
     });
-    // @ts-ignore
+
     mp.trigger('cef_cl_corporations_permissions_auto_changePermission', data);
   } catch (e) {}
 };

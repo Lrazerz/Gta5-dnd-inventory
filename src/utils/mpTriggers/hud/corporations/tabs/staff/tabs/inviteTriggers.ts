@@ -7,7 +7,6 @@ const mpTrigger_corporations_staff_invitePlayer = (nickname: string) => {
       nickname,
     });
     console.log('cef_cl_corporations_staff_invitePlayer', data);
-    // @ts-ignore
     mp.trigger('cef_cl_corporations_staff_invitePlayer', data);
   } catch (e) {}
 };

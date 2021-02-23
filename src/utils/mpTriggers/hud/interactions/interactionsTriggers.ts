@@ -2,7 +2,6 @@
 const mpTrigger_interactions_openInteraction = (interactionName: string) => {
   try {
     console.log('cef_cl_openInteraction', interactionName);
-    // @ts-ignore
     mp.trigger('cef_cl_openInteraction', interactionName);
   } catch (e) {}
 };
@@ -11,7 +10,6 @@ const mpTrigger_interactions_openInteraction = (interactionName: string) => {
 const mpTrigger_interactions_closeInteractions = () => {
   console.log('close interactions trigger');
   try {
-    // @ts-ignore
     mp.trigger('cef_cl_closeInteractions');
   } catch (e) {}
 };

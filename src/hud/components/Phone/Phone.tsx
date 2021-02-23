@@ -19,36 +19,26 @@ const Phone = React.memo(() => {
   const openedScreen = useSelector((state) => state.hud.phone.openedScreen);
   const themeImage = useSelector((state) => state.hud.phone.settings.cosmetics.themeImage);
 
-  //region -------------------- Window funcs --------------------
-  // @ts-ignore
   if (!window.phone_openIncomingCall) {
-    // @ts-ignore
     window.phone_openIncomingCall = phone_openIncomingCall;
   }
-  // @ts-ignore
   if (!window.phone_openLastMessages) {
-    // @ts-ignore
     window.phone_openLastMessages = phone_openLastMessages;
   }
   useEffect(() => {
     return () => {
-      // @ts-ignore
       window.phone_openIncomingCall = undefined;
-      // @ts-ignore
       window.phone_openLastMessages = undefined;
     };
   }, []);
-  //endregion
 
   let phoneContent: ReactElement;
 
-  // todo add active call, add contact
   switch (openedScreen) {
     case OpenedScreenEnum.mainScreen: {
       phoneContent = <MainScreen />;
       break;
     }
-    //region -------------------- Settings screens --------------------
     case OpenedScreenEnum.settings: {
       phoneContent = <SettingsScreen />;
       break;
@@ -61,7 +51,6 @@ const Phone = React.memo(() => {
       phoneContent = <SettingsChangeRingtoneScreen />;
       break;
     }
-    //endregion
     case OpenedScreenEnum.incomingCall: {
       phoneContent = <IncomingCallScreen />;
       break;

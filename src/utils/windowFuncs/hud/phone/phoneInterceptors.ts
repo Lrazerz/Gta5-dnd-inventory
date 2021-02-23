@@ -30,7 +30,6 @@ import { transformDateFromString } from '../../../common/date';
 
 // lastmessages as params
 const openPhone = (jsonData) => {
-  console.log('window.openPhone');
   const parsedData = JSON.parse(jsonData);
   const transformedLastMessages: LastMessageInterface[] = parsedData.LastMessages.map((lastMessage) => ({
     id: shortId.generate(),
@@ -49,13 +48,10 @@ const openPhone = (jsonData) => {
     ringtone: parsedData.Settings.Ringtone,
   };
 
-  // @ts-ignore
   dispatch(phoneOpen(transformedLastMessages, transformedSettings));
 };
 
 const closePhone = () => {
-  console.log('window.closePhone');
-  // @ts-ignore
   dispatch(phoneClose());
 };
 
@@ -69,7 +65,6 @@ const phone_openLastMessages = (jsonData) => {
     date: transformDateFromString(lastMessage.Date),
     message: lastMessage.Message,
   }));
-  // @ts-ignore
   dispatch(openLastMessages(transformedLastMessages));
 };
 
@@ -85,7 +80,6 @@ const phone_openSettings = (jsonData) => {
     },
     ringtone: parsedData.Ringtone,
   };
-  // @ts-ignore
   dispatch(setSettings(transformedSettingsData));
 };
 
@@ -126,7 +120,6 @@ const phone_openCurrentCall = (jsonData) => {
     speaker: parsedData.Speaker,
     isRecording: parsedData.IsRecording,
   };
-  // @ts-ignore
   dispatch(openCall(transformedCurrCallData));
 };
 
@@ -145,7 +138,6 @@ const phone_openCalls = (jsonData) => {
       phoneNumber: call.PhoneNumber,
     };
   });
-  // @ts-ignore
   dispatch(setCalls(transformedCallsData));
 };
 
@@ -160,7 +152,6 @@ const phone_openContacts = (jsonData) => {
       imageName: incomingContact.ImageName,
     };
   });
-  // @ts-ignore
   dispatch(setContacts(transformedContactsData));
 };
 
@@ -180,7 +171,6 @@ const phone_openChats = (jsonData) => {
     };
   });
 
-  // @ts-ignore
   dispatch(setChatsDemo(transformedChatsData));
 };
 //endregion

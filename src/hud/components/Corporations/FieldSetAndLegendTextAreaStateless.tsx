@@ -1,14 +1,13 @@
 import React, { CSSProperties } from 'react';
 import classes from '../../../styles/hud/components/Corporations/FieldSetAndLegendTextAreaStateless.module.scss';
 import CorporationsText from './CorporationsText';
-import CorporationsInput from './CorporationsInput';
 import { corporationsTheme } from '../../../constants/hud/corporations/corporationsTheme';
 import CorporationsTextArea from './CorporationsTextArea';
 
 interface Props {
   legend: string;
   contentText: string;
-  onChange: any;
+  onChange: (string) => void;
   maxLength?: number;
   placeholder?: string;
 }

@@ -23,8 +23,8 @@ const CorporationsDropdown: React.FC<Props> = (props) => {
     if (containerRef.current) {
       // @ts-ignore
       if (containerRef.current.childNodes[1]) {
-        // @ts-ignore
         const widthNumber =
+          // @ts-ignore
           +window.getComputedStyle(containerRef.current.childNodes[1]).width.match(/(\.|\d)+/)[0] * 1.3 + 'px';
         // @ts-ignore
         containerRef.current.childNodes[1].style.width = widthNumber;
@@ -51,7 +51,7 @@ const CorporationsDropdown: React.FC<Props> = (props) => {
     setIsOpened(false);
   };
 
-  const pickItemHandler = (listItem: string, e: any) => {
+  const pickItemHandler = (listItem: string, e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
     setIsOpened(false);
     props.onSelect(listItem);

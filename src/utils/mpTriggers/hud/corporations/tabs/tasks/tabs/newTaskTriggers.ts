@@ -28,7 +28,7 @@ const mpTrigger_tasks_newTask_addTask = (task: TasksNewTaskInterface) => {
       OpenedSubTab: translateTasksTabToServer(CorporationsTasksTabsEnumEng.newTask),
       Task: translatedTask,
     });
-    // @ts-ignore
+
     mp.trigger('cef_cl_tasks_newTask_addTask', data);
   } catch (e) {}
 };

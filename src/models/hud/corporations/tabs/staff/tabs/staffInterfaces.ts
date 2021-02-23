@@ -6,6 +6,7 @@ interface SingleStaffWorkerInterface {
   averageOnline: number;
   averageEarns: number;
   contributedToTreasury: number;
+  boostStatus: number; // ?
 }
 
 interface StaffTabInitialStateInterface {

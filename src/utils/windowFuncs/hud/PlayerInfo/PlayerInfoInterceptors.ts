@@ -1,4 +1,6 @@
-let openHud: (data: string) => Object;
+import { DefaultHudDataInterface } from '../../../../models/hud/hudInterfaces';
+
+let openHud: (data: string) => DefaultHudDataInterface;
 openHud = (data) => {
   const parsedData = JSON.parse(data);
   const {

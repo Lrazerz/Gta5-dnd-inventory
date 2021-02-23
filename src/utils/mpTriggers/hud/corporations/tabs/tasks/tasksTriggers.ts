@@ -8,7 +8,6 @@ const mpTrigger_corporations_tasks_openTab = (tab: CorporationsTasksTabsEnumRus)
       OpenedTab: CorporationsTabsDict.tasks,
       OpenedSubTab: tab,
     });
-    // @ts-ignore
     mp.trigger('cef_cl_corporations_tasks_openTab', data);
   } catch (e) {}
 };

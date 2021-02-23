@@ -20,9 +20,9 @@ let corporationsOpenPermissionsTab: (
     commonPermissionsSets: CommonPermissionsSetInterface[];
   };
 };
-// @ts-ignore
+
 corporationsOpenPermissionsTab = (jsonData) => {
-  const { Roles, SelectedRoleInfo, Modules } = JSON.parse(jsonData);
+  const { Roles, SelectedRoleInfo } = JSON.parse(jsonData);
 
   const roles: SingleRoleInterface[] = Roles.map((role) => ({
     title: role.Title,
@@ -109,9 +109,7 @@ interface AcceptedAutoModelDataInterface {
   };
 }
 
-let corporationsPermissionsOpenAutoTab: (autoData: string) => PermissionsTabAutoInterface;
-// @ts-ignore
-corporationsPermissionsOpenAutoTab = (autoData) => {
+const corporationsPermissionsOpenAutoTab = (autoData: string) => {
   const _getOptionType = (type) => {
     let convertedType: RowFieldTypeEnum;
 

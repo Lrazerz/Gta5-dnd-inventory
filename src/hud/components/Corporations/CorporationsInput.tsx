@@ -3,7 +3,7 @@ import classes from '../../../styles/hud/components/Corporations/CorporationsInp
 
 interface Props {
   value: string;
-  onChange: any;
+  onChange: (string) => void;
   styles?: CSSProperties;
   minLength?: number;
   maxLength?: number;

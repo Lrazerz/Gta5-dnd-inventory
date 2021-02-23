@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef, CSSProperties } from 'react';
 import { useSelector } from 'react-redux';
-// @ts-ignore
 import classes from '../styles/hud/HudApp.module.scss';
 import CarInfo from './components/CarInfo';
 import PlayerInfo from './components/PlayerInfo/PlayerInfo';
@@ -8,12 +7,12 @@ import Hotkeys from './components/Hotkeys/Hotkeys';
 import Phone from './components/Phone/Phone';
 import InteractionsContainer from './components/Interactions/InteractionsContainer';
 import Corporations from './components/Corporations/Corporations';
+import { DefaultHudDataInterface } from '../models/hud/hudInterfaces';
+import { CarInfoState } from './HudApp';
 
-//region ------------------------------ Props, defaults, state ------------------------------
 interface Props {
-  playerState: any;
-  carInfo: any;
-  // todo delete?
+  playerState: DefaultHudDataInterface;
+  carInfo: CarInfoState;
   onInteractionsClose: () => void;
 }
 
@@ -22,18 +21,16 @@ const HudAppStateless: React.FC<Props> = React.memo(function HudApp({ playerStat
   const [carInfoWrapperHeight, setCarInfoWrapperHeight]: [number, any] = useState(0);
   const [hotkeyWrapperHeight, setHotkeyWrapperHeight]: [number, any] = useState(0);
 
-  const phoneWrapperRef = useRef();
+  const phoneWrapperRef: React.Ref<HTMLDivElement> = useRef();
 
   const isPhoneOpenedRedux = useSelector((state) => state.hud.phone.isPhoneOpened);
   const isInteractionsOpenedRedux = useSelector((state) => state.hud.interactions.isOpened);
   const isCorporationsOpenedRedux = useSelector((state) => state.hud.corporations.corporations.isOpened);
 
-  //region -------------------- Set up and clean up dimensions --------------------
+  // Set up and clean up dimensions
   useEffect(() => {
     if (phoneWrapperRef.current) {
-      // @ts-ignore
       const width = window.getComputedStyle(phoneWrapperRef.current).width;
-      // @ts-ignore
       phoneWrapperRef.current.style.height = width;
     }
   }, [phoneWrapperRef.current]);
@@ -48,9 +45,7 @@ const HudAppStateless: React.FC<Props> = React.memo(function HudApp({ playerStat
   if (hotkeyWrapperHeight === 0) {
     setHotkeyWrapperHeight(window.innerWidth * 0.263 * 0.2178);
   }
-  //endregion
 
-  //region -------------------- Styles --------------------
   const playerInfoWrapperStyles: CSSProperties = {
     height: playerInfoWrapperHeight + 'px',
   };
@@ -62,7 +57,6 @@ const HudAppStateless: React.FC<Props> = React.memo(function HudApp({ playerStat
   const hotkeysWrapperStyles: CSSProperties = {
     height: hotkeyWrapperHeight + 'px',
   };
-  //endregion
 
   const carInfoOrHotkeysBlock = carInfo.isCarOpen ? (
     <div style={carInfoWrapperStyles} className={classes.CarInfoWrapper}>

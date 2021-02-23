@@ -20,12 +20,12 @@ interface Props {
   phoneText: string;
   theme: ThemesEnum;
 
-  onDropDownOpen: (e: any) => void;
+  onDropDownOpen: (e: React.MouseEvent<HTMLDivElement>) => void;
   onDropDownClose: () => void;
   onSetSelectedImage: (image: ImportedImageInterface) => void;
-  onNameTextChange: (e: any) => void;
-  onPhoneTextChange: (e: any) => void;
-  onAddContact: (e: any) => void;
+  onNameTextChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onPhoneTextChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onAddContact: (e: React.MouseEvent<HTMLDivElement>) => void;
   onOpenMainScreen: () => void;
 
   // to external library

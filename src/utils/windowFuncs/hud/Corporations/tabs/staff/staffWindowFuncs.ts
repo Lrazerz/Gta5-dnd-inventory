@@ -14,6 +14,7 @@ const window_corporations_staff_openStaffTab = (jsonData: string) => {
         averageOnline: singleWorker.AverageOnline,
         averageEarns: singleWorker.AverageEarns,
         contributedToTreasury: singleWorker.ContributedToTreasury,
+        boostStatus: singleWorker.BoostStatus,
       };
     }),
   };

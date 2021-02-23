@@ -42,7 +42,6 @@ const mpTrigger_tasks_archiveTasks_changePage = (pageNumber: number, lastTask: T
         IsSuccessful: lastTask.isSuccessful,
       },
     });
-    // @ts-ignore
     mp.trigger('cef_cl_tasks_archiveTasks_changePage', data);
   } catch (e) {}
 };
@@ -60,7 +59,6 @@ const mpTrigger_tasks_archiveTasks_removeTask = (taskId: string) => {
       OpenedSubTab: translateTasksTabToServer(CorporationsTasksTabsEnumEng.archiveTasks),
       TaskId: taskId,
     });
-    // @ts-ignore
     mp.trigger('cef_cl_tasks_archiveTasks_removeTask', data);
   } catch (e) {}
 };

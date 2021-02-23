@@ -1,13 +1,63 @@
+@use '../../../../../../constants/hud/corporations/corporationsTheme';
+
 .StaffTabListItem {
   width: 100%;
-  height: 100%;
-  background-color: fuchsia;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
+  box-sizing: border-box;
 
-  .AddNewRoleButtonWrapper {
-    width: 15.7%;
-    height: 60.3%;
+  .TabWithoutDescription {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: corporationsTheme.$bg_darkGray_picked;
+
+    .CurrentRoleButtonWrapper {
+      height: 39.7%;
+      margin-left: 2.32%;
+    }
+
+    .AddNewRoleButtonWrapper {
+      width: 15.7%;
+      height: 60.3%;
+      margin-left: 2.32%;
+    }
+
+    .ThreeDotsContainer {
+      width: 3.16%;
+      height: 50%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      margin-left: auto;
+      margin-right: 1.21%;
+
+      .ThreeDotsWrapper {
+        width: 10%;
+        height: 41.2%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        .SingleDot {
+          width: 100%;
+          padding-bottom: 100%;
+          background-color: corporationsTheme.$text-white3;
+        }
+      }
+    }
+  }
+
+  .DescriptionWrapper {
+    left: 0;
+    width: 100%;
+  }
+
+  .OptionsWrapper {
+    position: fixed;
+    //right: -30px;
+    //top: 0;
+    //z-index: 2;
   }
 }

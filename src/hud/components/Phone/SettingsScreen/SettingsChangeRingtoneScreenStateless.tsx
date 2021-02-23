@@ -11,7 +11,7 @@ interface Props {
   isDropDownOpened: boolean;
   selectedRingtone: string;
 
-  onSetSelectedRingtone: (e: any, ringtone: string) => void;
+  onSetSelectedRingtone: (e: React.MouseEvent<HTMLDivElement>, ringtone: string) => void;
   onCloseDropDown: () => void;
   onOpenDropDown: (e: any) => void;
   onOpenSettingsScreen: () => void;

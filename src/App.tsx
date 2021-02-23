@@ -37,26 +37,36 @@ const defaultHudData: DefaultHudDataInterface = {
 const App = React.memo(function App() {
   const dispatch = useDispatch();
 
-  const alertsContainerRef = useRef();
+  const alertsContainerRef: React.Ref<HTMLDivElement> = useRef();
 
   useEffect(() => {
     if (alertsContainerRef.current) {
-      // @ts-ignore
       const width: string = window.getComputedStyle(alertsContainerRef.current).width;
       const widthNumber: number = +width.match(/(\.|\d)+/)[0];
-      // @ts-ignore
       alertsContainerRef.current.style.height = widthNumber * 0.8 + 'px';
     }
   }, [alertsContainerRef.current]);
 
-  const [openedPart, setOpenedPart]: [number, (newState: number) => void] = useState(null);
+  const [openedPart, setOpenedPart]: [number, (newState: number) => void] = useState(OpenedPartsEnum.hud);
   const [hudData, setHudData]: [DefaultHudDataInterface, any] = useState(defaultHudData);
 
+  const openedPartRef: { current: OpenedPartsEnum } = useRef();
+  openedPartRef.current = openedPart;
+
+  const closeInventoryHandler = () => {
+    if (openedPartRef.current === OpenedPartsEnum.inventory) {
+      setOpenedPart(OpenedPartsEnum.none);
+    }
+  };
+  const closeHudHandler = () => {
+    if (openedPartRef.current === OpenedPartsEnum.hud) {
+      setOpenedPart(OpenedPartsEnum.none);
+    }
+  };
+
   useEffect(() => {
-    //region ------------------------------ Set up inventory functions on window ------------------------------
-    // @ts-ignore
+    // Set up inventory functions on window
     if (!window.openInventory || !window.refreshInventory) {
-      // @ts-ignore
       window.openInventory = async (info) => {
         if (!(openedPart === OpenedPartsEnum.inventory)) {
           setOpenedPart(OpenedPartsEnum.inventory);
@@ -64,13 +74,10 @@ const App = React.memo(function App() {
         window_openOrRefreshInventory(info);
         return;
       };
-      // @ts-ignore
       window.refreshInventory = window_openOrRefreshInventory;
     }
 
-    // @ts-ignore
     if (!window.openDoubleInventory) {
-      // @ts-ignore
       window.openDoubleInventory = async (info, externalInfo, extBoardHeight) => {
         if (!(openedPart === OpenedPartsEnum.inventory)) {
           setOpenedPart(OpenedPartsEnum.inventory);
@@ -78,50 +85,45 @@ const App = React.memo(function App() {
         window_openDoubleInventory(info, externalInfo, extBoardHeight);
       };
     }
-    //endregion
 
-    // @ts-ignore
     if (!window.closeInventory) {
+      window.closeInventory = closeInventoryHandler;
     }
-    //endregion
 
-    //region ------------------------------ Set up hud functions on window ------------------------------
-    // @ts-ignore
+    // Set up hud functions on window
     if (!window.openHud || !window.refreshHud) {
-      // @ts-ignore
       window.openHud = window.refreshHud = async (data) => {
         const hudData = openHud(data);
         setOpenedPart(OpenedPartsEnum.hud);
-        // @ts-ignore
         store.dispatch(setPlayerAvatarAction(hudData.playerAvatarName));
-        // @ts-ignore
         store.dispatch(setPhoneTime(hudData.time));
-        // @ts-ignore
         setHudData(hudData);
       };
     }
-    //endregion
 
-    //region ------------------------------ Alert functions ------------------------------
-    // @ts-ignore
+    if (!window.closeHud) {
+      window.closeHud = closeHudHandler;
+    }
+
+    // Alert functions
     if (!window.setAlert) {
-      // @ts-ignore
       window.setAlert = (jsonData: string) => {
         const parsedData = window_setAlert(jsonData);
         dispatch(setAlert(parsedData.message, parsedData.type, parsedData.duration));
       };
     }
-    //endregion
 
     return () => {
-      // @ts-ignore
       window.openInventory = undefined;
-      // @ts-ignore
+      window.refreshInventory = undefined;
       window.openDoubleInventory = undefined;
-      // @ts-ignore
+      window.closeInventory = undefined;
+
       window.openHud = undefined;
-      // @ts-ignore
       window.refreshHud = undefined;
+      window.closeHud = undefined;
+
+      window.setAlert = undefined;
     };
   }, []);
 

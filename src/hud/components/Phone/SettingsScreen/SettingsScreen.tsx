@@ -15,7 +15,6 @@ const SettingsScreen = React.memo(() => {
 
   useEffect(() => {
     return () => {
-      // @ts-ignore
       window.phone_openSettings = null;
     };
   }, []);
@@ -31,9 +30,9 @@ const SettingsScreen = React.memo(() => {
     trackMouse: true,
   });
 
-  const horizontalLineStyles: CSSProperties = {
-    backgroundColor: theme === ThemesEnum.black ? '#5422b0' : '#DAD8E6',
-  };
+  // const horizontalLineStyles: CSSProperties = {
+  //   backgroundColor: theme === ThemesEnum.black ? '#5422b0' : '#DAD8E6',
+  // };
 
   return (
     <div className={classes.SettingsScreen} {...handlers}>

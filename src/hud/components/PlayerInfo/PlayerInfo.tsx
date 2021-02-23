@@ -4,6 +4,7 @@ import PlayerIndicators from './PlayerIndicators';
 import PlayerAvatarAndRank from './PlayerAvatarAndRank';
 import NetworkAndTime from './NetworkAndTime';
 import Buffs from './Buffs';
+import { BuffInterface } from '../../../models/hud/hudInterfaces';
 
 interface Props {
   data: {
@@ -16,7 +17,7 @@ interface Props {
     };
     network: number;
     time: string;
-    buffs: [];
+    buffs: BuffInterface[];
   };
 }
 

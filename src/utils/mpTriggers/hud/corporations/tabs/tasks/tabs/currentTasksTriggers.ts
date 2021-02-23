@@ -39,7 +39,6 @@ const mpTrigger_tasks_currentTasks_changePage = (pageNumber: number, lastTask: T
         Appointer: lastTask.appointer,
       },
     });
-    // @ts-ignore
     mp.trigger('cef_cl_tasks_currentTasks_changePage', data);
   } catch (e) {}
 };
@@ -58,7 +57,6 @@ const mpTrigger_tasks_currentTasks_completeTask = (taskId: string, isSuccessful:
       TaskId: taskId,
       IsSuccessful: isSuccessful,
     });
-    // @ts-ignore
     mp.trigger('cef_cl_tasks_currentTasks_completeTask', data);
   } catch (e) {}
 };
@@ -76,7 +74,6 @@ const mpTrigger_tasks_currentTasks_removeTask = (taskId: string) => {
       OpenedSubTab: translateTasksTabToServer(CorporationsTasksTabsEnumEng.currentTasks),
       TaskId: taskId,
     });
-    // @ts-ignore
     mp.trigger('cef_cl_tasks_currentTasks_removeTask', data);
   } catch (e) {}
 };

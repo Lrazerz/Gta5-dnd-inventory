@@ -7,7 +7,7 @@ import CorporationsInput from './CorporationsInput';
 interface Props {
   legend: string;
   contentText: string;
-  onChange: any;
+  onChange: (string) => void;
   rightContent?: JSX.Element;
   minLength?: number;
   maxLength?: number;

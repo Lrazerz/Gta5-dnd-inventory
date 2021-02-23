@@ -7,7 +7,7 @@ import { closeContextMenu } from '../redux/actions/inventory/contextMenu';
 import InventoryAppStateless from './InventoryAppStateless';
 
 const InventoryApp = React.memo(function InventoryApp() {
-  //region ------------------------------ Get state from redux, set references ------------------------------
+  // Get state from redux, set references
   const dispatch = useDispatch();
 
   const boardSquareSize = useSelector((state) => state.inventory.board.boardSquareSize);
@@ -24,14 +24,13 @@ const InventoryApp = React.memo(function InventoryApp() {
   goingToDropRef.current = goingToDrop;
   draggedItemRef.current = draggedItem;
   contextMenuRef.current = contextMenu;
-  //endregion
 
   if (!boardSquareSize) {
     const bodyWidth = document.body.getBoundingClientRect().width;
     dispatch(setSquareSize(bodyWidth * 0.04125));
   }
 
-  //region ------------------------------ Event handlers ------------------------------
+  // Event handlers
   if (!document.oncontextmenu) {
     document.oncontextmenu = (e) => {
       e.preventDefault();
@@ -75,7 +74,6 @@ const InventoryApp = React.memo(function InventoryApp() {
       e.stopPropagation();
     }
   };
-  //endregion
 
   //Allow ToolTip to be BackDrop
   const tooltipStyles: CSSProperties = {

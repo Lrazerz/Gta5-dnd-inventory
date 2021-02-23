@@ -86,9 +86,7 @@ const Corporations = React.memo(() => {
   }
 
   useEffect(() => {
-    // @ts-ignore
     if (!window.corporations_openPermissions) {
-      // @ts-ignore
       window.corporations_openPermissions = (dataJSON: string) => {
         const parsedData = corporationsOpenPermissionsTab(dataJSON);
         dispatch(
@@ -100,58 +98,42 @@ const Corporations = React.memo(() => {
         );
       };
     }
-    // @ts-ignore
     if (!window.corporations_openTreasury) {
-      // @ts-ignore
       window.corporations_openTreasury = (jsonData: string) => {
         const parsedData: TreasuryInitialStateInterface = corporations_openTreasury(jsonData);
         dispatch(corporationsTreasuryOpenAction(parsedData));
       };
     }
-    // @ts-ignore
     if (!window.corporations_openLogs) {
-      // @ts-ignore
       window.corporations_openLogs = (jsonData: string) => {
         const parsedData: LogsInitialStateInterface = corporations_openLogs(jsonData);
         dispatch(corporationsLogsOpenAction(parsedData));
       };
     }
-    // @ts-ignore
     if (!window.corporations_tasks_openCurrentTasks) {
-      // @ts-ignore
       window.corporations_tasks_openCurrentTasks = (jsonData: string) => {
         const parsedData: TasksCurrentTasksInitialStateInterface = window_corporations_tasks_openCurrentTasks(jsonData);
         dispatch(tasksCurrentTasksOpenAction(parsedData));
       };
     }
-    // @ts-ignore
     if (!window.corporations_tasks_openNewTask) {
-      // @ts-ignore
       window.corporations_tasks_openNewTask = (jsonData: string) => {
         const parsedData: TasksNewTasksInitialStateInterface = window_corporations_tasks_OpenNewTask(jsonData);
         dispatch(tasksNewTaskOpenAction(parsedData));
       };
     }
-    // @ts-ignore
     if (!window.corporations_openStaff) {
-      // @ts-ignore
       window.corporations_openStaff = (jsonData: string) => {
         const parsedData: StaffTabInitialStateInterface = window_corporations_staff_openStaffTab(jsonData);
         dispatch(staffOpenStaffTabAction(parsedData));
       };
     }
     return () => {
-      // @ts-ignore
       window.corporations_openPermissions = null;
-      // @ts-ignore
       window.corporations_openTreasury = null;
-      // @ts-ignore
       window.corporations_openLogs = null;
-      // @ts-ignore
       window.corporations_tasks_openCurrentTasks = null;
-      // @ts-ignore
       window.corporations_tasks_openNewTask = null;
-      // @ts-ignore
       window.corporations_openStaff = null;
     };
   }, []);

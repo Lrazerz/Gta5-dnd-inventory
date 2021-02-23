@@ -168,7 +168,6 @@ const RangeComponent: React.FC<Props> = React.memo(
               const currentCountEl = currentCountWrapper.childNodes[0];
               // @ts-ignore
               currentCountEl.textContent = String(goingToStackSaved.draggedItemNewCurrentCount);
-              // @ts-ignore
               //endregion
 
               const contextItemWithChangedCount = {
