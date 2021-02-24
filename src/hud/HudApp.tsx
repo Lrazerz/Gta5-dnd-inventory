@@ -174,7 +174,6 @@ const HudApp: React.FC<Props> = React.memo(function HudApp({ data }) {
 
     if (!window.openInteractions) {
       window.openInteractions = (jsonData) => {
-        console.log('jsonData', jsonData);
         const parsedData = JSON.parse(jsonData);
         console.log('parsedData', parsedData);
         const lowerCaseValues: SingleInteractionInterface[] = parsedData.map((value) => {

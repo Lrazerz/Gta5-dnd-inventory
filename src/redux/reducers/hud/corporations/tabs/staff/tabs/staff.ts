@@ -19,7 +19,21 @@ const initialState: StaffTabInitialStateInterfaceWithLoading = {
     {
       nickname: 'DigitalNox Design1',
       role: 'new role',
-      potentialRoles: ['Role1', 'Role2', 'Role3'],
+      potentialRoles: [
+        'Role1231321312',
+        'Role23213213',
+        'Role3',
+        'Role1',
+        'Role2213',
+        'Role12321312',
+        'Role232113',
+        'Role12313212',
+        'Role2321313',
+        'Role312',
+        'Role23213',
+        'Role12313312',
+        'Rol213',
+      ],
       averageOnline: 500,
       averageEarns: 500,
       contributedToTreasury: 500,
@@ -129,7 +143,7 @@ export default (state = initialState, action) => {
     case CORPORATIONS_STAFF_OPEN_TAB: {
       const stateToReturn = { ...initialState };
 
-      if (action.openedTab === CorporationsStaffTabsEnumEng.personal) {
+      if (action.openedTab === CorporationsStaffTabsEnumEng.staff) {
         stateToReturn.isLoading = true;
       }
       return stateToReturn;

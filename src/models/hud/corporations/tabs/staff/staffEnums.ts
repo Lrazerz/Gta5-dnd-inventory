@@ -1,5 +1,5 @@
 enum CorporationsStaffTabsEnumEng {
-  personal,
+  staff,
   invite,
 }
 

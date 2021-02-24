@@ -5,6 +5,7 @@ import { StaffTabInitialStateInterface } from '../../../../models/hud/corporatio
 import { staffOpenStaffTabAction } from '../../../../redux/actions/hud/corporations/tabs/staff/tabs/staff';
 import { CorporationsStaffTabsEnumEng } from '../../../../models/hud/corporations/tabs/staff/staffEnums';
 import StaffTabStaff from './StaffTab/StaffTab';
+import StaffTabInvite from './InviteTab/StaffTabInvite';
 
 const StaffTab: React.FC = React.memo(() => {
   const dispatch = useDispatch();
@@ -27,12 +28,12 @@ const StaffTab: React.FC = React.memo(() => {
   let contentToReturn: JSX.Element;
 
   switch (openedTab) {
-    case CorporationsStaffTabsEnumEng.personal: {
+    case CorporationsStaffTabsEnumEng.staff: {
       contentToReturn = <StaffTabStaff />;
       break;
     }
     case CorporationsStaffTabsEnumEng.invite: {
-      contentToReturn = <></>;
+      contentToReturn = <StaffTabInvite />;
       break;
     }
     default: {

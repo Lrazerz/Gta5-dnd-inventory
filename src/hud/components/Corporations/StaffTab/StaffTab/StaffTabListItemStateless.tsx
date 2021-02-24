@@ -6,11 +6,14 @@ import CorporationsText from '../../CorporationsText';
 import CorporationsButton from '../../CorporationsButton';
 import newRoleImg from '../../../../../assets/hud/images/components/Corporations/newRole.svg';
 import CurrentRoleButton from './CurrentRoleButton';
-import { staffRemoveFromRoleAction } from '../../../../../redux/actions/hud/corporations/tabs/staff/tabs/staff';
+import {
+  staffAddToRoleAction,
+  staffKickAction,
+  staffRemoveFromRoleAction,
+} from '../../../../../redux/actions/hud/corporations/tabs/staff/tabs/staff';
 import StaffListItemDescription from './StaffListItemDescription';
 import { StaffListItemDimensionsInterface } from './StaffTabList';
 import StaffTabOptionsDropdown from './StaffTabOptionsDropdown';
-import logs from '../../../../../redux/reducers/hud/corporations/tabs/logs/logs';
 
 interface Props {
   staffWorker: SingleStaffWorkerInterface;
@@ -24,6 +27,7 @@ interface Props {
 
 const StaffTabListItemStateless: React.FC<Props> = (props) => {
   const dispatch = useDispatch();
+
   const newRoleClickHandler = () => {
     console.log('todo');
   };
@@ -31,6 +35,14 @@ const StaffTabListItemStateless: React.FC<Props> = (props) => {
   const removeCurrentRoleClickHandler = (e) => {
     e.stopPropagation();
     dispatch(staffRemoveFromRoleAction(props.staffWorker.nickname, props.staffWorker.role));
+  };
+
+  const selectRoleHandler = (role: string) => {
+    dispatch(staffAddToRoleAction(props.staffWorker.nickname, role));
+  };
+
+  const kickPlayerHandler = () => {
+    dispatch(staffKickAction(props.staffWorker.nickname));
   };
 
   const containerStyles: CSSProperties = {
@@ -70,7 +82,7 @@ const StaffTabListItemStateless: React.FC<Props> = (props) => {
 
   const currentRoleButton: JSX.Element = (
     <div className={classes.CurrentRoleButtonWrapper}>
-      <CurrentRoleButton onRemoveClick={removeCurrentRoleClickHandler} />
+      <CurrentRoleButton role={props.staffWorker.role} onRemoveClick={removeCurrentRoleClickHandler} />
     </div>
   );
 
@@ -95,17 +107,7 @@ const StaffTabListItemStateless: React.FC<Props> = (props) => {
   ];
 
   return (
-    <div
-      ref={props.containerRef}
-      style={containerStyles}
-      className={classes.StaffTabListItem}
-      onScroll={() => {
-        console.log('scr');
-      }}
-      onScrollCapture={() => {
-        console.log('scr');
-      }}
-    >
+    <div ref={props.containerRef} style={containerStyles} className={classes.StaffTabListItem}>
       <div
         className={classes.TabWithoutDescription}
         onClick={props.onDescriptionStateChange}
@@ -129,11 +131,9 @@ const StaffTabListItemStateless: React.FC<Props> = (props) => {
       {props.isOptionsOpened && (
         <div style={optionsWrapperStyles} className={classes.OptionsWrapper} onClick={props.onOptionsStateChange}>
           <StaffTabOptionsDropdown
-            roles={['a', 'd']}
-            onKickPlayer={() => {
-              console.log('todo');
-            }}
-            onSelectRole={() => console.log('todo')}
+            roles={props.staffWorker.potentialRoles}
+            onKickPlayer={kickPlayerHandler}
+            onSelectRole={selectRoleHandler}
           />
         </div>
       )}

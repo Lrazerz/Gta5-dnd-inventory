@@ -17,6 +17,7 @@ const initialDimensions = {
 };
 
 interface Props {
+  role: string;
   onRemoveClick: (e: any) => void;
 }
 
@@ -62,7 +63,7 @@ const CurrentRoleButton: React.FC<Props> = (props) => {
   return (
     <div ref={containerRef} style={containerStyles} className={classes.CurrentRoleButton}>
       <div style={removeButtonStyles} className={classes.RemoveButton} onClick={props.onRemoveClick} />
-      <CorporationsText styles={titleStyles}>Новая роль</CorporationsText>
+      <CorporationsText styles={titleStyles}>{props.role}</CorporationsText>
     </div>
   );
 };

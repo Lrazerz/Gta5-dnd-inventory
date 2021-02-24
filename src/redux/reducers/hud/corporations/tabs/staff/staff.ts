@@ -4,7 +4,7 @@ import { CORPORATIONS_STAFF_OPEN_TAB } from '../../../../../actions/hud/corporat
 import { CORPORATIONS_TAB_OPEN } from '../../../../../actions/hud/corporations/corporationsTypes';
 
 const initialState: CorporationsStaffInitialStateInterface = {
-  openedTab: CorporationsStaffTabsEnumEng.personal,
+  openedTab: CorporationsStaffTabsEnumEng.invite,
 };
 
 export default (state = initialState, action) => {

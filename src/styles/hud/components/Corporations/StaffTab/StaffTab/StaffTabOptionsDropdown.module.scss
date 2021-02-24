@@ -1,5 +1,29 @@
 .StaffTabOptionsDropdown {
-  width: 50px;
-  height: 50px;
-  background-color: green;
+  //width: 50px;
+  //height: 50px;
+  padding: 0.5294rem 1.1765rem;
+  border-radius: 0.5882rem;
+  background-color: #383C48;
+
+  .RoleTitle {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-top: 0.5294rem;
+
+    .RightArrow {
+      margin-left: 0.3647rem;
+      width: 0.33rem !important;
+      height: 0.577rem;
+      background-color: #D7D9DF;
+      display: inline-block;
+      clip-path: polygon(0% 14.29%, 10.71% 0%,100% 50%, 10.71% 100%, 0% 85.71%, 60.71% 50%, 0% 14.29%);
+    }
+  }
+
+  .OptionsDropdownWrapper {
+    position: absolute;
+    top: 50%;
+    left: 100%;
+  }
 }

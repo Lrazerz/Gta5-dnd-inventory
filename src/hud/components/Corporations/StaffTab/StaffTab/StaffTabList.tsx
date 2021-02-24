@@ -82,7 +82,6 @@ const StaffTabList: React.FC<Props> = (props) => {
   }, [containerRef.current]);
 
   const optionsChangeStateHandler = useCallback((e: any, indexInOptionsArray: number) => {
-    console.log('e', e);
     setDimensions((prev) => ({ ...prev, optionsPosition: { top: e.clientY, left: e.clientX } }));
     setOptionsIsOpenedStates((prev) => [
       ...prev
@@ -120,7 +119,7 @@ const StaffTabList: React.FC<Props> = (props) => {
   });
 
   return (
-    <div className={classes.StaffTabList} onScroll={scrollHandler}>
+    <div className={classes.StaffTabList} onScroll={scrollHandler} onClick={scrollHandler}>
       {contentBlock}
     </div>
   );

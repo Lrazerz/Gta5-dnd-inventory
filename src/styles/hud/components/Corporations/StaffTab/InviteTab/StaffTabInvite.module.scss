@@ -1,0 +1,34 @@
+.StaffTabInvite {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  overflow: hidden;
+
+  .Content {
+    width: 47%;
+    height: 22.89%;
+    margin-top: 11.45%;
+    //background-color: red;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+  }
+
+  .NicknameInputWrapper {
+    margin-top: 11.16%;
+    height: 1.0758rem;
+    width: 100%;
+    padding: 0 2.35%;
+    box-sizing: border-box;
+  }
+
+  .InviteButtonWrapper {
+    margin-top: 4%;
+    width: 100%;
+    height: 22.17%;
+  }
+}
