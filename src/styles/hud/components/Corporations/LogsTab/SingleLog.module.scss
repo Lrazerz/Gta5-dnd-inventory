@@ -6,4 +6,16 @@
   align-items: center;
   background-color: #323540;
   border-radius: 0.2941rem;
+
+  .DateWrapper {
+    height: 1.7058rem;
+    margin-left: 3.48%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 10%;
+    max-width: 10%;
+  }
 }

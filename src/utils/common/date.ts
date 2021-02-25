@@ -1,8 +1,18 @@
 import { DateObjectInterface } from '../../models/hud/phone/reducerInterfaces';
 
 // 25.08.2021@14:16
-let transformDateFromString: (string) => DateObjectInterface;
-transformDateFromString = (dateString: string) => {
+const transformDateFromString = (dateString: string): DateObjectInterface => {
+  if (!dateString) {
+    console.log('[forb] no dateString provided');
+    const newDate = new Date();
+    return {
+      minutes: newDate.getMinutes().toString().padStart(2, '0'),
+      hours: newDate.getHours().toString().padStart(2, '0'),
+      day: newDate.getDate().toString().padStart(2, '0'),
+      month: (newDate.getMonth() + 1).toString().padStart(2, '0'),
+      year: newDate.getFullYear().toString(),
+    };
+  }
   const dateArr = dateString.match(/\d+/g);
   return {
     minutes: dateArr[4],

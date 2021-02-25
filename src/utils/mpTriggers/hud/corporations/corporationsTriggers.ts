@@ -5,4 +5,11 @@ const mpTrigger_corporations_openTab = (tabTitle: string) => {
   } catch (e) {}
 };
 
-export { mpTrigger_corporations_openTab };
+const mpTrigger_corporations_close = () => {
+  console.log('cef_cl_corporations_close');
+  try {
+    mp.trigger('cef_cl_corporations_close');
+  } catch (e) {}
+};
+
+export { mpTrigger_corporations_openTab, mpTrigger_corporations_close };

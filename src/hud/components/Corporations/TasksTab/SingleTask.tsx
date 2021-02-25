@@ -73,6 +73,9 @@ const SingleTask: React.FC<Props> = React.memo((props) => {
     lineHeight: '0.9324rem',
     fontWeight: 600,
     color: '#7A8192',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    lineClamp: 2,
   };
 
   const idTextStyles: CSSProperties = {
@@ -80,31 +83,33 @@ const SingleTask: React.FC<Props> = React.memo((props) => {
     fontWeight: 700,
     color: '#696F7F',
     marginLeft: '3.46%',
-    whiteSpace: 'nowrap',
-    maxWidth: '13%',
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
+    width: '10%',
+    maxWidth: '10%',
+    textAlign: 'right',
   };
 
   const titleTextStyles: CSSProperties = {
     ...commonTextStyles,
     fontWeight: 700,
     color: '#fff',
-    whiteSpace: 'nowrap',
     maxWidth: '100%',
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
   };
 
   const dateTextStyles: CSSProperties = {
     ...commonTextStyles,
     fontWeight: 500,
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
   };
 
   const appointerDefinitionTextStyles: CSSProperties = {
     ...commonTextStyles,
     color: '#7A8192',
-    marginLeft: '4.83%',
+    marginLeft: '2.83%',
+    width: '7%',
+    maxWidth: '7%',
   };
 
   const executorDefinitionTextStyles: CSSProperties = {
@@ -114,18 +119,14 @@ const SingleTask: React.FC<Props> = React.memo((props) => {
 
   const appointerTextStyles: CSSProperties = {
     ...commonTextStyles,
-    whiteSpace: 'nowrap',
-    maxWidth: '19%',
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
+    width: '10%',
+    maxWidth: '10%',
   };
 
   const executorTextStyles: CSSProperties = {
     ...commonTextStyles,
-    whiteSpace: 'nowrap',
+    width: '19%',
     maxWidth: '19%',
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
   };
 
   // only when isArchive
@@ -156,9 +157,8 @@ const SingleTask: React.FC<Props> = React.memo((props) => {
           </div>
           <CorporationsText styles={appointerDefinitionTextStyles}>{'Выдал:'}&nbsp;</CorporationsText>
           <CorporationsText styles={appointerTextStyles}>{props.task.appointer}</CorporationsText>
-          <CorporationsText styles={executorDefinitionTextStyles}>
-            &nbsp;&nbsp;{'>'}&nbsp;&nbsp;{'Кому:'}&nbsp;
-          </CorporationsText>
+          <div className={classes.RightArrow} />
+          <CorporationsText styles={executorDefinitionTextStyles}>&nbsp;&nbsp;{'Кому:'}&nbsp;</CorporationsText>
           <CorporationsText styles={executorTextStyles}>{props.task.executor}</CorporationsText>
         </div>
         <div className={classes.OpenDescriptionButtonContainer}>

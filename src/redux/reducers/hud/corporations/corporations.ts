@@ -1,7 +1,6 @@
 import {
   CORPORATIONS_CLOSE,
   CORPORATIONS_OPEN,
-  CORPORATIONS_SET_LOADING,
   CORPORATIONS_TAB_OPEN,
 } from '../../../actions/hud/corporations/corporationsTypes';
 import { CorporationsTabsEnum } from '../../../../models/hud/corporations/enums';
@@ -11,9 +10,10 @@ interface InitialStateInterface {
   openedTab: CorporationsTabsEnum;
   // todo maybe info from main screen (info about corporation)
 }
+
 const initialState: InitialStateInterface = {
   isOpened: false,
-  openedTab: CorporationsTabsEnum.staff,
+  openedTab: CorporationsTabsEnum.tasks,
 };
 
 export default (state = initialState, action) => {

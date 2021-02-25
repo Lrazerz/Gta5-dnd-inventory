@@ -27,11 +27,14 @@ import {
   setSettings,
 } from '../../../../redux/actions/hud/phone';
 import { transformDateFromString } from '../../../common/date';
+import { parse } from '@typescript-eslint/parser';
 
 // lastmessages as params
 const openPhone = (jsonData) => {
   const parsedData = JSON.parse(jsonData);
-  const transformedLastMessages: LastMessageInterface[] = parsedData.LastMessages.map((lastMessage) => ({
+  const lastMessages = parsedData.lastMessages || [];
+
+  const transformedLastMessages: LastMessageInterface[] = lastMessages.map((lastMessage) => ({
     id: shortId.generate(),
     name: lastMessage.Name,
     imageName: lastMessage.ImageName,

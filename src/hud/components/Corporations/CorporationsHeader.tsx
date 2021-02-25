@@ -12,6 +12,8 @@ import { mpTrigger_corporations_openTab } from '../../../utils/mpTriggers/hud/co
 import CorporationsText from './CorporationsText';
 import { CorporationsTasksTabsEnumEng } from '../../../models/hud/corporations/tabs/tasks/tasksEnums';
 import { corporationsTasksOpenTabAction } from '../../../redux/actions/hud/corporations/tabs/tasks/tasks';
+import { CorporationsStaffTabsEnumEng } from '../../../models/hud/corporations/tabs/staff/staffEnums';
+import { corporationsStaffOpenTabAction } from '../../../redux/actions/hud/corporations/tabs/staff/staff';
 
 interface Props {
   openedTab: CorporationsTabsEnum;
@@ -25,12 +27,19 @@ const CorporationsHeader: React.FC<Props> = React.memo((props) => {
   const openedTasksTab: CorporationsTasksTabsEnumEng = useSelector(
     (state) => state.hud.corporations.tabs.tasks.tasks.openedTab,
   );
+  const openedStaffTab: CorporationsStaffTabsEnumEng = useSelector(
+    (state) => state.hud.corporations.tabs.staff.staff.openedTab,
+  );
 
   const isTasksTabWithBackButtonOpened =
-    openedTasksTab === CorporationsTasksTabsEnumEng.newTask ||
-    openedTasksTab === CorporationsTasksTabsEnumEng.archiveTasks;
+    openedTab === CorporationsTabsEnum.tasks &&
+    (openedTasksTab === CorporationsTasksTabsEnumEng.newTask ||
+      openedTasksTab === CorporationsTasksTabsEnumEng.archiveTasks);
 
-  const isBackButtonDisplayed = openedTab === CorporationsTabsEnum.tasks && isTasksTabWithBackButtonOpened;
+  const isPersonalWithBackButtonOpened =
+    openedTab === CorporationsTabsEnum.staff && openedStaffTab === CorporationsStaffTabsEnumEng.invite;
+
+  const isBackButtonDisplayed = isTasksTabWithBackButtonOpened || isPersonalWithBackButtonOpened;
 
   const [backButtonWidth, setBackButtonWidth]: [string, (string) => void] = useState();
 
@@ -48,6 +57,8 @@ const CorporationsHeader: React.FC<Props> = React.memo((props) => {
     if (!isBackButtonDisplayed) return;
     if (openedTab === CorporationsTabsEnum.tasks) {
       dispatch(corporationsTasksOpenTabAction(CorporationsTasksTabsEnumEng.currentTasks));
+    } else if (openedTab === CorporationsTabsEnum.staff) {
+      dispatch(corporationsStaffOpenTabAction(CorporationsStaffTabsEnumEng.staff));
     }
   };
 

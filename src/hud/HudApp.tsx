@@ -21,6 +21,7 @@ import HudAppStateless from './HudAppStateless';
 import { openCorporations } from '../utils/windowFuncs/hud/Corporations/CorporationsInterceptors';
 import { corporationsOpenAction, corporationsCloseAction } from '../redux/actions/hud/corporations/corporations';
 import { DefaultHudDataInterface } from '../models/hud/hudInterfaces';
+import { mpTrigger_corporations_close } from '../utils/mpTriggers/hud/corporations/corporationsTriggers';
 
 interface Props {
   data: DefaultHudDataInterface;
@@ -237,12 +238,22 @@ const HudApp: React.FC<Props> = React.memo(function HudApp({ data }) {
   }, [phoneWrapperRef.current]);
 
   const interactionsCloseHandler = () => {
-    try {
-      mpTrigger_interactions_closeInteractions();
-    } catch (e) {}
+    mpTrigger_interactions_closeInteractions();
   };
 
-  return <HudAppStateless playerState={playerInfo} carInfo={carInfo} onInteractionsClose={interactionsCloseHandler} />;
+  const corporationsCloseHandler = () => {
+    dispatch(corporationsCloseAction());
+    mpTrigger_corporations_close();
+  };
+
+  return (
+    <HudAppStateless
+      playerState={playerInfo}
+      carInfo={carInfo}
+      onInteractionsClose={interactionsCloseHandler}
+      onCorporationsClose={corporationsCloseHandler}
+    />
+  );
 });
 
 export default HudApp;

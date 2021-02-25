@@ -10,125 +10,126 @@ import { CORPORATIONS_STAFF_OPEN_TAB } from '../../../../../../actions/hud/corpo
 import { CORPORATIONS_TAB_OPEN } from '../../../../../../actions/hud/corporations/corporationsTypes';
 import { CorporationsTabsEnum } from '../../../../../../../models/hud/corporations/enums';
 import { CorporationsStaffTabsEnumEng } from '../../../../../../../models/hud/corporations/tabs/staff/staffEnums';
-
-const initialState: StaffTabInitialStateInterfaceWithLoading = {
-  isLoading: false,
-  currentPage: 1,
-  pagesCount: 10,
-  staff: [
-    {
-      nickname: 'DigitalNox Design1',
-      role: 'new role',
-      potentialRoles: [
-        'Role1231321312',
-        'Role23213213',
-        'Role3',
-        'Role1',
-        'Role2213',
-        'Role12321312',
-        'Role232113',
-        'Role12313212',
-        'Role2321313',
-        'Role312',
-        'Role23213',
-        'Role12313312',
-        'Rol213',
-      ],
-      averageOnline: 500,
-      averageEarns: 500,
-      contributedToTreasury: 500,
-      boostStatus: 0,
-    },
-    {
-      nickname: 'DigitalNox Design2',
-      role: '',
-      potentialRoles: ['Role1', 'Role2', 'Role3'],
-      averageOnline: 500,
-      averageEarns: 500,
-      contributedToTreasury: 500,
-      boostStatus: 0,
-    },
-    {
-      nickname: 'DigitalNox Design3',
-      role: '',
-      potentialRoles: ['Role1', 'Role2', 'Role3'],
-      averageOnline: 500,
-      averageEarns: 500,
-      contributedToTreasury: 500,
-      boostStatus: 0,
-    },
-    {
-      nickname: 'DigitalNox Design4',
-      role: '',
-      potentialRoles: ['Role1', 'Role2', 'Role3'],
-      averageOnline: 500,
-      averageEarns: 500,
-      contributedToTreasury: 500,
-      boostStatus: 0,
-    },
-    {
-      nickname: 'DigitalNox Design5',
-      role: '',
-      potentialRoles: ['Role1', 'Role2', 'Role3'],
-      averageOnline: 500,
-      averageEarns: 500,
-      contributedToTreasury: 500,
-      boostStatus: 0,
-    },
-    {
-      nickname: 'DigitalNox Design6',
-      role: '',
-      potentialRoles: ['Role1', 'Role2', 'Role3'],
-      averageOnline: 500,
-      averageEarns: 500,
-      contributedToTreasury: 500,
-      boostStatus: 0,
-    },
-    {
-      nickname: 'DigitalNox Design7',
-      role: '',
-      potentialRoles: ['Role1', 'Role2', 'Role3'],
-      averageOnline: 500,
-      averageEarns: 500,
-      contributedToTreasury: 500,
-      boostStatus: 0,
-    },
-    {
-      nickname: 'DigitalNox Design8',
-      role: '',
-      potentialRoles: ['Role1', 'Role2', 'Role3'],
-      averageOnline: 500,
-      averageEarns: 500,
-      contributedToTreasury: 500,
-      boostStatus: 0,
-    },
-    {
-      nickname: 'DigitalNox Design9',
-      role: '',
-      potentialRoles: ['Role1', 'Role2', 'Role3'],
-      averageOnline: 500,
-      averageEarns: 500,
-      contributedToTreasury: 500,
-      boostStatus: 0,
-    },
-    {
-      nickname: 'DigitalNox Design10',
-      role: '',
-      potentialRoles: ['Role1', 'Role2', 'Role3'],
-      averageOnline: 500,
-      averageEarns: 500,
-      contributedToTreasury: 500,
-      boostStatus: 0,
-    },
-  ],
-};
+// import logs from '../../logs/logs';
 
 // const initialState: StaffTabInitialStateInterfaceWithLoading = {
 //   isLoading: false,
 //   currentPage: 1,
-//   pagesCount: 1,
-//   staff: [],
+//   pagesCount: 10,
+//   staff: [
+//     {
+//       nickname: 'DigitalNox Design1',
+//       role: 'new role',
+//       potentialRoles: [
+//         'Role1231321312',
+//         'Role23213213',
+//         'Role3',
+//         'Role1',
+//         'Role2213',
+//         'Role12321312',
+//         'Role232113',
+//         'Role12313212',
+//         'Role2321313',
+//         'Role312',
+//         'Role23213',
+//         'Role12313312',
+//         'Rol213',
+//       ],
+//       averageOnline: 500,
+//       averageEarns: 500,
+//       contributedToTreasury: 500,
+//       boostStatus: 0,
+//     },
+//     {
+//       nickname: 'DigitalNox Design2',
+//       role: '',
+//       potentialRoles: ['Role1', 'Role2', 'Role3'],
+//       averageOnline: 500,
+//       averageEarns: 500,
+//       contributedToTreasury: 500,
+//       boostStatus: 0,
+//     },
+//     {
+//       nickname: 'DigitalNox Design3',
+//       role: '',
+//       potentialRoles: ['Role1', 'Role2', 'Role3'],
+//       averageOnline: 500,
+//       averageEarns: 500,
+//       contributedToTreasury: 500,
+//       boostStatus: 0,
+//     },
+//     {
+//       nickname: 'DigitalNox Design4',
+//       role: '',
+//       potentialRoles: ['Role1', 'Role2', 'Role3'],
+//       averageOnline: 500,
+//       averageEarns: 500,
+//       contributedToTreasury: 500,
+//       boostStatus: 0,
+//     },
+//     {
+//       nickname: 'DigitalNox Design5',
+//       role: '',
+//       potentialRoles: ['Role1', 'Role2', 'Role3'],
+//       averageOnline: 500,
+//       averageEarns: 500,
+//       contributedToTreasury: 500,
+//       boostStatus: 0,
+//     },
+//     {
+//       nickname: 'DigitalNox Design6',
+//       role: '',
+//       potentialRoles: ['Role1', 'Role2', 'Role3'],
+//       averageOnline: 500,
+//       averageEarns: 500,
+//       contributedToTreasury: 500,
+//       boostStatus: 0,
+//     },
+//     {
+//       nickname: 'DigitalNox Design7',
+//       role: '',
+//       potentialRoles: ['Role1', 'Role2', 'Role3'],
+//       averageOnline: 500,
+//       averageEarns: 500,
+//       contributedToTreasury: 500,
+//       boostStatus: 0,
+//     },
+//     {
+//       nickname: 'DigitalNox Design8',
+//       role: '',
+//       potentialRoles: ['Role1', 'Role2', 'Role3'],
+//       averageOnline: 500,
+//       averageEarns: 500,
+//       contributedToTreasury: 500,
+//       boostStatus: 0,
+//     },
+//     {
+//       nickname: 'DigitalNox Design9',
+//       role: '',
+//       potentialRoles: ['Role1', 'Role2', 'Role3'],
+//       averageOnline: 500,
+//       averageEarns: 500,
+//       contributedToTreasury: 500,
+//       boostStatus: 0,
+//     },
+//     {
+//       nickname: 'DigitalNox Design10',
+//       role: '',
+//       potentialRoles: ['Role1', 'Role2', 'Role3'],
+//       averageOnline: 500,
+//       averageEarns: 500,
+//       contributedToTreasury: 500,
+//       boostStatus: 0,
+//     },
+//   ],
 // };
+
+const initialState: StaffTabInitialStateInterfaceWithLoading = {
+  isLoading: false,
+  currentPage: 1,
+  pagesCount: 1,
+  staff: [],
+};
 
 export default (state = initialState, action) => {
   switch (action.type) {
@@ -143,9 +144,10 @@ export default (state = initialState, action) => {
     case CORPORATIONS_STAFF_OPEN_TAB: {
       const stateToReturn = { ...initialState };
 
-      if (action.openedTab === CorporationsStaffTabsEnumEng.staff) {
+      if (action.tab === CorporationsStaffTabsEnumEng.staff) {
         stateToReturn.isLoading = true;
       }
+
       return stateToReturn;
     }
     case STAFF_STAFF_OPEN: {

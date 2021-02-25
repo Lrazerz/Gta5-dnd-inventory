@@ -6,8 +6,7 @@ import { TasksArchiveTasksInitialStateInterface } from '../../../../../../../mod
 import { transformDateFromString } from '../../../../../../common/date';
 import { archiveTasksPageSize } from '../../../../../../../constants/hud/corporations/tasks/tasks';
 
-let window_corporations_tasks_openArchiveTasks: (jsonData: string) => TasksArchiveTasksInitialStateInterface;
-window_corporations_tasks_openArchiveTasks = (jsonData: string) => {
+const window_corporations_tasks_openArchiveTasks = (jsonData: string): TasksArchiveTasksInitialStateInterface => {
   const parsedData = JSON.parse(jsonData);
 
   return {
@@ -28,8 +27,7 @@ window_corporations_tasks_openArchiveTasks = (jsonData: string) => {
   };
 };
 
-let window_corporations_tasks_archiveTasks_openPage: (jsonData: string) => TasksArchiveTasksInitialStateInterface;
-window_corporations_tasks_archiveTasks_openPage = (jsonData: string) => {
+const window_corporations_tasks_archiveTasks_openPage = (jsonData: string): TasksArchiveTasksInitialStateInterface => {
   const parsedData = JSON.parse(jsonData);
 
   return {

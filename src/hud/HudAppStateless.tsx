@@ -13,10 +13,17 @@ import { CarInfoState } from './HudApp';
 interface Props {
   playerState: DefaultHudDataInterface;
   carInfo: CarInfoState;
+  // click on empty area
   onInteractionsClose: () => void;
+  onCorporationsClose: () => void;
 }
 
-const HudAppStateless: React.FC<Props> = React.memo(function HudApp({ playerState, carInfo, onInteractionsClose }) {
+const HudAppStateless: React.FC<Props> = React.memo(function HudApp({
+  playerState,
+  carInfo,
+  onInteractionsClose,
+  onCorporationsClose,
+}) {
   const [playerInfoWrapperHeight, setPlayerInfoWrapperHeight]: [number, any] = useState(0);
   const [carInfoWrapperHeight, setCarInfoWrapperHeight]: [number, any] = useState(0);
   const [hotkeyWrapperHeight, setHotkeyWrapperHeight]: [number, any] = useState(0);
@@ -34,6 +41,12 @@ const HudAppStateless: React.FC<Props> = React.memo(function HudApp({ playerStat
       phoneWrapperRef.current.style.height = width;
     }
   }, [phoneWrapperRef.current]);
+
+  const corporationsCloseHandler = (e) => {
+    if (e.target.className === classes.InteractionsWrapper) {
+      onCorporationsClose();
+    }
+  };
 
   //need to handle PlayerInfoWrapper and CarInfoWrapper the same way
   if (playerInfoWrapperHeight === 0) {
@@ -93,7 +106,7 @@ const HudAppStateless: React.FC<Props> = React.memo(function HudApp({ playerStat
         </div>
       )}
       {isCorporationsOpenedRedux && (
-        <div className={classes.InteractionsWrapper}>
+        <div className={classes.InteractionsWrapper} onClick={corporationsCloseHandler}>
           <Corporations />
         </div>
       )}

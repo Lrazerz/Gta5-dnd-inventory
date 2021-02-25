@@ -10,6 +10,7 @@ import { mpTrigger_corporations_staff_invitePlayer } from '../../../../../utils/
 const StaffTabInvite: React.FC = React.memo(() => {
   const [nickname, setNickname]: [string, (string) => void] = useState('');
 
+  // on enter press too
   const invitePlayerHandler = () => {
     if (nickname.length < minNicknameLength) {
       console.log(`[forb] nickname length < minNicknameLength`);
@@ -25,6 +26,12 @@ const StaffTabInvite: React.FC = React.memo(() => {
     }
     mpTrigger_corporations_staff_invitePlayer(nickname);
     setNickname('');
+  };
+
+  const inputKeyDownHandler = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (e.key.toLowerCase() === 'enter') {
+      invitePlayerHandler();
+    }
   };
 
   const titleTextStyles: CSSProperties = {
@@ -48,7 +55,7 @@ const StaffTabInvite: React.FC = React.memo(() => {
     <div className={classes.StaffTabInvite}>
       <div className={classes.Content}>
         <CorporationsText styles={titleTextStyles}>Пригласить игрока</CorporationsText>
-        <div className={classes.NicknameInputWrapper}>
+        <div className={classes.NicknameInputWrapper} onKeyDown={inputKeyDownHandler}>
           <CorporationsInput
             value={nickname}
             onChange={setNickname}
