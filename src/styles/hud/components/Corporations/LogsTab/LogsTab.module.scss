@@ -52,7 +52,8 @@
 
     .LoadingWrapper {
       width: 100%;
-      flex-grow: 1;
+      min-height: 89.69%;
+      max-height: 89.69%;
     }
   }
 }

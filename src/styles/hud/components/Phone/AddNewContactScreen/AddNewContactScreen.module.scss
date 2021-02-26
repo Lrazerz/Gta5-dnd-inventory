@@ -7,14 +7,6 @@
   flex-direction: column;
   position: relative;
 
-  .ScreenTitleWrapper {
-    width: 100%;
-    height: 6.33%;
-    box-sizing: border-box;
-    padding-left: 6%;
-    padding-top: 4.5%;
-  }
-
   .AvatarPreviewContainer {
     margin-top: 10%;
     width: 100%;
@@ -182,8 +174,7 @@
 
   .AddContactButtonContainer {
     width: 100%;
-    flex-grow: 1;
-    //background-color: fuchsia;
+    min-height: calc(66% - 8px);
     display: flex;
     flex-direction: column;
     justify-content: flex-end;

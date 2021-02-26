@@ -9,7 +9,7 @@
   flex-direction: column;
 
   .ScrollWrapper {
-    height: 97%;
+    min-height: 97%;
     max-height: 97%;
     width: 97.56%;
     overflow-x: hidden;
@@ -33,7 +33,7 @@
     }
   }
   .BlurredBottomBlock {
-    flex-grow: 1;
+    min-height: 3%;
     max-height: 3%;
     width: 100%;
   }

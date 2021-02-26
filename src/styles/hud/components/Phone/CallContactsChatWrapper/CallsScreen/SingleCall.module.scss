@@ -4,7 +4,6 @@
   display: flex;
 
   &:hover {
-    //filter: contrast(130%) opacity(80%);
     filter: contrast(130%) brightness(80%);
   }
 
@@ -31,7 +30,7 @@
 
   .InfoWrapper {
     height: 100%;
-    flex-grow: 1;
+    min-width: 75.58%;
     max-width: 75.58%;
     display: flex;
     flex-direction: column;
@@ -47,14 +46,12 @@
 
     .StatusTimeNumberContainer {
       width: 100%;
-      flex-grow: 1;
+      min-height: 54.69%;
       max-height: 54.69%;
       display: flex;
-      flex-direction: row;
       align-items: center;
 
       .StatusWrapper {
-        //width: 38.46%;
         min-width: 52.46%;
         max-width: 52.46%;
         height: 100%;
@@ -72,9 +69,9 @@
       }
 
       .NumberWrapper {
-        flex-grow: 1;
+        min-width: 55%;
+        max-width: 55%;
         margin-left: 5%;
-        max-width: 40%;
         height: 100%;
         display: flex;
         align-items: center;

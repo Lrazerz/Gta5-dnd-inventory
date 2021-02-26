@@ -13,7 +13,7 @@ interface InitialStateInterface {
 
 const initialState: InitialStateInterface = {
   isOpened: false,
-  openedTab: CorporationsTabsEnum.tasks,
+  openedTab: CorporationsTabsEnum.logs,
 };
 
 export default (state = initialState, action) => {

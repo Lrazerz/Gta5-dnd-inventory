@@ -38,7 +38,8 @@
     }
 
     .NetworkContainer {
-      flex-grow: 1;
+      min-width: 20%;
+      max-width: 20%;
 
       .ShiftedNetworkContainer {
         width: 100%;

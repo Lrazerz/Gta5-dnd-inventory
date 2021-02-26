@@ -93,7 +93,6 @@ const LastMessage: React.FC<Props> = React.memo(({ messageInfo, theme }) => {
             <img className={classes.Image} src={importedAvatarImg} />
           </div>
         </div>
-
         <div className={classes.InfoWrapper}>{nameTimeTextBlock}</div>
       </div>
     </div>

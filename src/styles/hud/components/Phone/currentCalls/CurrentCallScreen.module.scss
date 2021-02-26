@@ -81,7 +81,8 @@
     }
 
     .DeclineButtonWrapper {
-      flex-grow: 1;
+      min-height: 59.59%;
+      max-height: 59.59%;
       width: 100%;
       display: flex;
       align-items: center;

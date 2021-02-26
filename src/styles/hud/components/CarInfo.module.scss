@@ -10,7 +10,6 @@
     width: 100%;
     max-width: 100%;
     min-height: 55.5%;
-    height: 55.5%;
     max-height: 55.5%;
     display: flex;
     position: relative;
@@ -79,7 +78,8 @@
   }
 
   .CarStateWrapper {
-    flex-grow: 1;
+    min-height: 44.5%;
+    max-height: 44.5%;
 
     .BorderedGrayBlock {
       display: flex;

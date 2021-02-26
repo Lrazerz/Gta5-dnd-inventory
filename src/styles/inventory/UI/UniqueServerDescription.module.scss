@@ -13,8 +13,8 @@
 
     .LogoContainer {
       height: 100%;
-      //width: 38.77%;
       min-width: 40%;
+      max-width: 40%;
 
       .ImageWrapper {
         max-width: 40%;
@@ -41,7 +41,8 @@
     }
 
     .TextContainer {
-      flex-grow: 1;
+      min-width: 60%;
+      max-width: 60%;
       display: flex;
       flex-direction: column;
       margin-top: 4%;

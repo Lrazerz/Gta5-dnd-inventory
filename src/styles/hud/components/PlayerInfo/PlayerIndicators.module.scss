@@ -43,8 +43,10 @@
       }
     }
   }
+
   .IndicatorsWrapper {
-    flex-grow: 1;
+    min-width: 87.1%;
+    max-width: 87.1%;
     height: 100%;
     display: flex;
     align-items: center;

@@ -30,14 +30,9 @@ const SettingsScreen = React.memo(() => {
     trackMouse: true,
   });
 
-  // const horizontalLineStyles: CSSProperties = {
-  //   backgroundColor: theme === ThemesEnum.black ? '#5422b0' : '#DAD8E6',
-  // };
-
   return (
     <div className={classes.SettingsScreen} {...handlers}>
       <ScreenTitleWrapper theme={theme} titleText={'Настройки'} onBackButtonPress={swipeHandler} />
-      {/*<div className={classes.HorizontalLine} style={horizontalLineStyles}/>*/}
       <div className={classes.SettingsListWrapper}>
         <SettingsList />
       </div>

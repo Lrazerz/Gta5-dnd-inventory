@@ -46,7 +46,6 @@ const PlayerIndicators: React.FC<Props> = React.memo(({ firstIndicator, secondIn
           </div>
         </div>
       </div>
-
       <div className={classes.IndicatorsWrapper}>
         <div className={classes.ShiftedIndicatorsWrapper}>
           <div className={classes.SingleIndicatorWrapper}>

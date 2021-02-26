@@ -12,10 +12,10 @@
   }
 
   .SettingsListWrapper {
-    //padding-top: 3%;
     position: relative;
     width: 100%;
-    flex-grow: 1;
+    min-height: 93.48%;
+    max-height: 93.48%;
 
     .ChooseRingtoneSetting {
       display: flex;
@@ -100,7 +100,8 @@
 
     .RingtoneTextWrapper {
       width: 100%;
-      flex-grow: 1;
+      min-height: 99.81%;
+      max-height: 99.81%;
       display: flex;
       justify-content: center;
       align-items: center;

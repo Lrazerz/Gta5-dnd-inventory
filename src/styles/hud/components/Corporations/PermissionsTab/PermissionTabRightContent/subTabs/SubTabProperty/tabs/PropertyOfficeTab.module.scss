@@ -20,14 +20,14 @@
   .OptionRowContainer {
     width: 100%;
     height: calc(8.83% + 4px);
-    //height: calc(17.66% + 4px);
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
 
     .OptionRowWrapper {
       width: 100%;
-      flex-grow: 1;
+      height: calc(100% - 4px);
+      max-height: calc(100% - 4px);
     }
   }
 }
