@@ -58,6 +58,7 @@ const App = React.memo(function App() {
       setOpenedPart(OpenedPartsEnum.none);
     }
   };
+
   const closeHudHandler = () => {
     if (openedPartRef.current === OpenedPartsEnum.hud) {
       setOpenedPart(OpenedPartsEnum.none);

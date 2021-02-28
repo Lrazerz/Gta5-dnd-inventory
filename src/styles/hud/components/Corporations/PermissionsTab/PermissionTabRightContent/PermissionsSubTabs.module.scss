@@ -2,17 +2,22 @@
 
 .PermissionsSubTabs {
   width: 100%;
+  min-height: 100%;
   height: 100%;
+  max-height: 100%;
   display: flex;
   flex-direction: column;
 
   .Header {
     width: 100%;
+    min-height: 16.33%;
     height: 16.33%;
+    max-height: 16.33%;
   }
 
   .TabContent {
     min-height: 83.67%;
+    height: 83.67%;
     max-height: 83.67%;
     width: 100%;
     background-color: corporationsTheme.$bg_darkGrey2;

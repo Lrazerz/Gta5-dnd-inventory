@@ -8,15 +8,11 @@ import {
   PERMISSIONS_ROLES_PERMISSIONS_SET,
   PERMISSIONS_TAB_OPEN,
 } from '../../../../../actions/hud/corporations/tabs/permissions/permissionsTypes';
-import {
-  CommonPermissionsSetInterface,
-  PermissionsReducerInterface,
-  SingleRoleInterface,
-} from '../../../../../../models/hud/corporations/interfaces';
+import { PermissionsReducerInterface } from '../../../../../../models/hud/corporations/interfaces';
 import { CORPORATIONS_TAB_OPEN } from '../../../../../actions/hud/corporations/corporationsTypes';
 
 const initialState: PermissionsReducerInterface = {
-  openedTab: CorporationsPermissionsTabsEnum.auto,
+  openedTab: CorporationsPermissionsTabsEnum.modules,
   roles: null,
   selectedRole: null,
   commonPermissionsSets: null,

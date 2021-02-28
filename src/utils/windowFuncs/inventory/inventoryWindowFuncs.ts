@@ -169,7 +169,7 @@ const window_openOrRefreshInventory = async (info) => {
 };
 
 const window_openDoubleInventory = async (info, externalInfo, externalBoardHeight) => {
-  const { $values: values } = JSON.parse(info).$values;
+  const { $values: values } = JSON.parse(info);
   const { $values: externalValues } = JSON.parse(externalInfo);
 
   const { boardItems, enabledItems } = await _getEnabledAndBoardItems(values);

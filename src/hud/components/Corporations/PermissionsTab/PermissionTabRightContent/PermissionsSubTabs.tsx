@@ -6,8 +6,6 @@ import { CorporationsPermissionsTabsEnum } from '../../../../../models/hud/corpo
 import SubTabAuto from './subTabs/SubTabAuto/SubTabAuto';
 import SubTabProperty from './subTabs/SubTabProperty/SubTabProperty';
 
-interface Props {}
-
 const PermissionsSubTabs = React.memo((props) => {
   ``;
   const openedTab = useSelector((state) => state.hud.corporations.tabs.permissions.permissions.openedTab);
