@@ -28,11 +28,11 @@ interface Props {
 }
 
 const RolesListContent: React.FC<Props> = React.memo((props) => {
+  const dispatch = useDispatch();
+
   if (!props.roles) {
     return <div />;
   }
-
-  const dispatch = useDispatch();
 
   const selectRoleHandler = (role: SingleRoleInterface) => {
     if (!(props.selectedRole && props.selectedRole.title === role.title)) {

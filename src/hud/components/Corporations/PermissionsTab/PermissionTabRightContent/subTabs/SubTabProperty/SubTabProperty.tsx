@@ -52,7 +52,7 @@ const SubTabProperty = React.memo(() => {
   return (
     <div className={classes.SubTabProperty}>
       <div className={classes.TabsListWrapper}>
-        <PermissionsPropertyTabsList openedTab={openedTab} openedRoleTitle={openedRole && openedRole.title} />
+        <PermissionsPropertyTabsList openedTab={openedTab} openedRole={openedRole} />
       </div>
       <div className={classes.TabContentWrapper}>{tabBlock}</div>
     </div>

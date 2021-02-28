@@ -11,9 +11,10 @@ import PermissionsSubTabHeader from './PermissionsSubTabHeader';
 import { corporationsTheme } from '../../../../../constants/hud/corporations/corporationsTheme';
 import { permissionsOpenTabAction } from '../../../../../redux/actions/hud/corporations/tabs/permissions/permissions';
 import { mpTrigger_corporations_permissions_openTab } from '../../../../../utils/mpTriggers/hud/corporations/tabs/permissions/permissionsTriggers';
+import { SingleRoleInterface } from '../../../../../models/hud/corporations/interfaces';
 
 interface Props {
-  openedRoleTitle: string;
+  openedRole: SingleRoleInterface;
   openedTab: CorporationsPermissionsTabsEnum;
 }
 
@@ -32,7 +33,7 @@ const PermissionsSubTabsHeader: React.FC<Props> = React.memo((props) => {
     const tab: CorporationsPermissionsTabsEnum = CorporationsPermissionsTabsEnum[tabEng];
 
     dispatch(permissionsOpenTabAction(tab));
-    mpTrigger_corporations_permissions_openTab(props.openedRoleTitle, tabRussian);
+    mpTrigger_corporations_permissions_openTab(props.openedRole, tabRussian);
   };
 
   const tabsBlock = PermissionsSubTabsRussian.map((tab) => {

@@ -1,5 +1,6 @@
 // tab permissions
 import { CorporationsPermissionsTabsDict, CorporationsTabsDict } from '../../../../../../models/hud/corporations/enums';
+import { SingleRoleInterface } from '../../../../../../models/hud/corporations/interfaces';
 
 const mpTrigger_corporations_permissions_selectRole = (roleTitle: string) => {
   console.log('mpTrigger_corporations_permissions_selectRole', CorporationsTabsDict.permissions, roleTitle);
@@ -24,7 +25,7 @@ const mpTrigger_corporations_permissions_removeRole = (roleTitle: string) => {
 };
 
 const mpTrigger_corporations_permissions_changePermission = (
-  openedRoleTitle: string,
+  openedRole: SingleRoleInterface,
   setTitle: string,
   permissionTitle: string,
   value: boolean,
@@ -32,7 +33,7 @@ const mpTrigger_corporations_permissions_changePermission = (
   console.log(
     'mpTrigger_corporations_permissions_changePermission',
     CorporationsTabsDict.permissions,
-    openedRoleTitle,
+    openedRole,
     setTitle,
     permissionTitle,
     value,
@@ -40,7 +41,10 @@ const mpTrigger_corporations_permissions_changePermission = (
   try {
     const data = JSON.stringify({
       OpenedTab: CorporationsTabsDict.permissions,
-      OpenedRole: openedRoleTitle,
+      OpenedRole: {
+        Title: openedRole.title,
+        Priority: openedRole.priority,
+      },
       SetTitle: setTitle,
       PermissionTitle: permissionTitle,
       Value: value,
@@ -50,12 +54,15 @@ const mpTrigger_corporations_permissions_changePermission = (
   } catch (e) {}
 };
 
-const mpTrigger_corporations_permissions_openTab = (openedRoleTitle: string, tabTitle: string) => {
-  console.log('cef_cl_corporations_permissions_openTab', 'openedRole', openedRoleTitle, 'openedTab', tabTitle);
+const mpTrigger_corporations_permissions_openTab = (openedRole: SingleRoleInterface, tabTitle: string) => {
+  console.log('cef_cl_corporations_permissions_openTab', 'openedRole', openedRole, 'openedTab', tabTitle);
   try {
     const data = JSON.stringify({
       OpenedTab: CorporationsTabsDict.permissions,
-      OpenedRole: openedRoleTitle,
+      OpenedRole: {
+        Title: openedRole.title,
+        Priority: openedRole.priority,
+      },
       OpenedPermissionsTab: tabTitle,
     });
 

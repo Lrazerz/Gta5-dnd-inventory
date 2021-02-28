@@ -3,18 +3,22 @@ import {
   CorporationsTabsDict,
 } from '../../../../../../../models/hud/corporations/enums';
 import { PermissionsPropertyTabsDict } from '../../../../../../../models/hud/corporations/tabs/permissions/tabs/propertyEnums';
+import { SingleRoleInterface } from '../../../../../../../models/hud/corporations/interfaces';
 
-const mpTrigger_corporations_permissions_property_openTab = (openedRoleTitle: string, tabTitle: string) => {
-  console.log(`OpenedRole: ${openedRoleTitle}. OpenedTab: ${CorporationsTabsDict.permissions}. 
+const mpTrigger_corporations_permissions_property_openTab = (openedRole: SingleRoleInterface, tabTitle: string) => {
+  console.log(`OpenedRole: ${openedRole}. OpenedTab: ${CorporationsTabsDict.permissions}. 
   OpenedPermTab: ${CorporationsPermissionsTabsDict.property}. OpenPropertyTab: ${tabTitle}`);
   try {
     const data = JSON.stringify({
-      OpenedRole: openedRoleTitle,
+      OpenedRole: {
+        Title: openedRole.title,
+        Priority: openedRole.priority,
+      },
       OpenedTab: CorporationsTabsDict.permissions,
       OpenedPermissionsTab: CorporationsPermissionsTabsDict.property,
       OpenedPropertyTab: tabTitle,
     });
-    mp.trigger('cef_cl_property_openTab', data);
+    mp.trigger('cef_cl_permissions_property_openTab', data);
   } catch (e) {}
 };
 

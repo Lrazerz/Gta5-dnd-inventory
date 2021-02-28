@@ -5,7 +5,7 @@ import {
 } from '../../../../models/hud/corporations/interfaces';
 import { RowFieldTypeEnum } from '../../../../models/hud/corporations/enums';
 
-let openCorporations: (data: {}) => Object;
+let openCorporations: (data: {}) => {};
 openCorporations = (data) => {
   return {};
 };
@@ -26,6 +26,7 @@ corporationsOpenPermissionsTab = (jsonData) => {
 
   const roles: SingleRoleInterface[] = Roles.map((role) => ({
     title: role.Title,
+    priority: role.Priority,
   }));
 
   // find selected role id
@@ -38,6 +39,7 @@ corporationsOpenPermissionsTab = (jsonData) => {
 
   const selectedRoleInfo = {
     title: SelectedRoleInfo.Title,
+    priority: SelectedRoleInfo.Priority,
     commonPermissionsSets: SelectedRoleInfo.CommonPermissionsSets.map((singlePermissionSet) => ({
       title: singlePermissionSet.Title,
       permissions: singlePermissionSet.Permissions.map((singlePermission) => ({
@@ -109,7 +111,7 @@ interface AcceptedAutoModelDataInterface {
   };
 }
 
-const corporationsPermissionsOpenAutoTab = (autoData: string) => {
+const corporationsPermissionsOpenAutoTab = (autoData: string): PermissionsTabAutoInterface => {
   const _getOptionType = (type) => {
     let convertedType: RowFieldTypeEnum;
 

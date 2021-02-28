@@ -10,10 +10,11 @@ import {
 } from '../../../../../../../models/hud/corporations/tabs/permissions/tabs/propertyEnums';
 import { permissionsPropertyOpenTabAction } from '../../../../../../../redux/actions/hud/corporations/tabs/permissions/tabs/property/property';
 import { mpTrigger_corporations_permissions_property_openTab } from '../../../../../../../utils/mpTriggers/hud/corporations/tabs/permissions/tabs/permissionsPropertyTriggers';
+import { SingleRoleInterface } from '../../../../../../../models/hud/corporations/interfaces';
 
 interface Props {
   openedTab: PermissionsPropertyTabsEnum;
-  openedRoleTitle: string;
+  openedRole: SingleRoleInterface;
 }
 
 const PermissionsPropertyTabsList: React.FC<Props> = React.memo((props) => {
@@ -33,7 +34,7 @@ const PermissionsPropertyTabsList: React.FC<Props> = React.memo((props) => {
     const newTab: PermissionsPropertyTabsEnum = PermissionsPropertyTabsEnum[newTabEng];
 
     dispatch(permissionsPropertyOpenTabAction(newTab));
-    mpTrigger_corporations_permissions_property_openTab(props.openedRoleTitle, tabRussian);
+    mpTrigger_corporations_permissions_property_openTab(props.openedRole, tabRussian);
   };
 
   const tabsBlock: JSX.Element[] = PermissionsPropertyDisplayedTabsRussian.map((tabRussian) => {

@@ -38,6 +38,7 @@ interface PermissionsReducerInterface {
 
 interface SingleRoleInterface {
   title: string;
+  priority: number;
 }
 
 interface CommonPermissionsSetInterface {

@@ -20,7 +20,7 @@ const CommonPermissionsSet: React.FC<Props> = (props) => {
   const changePermissionHandler = (permission: PermissionInterface) => {
     dispatch(permissionsChangePermission(props.title, permission.title, !permission.value));
     mpTrigger_corporations_permissions_changePermission(
-      props.selectedRole.title,
+      props.selectedRole,
       props.title,
       permission.title,
       !permission.value,
