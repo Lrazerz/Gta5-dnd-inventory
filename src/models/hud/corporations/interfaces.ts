@@ -1,6 +1,6 @@
 // common
 // to generate list from config file
-import { CorporationsPermissionsTabsEnum, RowFieldTypeEnum } from './enums';
+import { CorporationsPermissionsTabsEnum, RowFieldTypeEnum } from "./enums";
 
 // row field interfaces
 interface _RowLabelInterface {
@@ -73,6 +73,7 @@ interface PermissionsAutoModelInterface {
   options: PermissionsAutoModelOptionInterface[];
   permissions: PermissionInterface[];
 }
+
 //endregion
 
 export {
@@ -84,5 +85,5 @@ export {
   SingleAutoModelTitleInterface,
   PermissionsAutoModelOptionInterface,
   PermissionsAutoModelInterface,
-  PermissionsTabAutoInterface,
+  PermissionsTabAutoInterface
 };

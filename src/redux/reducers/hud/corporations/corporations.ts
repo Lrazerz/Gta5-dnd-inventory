@@ -12,7 +12,7 @@ interface InitialStateInterface {
 }
 
 const initialState: InitialStateInterface = {
-  isOpened: false,
+  isOpened: true,
   openedTab: CorporationsTabsEnum.boost,
 };
 

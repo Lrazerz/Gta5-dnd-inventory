@@ -47,7 +47,7 @@ const App = React.memo(function App() {
     }
   }, [alertsContainerRef.current]);
 
-  const [openedPart, setOpenedPart]: [number, (newState: number) => void] = useState(OpenedPartsEnum.none);
+  const [openedPart, setOpenedPart]: [number, (newState: number) => void] = useState(OpenedPartsEnum.hud);
   const [hudData, setHudData]: [DefaultHudDataInterface, any] = useState(defaultHudData);
 
   const openedPartRef: { current: OpenedPartsEnum } = useRef();

@@ -65,7 +65,12 @@ const RolesListContent: React.FC<Props> = React.memo((props) => {
     color: corporationsTheme.text_gray,
   };
 
-  const rolesListJSX: ReactElement[] = props.roles.map((role, i) => {
+  // to sort roles by priorities
+  const rolesSortingFunc = (role1: SingleRoleInterface, role2: SingleRoleInterface) => {
+    return role1.priority > role2.priority ? 1 : role1.priority === role2.priority ? 0 : -1;
+  };
+
+  const rolesListJSX: ReactElement[] = props.roles.sort(rolesSortingFunc).map((role) => {
     const isSelectedRole = props.selectedRole && role.title === props.selectedRole.title;
     // to not change global value
     const localRoleStyles: CSSProperties = { ...singleRoleStyles };
@@ -86,7 +91,9 @@ const RolesListContent: React.FC<Props> = React.memo((props) => {
             <SixCircles color={circlesColor} />
           </div>
           <div className={classes.RoleTitleWrapper}>
-            <CorporationsText styles={localTitleStyles}>{(i + 1).toString() + '. ' + role.title}</CorporationsText>
+            <CorporationsText styles={localTitleStyles}>
+              {role.priority.toString() + '. ' + role.title}
+            </CorporationsText>
           </div>
           {/*<img className={classes.AddNewRoleImageWrapper} src={newRoleImg}/>*/}
           {isSelectedRole && (

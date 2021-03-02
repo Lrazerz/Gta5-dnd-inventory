@@ -39,7 +39,7 @@ const PermissionsSubTabs = React.memo((props) => {
   return (
     <div className={classes.PermissionsSubTabs}>
       <div className={classes.Header}>
-        <PermissionsSubTabsHeader openedRoleTitle={selectedRole && selectedRole.title} openedTab={openedTab} />
+        <PermissionsSubTabsHeader openedRole={selectedRole} openedTab={openedTab} />
       </div>
       <div className={classes.TabContent}>{tabContent}</div>
     </div>
